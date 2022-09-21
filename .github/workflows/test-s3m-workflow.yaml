@@ -1,0 +1,47 @@
+name: test S3M workflow
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    branches:
+      - '*'
+
+jobs:
+  test-S3M-workflow:
+    runs-on: ubuntu-latest
+    container: rocker/geospatial:4.1.2
+    #env:
+    #  GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install system dependencies
+        run: |
+          apt-get update && apt-get install -y --no-install-recommends \
+          git-crypt libxt6 libglpk-dev
+          
+#      - name: Decrypt repository using symmetric key
+#        run: |
+#          echo $GIT_CRYPT_KEY64 > git_crypt_key.key64 && base64 -di git_crypt_key.key64 > git_crypt_key.key && git-crypt unlock git_crypt_key.key
+#          rm git_crypt_key.key git_crypt_key.key64
+          
+      - name: Install packages from renv.lock (with cache)
+        if: ${{ !env.ACT }}  
+        uses: r-lib/actions/setup-renv@master
+        with:
+          cache-version: 2
+
+      - name: Install packages from renv.lock (local, no cache)
+        if: ${{ env.ACT }}  
+        run: |
+          renv::restore()
+        shell: Rscript {0}
+        
+      - name: Run workflow
+        run: |
+          targets::tar_make()
+        shell: Rscript {0}
+          
