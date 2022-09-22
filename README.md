@@ -11,5 +11,5 @@ This repository is a template for a
 [`{targets}`](https://docs.ropensci.org/targets/)-based,
 [`{renv}`](https://rstudio.github.io/renv/articles/renv.html)-enabled
 [`R`](https://cran.r-project.org/) workflow for the analysis and
-reporting of the Improving Nutrition Status for under 5 Children in
-Zambezia and Nampula project baseline and endline survey.
+reporting of the **Improving Nutrition Status for under 5 Children in
+Zambezia and Nampula project baseline and endline survey**.

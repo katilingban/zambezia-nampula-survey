@@ -12,6 +12,12 @@ library(here)
 library(rmarkdown)
 library(knitr)
 library(kableExtra)
+library(googledrive)
+library(dplyr)
+library(glue)
+library(blastula)
+library(openxlsx)
+library(googleLanguageR)
 
 
 ################################################################################
@@ -22,10 +28,11 @@ library(kableExtra)
 #
 ################################################################################
 
-library(sf)
-library(raster)
+library(mozambique)
 library(spatialsampler)
 library(mapboxapi)
+library(osmdata)
+library(sf)
 
 
 ################################################################################
@@ -36,7 +43,6 @@ library(mapboxapi)
 #
 ################################################################################
 
-library(ruODK)
 library(okapi)
 
 
@@ -49,6 +55,7 @@ library(okapi)
 ################################################################################
 
 library(zscorer)
+library(nipnTK)
 library(nutricheckr)
 library(anthrocheckr)
 
@@ -64,3 +71,12 @@ library(anthrocheckr)
 library(ppitables)
 
 
+################################################################################
+#
+#'
+#' Food insecurity experience scale (FIES) related package/s
+#'
+#
+################################################################################
+
+library(RM.weights)
