@@ -187,6 +187,16 @@
       "Hash": "543776ae6848fde2f48ff3816d0628bc",
       "Requirements": []
     },
+    "base64url": {
+      "Package": "base64url",
+      "Version": "1.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0c54cf3a08cc0e550fbd64ad33166143",
+      "Requirements": [
+        "backports"
+      ]
+    },
     "bbw": {
       "Package": "bbw",
       "Version": "0.1.3",
@@ -1425,10 +1435,10 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.15.0",
+      "Version": "0.15.5",
       "Source": "Repository",
       "Repository": "RSPM",
-      "Hash": "36c1a644e5b0ba8050f40f07ea1dae62",
+      "Hash": "6a38294e7d12f5d8e656b08c5bd8ae34",
       "Requirements": []
     },
     "rgdal": {
@@ -1453,10 +1463,10 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.12",
+      "Version": "1.0.5",
       "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "0879f5388fe6e4d56d7ef0b7ccb031e5",
+      "Repository": "CRAN",
+      "Hash": "971c3d698fc06dabdac6bc4bcda72dc4",
       "Requirements": []
     },
     "rmarkdown": {
@@ -1798,12 +1808,13 @@
     },
     "targets": {
       "Package": "targets",
-      "Version": "0.9.0",
+      "Version": "0.13.4",
       "Source": "Repository",
       "Repository": "RSPM",
-      "Hash": "e4868558d1403b84942e30c92434e128",
+      "Hash": "8cb09871aad61a76aa5191b53c7a2bcd",
       "Requirements": [
         "R6",
+        "base64url",
         "callr",
         "cli",
         "codetools",
