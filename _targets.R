@@ -67,7 +67,9 @@ raw_data <- tar_plan(
   baseline_final_dataset_processing = read_text_data(
     file_list = baseline_data_downloads, 
     filename = "final_dataset", widths = 150
-  )
+  ),
+  ## Read raw endline data
+  endline_raw_data = get_endline_data()
 )
 
 
