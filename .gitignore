@@ -2,8 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-#data
-#!data/.gitkeep
-#outputs
-#!outputs/.gitkeep
+data
+!data/.gitkeep
+outputs
+!outputs/.gitkeep
 _targets
