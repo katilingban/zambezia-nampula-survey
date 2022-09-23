@@ -91,10 +91,18 @@ hash_data <- function(x,
 ################################################################################
 #
 #'
-#' Replicate data cleaning/processing workflow
-#'
-#' 
-#'
+#' Process baseline data
 #'
 #
+#
 ################################################################################
+
+process_baseline_data <- function(.data) {
+  .data |>
+    dplyr::mutate(
+      ig1 = recode_var_categorical(ig1),
+      q08 = recode_var_categorical(q08),
+      igs1 = recode_var_categorical(igs1),
+      igs2 = recode_var_categorical(igs2)
+    )
+}

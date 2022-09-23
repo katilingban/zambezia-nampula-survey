@@ -11,14 +11,12 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 # Set build options ------------------------------------------------------------
 
+options(
+  survey.lonely.psu = "adjust"  ## Adjust variance for stratum with single PSU
+)
 
 
 # Groups of targets ------------------------------------------------------------
-
-## Sampling
-spatial_sample <- tar_plan(
-  ##
-)
 
 ## Data downloads
 data_downloads <- tar_plan(
@@ -27,11 +25,25 @@ data_downloads <- tar_plan(
     name = baseline_data_downloads,
     command = download_all_baseline_data(overwrite = TRUE),
     cue = tar_cue("thorough")
+  ),
+  ## Download baseline and endline sampling list
+  tar_target(
+    name = survey_sampling_list_download,
+    command = download_googledrive(
+      filename = "VIGH-UNICEF_EA_Sample_Final_01252019.xlsx",
+      overwrite = TRUE
+    ),
+    cue = tar_cue("thorough")
   )
 )
 
 ## Read raw data
 raw_data <- tar_plan(
+  ## Sampling list for baseline and endline
+  survey_sampling_list = openxlsx::read.xlsx(
+    xlsxFile = survey_sampling_list_download$local_path,
+    sheet = 1
+  ),
   ## Read raw baseline data
   baseline_raw_data_spss = read_spss_data(
     file_list = baseline_data_downloads
@@ -75,13 +87,65 @@ raw_data <- tar_plan(
 
 ## Process data
 processed_data <- tar_plan(
-  ##
+  ## Get baseline sampling weights
+  baseline_sample_weight = calculate_weights(
+    .data = baseline_raw_data_stata,
+    survey_sampling_list
+  ),
+  baseline_data_processed = process_baseline_data(
+    .data = baseline_raw_data_stata
+  ),
+  ## Process baseline data with weights
+  baseline_data_weighted = dplyr::left_join(
+    #x = baseline_raw_data_stata,
+    x = baseline_data_processed,
+    y = baseline_sample_weight |>
+      subset(
+        select = c(
+          ea_id, study_group, 
+          cluster_sample_prob_obs, ind_sample_prob_obs,
+          sample_prob_obs, sample_weight_obs
+        )
+      ),
+    by = c("enum1" = "ea_id")
+  ),
+  ## Set baseline data overall survey design
+  baseline_survey_design = survey::svydesign(
+    ids = ~enum1 + sbjnum,
+    fpc = ~cluster_sample_prob_obs + ind_sample_prob_obs,
+    strata = ~prov + strata,
+    data = baseline_data_weighted,
+    pps = "brewer"
+  ),
+  ## Process baseline data Income and occupation
+  baseline_work_data = process_work_baseline(
+    .data = baseline_data_weighted
+  )
 )
 
 
 ## Analysis
 analysis <- tar_plan(
-  ##
+  baseline_results_total = estimate_total(
+    vars = c("ig1", "q08", "igs1", "igs2"),
+    design = baseline_survey_design
+  ),
+  baseline_results_province = estimate_province(
+    vars = c("ig1", "q08", "igs1", "igs2"),
+    design = baseline_survey_design
+  ),
+  baseline_results_strata = estimate_strata(
+    vars = c("ig1", "q08", "igs1", "igs2"),
+    design = baseline_survey_design
+  ),
+  baseline_results_study_group = estimate_study_group(
+    vars = c("ig1", "q08", "igs1", "igs2"),
+    design = baseline_survey_design
+  ),
+  baseline_results_study_group_province = estimate_study_group_province(
+    vars = c("ig1", "q08", "igs1", "igs2"),
+    design = baseline_survey_design
+  ),
 )
 
 
@@ -106,7 +170,6 @@ set.seed(1977)
 
 # Concatenate targets ----------------------------------------------------------
 list(
-  spatial_sample,
   data_downloads,
   raw_data,
   processed_data,

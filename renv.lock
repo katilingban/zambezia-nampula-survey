@@ -1492,6 +1492,16 @@
         "Rcpp"
       ]
     },
+    "mitools": {
+      "Package": "mitools",
+      "Version": "2.4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "a4b659bd0528226724d55034f11ed7cb",
+      "Requirements": [
+        "DBI"
+      ]
+    },
     "mozambique": {
       "Package": "mozambique",
       "Version": "0.0.0.9000",
@@ -2265,6 +2275,21 @@
         "glue",
         "magrittr",
         "stringi"
+      ]
+    },
+    "survey": {
+      "Package": "survey",
+      "Version": "4.1-1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "8aec2bc6533a6d1e6ef43bbf0c20205a",
+      "Requirements": [
+        "Matrix",
+        "lattice",
+        "minqa",
+        "mitools",
+        "numDeriv",
+        "survival"
       ]
     },
     "survival": {
