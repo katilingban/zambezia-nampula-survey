@@ -37,12 +37,13 @@ estimate_province <- function(vars, design) {
   )
   
   ## Estimate indicators
-  Map(
+  parallel::mcMap(
     f = survey::svymean,
     x = f_vars_list,
     design = design_list,
     na.rm = TRUE,
-    deff = TRUE
+    deff = TRUE,
+    mc.cores = 2
   )
 }
 
@@ -69,12 +70,14 @@ estimate_strata <- function(vars, design) {
   )
   
   ## Estimate indicators
-  Map(
+  parallel::mcMap(
     f = survey::svymean,
     x = f_vars_list,
     design = design_list,
     na.rm = TRUE,
-    deff = TRUE
+    deff = TRUE,
+    mc.cores = 5,
+    mc.preschedule = FALSE
   )
 }
 
@@ -94,12 +97,13 @@ estimate_study_group <- function(vars, design) {
   )
   
   ## Estimate indicators
-  Map(
+  parallel::mcMap(
     f = survey::svymean,
     x = f_vars_list,
     design = design_list,
     na.rm = TRUE,
-    deff = TRUE
+    deff = TRUE,
+    mc.cores = 2
   )
 }
 
@@ -121,11 +125,13 @@ estimate_study_group_province <- function(vars, design) {
   )
   
   ## Estimate indicators
-  Map(
+  parallel::mcMap(
     f = survey::svymean,
     x = f_vars_list,
     design = design_list,
     na.rm = TRUE,
-    deff = TRUE
+    deff = TRUE,
+    mc.cores = 4,
+    mc.preschedule = FALSE
   )
 }

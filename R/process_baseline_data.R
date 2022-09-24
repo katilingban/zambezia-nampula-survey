@@ -100,9 +100,35 @@ hash_data <- function(x,
 process_baseline_data <- function(.data) {
   .data |>
     dplyr::mutate(
-      ig1 = recode_var_categorical(ig1),
-      q08 = recode_var_categorical(q08),
-      igs1 = recode_var_categorical(igs1),
-      igs2 = recode_var_categorical(igs2)
+      ## demographics - head of household (respondent)
+      respondent_sex = recode_var_categorical(pg),
+      respondent_age = recode_age_respondent(
+        q01a, q01b_date, vend_date
+      ),
+      respondent_age_group = recode_age_group_respondent(
+        respondent_age, q01a
+      ),
+      respondent_language = recode_var_categorical(idiomaq),
+      respondent_civil_status = recode_var_categorical(q01e),
+      respondent_education_years = recode_education_years(q01d),
+      respondent_education_group = recode_education_group(
+        respondent_education_years, q01d
+      ),
+      respondent_occupation = recode_var_categorical(igs1),
+      ## demographics - children
+      respondent_child_relationship = recode_var_categorical(pa),
+      child_sex = recode_var_categorical(pg),
+      child_age = as.integer(pb),
+      child_age_group = recode_age_group_child(child_age, pb),
+      child_currently_breastfeeding = recode_breastfeeding_child(eb1),
+      child_parent_age_at_birth = recode_age_parent_at_birth(pf),
+      child_location_of_birth = recode_var_categorical(ph),
+      child_caesarean_birth = ifelse(pl == 2, 0, 1),
+      child_complications_at_birth = ifelse(pk == 2, 0, 1),
+      child_low_birth_weight = ifelse(pi == 2, 0, 1),
+      source_of_income = recode_var_categorical(ig1),
+      monthly_income = recode_var_categorical(q08),
+      partner_occupation = recode_var_categorical(igs2),
+      .keep = "unused"
     )
 }
