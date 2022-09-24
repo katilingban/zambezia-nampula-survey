@@ -77,7 +77,7 @@ estimate_strata <- function(vars, design) {
     design = design_list,
     na.rm = TRUE,
     deff = TRUE,
-    mc.cores = 5
+    mc.cores = 2
   ) |>
     (\(x)
       {
@@ -141,7 +141,7 @@ estimate_study_group_province <- function(vars, design) {
     design = design_list,
     na.rm = TRUE,
     deff = TRUE,
-    mc.cores = 4
+    mc.cores = 2
   ) |>
     (\(x) 
       { 

@@ -140,10 +140,6 @@ processed_data <- tar_plan(
     data = baseline_data_weighted |>
       get_respondent_data(),
     pps = "brewer"
-  ),
-  ## Process baseline data Income and occupation
-  baseline_work_data = process_work_baseline(
-    .data = baseline_data_weighted
   )
 )
 
