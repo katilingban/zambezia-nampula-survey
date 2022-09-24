@@ -110,17 +110,32 @@ processed_data <- tar_plan(
     by = c("enum1" = "ea_id")
   ),
   ## Set baseline data survey design for children data
+  # baseline_child_survey_design = survey::svydesign(
+  #   ids = ~enum1 + sbjnum,
+  #   fpc = ~cluster_sample_prob_obs + ind_sample_prob_obs,
+  #   strata = ~prov + strata,
+  #   data = baseline_data_weighted,
+  #   pps = "brewer"
+  # ),
   baseline_child_survey_design = survey::svydesign(
-    ids = ~enum1 + sbjnum,
-    fpc = ~cluster_sample_prob_obs + ind_sample_prob_obs,
+    ids = ~enum1,
+    fpc = ~sample_prob_obs,
     strata = ~prov + strata,
     data = baseline_data_weighted,
     pps = "brewer"
   ),
   ## Set baseline data survey design for hh/respondent data
+  # baseline_hh_survey_design = survey::svydesign(
+  #   ids = ~enum1 + sbjnum,
+  #   fpc = ~cluster_sample_prob_obs + ind_sample_prob_obs,
+  #   strata = ~prov + strata,
+  #   data = baseline_data_weighted |>
+  #     get_respondent_data(),
+  #   pps = "brewer"
+  # ),
   baseline_hh_survey_design = survey::svydesign(
-    ids = ~enum1 + sbjnum,
-    fpc = ~cluster_sample_prob_obs + ind_sample_prob_obs,
+    ids = ~enum1,
+    fpc = ~sample_prob_obs,
     strata = ~prov + strata,
     data = baseline_data_weighted |>
       get_respondent_data(),
@@ -135,41 +150,78 @@ processed_data <- tar_plan(
 
 ## Analysis
 analysis <- tar_plan(
-  baseline_demographics_respondent = estimate_tota(
-    vars = c("respondent_sex", "responden_age",
+  ## Baseline results - demographics respondent
+  baseline_demographics_respondent = estimate_total(
+    vars = c("respondent_sex", "respondent_age",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
   baseline_demographics_respondent_province = estimate_province(
-    vars = c("respondent_sex", "responden_age",
+    vars = c("respondent_sex", "respondent_age",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
   baseline_demographics_respondent_strata = estimate_strata(
-    vars = c("respondent_sex", "responden_age",
+    vars = c("respondent_sex", "respondent_age",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
-  baseline_demographics_study_group = estimate_study_group(
-    vars = c("respondent_sex", "responden_age",
+  baseline_demographics_respondent_study_group = estimate_study_group(
+    vars = c("respondent_sex", "respondent_age",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
-  baseline_demographics_study_group_province = estimate_study_group_province(
-    vars = c("respondent_sex", "responden_age",
+  baseline_demographics_respondent_study_group_province = estimate_study_group_province(
+    vars = c("respondent_sex", "respondent_age",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
-  )
+  )#,
+  ## Baseline results - demographics children
+  # baseline_demographics_respondent = estimate_tota(
+  #   vars = c("respondent_sex", "responden_age",
+  #            "respondent_age_group", "respondent_language", 
+  #            "respondent_civil_status", "respondent_education_years",
+  #            "respondent_education_group", "respondent_occupation"),
+  #   design = baseline_hh_survey_design
+  # ),
+  # baseline_demographics_respondent_province = estimate_province(
+  #   vars = c("respondent_sex", "responden_age",
+  #            "respondent_age_group", "respondent_language", 
+  #            "respondent_civil_status", "respondent_education_years",
+  #            "respondent_education_group", "respondent_occupation"),
+  #   design = baseline_hh_survey_design
+  # ),
+  # baseline_demographics_respondent_strata = estimate_strata(
+  #   vars = c("respondent_sex", "responden_age",
+  #            "respondent_age_group", "respondent_language", 
+  #            "respondent_civil_status", "respondent_education_years",
+  #            "respondent_education_group", "respondent_occupation"),
+  #   design = baseline_hh_survey_design
+  # ),
+  # baseline_demographics_study_group = estimate_study_group(
+  #   vars = c("respondent_sex", "responden_age",
+  #            "respondent_age_group", "respondent_language", 
+  #            "respondent_civil_status", "respondent_education_years",
+  #            "respondent_education_group", "respondent_occupation"),
+  #   design = baseline_hh_survey_design
+  # ),
+  # baseline_demographics_study_group_province = estimate_study_group_province(
+  #   vars = c("respondent_sex", "responden_age",
+  #            "respondent_age_group", "respondent_language", 
+  #            "respondent_civil_status", "respondent_education_years",
+  #            "respondent_education_group", "respondent_occupation"),
+  #   design = baseline_hh_survey_design
+  # )
 )
 
 

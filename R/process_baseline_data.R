@@ -101,7 +101,7 @@ process_baseline_data <- function(.data) {
   .data |>
     dplyr::mutate(
       ## demographics - head of household (respondent)
-      respondent_sex = recode_var_categorical(pg),
+      respondent_sex = recode_var_categorical(rsex),
       respondent_age = recode_age_respondent(
         q01a, q01b_date, vend_date
       ),

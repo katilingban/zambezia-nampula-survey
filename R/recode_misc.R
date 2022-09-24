@@ -287,8 +287,8 @@ recode_age_group_respondent <- function(age, reported_age) {
   )
   
   ifelse(
-    is.na(x) & haven::as_factor(reported_age) %in% c("NS", "NR"), 
-    "No response", levels(x)
+    is.na(x) & haven::as_factor(reported_age) %in% c("NS", "NR"),
+    "No response", as.character(x)
   ) |>
     factor(levels = c(levels(x), "No response"))
 }
@@ -302,13 +302,13 @@ recode_education_group <- function(education_years, reported_years) {
   x <- cut(
     x = education_years,
     breaks = c(0, 6, 12, Inf),
-    labels = c("0 to 5 years", "6 to 12 years", "12 or more years"),
+    labels = c("0 to 5 years", "6 to 11 years", "12 or more years"),
     include.lowest = TRUE, right = FALSE
   )
   
   ifelse(
-    is.na(x) & haven::as_factor(reported_years) %in% c("NS", "NR"), 
-    "No response", levels(x)
+    is.na(x) & haven::as_factor(reported_years) %in% c("NS", "NR"),
+    "No response", as.character(x)
   ) |>
     factor(levels = c(levels(x), "No response"))
 }
@@ -335,8 +335,8 @@ recode_age_group_child <- function(age, reported_age) {
   )
   
   ifelse(
-    is.na(x) & haven::as_factor(reported_age) %in% c("NS", "NR"), 
-    "No response", levels(x)
+    is.na(x) & haven::as_factor(reported_age) %in% c("NS", "NR"),
+    "No response", as.character(x)
   ) |>
     factor(levels = c(levels(x), "No response"))
 }
@@ -364,8 +364,8 @@ recode_age_parent_at_birth <- function(age) {
   )
   
   ifelse(
-    is.na(x) & haven::as_factor(age) %in% c("NS", "NR"), 
-    "No response", levels(x)
+    is.na(x) & haven::as_factor(age) %in% c("NS", "NR"),
+    "No response", as.character(x)
   ) |>
     factor(levels = c(levels(x), "No response"))
 }

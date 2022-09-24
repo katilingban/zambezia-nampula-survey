@@ -82,8 +82,8 @@ calculate_weights <- function(.data, survey_sampling_list,
     dplyr::mutate(
       study_group = study_group,
       total_pop = sum(cluster_pop),
-      #cluster_sample_prob_obs = (cluster_pop * n_cluster) / total_pop,
-      cluster_sample_prob_obs = cluster_pop / total_pop,
+      cluster_sample_prob_obs = (cluster_pop * n_cluster) / total_pop,
+      #cluster_sample_prob_obs = cluster_pop / total_pop,
       ind_sample_prob_obs = cluster_size / cluster_pop,
       sample_prob_obs = cluster_sample_prob_obs * ind_sample_prob_obs,
       sample_weight_obs = 1 / sample_prob_obs
