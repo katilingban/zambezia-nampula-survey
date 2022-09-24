@@ -102,11 +102,11 @@ process_baseline_data <- function(.data) {
     dplyr::mutate(
       ## demographics - head of household (respondent)
       respondent_sex = recode_var_categorical(rsex),
-      respondent_age = recode_age_respondent(
+      respondent_age_years = recode_age_respondent(
         q01a, q01b_date, vend_date
       ),
       respondent_age_group = recode_age_group_respondent(
-        respondent_age, q01a
+        respondent_age_years, q01a
       ),
       respondent_language = recode_var_categorical(idiomaq),
       respondent_civil_status = recode_var_categorical(q01e),
@@ -118,8 +118,8 @@ process_baseline_data <- function(.data) {
       ## demographics - children
       respondent_child_relationship = recode_var_categorical(pa),
       child_sex = recode_var_categorical(pg),
-      child_age = as.integer(pb),
-      child_age_group = recode_age_group_child(child_age, pb),
+      child_age_years = as.integer(pb),
+      child_age_group = recode_age_group_child(child_age_years, pb),
       child_currently_breastfeeding = recode_breastfeeding_child(eb1),
       child_parent_age_at_birth = recode_age_parent_at_birth(pf),
       child_location_of_birth = recode_var_categorical(ph),

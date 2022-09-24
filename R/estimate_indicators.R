@@ -44,7 +44,8 @@ estimate_province <- function(vars, design) {
     na.rm = TRUE,
     deff = TRUE,
     mc.cores = 2
-  )
+  ) |>
+    (\(x) { names(x) <- c("Zambezia", "Nampula"); x } )()
 }
 
 ## Estimate by strata ----------------------------------------------------------
@@ -76,9 +77,17 @@ estimate_strata <- function(vars, design) {
     design = design_list,
     na.rm = TRUE,
     deff = TRUE,
-    mc.cores = 5,
-    mc.preschedule = FALSE
-  )
+    mc.cores = 5
+  ) |>
+    (\(x)
+      {
+        names(x) <- c(
+          "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+          "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+        )
+        x
+      } 
+    )()
 }
 
 ## Estimate by study group (total) ---------------------------------------------
@@ -104,7 +113,8 @@ estimate_study_group <- function(vars, design) {
     na.rm = TRUE,
     deff = TRUE,
     mc.cores = 2
-  )
+  ) |>
+    (\(x) { names(x) <- c("Control", "Intervention"); x })()
 }
 
 ## Estimate by study group by province -----------------------------------------
@@ -131,7 +141,17 @@ estimate_study_group_province <- function(vars, design) {
     design = design_list,
     na.rm = TRUE,
     deff = TRUE,
-    mc.cores = 4,
-    mc.preschedule = FALSE
-  )
+    mc.cores = 4
+  ) |>
+    (\(x) 
+      { 
+        names(x) <- lapply(
+          X = c("Zambezia", "Nampula"),
+          FUN = paste,
+          c("Control", "Intervention")
+        ) |>
+          unlist()
+        x
+      }
+    )()
 }

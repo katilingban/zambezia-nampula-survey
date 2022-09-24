@@ -152,82 +152,145 @@ processed_data <- tar_plan(
 analysis <- tar_plan(
   ## Baseline results - demographics respondent
   baseline_demographics_respondent = estimate_total(
-    vars = c("respondent_sex", "respondent_age",
+    vars = c("respondent_sex", "respondent_age_years",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
   baseline_demographics_respondent_province = estimate_province(
-    vars = c("respondent_sex", "respondent_age",
+    vars = c("respondent_sex", "respondent_age_years",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
   baseline_demographics_respondent_strata = estimate_strata(
-    vars = c("respondent_sex", "respondent_age",
+    vars = c("respondent_sex", "respondent_age_years",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
   baseline_demographics_respondent_study_group = estimate_study_group(
-    vars = c("respondent_sex", "respondent_age",
+    vars = c("respondent_sex", "respondent_age_years",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
   baseline_demographics_respondent_study_group_province = estimate_study_group_province(
-    vars = c("respondent_sex", "respondent_age",
+    vars = c("respondent_sex", "respondent_age_years",
              "respondent_age_group", "respondent_language", 
              "respondent_civil_status", "respondent_education_years",
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
-  )#,
+  ),
   ## Baseline results - demographics children
-  # baseline_demographics_respondent = estimate_tota(
-  #   vars = c("respondent_sex", "responden_age",
-  #            "respondent_age_group", "respondent_language", 
-  #            "respondent_civil_status", "respondent_education_years",
-  #            "respondent_education_group", "respondent_occupation"),
-  #   design = baseline_hh_survey_design
-  # ),
-  # baseline_demographics_respondent_province = estimate_province(
-  #   vars = c("respondent_sex", "responden_age",
-  #            "respondent_age_group", "respondent_language", 
-  #            "respondent_civil_status", "respondent_education_years",
-  #            "respondent_education_group", "respondent_occupation"),
-  #   design = baseline_hh_survey_design
-  # ),
-  # baseline_demographics_respondent_strata = estimate_strata(
-  #   vars = c("respondent_sex", "responden_age",
-  #            "respondent_age_group", "respondent_language", 
-  #            "respondent_civil_status", "respondent_education_years",
-  #            "respondent_education_group", "respondent_occupation"),
-  #   design = baseline_hh_survey_design
-  # ),
-  # baseline_demographics_study_group = estimate_study_group(
-  #   vars = c("respondent_sex", "responden_age",
-  #            "respondent_age_group", "respondent_language", 
-  #            "respondent_civil_status", "respondent_education_years",
-  #            "respondent_education_group", "respondent_occupation"),
-  #   design = baseline_hh_survey_design
-  # ),
-  # baseline_demographics_study_group_province = estimate_study_group_province(
-  #   vars = c("respondent_sex", "responden_age",
-  #            "respondent_age_group", "respondent_language", 
-  #            "respondent_civil_status", "respondent_education_years",
-  #            "respondent_education_group", "respondent_occupation"),
-  #   design = baseline_hh_survey_design
-  # )
+  baseline_demographics_child = estimate_total(
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = baseline_child_survey_design
+  ),
+  baseline_demographics_child_province = estimate_province(
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = baseline_child_survey_design
+  ),
+  baseline_demographics_child_strata = estimate_strata(
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = baseline_child_survey_design
+  ),
+  baseline_demographics_child_study_group = estimate_study_group(
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = baseline_child_survey_design
+  ),
+  baseline_demographics_child_study_group_province = estimate_study_group_province(
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = baseline_child_survey_design
+  )
 )
 
 
 ## Outputs
 outputs <- tar_plan(
-  ##
+  ## Baseline demographics table - respondent
+  baseline_demographics_respondent_table = create_province_table(
+    baseline_demographics_respondent_province,
+    baseline_demographics_respondent,
+    vars = c("respondent_sex", "respondent_age_years", "respondent_age_group", 
+             "respondent_language", "respondent_civil_status", 
+             "respondent_education_years", "respondent_education_group", 
+             "respondent_occupation"),
+    report = FALSE
+  ),
+  baseline_demographics_respondent_table_report = create_province_table(
+    baseline_demographics_respondent_province,
+    baseline_demographics_respondent,
+    vars = c("respondent_sex", "respondent_age_years", "respondent_age_group", 
+             "respondent_language", "respondent_civil_status", 
+             "respondent_education_years", "respondent_education_group", 
+             "respondent_occupation"),
+    report = TRUE, format = "wide"
+  ),
+  baseline_demographics_respondent_strata_table = create_strata_table(
+    baseline_demographics_respondent_strata,
+    baseline_demographics_respondent,
+    vars = c("respondent_sex", "respondent_age_years", "respondent_age_group", 
+             "respondent_language", "respondent_civil_status", 
+             "respondent_education_years", "respondent_education_group", 
+             "respondent_occupation"),
+    report = FALSE
+  ),
+  ## Baseline demographics table - child
+  baseline_demographics_child_table = create_province_table(
+    baseline_demographics_child_province,
+    baseline_demographics_child,
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    report = FALSE
+  ),
+  baseline_demographics_child_table_report = create_province_table(
+    baseline_demographics_child_province,
+    baseline_demographics_child,
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    report = TRUE, format = "wide"
+  ),
+  baseline_demographics_child_strata_table = create_strata_table(
+    baseline_demographics_child_strata,
+    baseline_demographics_child,
+    vars = c("child_sex", "child_age_years",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    report = FALSE
+  )
 )
 
 
