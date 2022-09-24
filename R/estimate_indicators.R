@@ -92,8 +92,8 @@ estimate_study_group <- function(vars, design) {
   
   ## Make list of designs
   design_list <- list(
-    subset(design, subset = study_group == "control"),
-    subset(design, subset = study_group == "intervention")
+    subset(design, subset = study_group == "COM"),
+    subset(design, subset = study_group == "INT")
   )
   
   ## Estimate indicators

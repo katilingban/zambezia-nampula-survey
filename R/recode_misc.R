@@ -360,7 +360,8 @@ recode_age_parent_at_birth <- function(age) {
     breaks = c(0, 15, 20, 25, 30, 35, 40, 45, 50, Inf),
     labels = c("less than 15 years", "15 to 19 years", "20 to 24 years",
                "25 to 29 years", "30 to 34 years", "35 to 39 years",
-               "40 to 44 years", "45 to 49 years", "50 years or more")
+               "40 to 44 years", "45 to 49 years", "50 years or more"),
+    include.lowest = TRUE, right = FALSE
   )
   
   ifelse(
