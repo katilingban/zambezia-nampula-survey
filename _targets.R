@@ -469,6 +469,73 @@ outputs_baseline <- tar_plan(
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
     report = FALSE
+  ),
+  ### Baseline household income table
+  baseline_hh_income_table = create_province_table(
+    baseline_hh_income_province,
+    baseline_hh_income,
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_income_table_report = create_province_table(
+    baseline_hh_income_province,
+    baseline_hh_income,
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_income_strata_table = create_strata_table(
+    baseline_hh_income_strata,
+    baseline_hh_income,
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_income_study_group_table = create_study_group_table(
+    baseline_hh_income_study_group,
+    baseline_hh_income,
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_income_study_group_table_report = create_study_group_table(
+    baseline_hh_income_study_group,
+    baseline_hh_income,
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_income_study_group_province_table = create_study_group_province_table(
+    baseline_hh_income_study_group_province,
+    baseline_hh_income_study_group,
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    report = FALSE
   )
 )
 
