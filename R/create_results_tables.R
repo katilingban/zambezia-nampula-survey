@@ -217,17 +217,20 @@ format_results_table_report <- function(results_table) {
     (\(x)
      {
        x[["estimate"]] <- ifelse(
-         x[["estimate"]] < 1, 
+         #x[["estimate"]] < 1, 
+         x[["category"]] != "Mean",
          scales::percent(x[["estimate"]], accuracy = 0.01, suffix = "%"),
          scales::number(x[["estimate"]], accuracy = 0.01)
        )
        x[["lcl"]] <- ifelse(
-         x[["lcl"]] < 1, 
+         #x[["lcl"]] < 1,
+         x[["category"]] != "Mean",
          scales::percent(x[["lcl"]], accuracy = 0.01, suffix = "%"),
          scales::number(x[["lcl"]], accuracy = 0.01)
        )
        x[["ucl"]] <- ifelse(
-         x[["ucl"]] < 1, 
+         #x[["ucl"]] < 1, 
+         x[["category"]] != "Mean",
          scales::percent(x[["ucl"]], accuracy = 0.01, suffix = "%"),
          scales::number(x[["ucl"]], accuracy = 0.01)
        )
