@@ -6,6 +6,8 @@
 #
 ################################################################################
 
+## Create by province and overall results table --------------------------------
+
 create_province_table <- function(results_province, 
                                   results_total,
                                   vars,
@@ -14,81 +16,32 @@ create_province_table <- function(results_province,
   format <- match.arg(format)
   
   results_table <- rbind(
-    data.frame(
-      get_vars_info(x = names(results_province[[1]]), vars = vars),
-      unit = "Zambezia",
-      estimate = coef(results_province[[1]]),
-      confint(results_province[[1]])
-    ) |>
-      (\(x) { names(x)[5:6] <- c("lcl", "ucl"); x })(),
-    data.frame(
-      get_vars_info(x = names(results_province[[2]]), vars = vars),
-      unit = "Nampula",
-      estimate = coef(results_province[[2]]),
-      confint(results_province[[2]])
-    ) |>
-      (\(x) { names(x)[5:6] <- c("lcl", "ucl"); x })(),
-    data.frame(
-      get_vars_info(x = names(results_total), vars = vars),
-      unit = "Overall",
-      estimate = coef(results_total),
-      confint(results_total)
-    ) |>
-      (\(x) { names(x)[5:6] <- c("lcl", "ucl"); x })()
+    create_results_tables(
+      x = results_province,
+      vars = vars,
+      strata = names(results_province)
+    ),
+    create_results_table(
+      x = results_total,
+      vars = vars,
+      strata = "Overall"
+    )
   )
   
   row.names(results_table) <- NULL
   
   if (report) {
-    results_table <- results_table |>
-      (\(x)
-       {
-         x[["estimate"]] <- ifelse(
-           x[["estimate"]] < 1, 
-           scales::percent(x[["estimate"]], accuracy = 0.01, suffix = "%"),
-           scales::number(x[["estimate"]], accuracy = 0.01)
-          )
-         x[["lcl"]] <- ifelse(
-           x[["lcl"]] < 1, 
-           scales::percent(x[["lcl"]], accuracy = 0.01, suffix = "%"),
-           scales::number(x[["lcl"]], accuracy = 0.01)
-         )
-         x[["ucl"]] <- ifelse(
-           x[["ucl"]] < 1, 
-           scales::percent(x[["ucl"]], accuracy = 0.01, suffix = "%"),
-           scales::number(x[["ucl"]], accuracy = 0.01)
-         )
-         x
-      }
-      )()
+    results_table <- format_results_table_report(results_table)
   }
   
   if (format == "wide") {
-    results_table <- data.frame(
-      results_table |>
-        subset(unit == "Zambezia", select = -unit),
-      results_table |>
-        subset(unit == "Nampula", c(estimate, lcl, ucl)),
-      results_table |>
-        subset(unit == "Overall", c(estimate, lcl, ucl))
-    ) |> 
-      (\(x)
-        {
-          names(x) <- c(
-            "variable", "category",
-            lapply(
-              X = c("zambezia", "nampula", "overall"),
-              FUN = paste,
-              c("estimate", "lcl", "ucl"),
-              sep = "_"
-            ) |>
-              unlist()
-          )
-          x
-        }
-      )()
+    results_table <- pivot_results_table(results_table)
   }
+  
+  results_table
 }
+
+## Create by strata and overall results table ----------------------------------
 
 create_strata_table <- function(results_strata,
                                 results_total,
@@ -113,37 +66,79 @@ create_strata_table <- function(results_strata,
   row.names(results_table) <- NULL
   
   if (report) {
-    results_table <- results_table |>
-      (\(x)
-       {
-         x[["estimate"]] <- ifelse(
-           x[["estimate"]] < 1, 
-           scales::percent(x[["estimate"]], accuracy = 0.01, suffix = "%"),
-           scales::number(x[["estimate"]], accuracy = 0.01)
-         )
-         x[["lcl"]] <- ifelse(
-           x[["lcl"]] < 1, 
-           scales::percent(x[["lcl"]], accuracy = 0.01, suffix = "%"),
-           scales::number(x[["lcl"]], accuracy = 0.01)
-         )
-         x[["ucl"]] <- ifelse(
-           x[["ucl"]] < 1, 
-           scales::percent(x[["ucl"]], accuracy = 0.01, suffix = "%"),
-           scales::number(x[["ucl"]], accuracy = 0.01)
-         )
-         x
-      }
-      )()
+    results_table <- format_results_table_report(results_table)
   }
   
   results_table
 }
 
-create_study_group_table <- function() {
+## Create by study group and overall results table -----------------------------
+
+create_study_group_table <- function(results_study_group,
+                                     results_total,
+                                     vars,
+                                     report = FALSE,
+                                     format = c("long", "wide")) {
+  format <- match.arg(format)
   
+  results_table <- rbind(
+    create_results_tables(
+      x = results_study_group,
+      vars = vars,
+      strata = names(results_study_group)
+    ),
+    create_results_table(
+      x = results_total,
+      vars = vars,
+      strata = "Overall"
+    )
+  )
+  
+  row.names(results_table) <- NULL
+  
+  if (report) {
+    results_table <- format_results_table_report(results_table)
+  }
+  
+  if (format == "wide") {
+    results_table <- pivot_results_table(results_table)
+  }
+  
+  results_table
 }
 
+## Create by study group per province table ------------------------------------
 
+create_study_group_province_table <- function(results_study_group_province,
+                                              results_study_group,
+                                              vars,
+                                              report = FALSE,
+                                              format = c("long", "wide")) {
+  format <- match.arg(format)
+  
+  results_table <- rbind(
+    create_results_tables(
+      x = results_study_group_province,
+      vars = vars,
+      strata = names(results_study_group_province)
+    ),
+    create_results_tables(
+      x = results_study_group,
+      vars = vars,
+      strata = names(results_study_group)
+    )
+  )
+  
+  row.names(results_table) <- NULL
+  
+  if (report) {
+    results_table <- format_results_table(results_table)
+  }
+  
+  results_table
+}
+
+## Get variable identifiers ----------------------------------------------------
 
 get_vars_info <- function(x, vars) {
   variable <- stringr::str_extract_all(
@@ -169,14 +164,37 @@ get_vars_info <- function(x, vars) {
 }
 
 
-create_results_table <- function(x, vars, strata) {
-  data.frame(
-    get_vars_info(x = names(x), vars = vars),
-    unit = strata,
+# create_results_table <- function(x, vars, strata, 
+#                                  sep = NULL, group_name = NULL) {
+  # if (!is.null(sep)) {
+  #   strata <- stringr::str_split(
+  #     string = strata, pattern = sep, simplify = TRUE
+  #   ) |>
+  #     data.frame()
+  #   
+  #   if (!is.null(group_name)) {
+  #     names(strata) <- group_name
+  #   } else {
+  #     names(strata) <- paste0("unit", seq_len(ncol(strata)))
+  #   }
+  # }
+
+## Create results table --------------------------------------------------------
+
+create_results_table <- function(x, vars, strata) {  
+  results_table <- data.frame(
+    strata = strata,
     estimate = coef(x),
     confint(x)
   ) |>
-    (\(x) { names(x)[5:6] <- c("lcl", "ucl"); x })()
+    (\(x) { names(x)[3:4] <- c("lcl", "ucl"); x })()
+  
+  results_table <- data.frame(
+    get_vars_info(x = row.names(results_table), vars = vars),
+    results_table
+  )
+  
+  results_table
 }
 
 create_results_tables <- function(x, vars, strata) {
@@ -190,4 +208,60 @@ create_results_tables <- function(x, vars, strata) {
     strata = strata
   ) |>
     dplyr::bind_rows()
+}
+
+## Format results table for reports --------------------------------------------
+
+format_results_table_report <- function(results_table) {
+  results_table |>
+    (\(x)
+     {
+       x[["estimate"]] <- ifelse(
+         x[["estimate"]] < 1, 
+         scales::percent(x[["estimate"]], accuracy = 0.01, suffix = "%"),
+         scales::number(x[["estimate"]], accuracy = 0.01)
+       )
+       x[["lcl"]] <- ifelse(
+         x[["lcl"]] < 1, 
+         scales::percent(x[["lcl"]], accuracy = 0.01, suffix = "%"),
+         scales::number(x[["lcl"]], accuracy = 0.01)
+       )
+       x[["ucl"]] <- ifelse(
+         x[["ucl"]] < 1, 
+         scales::percent(x[["ucl"]], accuracy = 0.01, suffix = "%"),
+         scales::number(x[["ucl"]], accuracy = 0.01)
+       )
+       x
+    }
+    )()
+}
+
+## Pivot results table for reports ---------------------------------------------
+
+pivot_results_table <- function(results_table) {
+  type <- unique(results_table[["strata"]]) 
+  
+  data.frame(
+    results_table |>
+      subset(strata == type[1], select = -strata),
+    results_table |>
+      subset(strata == type[2], c(estimate, lcl, ucl)),
+    results_table |>
+      subset(strata == type[3], c(estimate, lcl, ucl))
+  ) |> 
+    (\(x)
+     {
+       names(x) <- c(
+         "variable", "category",
+         lapply(
+           X = tolower(type),
+           FUN = paste,
+           c("estimate", "lcl", "ucl"),
+           sep = "_"
+         ) |>
+           unlist()
+       )
+       x
+    }
+    )()
 }
