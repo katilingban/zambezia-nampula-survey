@@ -183,3 +183,29 @@ recode_age_group_spouse <- function(age, reported_age) {
   ) |>
     factor(levels = c(levels(x), "No response"))
 }
+
+
+recode_time_in_location <- function(time) {
+  as.integer(time) |>
+    (\(x) ifelse(x %in% c(888886:888887), NA, x))()
+}
+
+
+recode_time_in_location_group <- function(time, reported_time) {
+  x <- cut(
+    x = time,
+    breaks = c(0, 1, 6, 12, 24, 36, 48, 60, 72, 84, 96, 108, 121, Inf),
+    labels = c("less than 1 month", "1 to 5 months", "6 to 11 months", 
+               "12 to 23 months", "24 to 35 months", "36 to 47 months", 
+               "48 to 59 months", "60 to 71 months", "72 to 83 monhs", 
+               "84 to 95 months", "96 to 107 months", "108 to 120 months",
+               "more than 10 years"),
+    include.lowest = TRUE, right = FALSE
+  )
+  
+  ifelse(
+    is.na(x) & haven::as_factor(reported_time) %in% c("888886", "888887"),
+    "No response", as.character(x)
+  ) |>
+    factor(levels = c(levels(x), "No response"))
+}
