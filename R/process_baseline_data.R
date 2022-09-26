@@ -147,6 +147,21 @@ dplyr::mutate(
   sufficiency_of_family_resource = recode_var_categorical(ig3),
   household_income_against_expenses = recode_var_categorical(ig4),
   ## household structure
+  home_ownership_own = recode_yes_no(as.integer(sdh5)),
+  home_ownership_rent = recode_yes_no(as.integer(sdh6)),
+  home_ownership_loan = recode_yes_no(as.integer(sdh7)),
+  number_of_rooms_in_home = haven::as_factor(sdh3) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  number_of_bedrooms_in_home = haven::as_factor(sdh3) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  roofing_material = recode_var_categorical(sdh1) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  floor_material = recode_var_categorical(sdh2) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  time_living_in_location_in_months = recode_time_in_location(q03),
+  time_living_in_location_group = recode_time_in_location_group(
+    time_living_in_location_in_months, q03
+  ),
   ## household amenities
   ## mode of daily travel
   ## household decision making

@@ -299,6 +299,47 @@ analysis_baseline <- tar_plan(
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
     design = baseline_hh_survey_design
+  ),
+  ## Baseline household structure
+  baseline_hh_structure = estimate_total(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_structure_province = estimate_province(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_structure_strata = estimate_strata(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_structure_study_group = estimate_study_group(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_structure_study_group_province = estimate_study_group_province(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -534,6 +575,67 @@ outputs_baseline <- tar_plan(
       "pregnant_women_living_in_household", "monthly_household_income",
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    report = FALSE
+  ),
+  ### Baseline household structure table
+  baseline_hh_structure_table = create_province_table(
+    baseline_hh_structure_province,
+    baseline_hh_structure,
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_structure_table_report = create_province_table(
+    baseline_hh_structure_province,
+    baseline_hh_structure,
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_structure_strata_table = create_strata_table(
+    baseline_hh_structure_strata,
+    baseline_hh_structure,
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_structure_study_group_table = create_study_group_table(
+    baseline_hh_structure_study_group,
+    baseline_hh_structure,
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_structure_study_group_table_report = create_study_group_table(
+    baseline_hh_structure_study_group,
+    baseline_hh_structure,
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_structure_study_group_province_table = create_study_group_province_table(
+    baseline_hh_structure_study_group_province,
+    baseline_hh_structure_study_group,
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
+      "time_living_in_location_in_months", "time_living_in_location_group"
     ),
     report = FALSE
   )
