@@ -528,6 +528,47 @@ analysis_baseline <- tar_plan(
       "healthcare_for_child"
     ),
     design = baseline_hh_survey_design
+  ),
+  ## Baseline results - household membership in community groups
+  baseline_hh_groups = estimate_total(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_groups_province = estimate_province(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_groups_strata = estimate_strata(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_groups_study_group = estimate_study_group(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_groups_study_group_province = estimate_study_group_province(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -1085,6 +1126,67 @@ outputs_baseline <- tar_plan(
       "family_planning", "agricultural_tasks", "household_finances",
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
+    ),
+    report = FALSE
+  ),
+  ### Baseline household community group membership table
+  basline_hh_groups_province_table = create_province_table(
+    baseline_hh_groups_province,
+    baseline_hh_groups,
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_groups_province_table_report = create_province_table(
+    baseline_hh_groups_province,
+    baseline_hh_groups,
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_groups_strata_table = create_strata_table(
+    baseline_hh_groups_strata,
+    baseline_hh_groups,
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_groups_study_group_table = create_study_group_table(
+    baseline_hh_groups_study_group,
+    baseline_hh_groups,
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    report =  FALSE
+  ),
+  baseline_hh_groups_study_group_table_report = create_study_group_table(
+    baseline_hh_groups_study_group,
+    baseline_hh_groups,
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_groups_study_group_province_table = create_study_group_province_table(
+    baseline_hh_groups_study_group_province,
+    baseline_hh_groups_study_group,
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "presentation_facilitator", "information_application",
+      "health_tasks_participation"
     ),
     report = FALSE
   )

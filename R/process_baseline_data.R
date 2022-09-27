@@ -235,7 +235,29 @@ dplyr::mutate(
   healthcare_for_child = recode_var_categorical(ge10) |>
     (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
   ## community groups participation
-  
+  group_membership = recode_var_categorical(q05) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
+    (\(x) ifelse(x == "Sim. Especifique", q05_spec, x))(),
+  presentation_participation = recode_var_categorical(q06) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
+    (\(x) ifelse(x == "Sim. Conteúdo", q06_spec, x))(),
+  presentation_facilitator = recode_var_categorical(q06a) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
+    (\(x) ifelse(x == "ONG (especifique)", q06a_spec, x))(),
+  information_application = recode_var_categorical(q06b) |>
+    (\(x)
+      {
+        ifelse(
+          x %in% c("NS", "NR"), "No response", 
+          ifelse(
+            x == "NSA", "Did not participate in presentations", x
+          )
+        )
+      }
+    )(),
+  health_tasks_participation = recode_var_categorical(q07) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
+    (\(x) ifelse(x == "Sim. Especifique", q07_spec, x))(),
   
   
   .keep = "unused"
