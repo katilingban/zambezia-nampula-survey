@@ -209,3 +209,23 @@ recode_time_in_location_group <- function(time, reported_time) {
   ) |>
     factor(levels = c(levels(x), "No response"))
 }
+
+
+recode_group_type <- function(group, group_name) {
+  ifelse(
+    group == 2, "Not a member of any group",
+    ifelse(
+      group %in% c("NS", "NR", "NSA"), "No response", group_name
+    )
+  )
+}
+
+
+recode_presentation_type <- function(presentation, presentation_name) {
+  ifelse(
+    presentation == 2, "Not a member of any group",
+    ifelse(
+      presentation %in% c("NS", "NR", "NSA"), "No response", presentation_name
+    )
+  )
+}
