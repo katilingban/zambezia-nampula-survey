@@ -431,6 +431,57 @@ analysis_baseline <- tar_plan(
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
+  ),
+  ### Baseline results - mode of daily travel
+  baseline_hh_travel = estimate_total(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_travel_province = estimate_province(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_travel_strata = estimate_strata(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_travel_study_group = estimate_study_group(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_travel_study_group_province = estimate_study_group_province(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -848,6 +899,79 @@ outputs_baseline <- tar_plan(
       "fuel_used_for_cooking",
       "location_of_food_preparation",
       "fuel_used_for_lighting"
+    ),
+    report = FALSE
+  ),
+  ### Baseline household travel table
+  baseline_hh_travel_province_table = create_province_table(
+    baseline_hh_travel_province,
+    baseline_hh_travel,
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_travel_province_table_report = create_province_table(
+    baseline_hh_travel_province,
+    baseline_hh_travel,
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_travel_strata_table = create_strata_table(
+    baseline_hh_travel_strata,
+    baseline_hh_travel,
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_travel_study_group_table = create_study_group_table(
+    baseline_hh_travel_study_group,
+    baseline_hh_travel,
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_travel_study_group_table_report = create_study_group_table(
+    baseline_hh_travel_study_group,
+    baseline_hh_travel,
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_travel_study_group_province_table = create_study_group_province_table(
+    baseline_hh_travel_study_group_province,
+    baseline_hh_travel_study_group,
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
     report = FALSE
   )

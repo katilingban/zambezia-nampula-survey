@@ -199,6 +199,20 @@ dplyr::mutate(
   fuel_used_for_lighting = recode_var_categorical(cfegs5) |>
     (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
   ## mode of daily travel
+  usual_mode_of_travel = recode_var_categorical(gi1) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  time_to_travel_to_health_centre = as.integer(gi2t),
+  mode_of_travel_to_health_centre = recode_var_categorical(gi2m) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  time_to_travel_to_local_markets = as.integer(gi3t),
+  mode_of_travel_to_local_markets = recode_var_categorical(gi3m) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  time_to_travel_to_primary_school = as.integer(gi4t),
+  mode_of_travel_to_primary_school = recode_var_categorical(gi4m) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  time_to_travel_to_secondary_school = as.integer(gi5t),
+  mode_of_travel_to_secondary_school = recode_var_categorical(gi5m) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
   ## household decision making
   ## community groups participation
   
