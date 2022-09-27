@@ -254,7 +254,7 @@ analysis_baseline <- tar_plan(
              "spouse_occupation", "spouse_lives_in_home"),
     design = baseline_hh_survey_design
   ),
-  ## Baseline household income
+  ### Baseline results - household income
   baseline_hh_income = estimate_total(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
@@ -300,7 +300,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ## Baseline household structure
+  ### Baseline results - household structure
   baseline_hh_structure = estimate_total(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
@@ -338,6 +338,97 @@ analysis_baseline <- tar_plan(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
       "number_of_bedrooms_in_home", "roofing_material", "floor_material",
       "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  ### Baseline results - household amenities
+  baseline_hh_amenities = estimate_total(
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_amenities_province = estimate_province(
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_amenities_strata = estimate_strata(
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_amenities_study_group = estimate_study_group(
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_amenities_study_group_province = estimate_study_group_province(
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   )
@@ -636,6 +727,127 @@ outputs_baseline <- tar_plan(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
       "number_of_bedrooms_in_home", "roofing_material", "floor_material",
       "time_living_in_location_in_months", "time_living_in_location_group"
+    ),
+    report = FALSE
+  ),
+  ### Baseline household amenities table
+  baseline_hh_amenities_table = create_province_table(
+    baseline_hh_amenities_province,
+    baseline_hh_amenities,
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_amenities_table_report = create_province_table(
+    baseline_hh_amenities_province,
+    baseline_hh_amenities,
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_amenities_strata_table = create_strata_table(
+    baseline_hh_amenities_strata,
+    baseline_hh_amenities,
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_amenities_study_group_table = create_study_group_table(
+    baseline_hh_amenities_study_group,
+    baseline_hh_amenities,
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_amenities_study_group_table_report = create_study_group_table(
+    baseline_hh_amenities_study_group,
+    baseline_hh_amenities,
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_amenities_study_group_province_table = create_study_group_province_table(
+    baseline_hh_amenities_study_group_province,
+    baseline_hh_amenities_study_group,
+    vars = c(
+      "communication_and_information_access_electricity",
+      "communication_and_information_access_cellphone",
+      "communication_and_information_access_computer",
+      "communication_and_information_access_landline",
+      "communication_and_information_access_radio",
+      "communication_and_information_access_television",
+      "amenities_housekeeper_childcare_employee",
+      "amenities_refrigerator",
+      "amenities_refrigerator_alternative",
+      "number_of_mosquito_nets",
+      "fuel_used_for_cooking",
+      "location_of_food_preparation",
+      "fuel_used_for_lighting"
     ),
     report = FALSE
   )

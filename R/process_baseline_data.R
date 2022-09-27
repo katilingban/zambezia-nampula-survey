@@ -163,6 +163,41 @@ dplyr::mutate(
     time_living_in_location_in_months, q03
   ),
   ## household amenities
+  communication_and_information_access_electricity = recode_yes_no(
+    as.integer(cdcg1)
+  ),
+  communication_and_information_access_cellphone = recode_yes_no(
+    as.integer(cdcg4)
+  ),
+  communication_and_information_access_computer = recode_yes_no(
+    as.integer(cdcg7)
+  ),
+  communication_and_information_access_landline = recode_yes_no(
+    as.integer(cdcg6)
+  ),
+  communication_and_information_access_radio = recode_yes_no(
+    as.integer(cdcg2)
+  ),
+  communication_and_information_access_television = recode_yes_no(
+    as.integer(cdcg3)
+  ),
+  amenities_housekeeper_childcare_employee = recode_yes_no(
+    as.integer(cdcg14)
+  ),
+  amenities_refrigerator = recode_yes_no(
+    as.integer(cdcg11)
+  ),
+  amenities_refrigerator_alternative = recode_yes_no(
+    as.integer(cdcg11a)
+  ),
+  number_of_mosquito_nets = recode_var_categorical(cdcg13) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  fuel_used_for_cooking = recode_var_categorical(cfegs1) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  location_of_food_preparation = recode_var_categorical(cfegs3) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  fuel_used_for_lighting = recode_var_categorical(cfegs5) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
   ## mode of daily travel
   ## household decision making
   ## community groups participation
