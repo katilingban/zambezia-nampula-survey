@@ -482,6 +482,52 @@ analysis_baseline <- tar_plan(
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
     design = baseline_hh_survey_design
+  ),
+  ### Baseline results - household decision making
+  baseline_hh_decision = estimate_total(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_decision_province = estimate_province(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_decision_strata = estimate_strata(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_decision_study_group = estimate_study_group(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_hh_decision_study_group_province = estimate_study_group_province(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -972,6 +1018,73 @@ outputs_baseline <- tar_plan(
       "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    report = FALSE
+  ),
+  ### Baseline household decisions table
+  baseline_hh_decision_province_table = create_province_table(
+    baseline_hh_decision_province,
+    baseline_hh_decision,
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_decision_province_table_report = create_province_table(
+    baseline_hh_decision_province,
+    baseline_hh_decision,
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_decision_strata_table = create_strata_table(
+    baseline_hh_decision_strata,
+    baseline_hh_decision,
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_decision_study_group_table = create_study_group_table(
+    baseline_hh_decision_study_group,
+    baseline_hh_decision,
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    report = FALSE
+  ),
+  baseline_hh_decision_study_group_table_report = create_study_group_table(
+    baseline_hh_decision_study_group,
+    baseline_hh_decision,
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_hh_decision_study_group_province_table = create_study_group_province_table(
+    baseline_hh_decision_study_group_province,
+    baseline_hh_decision_study_group,
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
     ),
     report = FALSE
   )

@@ -214,6 +214,26 @@ dplyr::mutate(
   mode_of_travel_to_secondary_school = recode_var_categorical(gi5m) |>
     (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
   ## household decision making
+  marrying_age = recode_var_categorical(ge1) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  using_condoms = recode_var_categorical(ge2) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  household_responsibilities = recode_var_categorical(ge3) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  family_planning = recode_var_categorical(ge4) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  agricultural_tasks = recode_var_categorical(ge5) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  household_finances = recode_var_categorical(ge6) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  child_rearing = recode_var_categorical(ge7) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  child_discipline = recode_var_categorical(ge8) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  healthcare_in_pregnancy = recode_var_categorical(ge9) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+  healthcare_for_child = recode_var_categorical(ge10) |>
+    (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
   ## community groups participation
   
   
