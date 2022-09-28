@@ -272,7 +272,37 @@ process_baseline_data <- function(.data) {
     moderate_wasting_by_muac = ifelse(child_muac < 12.5 & child_muac >= 11.5, 1, 0),
     severe_wasting_by_muac = ifelse(child_muac < 11.5, 1, 0),
     severe_wasting_by_oedema = ifelse(cmalnut == 1, 1, 0),
-    ## Women's dietary diversity score
+    ## Water
+    surface_water_source = ifelse(wt2 == 11, 1, 0),
+    unimproved_water_source = ifelse(wt2 %in% c(7, 9), 1, 0),
+    limited_water_source = ifelse(
+      wt2 %in% c(1:6, 8, 10, 12) & wt3a > 30, 1, 0
+    ),
+    basic_water_source = ifelse(
+      wt2 %in% c(1:6, 8, 10, 12) & wt3a <= 30, 1, 0
+    ),
+    sufficient_water_source = ifelse(
+      wt2 %in% 1:2 & wt4 == 1, 1, 0
+    ),
+    ## Sanitation
+    open_defecation = ifelse(lusd1 == 2 | lusd4 == 6, 1, 0),
+    unimproved_toilet_facility = ifelse(lusd4 == 5, 1, 0),
+    limited_toilet_facility = ifelse(lusd2 == 1 & lusd4 != 5, 1, 0),
+    basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 == 5, 1, 0),
+    ## Hygiene
+    no_handwashing_facility = ifelse(
+      mao1 == 2, 1, 
+      ifelse(
+        mao1 %in% 3:4, NA, 1
+      )
+    ),
+    limited_handwashing_facility = ifelse(
+      mao1 == 1 & (mao1a == 2 | mao1b == 3), 1, 0
+    ),
+    basic_handwashing_facility = ifelse(
+      mao1 == 1 & mao1a == 1 & mao1b != 3, 1, 0
+    ),
+    
     
     
     
