@@ -272,12 +272,14 @@ process_baseline_data <- function(.data) {
     moderate_wasting_by_muac = ifelse(child_muac < 12.5 & child_muac >= 11.5, 1, 0),
     severe_wasting_by_muac = ifelse(child_muac < 11.5, 1, 0),
     severe_wasting_by_oedema = ifelse(cmalnut == 1, 1, 0),
+    ## Women's dietary diversity score
     
     
     
     
     .keep = "unused"
   ) |>
+    ## Child anthropometry
     zscorer::addWGSR(
       sex = "child_sex_integer",
       firstPart = "child_weight",
@@ -317,6 +319,27 @@ process_baseline_data <- function(.data) {
         x$severe_wasting_by_weight_for_height = ifelse(x$wfhz < -3, 1, 0)
         x
       }
+    )() |>
+    (\(x)
+     {
+       data.frame(
+         x,
+         wdds_recode_groups(
+           vars = wdds_map_fg_vars(
+             staples = c("nutmul1", "nutmul2"),
+             green_leafy = "nutmul10",
+             other_vita = c("nutmul11", "nutmul12"),
+             fruits_vegetables = c("nutmul13", "nutmul14"),
+             organ_meat = "nutmul6",
+             meat_fish = c("nutmul7", "nutmul8"),
+             eggs = "nutmul9",
+             legumes = c("nutmul3", "nutmul4"),
+             milk = "nutmul5"
+           ),
+           .data = x
+         ) |>
+           wdds_calculate_score(add = TRUE)
+       )
+     }
     )()
-    
 }

@@ -8,7 +8,7 @@
 
 wdds_recode_group <- function(vars,
                               .data,
-                              food_group = c("staples", "grean_leafy", 
+                              food_group = c("staples", "green_leafy", 
                                              "other_vita", "fruits_vegetables", 
                                              "organ_meat", "meat_fish", "eggs", 
                                              "legumes", "milk")) {
@@ -60,7 +60,7 @@ wdds_recode_group <- function(vars,
 
 wdds_recode_groups <- function(vars,
                                .data,
-                               food_group = c("staples", "grean_leafy", 
+                               food_group = c("staples", "green_leafy", 
                                               "other_vita", "fruits_vegetables", 
                                               "organ_meat", "meat_fish", "eggs", 
                                               "legumes", "milk")) {
@@ -95,12 +95,12 @@ wdds_recode_groups <- function(vars,
 #
 ################################################################################
 
-wdds_map_fg_vars <- function(staples, grean_leafy, other_vita, 
+wdds_map_fg_vars <- function(staples, green_leafy, other_vita, 
                              fruits_vegetables, organ_meat, meat_fish, 
                              eggs, legumes, milk) {
   list(
     staples = staples, 
-    grean_leafy = grean_leafy, 
+    green_leafy = green_leafy, 
     other_vita = other_vita, 
     fruits_vegetables = fruits_vegetables, 
     organ_meat = organ_meat, 
