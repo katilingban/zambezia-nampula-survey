@@ -711,6 +711,76 @@ analysis_baseline <- tar_plan(
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     design = baseline_hh_survey_design
+  ),
+  baseline_child_dev = estimate_total(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_dev_province = estimate_province(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_dev_strata = estimate_strata(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_dev_study_group = estimate_study_group(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_dev_study_group_province = estimate_study_group_province(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = baseline_child_survey_design
   )
 )
 
@@ -1536,6 +1606,103 @@ outputs_baseline <- tar_plan(
       "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    report = FALSE
+  ),
+  ### Baseline child development table
+  baseline_child_dev_province_table = create_province_table(
+    baseline_child_dev_province,
+    baseline_child_dev,
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    report = FALSE
+  ),
+  baseline_child_dev_province_table_report = create_province_table(
+    baseline_child_dev_province,
+    baseline_child_dev,
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_dev_strata_table = create_strata_table(
+    baseline_child_dev_strata,
+    baseline_child_dev,
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    report = FALSE
+  ),
+  baseline_child_dev_study_group_table = create_study_group_table(
+    baseline_child_dev_study_group,
+    baseline_child_dev,
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    report = FALSE
+  ),
+  baseline_child_dev_study_group_table_report = create_study_group_table(
+    baseline_child_dev_study_group,
+    baseline_child_dev,
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_dev_study_group_province_table = create_study_group_province_table(
+    baseline_child_dev_study_group_province,
+    baseline_child_dev_study_group,
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
     ),
     report = FALSE
   )
