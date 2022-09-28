@@ -341,5 +341,28 @@ process_baseline_data <- function(.data) {
            wdds_calculate_score(add = TRUE)
        )
      }
+    )() |>
+    (\(x)
+      {
+        data.frame(
+          x,
+          mddw_recode_groups(
+            vars = mddw_map_fg_vars(
+              staples = c("nutmul1", "nutmul2"),
+              pulses = "nutmul3",
+              nuts_seeds = "nutmul4",
+              milk = "nutmul5",
+              meat_fish = c("nutmul6", "nutmul7", "nutmul8"), 
+              eggs = "nutmul9", 
+              green_leafy = "nutmul10",
+              other_vita = c("nutmul11", "nutmul12"),
+              vegetables = "nutmul13",
+              fruits = "nutmul14"
+            ),
+            .data = x
+          ) |>
+            mddw_calculate_score(add = TRUE)
+        )
+      }
     )()
 }

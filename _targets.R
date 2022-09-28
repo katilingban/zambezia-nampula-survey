@@ -671,6 +671,46 @@ analysis_baseline <- tar_plan(
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
     design = baseline_hh_survey_design
+  ),
+  baseline_mddw = estimate_total(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_mddw_province = estimate_province(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_mddw_strata = estimate_strata(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_mddw_study_group = estimate_study_group(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_mddw_study_group_province = estimate_study_group_province(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -1435,6 +1475,67 @@ outputs_baseline <- tar_plan(
       "wdds_staples", "wdds_green_leafy", "wdds_other_vita",
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
+    ),
+    report = FALSE
+  ),
+  ### Baseline MDDW table
+  baseline_mddw_province_table = create_province_table(
+    baseline_mddw_province,
+    baseline_mddw,
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    report = FALSE
+  ),
+  baseline_mddw_province_table_report = create_province_table(
+    baseline_mddw_province,
+    baseline_mddw,
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_mddw_strata_table = create_strata_table(
+    baseline_mddw_strata,
+    baseline_mddw,
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    report = FALSE
+  ),
+  baseline_mddw_study_group_table = create_study_group_table(
+    baseline_mddw_study_group,
+    baseline_mddw,
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    report = FALSE
+  ),
+  baseline_mddw_study_group_table_report = create_study_group_table(
+    baseline_mddw_study_group,
+    baseline_mddw,
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_mddw_study_group_province_table = create_study_group_province_table(
+    baseline_mddw_study_group_province,
+    baseline_mddw_study_group,
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     report = FALSE
   )
