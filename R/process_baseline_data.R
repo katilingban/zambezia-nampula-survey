@@ -364,5 +364,36 @@ process_baseline_data <- function(.data) {
             mddw_calculate_score(add = TRUE)
         )
       }
+    )() |>
+    (\(x)
+      {
+        play_df <- data.frame(
+          x,
+          play_recode_responses(
+            vars = paste0(
+              "play", 
+              c(paste0(1, letters[1:7]), 2, paste0(3, letters[1:6]))
+            ),
+            .data = x,
+            na_values = c(8, 9)
+          ) |>
+            (\(x)
+              {
+                names(x) <- c(
+                  "sing_to_or_with_child", "take_child_for_a_walk", 
+                  "play_a_game_with_child", "read_books_or_look_at_photos",
+                  "tell_stories_to_child", "identify_objects_with_child",
+                  "draw_things_to_or_with_child", "child_has_place_for_toys",
+                  "play_with_child_during_bath", "play_with_child_while_feeding_child",
+                  "play_with_child_while_changing_clothes", 
+                  "play_with_child_while_working_at_home",
+                  "play_with_child_while_working_in_the_field",
+                  "play_with_child_during_free_time"
+                )
+                x
+              }
+            )()
+        )
+      }
     )()
 }
