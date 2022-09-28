@@ -672,6 +672,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
+  ### Baseline results - MDD-W
   baseline_mddw = estimate_total(
     vars = c(
       "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
@@ -712,6 +713,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
+  ### Baseline results - child development
   baseline_child_dev = estimate_total(
     vars = c(
       "sing_to_or_with_child", "take_child_for_a_walk", 
@@ -781,6 +783,62 @@ analysis_baseline <- tar_plan(
       "play_with_child_during_free_time"
     ),
     design = baseline_child_survey_design
+  ),
+  ### Baseline results - WASH
+  baseline_wash = estimate_total(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_province = estimate_province(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_strata = estimate_strata(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_study_group = estimate_study_group(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_study_group_province = estimate_study_group_province(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -1703,6 +1761,85 @@ outputs_baseline <- tar_plan(
       "play_with_child_while_working_at_home",
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
+    ),
+    report = FALSE
+  ),
+  ### Baseline WASH table
+  baseline_wash_province_table = create_province_table(
+    baseline_wash_province,
+    baseline_wash,
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    report = FALSE
+  ),
+  baseline_wash_province_table_report = create_province_table(
+    baseline_wash_province,
+    baseline_wash,
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_wash_strata_table = create_strata_table(
+    baseline_wash_strata,
+    baseline_wash,
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    report = FALSE
+  ),
+  baseline_wash_study_group_table = create_study_group_table(
+    baseline_wash_study_group,
+    baseline_wash,
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    report = FALSE
+  ),
+  baseline_wash_study_group_table_report = create_study_group_table(
+    baseline_wash_study_group,
+    baseline_wash,
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_wash_study_group_province_table = create_study_group_province_table(
+    baseline_wash_study_group_province,
+    baseline_wash_study_group,
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
     ),
     report = FALSE
   )
