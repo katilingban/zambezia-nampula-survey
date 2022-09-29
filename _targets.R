@@ -920,6 +920,42 @@ analysis_baseline <- tar_plan(
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
     design = baseline_child_survey_design
+  ),
+  ### Baseline results - women's mental health and alcohol consumption
+  baseline_women_phq8 = estimate_total(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_women_phq8_province = estimate_province(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_women_phq8_strata = estimate_strata(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_women_phq8_study_group = estimate_study_group(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_women_phq8_study_group_province = estimate_study_group_province(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -2030,6 +2066,61 @@ outputs_baseline <- tar_plan(
       "rti_point_of_care", "rti_treatment_antiobioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    report = FALSE
+  ),
+  ### Baseline PHQ8 and alcohol consupmtion table
+  baseline_women_phq8_province_table = create_province_table(
+    baseline_women_phq8_province,
+    baseline_women_phq8,
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    report = FALSE
+  ),
+  baseline_women_phq8_province_table_report = create_province_table(
+    baseline_women_phq8_province,
+    baseline_women_phq8,
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_women_phq8_strata_table = create_strata_table(
+    baseline_women_phq8_strata,
+    baseline_women_phq8,
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    report = FALSE
+  ),
+  baseline_women_phq8_study_group_table = create_study_group_table(
+    baseline_women_phq8_study_group,
+    baseline_women_phq8,
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    report = FALSE
+  ),
+  baseline_women_phq8_study_group_table_report = create_study_group_table(
+    baseline_women_phq8_study_group,
+    baseline_women_phq8,
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_women_phq8_study_group_province_table = create_study_group_province_table(
+    baseline_women_phq8_study_group_province,
+    baseline_women_phq8_province,
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
     ),
     report = FALSE
   )
