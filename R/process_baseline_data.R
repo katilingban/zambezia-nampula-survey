@@ -302,6 +302,42 @@ process_baseline_data <- function(.data) {
     basic_handwashing_facility = ifelse(
       mao1 == 1 & mao1a == 1 & mao1b != 3, 1, 0
     ),
+    ## Diarrhoea
+    diarrhoea_episode = ifelse(ort1 == 2, 0, 1),
+    diarrhoea_seek_treatment = ifelse(ort3 == 2, 0, 1),
+    diarrhoea_point_of_care = recode_var_categorical(ort4) |>
+      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    diarrhoea_treatment_with_ors = ifelse(
+      ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
+    ),
+    ## Fever
+    fever_episdoe = ifelse(fiber1 == 2, 0, 1),
+    fever_seek_treatment = ifelse(fiber2 == 2, 0, 1),
+    fever_point_of_care = recode_var_categorical(fiber3) |>
+      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    fever_malaria_test = ifelse(fiber4 == 1 | fiber5 == 1, 1, 0),
+    fever_malaria_episode = ifelse(fiber6 == 1, 1, 0),
+    fever_malaria_coartem = ifelse(fiber6a_1 == 1, 1, 0),
+    fever_malaria_amodiaquina_artesunato = ifelse(fiber6a_2 == 1, 1, 0),
+    fever_malaria_fansidar = ifelse(fiber6a_3 == 1, 1, 0),
+    fever_malaria_quinino = ifelse(fiber6a_4 == 1, 1, 0),
+    fever_malaria_quinino_injection = ifelse(is.na(fiber6a_4), NA, 0),
+    fever_malaria_artesunato = ifelse(fiber6a_6 == 1, 1, 0),
+    fever_malaria_paracetamol_comprimido_xarope = ifelse(fiber6a_7 == 1, 1, 0),
+    fever_malaria_treatment_intake = ifelse(fiber7 == 1, 1, 0),
+    ## RTI
+    rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
+    rti_seek_treatment = ifelse(ch3 == 1, 1, 0),
+    rti_poc = recode_var_categorical(ch4) |>
+      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    rti_treatment_antiobioticos = ifelse(ch5a_1 == 1, 1, 0),
+    rti_treatment_paracetamol = ifelse(ch5a_2 == 1, 1, 0),
+    rti_treatment_aspirina = ifelse(ch5a_3 == 1, 1, 0),
+    rti_treatment_ibuprofeno = ifelse(ch5a_4 == 1, 1, 0),
+    rti_treatment_other = ifelse(ch5a_5 == 1, 1, 0),
+    
+    
+    
     
     
     
