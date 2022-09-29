@@ -311,7 +311,7 @@ process_baseline_data <- function(.data) {
       ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
     ),
     ## Fever
-    fever_episdoe = ifelse(fiber1 == 2, 0, 1),
+    fever_episode = ifelse(fiber1 == 2, 0, 1),
     fever_seek_treatment = ifelse(fiber2 == 2, 0, 1),
     fever_point_of_care = recode_var_categorical(fiber3) |>
       (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
@@ -328,7 +328,7 @@ process_baseline_data <- function(.data) {
     ## RTI
     rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
     rti_seek_treatment = ifelse(ch3 == 1, 1, 0),
-    rti_poc = recode_var_categorical(ch4) |>
+    rti_point_of_care = recode_var_categorical(ch4) |>
       (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
     rti_treatment_antiobioticos = ifelse(ch5a_1 == 1, 1, 0),
     rti_treatment_paracetamol = ifelse(ch5a_2 == 1, 1, 0),
