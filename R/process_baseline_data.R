@@ -335,6 +335,14 @@ process_baseline_data <- function(.data) {
     rti_treatment_aspirina = ifelse(ch5a_3 == 1, 1, 0),
     rti_treatment_ibuprofeno = ifelse(ch5a_4 == 1, 1, 0),
     rti_treatment_other = ifelse(ch5a_5 == 1, 1, 0),
+    ## Mental health
+    phq8_score = ment1 + ment2 + ment3 + ment4 + ment5 + ment6 + ment7 + ment8,
+    major_depression = ifelse(phq8_score > 10 & phq8_score <= 20, 1, 0),
+    severe_depression = ifelse(phq8_score > 20, 1, 0),
+    at_least_major_depression = ifelse(phq8_score > 10, 1, 0),
+    alcohol_consumption = recode_var_categorical(ment9) |>
+      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    
     
     
     
