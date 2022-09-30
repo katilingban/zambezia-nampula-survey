@@ -956,6 +956,72 @@ analysis_baseline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     design = baseline_hh_survey_design
+  ),
+  ### Baseline results - pregnancy characteristics
+  baseline_pregnant = estimate_total(
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_province = estimate_province(
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_strata = estimate_strata(
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_study_group = estimate_study_group(
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_study_group_province = estimate_study_group_province(
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -2121,6 +2187,82 @@ outputs_baseline <- tar_plan(
     vars = c(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
+    ),
+    report = FALSE
+  ),
+  ### Baseline pregnant table
+  baseline_pregnant_province_table = create_province_table(
+    baseline_pregnant_province,
+    baseline_pregnant,
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    report = FALSE
+  ),
+  baseline_pregnant_province_table_report = create_province_table(
+    baseline_pregnant_province,
+    baseline_pregnant,
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_strata_table = create_strata_table(
+    baseline_pregnant_strata,
+    baseline_pregnant,
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    report = FALSE
+  ),
+  baseline_pregnant_study_group_table_report = create_study_group_table(
+    baseline_pregnant_study_group,
+    baseline_pregnant,
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_study_group_province_table = create_study_group_province_table(
+    baseline_pregnant_study_group_province,
+    baseline_pregnant_study_group,
+    vars = c(
+      "currently_pregnant", "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
     ),
     report = FALSE
   )

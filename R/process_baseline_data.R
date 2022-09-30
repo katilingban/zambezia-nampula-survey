@@ -342,7 +342,32 @@ process_baseline_data <- function(.data) {
     at_least_major_depression = ifelse(phq8_score > 10, 1, 0),
     alcohol_consumption = recode_var_categorical(ment9) |>
       (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    ## Pregnant
+    currently_pregnant = ifelse(wh1 == 2, 0, 1),
+    weeks_of_gestation_self_report = as.integer(wh4),
+    prenatal_card_self_report = ifelse(wh2 == 2, 0, 1),
+    prenatal_card_available = ifelse(wh3 == 2, 0, 1),
+    malaria_during_pregnancy = ifelse(wh5 == 2, 0, 1),
+    anemia_during_pregnancy = ifelse(wh6 == 2, 0, 1),
+    excluded_foods_from_diet = ifelse(wh7 == 2, 0, 1),
+    included_foods_from_diet = ifelse(wh8 == 2, 0, 1),
+    wants_more_children = ifelse(wh9 == 2, 0, 1),
+    vaginal_bleeding = preg1_1,
+    severe_headache = preg1_2,
+    blurry_vision = preg1_3,
+    swollen_extremities = preg1_4,
+    convulsions = preg1_5,
+    fever = preg1_6,
+    intense_abdominal_pain = preg1_7,
+    loss_of_consciousness = preg1_8,
+    fatigue = preg1_9,
+    plans_when_labor_begins = recode_var_categorical(preg2) |>
+      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
     
+    
+    
+    
+
     
     
     
