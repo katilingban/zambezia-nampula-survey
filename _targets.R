@@ -1022,6 +1022,47 @@ analysis_baseline <- tar_plan(
       "fatigue", "plans_when_labor_begins"
     ),
     design = baseline_hh_survey_design
+  ),
+  ### Baseline results - PMTCT and mosquito net
+  baseline_pregnant_prevention = estimate_total(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_prevention_province = estimate_province(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_prevention_strata = estimate_strata(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_prevention_study_group = estimate_study_group(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pregnant_prevention_study_group_province = estimate_study_group_province(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -2263,6 +2304,67 @@ outputs_baseline <- tar_plan(
       "blurry_vision", "swollen_extremities", "convulsions",
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
+    ),
+    report = FALSE
+  ),
+  ### Baseline pregnant prevention of disease table
+  baseline_pregnant_prevention_province_table = create_province_table(
+    baseline_pregnant_prevention_province,
+    baseline_pregnant_prevention,
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    report = FALSE
+  ),
+  baseline_pregnant_prevention_province_table_report = create_province_table(
+    baseline_pregnant_prevention_province,
+    baseline_pregnant_prevention,
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_prevention_strata_table = create_strata_table(
+    baseline_pregnant_prevention_strata,
+    baseline_pregnant_prevention,
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    report = FALSE
+  ),
+  baseline_pregnant_prevention_study_group_table = create_study_group_table(
+    baseline_pregnant_prevention_study_group,
+    baseline_pregnant_prevention,
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    report = FALSE
+  ),
+  baseline_pregnant_prevention_study_group_table_report = create_study_group_table(
+    baseline_pregnant_prevention_study_group,
+    baseline_pregnant_prevention,
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_prevention_study_group_province_table = create_study_group_province_table(
+    baseline_pregnant_prevention_study_group_province,
+    baseline_pregnant_prevention_study_group,
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
     ),
     report = FALSE
   )
