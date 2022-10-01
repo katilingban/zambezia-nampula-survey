@@ -363,6 +363,12 @@ process_baseline_data <- function(.data) {
     fatigue = preg1_9,
     plans_when_labor_begins = recode_var_categorical(preg2) |>
       (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    ### PMTCT and malaria prevention
+    offered_voluntary_counselling_and_testing = ifelse(pmtct1 == 2, 0, 1),
+    received_vct_results = ifelse(pmtct2 == 2, 0, 1),
+    offered_medication_to_reduce_child_risk = ifelse(pmtct3 == 2, 0, 1),
+    received_mosquito_net = ifelse(ins1 == 2, 0, 1),
+    slept_under_mosquito_net = ifelse(ins2 == 2, 0, 1),
     
     
     
