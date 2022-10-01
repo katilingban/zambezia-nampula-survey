@@ -1290,6 +1290,82 @@ analysis_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_none"
     ),
     design = baseline_hh_survey_design
+  ),
+  ### Baseline results - EPI
+  baseline_child_immunisation = estimate_total(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_immunisation_province = estimate_province(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_immunisation_strata = estimate_strata(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_immunisation_study_group = estimate_study_group(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    design = baseline_child_survey_design
+  ),
+  baseline_child_immunisation_study_group_province = estimate_study_group_province(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    design = baseline_child_survey_design
   )
 )
 
@@ -2700,6 +2776,7 @@ outputs_baseline <- tar_plan(
     ),
     report = TRUE, format = "wide"
   ),
+  ### Baseline family planning table -------------------------------------------
   baseline_natal_care_study_group_province_table = create_study_group_province_table(
     baseline_natal_care_study_group_province,
     baseline_natal_care_study_group,
@@ -2887,6 +2964,109 @@ outputs_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated",
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
+    ),
+    report = FALSE
+  ),
+  ### Baseline child immunisation table ----------------------------------------
+  baseline_child_immunisation_province_table = create_province_table(
+    baseline_child_immunisation_province,
+    baseline_child_immunisation,
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    report = FALSE
+  ),
+  baseline_child_immunisation_province_table_report = create_province_table(
+    baseline_child_immunisation_province,
+    baseline_child_immunisation,
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_strata_table = create_strata_table(
+    baseline_child_immunisation_strata,
+    baseline_child_immunisation,
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    report = FALSE
+  ),
+  baseline_child_immunisation_study_group_table = create_study_group_table(
+    baseline_child_immunisation_study_group,
+    baseline_child_immunisation,
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    report = FALSE
+  ),
+  baseline_child_immunisation_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_study_group,
+    baseline_child_immunisation,
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_study_group_province,
+    baseline_child_immunisation_study_group,
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
     ),
     report = FALSE
   )
