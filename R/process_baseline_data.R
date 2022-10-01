@@ -214,24 +214,15 @@ process_baseline_data <- function(.data) {
     healthcare_in_pregnancy = recode_var_categorical(ge9),
     healthcare_for_child = recode_var_categorical(ge10),
     ## community groups participation
-    group_membership = recode_var_categorical(q05) |>
-      (\(x) ifelse(x == "Sim. Especifique", q05_spec, x))(),
-    presentation_participation = recode_var_categorical(q06) |>
-      (\(x) ifelse(x == "Sim. Conteúdo", q06_spec, x))(),
+    group_membership = ifelse(q05 == 2, 0, 1),
+    group_membership_type = recode_group_type(q05, q05_spec),
+    presentation_participation = ifelse(q06 == 2, 0, 1),
+    presentation_topic = recode_presentation_type(q06, q06_spec),
     presentation_facilitator = recode_var_categorical(q06a) |>
       (\(x) ifelse(x == "ONG (especifique)", q06a_spec, x))(),
-    information_application = recode_var_categorical(q06b) |>
-      (\(x)
-       {
-         ifelse(
-           x %in% c("NS", "NR"), "No response", 
-           ifelse(
-             x == "NSA", "Did not participate in presentations", x
-           )
-         )
-      }
-      )(),
-    health_tasks_participation = recode_var_categorical(q07) |>
+    information_application = ifelse(q06b == 2, 0, 1),
+    health_tasks_participation = ifelse(q07 == 2, 0, 1),
+    health_tasks_participation_type = recode_var_categorical(q07) |>
       (\(x) ifelse(x == "Sim. Especifique", q07_spec, x))(),
     ## Child anthropometry
     child_height = ifelse(caltura_fi == 2, caltura_check, caltura),
@@ -360,6 +351,28 @@ process_baseline_data <- function(.data) {
     difficulty_reaching_facility_no_difficulty = spc5a_6,
     time_to_postnatal_check_for_child = recode_var_categorical(spc6),
     time_to_postnatal_check_for_mother = recode_var_categorical(spc7),
+    ## Family planning
+    attempted_to_delay_or_prevent_pregnancy = ifelse(pf1 == 2, 0, 1),
+    benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother = bs2_1,
+    benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_baby = bs2_2,
+    benefit_of_waiting_for_next_pregnancy_avoid_poverty = bs2_3,
+    benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated = bs2_4,
+    benefit_of_waiting_for_next_pregnancy_other_reasons = bs2_5,
+    benefit_of_waiting_for_next_pregnancy_none = bs2_6,
+    benefit_of_waiting_until_18_years_of_age = ifelse(bs3 == 2, 0, 1),
+    benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother = bs3a_1,
+    benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby = bs3a_2,
+    benefit_of_waiting_until_18_years_of_age_avoid_poverty = bs3a_3,
+    benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated = bs3a_4,
+    benefit_of_waiting_until_18_years_of_age_other_reasons = bs3a_5,
+    benefit_of_waiting_until_18_years_of_age_none = bs3a_6,
+    problem_with_having_more_than_4_children = ifelse(bs4 == 2, 0, 1),
+    problem_with_having_more_than_4_children_maternal_mortality = bs4a_1,
+    problem_with_having_more_than_4_children_child_mortality = bs4a_2,
+    problem_with_having_more_than_4_children_poverty = bs4a_3,
+    problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated = bs4a_4,
+    problem_with_having_more_than_4_children_other_reasons = bs4a_5,
+    problem_with_having_more_than_4_children_none = bs4a_6,
     
     
     

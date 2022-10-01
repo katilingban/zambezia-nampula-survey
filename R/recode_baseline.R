@@ -223,9 +223,20 @@ recode_group_type <- function(group, group_name) {
 
 recode_presentation_type <- function(presentation, presentation_name) {
   ifelse(
-    presentation == 2, "Not a member of any group",
+    presentation == 2, "Did not participate in any presentation",
     ifelse(
       presentation %in% c("NS", "NR", "NSA"), "No response", presentation_name
     )
   )
 }
+
+
+recode_presentation_facilitator <- function(presentation, presentation_facilitator) {
+  ifelse(
+    presentation == 2, "Did not participate in any presentation",
+    ifelse(
+      presentation %in% c("NS", "NR", "NSA"), "No response", presentation_facilitator
+    )
+  )
+}
+
