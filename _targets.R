@@ -533,40 +533,35 @@ analysis_baseline <- tar_plan(
   baseline_hh_groups = estimate_total(
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_groups_province = estimate_province(
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_groups_strata = estimate_strata(
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_groups_study_group = estimate_study_group(
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_groups_study_group_province = estimate_study_group_province(
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     design = baseline_hh_survey_design
   ),
@@ -1730,8 +1725,7 @@ outputs_baseline <- tar_plan(
     baseline_hh_groups,
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     report = FALSE
   ),
@@ -1740,8 +1734,7 @@ outputs_baseline <- tar_plan(
     baseline_hh_groups,
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     report = TRUE, format = "wide"
   ),
@@ -1750,8 +1743,7 @@ outputs_baseline <- tar_plan(
     baseline_hh_groups,
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     report = FALSE
   ),
@@ -1760,8 +1752,7 @@ outputs_baseline <- tar_plan(
     baseline_hh_groups,
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     report =  FALSE
   ),
@@ -1770,8 +1761,7 @@ outputs_baseline <- tar_plan(
     baseline_hh_groups,
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     report = TRUE, format = "wide"
   ),
@@ -1780,8 +1770,7 @@ outputs_baseline <- tar_plan(
     baseline_hh_groups_study_group,
     vars = c(
       "group_membership", "presentation_participation", 
-      "presentation_facilitator", "information_application",
-      "health_tasks_participation"
+      "information_application", "health_tasks_participation"
     ),
     report = FALSE
   ),
