@@ -1508,6 +1508,32 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_child_survey_design
   ),
+  ### Baseline results - full immunisation -------------------------------------
+  baseline_child_immunisation_full = estimate_total(
+    vars = "immunisation_fully_immunised",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_full_province = estimate_province(
+    vars = "immunisation_fully_immunised",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_full_strata = estimate_strata(
+    vars = "immunisation_fully_immunised",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_full_study_group = estimate_study_group(
+    vars = "immunisation_fully_immunised",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_full_study_group_province = estimate_study_group_province(
+    vars = "immunisation_fully_immunised",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
   ### Baseline results - IYCF --------------------------------------------------
   baseline_iycf = estimate_total(
     vars = c(
@@ -3314,6 +3340,43 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
+  ### Baseline child immunisation full table -----------------------------------
+  baseline_child_immunisation_full_province_table = create_province_table(
+    baseline_child_immunisation_full_province,
+    baseline_child_immunisation_full,
+    vars = "immunisation_fully_immunised",
+    report = FALSE
+  ),
+  baseline_child_immunisation_full_province_table_report = create_province_table(
+    baseline_child_immunisation_full_province,
+    baseline_child_immunisation_full,
+    vars = "immunisation_fully_immunised",
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_full_strata_table = create_strata_table(
+    baseline_child_immunisation_full_strata,
+    baseline_child_immunisation_full,
+    vars = "immunisation_fully_immunised",
+    report = FALSE
+  ),
+  baseline_child_immunisation_full_study_group_table = create_study_group_table(
+    baseline_child_immunisation_full_study_group,
+    baseline_child_immunisation_full,
+    vars = "immunisation_fully_immunised",
+    report = FALSE
+  ),
+  baseline_child_immunisation_full_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_full_study_group,
+    baseline_child_immunisation_full,
+    vars = "immunisation_fully_immunised",
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_full_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_full_study_group_province,
+    baseline_child_immunisation_full_study_group,
+    vars = "immunisation_fully_immunised",
+    report = FALSE
+  ),
   ### Baseline IYCF table ------------------------------------------------------
   baseline_iycf_province_table = create_province_table(
     baseline_iycf_province,
@@ -3418,7 +3481,7 @@ outputs_baseline <- tar_plan(
     vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
     report = FALSE
   ),
-  ### Baseline exclusive breastfeeding table
+  ### Baseline exclusive breastfeeding table -----------------------------------
   baseline_ebf_province_table = create_province_table(
     baseline_ebf_province,
     baseline_ebf,
