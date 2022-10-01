@@ -487,6 +487,37 @@ process_baseline_data <- function(.data) {
         )
       )
     ),
+    ### IYCF/ICFI - 6-23 months
+    food_group_breastmilk = ifelse(eb1 == 2, 1, 0),
+    food_group_dairy = ifelse(nut1l != 1, 1, 0),
+    food_group_starch = ifelse(nut1a !=1 | nut1c != 1, 1, 0),
+    food_group_vitamin_a_rich = ifelse(
+      nut1b != 1 | nut1d != 1 | nut1e != 1 | nut1n != 1, 1, 0
+    ),
+    food_group_other_fruits_vegetables = ifelse(nut1f != 1, 1, 0),
+    food_group_legumes = ifelse(nut1k != 1, 1, 0),
+    food_group_meat = ifelse(nut1g != 1 | nut1h != 1 | nut1j != 1, 1, 0),
+    food_group_eggs = ifelse(nut1i != 1, 1, 0),
+    food_groups_score = food_group_breastmilk + food_group_dairy + 
+      food_group_starch + food_group_vitamin_a_rich + 
+      food_group_other_fruits_vegetables +
+      food_group_legumes + food_group_meat + food_group_eggs,
+    minimum_dietary_diversity = ifelse(
+      child_age_months < 6 | child_age_months >= 24, NA,
+      ifelse(
+        food_groups_score >= 5, 1, 0
+      )
+    ),
+    ## Breastfeeding (less than 24 months)
+    ever_breastfed = ifelse(eb1 == 1 | eb1 == 2, 1, 0),
+    early_initiation_of_breastfeeding = ifelse(eb2 == 1 | eb2_hrs <= 1, 1, 0),
+    ## Exclusive breastfeeding (less than 6 months)
+    exclusive_breastfeeding = ifelse(
+      eb2 == 2 & nut2 == 1, 1, 0
+    ),
+    
+    
+    
     
     
     

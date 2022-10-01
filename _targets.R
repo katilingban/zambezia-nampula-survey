@@ -87,7 +87,7 @@ raw_data_baseline <- tar_plan(
 
 ## Process data ----------------------------------------------------------------
 processed_data_baseline <- tar_plan(
-  ### Get baseline sampling weights
+  ### Get baseline sampling weights --------------------------------------------
   baseline_sample_weight = calculate_weights(
     .data = baseline_raw_data_stata,
     survey_sampling_list
@@ -95,9 +95,8 @@ processed_data_baseline <- tar_plan(
   baseline_data_processed = process_baseline_data(
     .data = baseline_raw_data_stata
   ),
-  ### Process baseline data with weights
+  ### Process baseline data with weights ---------------------------------------
   baseline_data_weighted = dplyr::left_join(
-    #x = baseline_raw_data_stata,
     x = baseline_data_processed,
     y = baseline_sample_weight |>
       subset(
@@ -117,6 +116,7 @@ processed_data_baseline <- tar_plan(
   #   data = baseline_data_weighted,
   #   pps = "brewer"
   # ),
+  ### Set baseline survey design for children ----------------------------------
   baseline_child_survey_design = survey::svydesign(
     ids = ~enum1,
     fpc = ~sample_prob_obs,
@@ -132,7 +132,8 @@ processed_data_baseline <- tar_plan(
   #   data = baseline_data_weighted |>
   #     get_respondent_data(),
   #   pps = "brewer"
-  # ),
+  # ), 
+  ### Set baseline survey design for households/respondent ---------------------
   baseline_hh_survey_design = survey::svydesign(
     ids = ~enum1,
     fpc = ~sample_prob_obs,
@@ -576,7 +577,8 @@ analysis_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
-    design = baseline_child_survey_design
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
   ),
   baseline_child_anthro_province = estimate_province(
     vars = c(
@@ -588,7 +590,8 @@ analysis_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
-    design = baseline_child_survey_design
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
   ),
   baseline_child_anthro_strata = estimate_strata(
     vars = c(
@@ -600,7 +603,8 @@ analysis_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
-    design = baseline_child_survey_design
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
   ),
   baseline_child_anthro_study_group = estimate_study_group(
     vars = c(
@@ -612,7 +616,8 @@ analysis_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
-    design = baseline_child_survey_design
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
   ),
   baseline_child_anthro_study_group_province = estimate_study_group_province(
     vars = c(
@@ -624,7 +629,8 @@ analysis_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
-    design = baseline_child_survey_design
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
   ),
   ### Baseline results - WDDS --------------------------------------------------
   baseline_wdds = estimate_total(
@@ -633,7 +639,12 @@ analysis_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_wdds_province = estimate_province(
     vars = c(
@@ -641,7 +652,12 @@ analysis_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_wdds_strata = estimate_strata(
     vars = c(
@@ -649,7 +665,12 @@ analysis_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_wdds_study_group = estimate_study_group(
     vars = c(
@@ -657,7 +678,12 @@ analysis_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_wdds_study_group_province = estimate_study_group_province(
     vars = c(
@@ -665,7 +691,12 @@ analysis_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   ### Baseline results - MDD-W -------------------------------------------------
   baseline_mddw = estimate_total(
@@ -674,7 +705,12 @@ analysis_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_mddw_province = estimate_province(
     vars = c(
@@ -682,7 +718,12 @@ analysis_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_mddw_strata = estimate_strata(
     vars = c(
@@ -690,7 +731,12 @@ analysis_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_mddw_study_group = estimate_study_group(
     vars = c(
@@ -698,7 +744,12 @@ analysis_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_mddw_study_group_province = estimate_study_group_province(
     vars = c(
@@ -706,7 +757,12 @@ analysis_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   ### Baseline results - child development -------------------------------------
   baseline_child_dev = estimate_total(
@@ -922,35 +978,40 @@ analysis_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
   ),
   baseline_women_phq8_province = estimate_province(
     vars = c(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
   ),
   baseline_women_phq8_strata = estimate_strata(
     vars = c(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
   ),
   baseline_women_phq8_study_group = estimate_study_group(
     vars = c(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
   ),
   baseline_women_phq8_study_group_province = estimate_study_group_province(
     vars = c(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
   ),
   ### Baseline results - pregnancy characteristics -----------------------------
   baseline_pregnant = estimate_total(
@@ -964,7 +1025,8 @@ analysis_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
   ),
   baseline_pregnant_province = estimate_province(
     vars = c(
@@ -977,7 +1039,8 @@ analysis_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
   ),
   baseline_pregnant_strata = estimate_strata(
     vars = c(
@@ -990,7 +1053,8 @@ analysis_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
   ),
   baseline_pregnant_study_group = estimate_study_group(
     vars = c(
@@ -1003,7 +1067,8 @@ analysis_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
   ),
   baseline_pregnant_study_group_province = estimate_study_group_province(
     vars = c(
@@ -1016,7 +1081,8 @@ analysis_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
   ),
   ### Baseline results - PMTCT and mosquito net --------------------------------
   baseline_pregnant_prevention = estimate_total(
@@ -1025,7 +1091,12 @@ analysis_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_pregnant_prevention_province = estimate_province(
     vars = c(
@@ -1033,7 +1104,12 @@ analysis_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_pregnant_prevention_strata = estimate_strata(
     vars = c(
@@ -1041,7 +1117,12 @@ analysis_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_pregnant_prevention_study_group = estimate_study_group(
     vars = c(
@@ -1049,7 +1130,12 @@ analysis_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_pregnant_prevention_study_group_province = estimate_study_group_province(
     vars = c(
@@ -1057,7 +1143,12 @@ analysis_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   ### Baseline results - natal care
   baseline_natal_care = estimate_total(
@@ -1078,7 +1169,12 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_no_difficulty",
       "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_natal_care_province = estimate_province(
     vars = c(
@@ -1098,7 +1194,12 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_no_difficulty",
       "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_natal_care_strata = estimate_strata(
     vars = c(
@@ -1118,7 +1219,12 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_no_difficulty",
       "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_natal_care_study_group = estimate_study_group(
     vars = c(
@@ -1138,7 +1244,12 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_no_difficulty",
       "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_natal_care_study_group_province = estimate_study_group_province(
     vars = c(
@@ -1158,7 +1269,12 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_no_difficulty",
       "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   ### Baseline results - Family planning ----------------------------------------------------------
   baseline_family_planning = estimate_total(
@@ -1185,7 +1301,12 @@ analysis_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_family_planning_province = estimate_province(
     vars = c(
@@ -1211,7 +1332,12 @@ analysis_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_family_planning_strata = estimate_strata(
     vars = c(
@@ -1237,7 +1363,12 @@ analysis_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_family_planning_study_group = estimate_study_group(
     vars = c(
@@ -1263,7 +1394,12 @@ analysis_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
   baseline_family_planning_study_group_province = estimate_study_group_province(
     vars = c(
@@ -1289,9 +1425,14 @@ analysis_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    design = baseline_hh_survey_design
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   ),
-  ### Baseline results - EPI
+  ### Baseline results - EPI ---------------------------------------------------
   baseline_child_immunisation = estimate_total(
     vars = c(
       "immunisation_card_retention_self_report", "immunisation_card_retention",
@@ -1366,6 +1507,109 @@ analysis_baseline <- tar_plan(
       "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
     ),
     design = baseline_child_survey_design
+  ),
+  ### Baseline results - IYCF --------------------------------------------------
+  baseline_iycf = estimate_total(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  baseline_iycf_province = estimate_province(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  baseline_iycf_strata = estimate_strata(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  baseline_iycf_study_group = estimate_study_group(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  baseline_iycf_study_group_province = estimate_study_group_province(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  ### Baseline results - breastfeeding -----------------------------------------
+  baseline_breastfeeding = estimate_total(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding_province = estimate_province(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding_strata = estimate_strata(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding_study_group = estimate_study_group(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding_study_group_province = estimate_study_group_province(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  ### Baseline results - exclusive breastfeeding -------------------------------
+  baseline_ebf = estimate_total(
+    vars = "exclusive_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  baseline_ebf_province = estimate_province(
+    vars = "exclusive_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  baseline_ebf_strata = estimate_strata(
+    vars = "exclusive_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  baseline_ebf_study_group = estimate_study_group(
+    vars = "exclusive_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  baseline_ebf_study_group_province = estimate_study_group_province(
+    vars = "exclusive_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 6)
   )
 )
 
@@ -3068,6 +3312,147 @@ outputs_baseline <- tar_plan(
       "immunisation_rotavirus_second_dose",
       "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
     ),
+    report = FALSE
+  ),
+  ### Baseline IYCF table ------------------------------------------------------
+  baseline_iycf_province_table = create_province_table(
+    baseline_iycf_province,
+    baseline_iycf,
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    report = FALSE
+  ),
+  baseline_iycf_province_table_report = create_province_table(
+    baseline_iycf_province,
+    baseline_iycf,
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_iycf_strata_table = create_strata_table(
+    baseline_iycf_strata,
+    baseline_iycf,
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    report = FALSE
+  ),
+  baseline_iycf_study_group_table = create_study_group_table(
+    baseline_iycf_study_group,
+    baseline_iycf,
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    report = FALSE
+  ),
+  baseline_iycf_study_group_table_report = create_study_group_table(
+    baseline_iycf_study_group,
+    baseline_iycf,
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_iycf_study_group_province_table =  create_study_group_province_table(
+    baseline_iycf_study_group_province,
+    baseline_iycf_province,
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    report = FALSE
+  ),
+  ### Baseline breastfeeding table ---------------------------------------------
+  baseline_breastfeeding_province_table = create_province_table(
+    baseline_breastfeeding_province,
+    baseline_breastfeeding,
+    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    report = FALSE
+  ),
+  baseline_breastfeeding_province_table_report = create_province_table(
+    baseline_breastfeeding_province,
+    baseline_breastfeeding,
+    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    report = TRUE, format = "wide"
+  ),
+  baseline_breastfeeding_strata_table = create_strata_table(
+    baseline_breastfeeding_strata,
+    baseline_breastfeeding,
+    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    report = FALSE
+  ),
+  baseline_breastfeeding_stugy_group_table = create_study_group_table(
+    baseline_breastfeeding_study_group,
+    baseline_breastfeeding,
+    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    report = FALSE
+  ),
+  baseline_breastfeeding_study_group_table_report = create_study_group_table(
+    baseline_breastfeeding_study_group,
+    baseline_breastfeeding,
+    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    report = TRUE, format = "wide"
+  ),
+  baseline_breastfeeding_study_group_province_table = create_study_group_province_table(
+    baseline_breastfeeding_study_group_province,
+    baseline_breastfeeding_study_group,
+    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    report = FALSE
+  ),
+  ### Baseline exclusive breastfeeding table
+  baseline_ebf_province_table = create_province_table(
+    baseline_ebf_province,
+    baseline_ebf,
+    vars = "exclusive_breastfeeding",
+    report = FALSE
+  ),
+  baseline_ebf_province_table_report = create_province_table(
+    baseline_ebf_province,
+    baseline_ebf,
+    vars = "exclusive_breastfeeding",
+    report = TRUE, format = "wide"
+  ),
+  baseline_ebf_strata_table = create_strata_table(
+    baseline_ebf_strata,
+    baseline_ebf,
+    vars = "exclusive_breastfeeding",
+    report = FALSE
+  ),
+  baseline_ebf_study_group_table = create_study_group_table(
+    baseline_ebf_study_group,
+    baseline_ebf,
+    vars = "exclusive_breastfeeding",
+    report = FALSE
+  ),
+  baseline_ebf_study_group_table_report = create_study_group_table(
+    baseline_ebf_study_group,
+    baseline_ebf,
+    vars = "exclusive_breastfeeding",
+    report = TRUE, format = "wide"
+  ),
+  baseline_ebf_study_group_province_table = create_study_group_province_table(
+    baseline_ebf_study_group_province,
+    baseline_ebf_study_group,
+    vars = "exclusive_breastfeeding",
     report = FALSE
   )
 )
