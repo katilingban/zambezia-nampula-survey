@@ -47,6 +47,6 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("baseline_natal_care"))
+          targets::tar_make(dplyr::starts_with("baseline_family_planning"))
         shell: Rscript {0}
           
