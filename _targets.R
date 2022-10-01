@@ -146,7 +146,7 @@ processed_data_baseline <- tar_plan(
 
 ## Analysis --------------------------------------------------------------------
 analysis_baseline <- tar_plan(
-  ### Baseline results - demographics respondent
+  ### Baseline results - demographics respondent -------------------------------
   baseline_demo_respondent = estimate_total(
     vars = c("respondent_sex", "respondent_age_years",
              "respondent_age_group", "respondent_language", 
@@ -182,7 +182,7 @@ analysis_baseline <- tar_plan(
              "respondent_education_group", "respondent_occupation"),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - demographics children
+  ### Baseline results - demographics children ---------------------------------
   baseline_demo_child = estimate_total(
     vars = c("child_sex", "child_age_months",
              "child_age_group", "child_currently_breastfeeding",
@@ -223,7 +223,7 @@ analysis_baseline <- tar_plan(
              "child_low_birth_weight"),
     design = baseline_child_survey_design
   ),
-  ### Baseline results - demographics spouse
+  ### Baseline results - demographics spouse -----------------------------------
   baseline_demo_spouse = estimate_total(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
@@ -254,7 +254,7 @@ analysis_baseline <- tar_plan(
              "spouse_occupation", "spouse_lives_in_home"),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - household income
+  ### Baseline results - household income --------------------------------------
   baseline_hh_income = estimate_total(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
@@ -300,7 +300,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - household structure
+  ### Baseline results - household structure -----------------------------------
   baseline_hh_structure = estimate_total(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
@@ -341,7 +341,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - household amenities
+  ### Baseline results - household amenities -----------------------------------
   baseline_hh_amenities = estimate_total(
     vars = c(
       "communication_and_information_access_electricity",
@@ -432,7 +432,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - mode of daily travel
+  ### Baseline results - mode of daily travel ----------------------------------
   baseline_hh_travel = estimate_total(
     vars = c(
       "usual_mode_of_travel",
@@ -483,7 +483,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - household decision making
+  ### Baseline results - household decision making -----------------------------
   baseline_hh_decision = estimate_total(
     vars = c(
       "marrying_age", "using_condoms", "household_responsibilities",
@@ -529,7 +529,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ## Baseline results - household membership in community groups
+  ### Baseline results - household membership in community groups --------------
   baseline_hh_groups = estimate_total(
     vars = c(
       "group_membership", "presentation_participation", 
@@ -570,7 +570,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ## Baseline results - child anthropometry
+  ### Baseline results - child anthropometry -----------------------------------
   baseline_child_anthro = estimate_total(
     vars = c(
       "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
@@ -631,7 +631,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_child_survey_design
   ),
-  ### Baseline results - WDDS
+  ### Baseline results - WDDS --------------------------------------------------
   baseline_wdds = estimate_total(
     vars = c(
       "wdds_staples", "wdds_green_leafy", "wdds_other_vita",
@@ -672,7 +672,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - MDD-W
+  ### Baseline results - MDD-W -------------------------------------------------
   baseline_mddw = estimate_total(
     vars = c(
       "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
@@ -713,7 +713,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - child development
+  ### Baseline results - child development -------------------------------------
   baseline_child_dev = estimate_total(
     vars = c(
       "sing_to_or_with_child", "take_child_for_a_walk", 
@@ -784,7 +784,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_child_survey_design
   ),
-  ### Baseline results - WASH
+  ### Baseline results - WASH --------------------------------------------------
   baseline_wash = estimate_total(
     vars = c(
       "surface_water_source", "unimproved_water_source", "limited_water_source",
@@ -840,7 +840,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - period prevalence of childhood illnesses
+  ### Baseline results - period prevalence of childhood illnesses --------------
   baseline_child_ill = estimate_total(
     vars = c(
       "diarrhoea_episode", "diarrhoea_seek_treatment", 
@@ -921,7 +921,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_child_survey_design
   ),
-  ### Baseline results - women's mental health and alcohol consumption
+  ### Baseline results - women's mental health and alcohol consumption ---------
   baseline_women_phq8 = estimate_total(
     vars = c(
       "phq8_score", "major_depression", "severe_depression",
@@ -957,7 +957,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - pregnancy characteristics
+  ### Baseline results - pregnancy characteristics -----------------------------
   baseline_pregnant = estimate_total(
     vars = c(
       "currently_pregnant", "weeks_of_gestation_self_report",
@@ -1023,7 +1023,7 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design
   ),
-  ### Baseline results - PMTCT and mosquito net
+  ### Baseline results - PMTCT and mosquito net --------------------------------
   baseline_pregnant_prevention = estimate_total(
     vars = c(
       "offered_voluntary_counselling_and_testing",
@@ -1063,13 +1063,114 @@ analysis_baseline <- tar_plan(
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
     design = baseline_hh_survey_design
+  ),
+  ### Baseline results - natal care
+  baseline_natal_care = estimate_total(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_natal_care_province = estimate_province(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_natal_care_strata = estimate_strata(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_natal_care_study_group = estimate_study_group(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_natal_care_study_group_province = estimate_study_group_province(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
 
 ## Outputs ---------------------------------------------------------------------
 outputs_baseline <- tar_plan(
-  ### Baseline demographics table - respondent
+  ### Baseline demographics table - respondent ---------------------------------
   baseline_demo_respondent_table = create_province_table(
     baseline_demo_respondent_province,
     baseline_demo_respondent,
@@ -1124,7 +1225,7 @@ outputs_baseline <- tar_plan(
              "respondent_occupation"),
     report = FALSE
   ),
-  ### Baseline demographics table - child
+  ### Baseline demographics table - child --------------------------------------
   baseline_demo_child_table = create_province_table(
     baseline_demo_child_province,
     baseline_demo_child,
@@ -1185,7 +1286,7 @@ outputs_baseline <- tar_plan(
              "child_low_birth_weight"),
     report = FALSE
   ),
-  ### Baseline demographics table - spouse
+  ### Baseline demographics table - spouse -------------------------------------
   baseline_demo_spouse_table = create_province_table(
     baseline_demo_spouse_province,
     baseline_demo_spouse,
@@ -1234,7 +1335,7 @@ outputs_baseline <- tar_plan(
              "spouse_occupation", "spouse_lives_in_home"),
     report = FALSE
   ),
-  ### Baseline household income table
+  ### Baseline household income table ------------------------------------------
   baseline_hh_income_table = create_province_table(
     baseline_hh_income_province,
     baseline_hh_income,
@@ -1301,7 +1402,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline household structure table
+  ### Baseline household structure table ---------------------------------------
   baseline_hh_structure_table = create_province_table(
     baseline_hh_structure_province,
     baseline_hh_structure,
@@ -1362,7 +1463,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline household amenities table
+  ### Baseline household amenities table ---------------------------------------
   baseline_hh_amenities_table = create_province_table(
     baseline_hh_amenities_province,
     baseline_hh_amenities,
@@ -1483,7 +1584,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline household travel table
+  ### Baseline household travel table ------------------------------------------
   baseline_hh_travel_province_table = create_province_table(
     baseline_hh_travel_province,
     baseline_hh_travel,
@@ -1556,7 +1657,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline household decisions table
+  ### Baseline household decisions table ---------------------------------------
   baseline_hh_decision_province_table = create_province_table(
     baseline_hh_decision_province,
     baseline_hh_decision,
@@ -1623,7 +1724,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline household community group membership table
+  ### Baseline household community group membership table ----------------------
   basline_hh_groups_province_table = create_province_table(
     baseline_hh_groups_province,
     baseline_hh_groups,
@@ -1684,7 +1785,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ## Baseline child anthropometry table
+  ### Baseline child anthropometry table ---------------------------------------
   baseline_child_anthro_province_table = create_province_table(
     baseline_child_anthro_province,
     baseline_child_anthro,
@@ -1769,7 +1870,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline WDDS table
+  ### Baseline WDDS table ------------------------------------------------------
   baseline_wdds_province_table = create_province_table(
     baseline_wdds_province,
     baseline_wdds,
@@ -1830,7 +1931,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline MDDW table
+  ### Baseline MDDW table ------------------------------------------------------
   baseline_mddw_province_table = create_province_table(
     baseline_mddw_province,
     baseline_mddw,
@@ -1891,7 +1992,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline child development table
+  ### Baseline child development table -----------------------------------------
   baseline_child_dev_province_table = create_province_table(
     baseline_child_dev_province,
     baseline_child_dev,
@@ -1988,7 +2089,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline WASH table
+  ### Baseline WASH table ------------------------------------------------------
   baseline_wash_province_table = create_province_table(
     baseline_wash_province,
     baseline_wash,
@@ -2067,7 +2168,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline childhood illnesses table
+  ### Baseline childhood illnesses table ---------------------------------------
   baseline_child_ill_province_table = create_province_table(
     baseline_child_ill_province,
     baseline_child_ill,
@@ -2176,7 +2277,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline PHQ8 and alcohol consupmtion table
+  ### Baseline PHQ8 and alcohol consupmtion table ------------------------------
   baseline_women_phq8_province_table = create_province_table(
     baseline_women_phq8_province,
     baseline_women_phq8,
@@ -2231,7 +2332,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline pregnant table
+  ### Baseline pregnant table --------------------------------------------------
   baseline_pregnant_province_table = create_province_table(
     baseline_pregnant_province,
     baseline_pregnant,
@@ -2307,7 +2408,7 @@ outputs_baseline <- tar_plan(
     ),
     report = FALSE
   ),
-  ### Baseline pregnant prevention of disease table
+  ### Baseline pregnant prevention of disease table ----------------------------
   baseline_pregnant_prevention_province_table = create_province_table(
     baseline_pregnant_prevention_province,
     baseline_pregnant_prevention,
@@ -2365,6 +2466,139 @@ outputs_baseline <- tar_plan(
       "offered_voluntary_counselling_and_testing",
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    report = FALSE
+  ),
+  ### Baseline natal care table
+  baseline_natal_care_province_table = create_province_table(
+    baseline_natal_care_province,
+    baseline_natal_care,
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    report = FALSE
+  ),
+  baseline_natal_care_province_table_report = create_province_table(
+    baseline_natal_care_province,
+    baseline_natal_care,
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_strata_table = create_strata_table(
+    baseline_natal_care_strata,
+    baseline_natal_care,
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    report = FALSE
+  ),
+  baseline_natal_care_study_group_table = create_study_group_table(
+    baseline_natal_care_study_group,
+    baseline_natal_care,
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    report = FALSE
+  ),
+  baseline_natal_care_study_group_table_report = create_study_group_table(
+    baseline_natal_care_study_group,
+    baseline_natal_care,
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_study_group_province_table = create_study_group_province_table(
+    baseline_natal_care_study_group_province,
+    baseline_natal_care_study_group,
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     report = FALSE
   )
