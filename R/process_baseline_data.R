@@ -152,14 +152,10 @@ process_baseline_data <- function(.data) {
     home_ownership_own = recode_yes_no(as.integer(sdh5)),
     home_ownership_rent = recode_yes_no(as.integer(sdh6)),
     home_ownership_loan = recode_yes_no(as.integer(sdh7)),
-    number_of_rooms_in_home = haven::as_factor(sdh3) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    number_of_bedrooms_in_home = haven::as_factor(sdh3) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    roofing_material = recode_var_categorical(sdh1) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    floor_material = recode_var_categorical(sdh2) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    number_of_rooms_in_home = haven::as_factor(sdh3),
+    number_of_bedrooms_in_home = haven::as_factor(sdh3),
+    roofing_material = recode_var_categorical(sdh1),
+    floor_material = recode_var_categorical(sdh2),
     time_living_in_location_in_months = recode_time_in_location(q03),
     time_living_in_location_group = recode_time_in_location_group(
       time_living_in_location_in_months, q03
@@ -192,73 +188,41 @@ process_baseline_data <- function(.data) {
     amenities_refrigerator_alternative = recode_yes_no(
       as.integer(cdcg11a)
     ),
-    number_of_mosquito_nets = recode_var_categorical(cdcg13) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    fuel_used_for_cooking = recode_var_categorical(cfegs1) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    location_of_food_preparation = recode_var_categorical(cfegs3) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    fuel_used_for_lighting = recode_var_categorical(cfegs5) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    number_of_mosquito_nets = recode_var_categorical(cdcg13),
+    fuel_used_for_cooking = recode_var_categorical(cfegs1),
+    location_of_food_preparation = recode_var_categorical(cfegs3),
+    fuel_used_for_lighting = recode_var_categorical(cfegs5),
     ## mode of daily travel
-    usual_mode_of_travel = recode_var_categorical(gi1) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    usual_mode_of_travel = recode_var_categorical(gi1),
     time_to_travel_to_health_centre = as.integer(gi2t),
-    mode_of_travel_to_health_centre = recode_var_categorical(gi2m) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    mode_of_travel_to_health_centre = recode_var_categorical(gi2m),
     time_to_travel_to_local_markets = as.integer(gi3t),
-    mode_of_travel_to_local_markets = recode_var_categorical(gi3m) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    mode_of_travel_to_local_markets = recode_var_categorical(gi3m),
     time_to_travel_to_primary_school = as.integer(gi4t),
-    mode_of_travel_to_primary_school = recode_var_categorical(gi4m) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    mode_of_travel_to_primary_school = recode_var_categorical(gi4m),
     time_to_travel_to_secondary_school = as.integer(gi5t),
-    mode_of_travel_to_secondary_school = recode_var_categorical(gi5m) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    mode_of_travel_to_secondary_school = recode_var_categorical(gi5m),
     ## household decision making
-    marrying_age = recode_var_categorical(ge1) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    using_condoms = recode_var_categorical(ge2) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    household_responsibilities = recode_var_categorical(ge3) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    family_planning = recode_var_categorical(ge4) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    agricultural_tasks = recode_var_categorical(ge5) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    household_finances = recode_var_categorical(ge6) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    child_rearing = recode_var_categorical(ge7) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    child_discipline = recode_var_categorical(ge8) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    healthcare_in_pregnancy = recode_var_categorical(ge9) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
-    healthcare_for_child = recode_var_categorical(ge10) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    marrying_age = recode_var_categorical(ge1),
+    using_condoms = recode_var_categorical(ge2),
+    household_responsibilities = recode_var_categorical(ge3),
+    family_planning = recode_var_categorical(ge4),
+    agricultural_tasks = recode_var_categorical(ge5),
+    household_finances = recode_var_categorical(ge6),
+    child_rearing = recode_var_categorical(ge7),
+    child_discipline = recode_var_categorical(ge8),
+    healthcare_in_pregnancy = recode_var_categorical(ge9),
+    healthcare_for_child = recode_var_categorical(ge10),
     ## community groups participation
-    group_membership = recode_var_categorical(q05) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
-      (\(x) ifelse(x == "Sim. Especifique", q05_spec, x))(),
-    presentation_participation = recode_var_categorical(q06) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
-      (\(x) ifelse(x == "Sim. Conteúdo", q06_spec, x))(),
+    group_membership = ifelse(q05 == 2, 0, 1),
+    group_membership_type = recode_group_type(q05, q05_spec),
+    presentation_participation = ifelse(q06 == 2, 0, 1),
+    presentation_topic = recode_presentation_type(q06, q06_spec),
     presentation_facilitator = recode_var_categorical(q06a) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
       (\(x) ifelse(x == "ONG (especifique)", q06a_spec, x))(),
-    information_application = recode_var_categorical(q06b) |>
-      (\(x)
-       {
-         ifelse(
-           x %in% c("NS", "NR"), "No response", 
-           ifelse(
-             x == "NSA", "Did not participate in presentations", x
-           )
-         )
-      }
-      )(),
-    health_tasks_participation = recode_var_categorical(q07) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))() |>
+    information_application = ifelse(q06b == 2, 0, 1),
+    health_tasks_participation = ifelse(q07 == 2, 0, 1),
+    health_tasks_participation_type = recode_var_categorical(q07) |>
       (\(x) ifelse(x == "Sim. Especifique", q07_spec, x))(),
     ## Child anthropometry
     child_height = ifelse(caltura_fi == 2, caltura_check, caltura),
@@ -305,16 +269,14 @@ process_baseline_data <- function(.data) {
     ## Diarrhoea
     diarrhoea_episode = ifelse(ort1 == 2, 0, 1),
     diarrhoea_seek_treatment = ifelse(ort3 == 2, 0, 1),
-    diarrhoea_point_of_care = recode_var_categorical(ort4) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    diarrhoea_point_of_care = recode_var_categorical(ort4),
     diarrhoea_treatment_with_ors = ifelse(
       ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
     ),
     ## Fever
     fever_episode = ifelse(fiber1 == 2, 0, 1),
     fever_seek_treatment = ifelse(fiber2 == 2, 0, 1),
-    fever_point_of_care = recode_var_categorical(fiber3) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    fever_point_of_care = recode_var_categorical(fiber3),
     fever_malaria_test = ifelse(fiber4 == 1 | fiber5 == 1, 1, 0),
     fever_malaria_episode = ifelse(fiber6 == 1, 1, 0),
     fever_malaria_coartem = ifelse(fiber6a_1 == 1, 1, 0),
@@ -328,8 +290,7 @@ process_baseline_data <- function(.data) {
     ## RTI
     rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
     rti_seek_treatment = ifelse(ch3 == 1, 1, 0),
-    rti_point_of_care = recode_var_categorical(ch4) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    rti_point_of_care = recode_var_categorical(ch4),
     rti_treatment_antiobioticos = ifelse(ch5a_1 == 1, 1, 0),
     rti_treatment_paracetamol = ifelse(ch5a_2 == 1, 1, 0),
     rti_treatment_aspirina = ifelse(ch5a_3 == 1, 1, 0),
@@ -340,8 +301,7 @@ process_baseline_data <- function(.data) {
     major_depression = ifelse(phq8_score > 10 & phq8_score <= 20, 1, 0),
     severe_depression = ifelse(phq8_score > 20, 1, 0),
     at_least_major_depression = ifelse(phq8_score > 10, 1, 0),
-    alcohol_consumption = recode_var_categorical(ment9) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    alcohol_consumption = recode_var_categorical(ment9),
     ## Pregnant
     currently_pregnant = ifelse(wh1 == 2, 0, 1),
     weeks_of_gestation_self_report = as.integer(wh4),
@@ -361,14 +321,59 @@ process_baseline_data <- function(.data) {
     intense_abdominal_pain = preg1_7,
     loss_of_consciousness = preg1_8,
     fatigue = preg1_9,
-    plans_when_labor_begins = recode_var_categorical(preg2) |>
-      (\(x) ifelse(x %in% c("NS", "NR", "NSA"), "No response", x))(),
+    plans_when_labor_begins = recode_var_categorical(preg2),
     ### PMTCT and malaria prevention
     offered_voluntary_counselling_and_testing = ifelse(pmtct1 == 2, 0, 1),
     received_vct_results = ifelse(pmtct2 == 2, 0, 1),
     offered_medication_to_reduce_child_risk = ifelse(pmtct3 == 2, 0, 1),
     received_mosquito_net = ifelse(ins1 == 2, 0, 1),
     slept_under_mosquito_net = ifelse(ins2 == 2, 0, 1),
+    ### Natal care
+    location_of_last_delivery = recode_var_categorical(spc1),
+    number_of_prenatal_visits = recode_var_categorical(spc2),
+    at_least_four_anc_visits = ifelse(spc2 %in% 4:5, 1, 0),
+    treated_well_during_anc = ifelse(spc2a == 2, 0, 1),
+    treated_well_at_delivery = ifelse(spc2b == 2, 0, 1),
+    delivery_assisted_by_doctor = spc3_1,
+    delivery_assisted_by_nurse = spc3_2,
+    delivery_assisted_by_midwife = spc3_3,
+    delivery_assisted_by_other_person = spc3_4,
+    delivery_assisted_by_traditional_midwife = spc3_5,
+    delivery_assisted_by_community_health_worker = spc3_6,
+    delivery_assisted_by_relative_or_friend = spc3_7,
+    delivery_assisted_by_other = spc3_8,
+    delivery_assisted_by_nobody = spc3_9,
+    difficulty_reaching_facility_due_to_cost = spc5a_1,
+    difficulty_reaching_facility_due_to_distance = spc5a_2,
+    difficulty_reaching_facility_due_to_stigma = spc5a_3,
+    difficulty_reaching_facility_due_to_poor_roads = spc5a_4,
+    difficulty_reaching_facility_due_to_other_reasons = spc5a_5,
+    difficulty_reaching_facility_no_difficulty = spc5a_6,
+    time_to_postnatal_check_for_child = recode_var_categorical(spc6),
+    time_to_postnatal_check_for_mother = recode_var_categorical(spc7),
+    ## Family planning
+    attempted_to_delay_or_prevent_pregnancy = ifelse(pf1 == 2, 0, 1),
+    benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother = bs2_1,
+    benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_baby = bs2_2,
+    benefit_of_waiting_for_next_pregnancy_avoid_poverty = bs2_3,
+    benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated = bs2_4,
+    benefit_of_waiting_for_next_pregnancy_other_reasons = bs2_5,
+    benefit_of_waiting_for_next_pregnancy_none = bs2_6,
+    benefit_of_waiting_until_18_years_of_age = ifelse(bs3 == 2, 0, 1),
+    benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother = bs3a_1,
+    benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby = bs3a_2,
+    benefit_of_waiting_until_18_years_of_age_avoid_poverty = bs3a_3,
+    benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated = bs3a_4,
+    benefit_of_waiting_until_18_years_of_age_other_reasons = bs3a_5,
+    benefit_of_waiting_until_18_years_of_age_none = bs3a_6,
+    problem_with_having_more_than_4_children = ifelse(bs4 == 2, 0, 1),
+    problem_with_having_more_than_4_children_maternal_mortality = bs4a_1,
+    problem_with_having_more_than_4_children_child_mortality = bs4a_2,
+    problem_with_having_more_than_4_children_poverty = bs4a_3,
+    problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated = bs4a_4,
+    problem_with_having_more_than_4_children_other_reasons = bs4a_5,
+    problem_with_having_more_than_4_children_none = bs4a_6,
+    
     
     
     

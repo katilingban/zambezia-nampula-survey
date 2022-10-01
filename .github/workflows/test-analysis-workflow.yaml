@@ -12,6 +12,7 @@ on:
 jobs:
   test-analysis-workflow:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     container: rocker/geospatial:4.2.1
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
@@ -46,6 +47,6 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make()
+          targets::tar_make(dplyr::starts_with("baseline_natal_care"))
         shell: Rscript {0}
           
