@@ -1688,6 +1688,47 @@ analysis_baseline <- tar_plan(
     vars = "deworming_coverage",
     design = baseline_child_survey_design |>
       subset(child_age_months >= 12)
+  ),
+  ### Baseline results - women's decision making -------------------------------
+  baseline_wem = estimate_total(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  baseline_wem_province = estimate_province(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  baseline_wem_strata = estimate_strata(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  baseline_wem_study_group = estimate_study_group(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  baseline_wem_study_group_province = estimate_study_group_province(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
   )
 )
 
@@ -3642,6 +3683,61 @@ outputs_baseline <- tar_plan(
     baseline_deworming_study_group_province,
     baseline_deworming_study_group,
     vars = "deworming_coverage",
+    report = FALSE
+  ),
+  ### Baseline women's decision making table -----------------------------------
+  baseline_wem_province_table = create_province_table(
+    baseline_wem_province,
+    baseline_wem,
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    report = FALSE
+  ),
+  baseline_wem_province_table_report = create_province_table(
+    baseline_wem_province,
+    baseline_wem,
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_wem_strata_table = create_strata_table(
+    baseline_wem_strata,
+    baseline_wem,
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    report = FALSE
+  ),
+  baseline_wem_study_group_table = create_study_group_table(
+    baseline_wem_study_group,
+    baseline_wem,
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    report = FALSE
+  ),
+  baseline_wem_study_group_table_report = create_study_group_table(
+    baseline_wem_study_group,
+    baseline_wem,
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    report = TRUE, format = "wide"
+  ),
+  baseline_wem_study_group_province_table = create_study_group_province_table(
+    baseline_wem_study_group_province,
+    baseline_wem_study_group,
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
     report = FALSE
   )
 )

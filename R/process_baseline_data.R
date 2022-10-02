@@ -487,7 +487,7 @@ process_baseline_data <- function(.data) {
         )
       )
     ),
-    ### Vitamin A and deworming
+    ## Vitamin A and deworming
     vitamin_a_supplementation_coverage = ifelse(
       child_age_months >= 6 & child_age_months < 12 & vas1 != 1, 1,
       ifelse(
@@ -495,7 +495,7 @@ process_baseline_data <- function(.data) {
       )
     ),
     deworming_coverage = ifelse(vas3 == 2, 0, 1),
-    ### IYCF/ICFI - 6-23 months
+    ## IYCF/ICFI - 6-23 months
     food_group_breastmilk = ifelse(eb1 == 2, 1, 0),
     food_group_dairy = ifelse(nut1l != 1, 1, 0),
     food_group_starch = ifelse(nut1a !=1 | nut1c != 1, 1, 0),
@@ -523,6 +523,11 @@ process_baseline_data <- function(.data) {
     exclusive_breastfeeding = ifelse(
       eb2 == 2 & nut2 == 1, 1, 0
     ),
+    ## Women's decision making
+    freedom_and_control = recode_var_categorical(von1),
+    control_over_destiny = recode_var_categorical(von2),
+    make_decision_without_husband = recode_var_categorical(von3),
+    willingly_participate_in_survey = recode_var_categorical(von4),
     .keep = "unused"
   ) |>
     ## Child anthropometry
