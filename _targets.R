@@ -37,7 +37,7 @@ data_downloads <- tar_plan(
   )
 )
 
-## Read raw data ---------------------------------------------------------------
+## Read raw baseline data ------------------------------------------------------
 raw_data_baseline <- tar_plan(
   ### Sampling list for baseline and endline
   survey_sampling_list = openxlsx::read.xlsx(
@@ -79,13 +79,10 @@ raw_data_baseline <- tar_plan(
   baseline_final_dataset_processing = read_text_data(
     file_list = baseline_data_downloads, 
     filename = "final_dataset", widths = 150
-  ),
-  ### Read raw endline data
-  endline_raw_data = get_endline_data()
+  )
 )
 
-
-## Process data ----------------------------------------------------------------
+## Process baseline data -------------------------------------------------------
 processed_data_baseline <- tar_plan(
   ### Get baseline sampling weights --------------------------------------------
   baseline_sample_weight = calculate_weights(
@@ -144,8 +141,7 @@ processed_data_baseline <- tar_plan(
   )
 )
 
-
-## Analysis --------------------------------------------------------------------
+## Baseline analysis -----------------------------------------------------------
 analysis_baseline <- tar_plan(
   ### Baseline results - demographics respondent -------------------------------
   baseline_demo_respondent = estimate_total(
@@ -3819,6 +3815,17 @@ outputs_baseline <- tar_plan(
   )
 )
 
+## Read raw endline data -------------------------------------------------------
+
+raw_data_endline <- tar_plan(
+  ### Read raw endline data 
+  endline_raw_data = get_endline_data()
+)
+
+## Process endline data --------------------------------------------------------
+processed_data_endline <- tar_plan(
+  
+)
 
 ## Reports ---------------------------------------------------------------------
 reports_baseline <- tar_plan(
@@ -3842,5 +3849,7 @@ list(
   analysis_baseline,
   outputs_baseline,
   reports_baseline,
+  raw_data_endline,
+  processed_data_endline,
   deploy
 )
