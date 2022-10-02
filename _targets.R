@@ -1636,6 +1636,58 @@ analysis_baseline <- tar_plan(
     vars = "exclusive_breastfeeding",
     design = baseline_child_survey_design |>
       subset(child_age_months < 6)
+  ),
+  ### Baseline results - vitamin A supplementation for children 6-59 -----------
+  baseline_child_vita = estimate_total(
+    vars = "vitamin_a_supplementation_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  baseline_child_vita_province = estimate_province(
+    vars = "vitamin_a_supplementation_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  baseline_child_vita_strata = estimate_strata(
+    vars = "vitamin_a_supplementation_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  baseline_child_vita_study_group = estimate_study_group(
+    vars = "vitamin_a_supplementation_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  baseline_child_vita_study_group_province = estimate_study_group_province(
+    vars = "vitamin_a_supplementation_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  ### Baseline results - deworming coverage for children 12-59 -----------------
+  baseline_deworming = estimate_total(
+    vars = "deworming_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  baseline_deworming_province = estimate_province(
+    vars = "deworming_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  baseline_deworming_strata = estimate_strata(
+    vars = "deworming_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  baseline_deworming_study_group = estimate_study_group(
+    vars = "deworming_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  baseline_deworming_study_group_province = estimate_study_group_province(
+    vars = "deworming_coverage",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12)
   )
 )
 
@@ -3516,6 +3568,80 @@ outputs_baseline <- tar_plan(
     baseline_ebf_study_group_province,
     baseline_ebf_study_group,
     vars = "exclusive_breastfeeding",
+    report = FALSE
+  ),
+  ### Baseline child vitamin A coverage table ----------------------------------
+  baseline_child_vita_province_table = create_province_table(
+    baseline_child_vita_province,
+    baseline_child_vita,
+    vars = "vitamin_a_supplementation_coverage",
+    report = FALSE
+  ),
+  baseline_child_vita_province_table_report = create_province_table(
+    baseline_child_vita_province,
+    baseline_child_vita,
+    vars = "vitamin_a_supplementation_coverage",
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_vita_strata_table = create_strata_table(
+    baseline_child_vita_strata,
+    baseline_child_vita,
+    vars = "vitamin_a_supplementation_coverage",
+    report = FALSE
+  ),
+  baseline_child_vita_study_group_table = create_study_group_table(
+    baseline_child_vita_study_group,
+    baseline_child_vita,
+    vars = "vitamin_a_supplementation_coverage",
+    report = FALSE
+  ),
+  baseline_child_vita_study_group_table_report = create_study_group_table(
+    baseline_child_vita_study_group,
+    baseline_child_vita,
+    vars = "vitamin_a_supplementation_coverage",
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_vita_study_group_province_table = create_study_group_province_table(
+    baseline_child_vita_study_group_province,
+    baseline_child_vita_study_group,
+    vars = "vitamin_a_supplementation_coverage",
+    report = FALSE
+  ),
+  ### Baseline deworming coverage table ----------------------------------------
+  baseline_deworming_province_table = create_province_table(
+    baseline_deworming_province,
+    baseline_deworming,
+    vars = "deworming_coverage",
+    report = FALSE
+  ),
+  baseline_deworming_province_table_report = create_province_table(
+    baseline_deworming_province,
+    baseline_deworming,
+    vars = "deworming_coverage",
+    report = TRUE, format = "wide"
+  ),
+  baseline_deworming_strata_table = create_strata_table(
+    baseline_deworming_strata,
+    baseline_deworming,
+    vars = "deworming_coverage",
+    report = FALSE
+  ),
+  baseline_deworming_study_group_table = create_study_group_table(
+    baseline_deworming_study_group,
+    baseline_deworming,
+    vars = "deworming_coverage",
+    report = FALSE
+  ),
+  baseline_deworming_study_group_table_report = create_study_group_table(
+    baseline_deworming_study_group,
+    baseline_deworming,
+    vars = "deworming_coverage",
+    report = TRUE, format = "wide"
+  ),
+  baseline_deworming_study_group_province_table = create_study_group_province_table(
+    baseline_deworming_study_group_province,
+    baseline_deworming_study_group,
+    vars = "deworming_coverage",
     report = FALSE
   )
 )
