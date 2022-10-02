@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-# Load packages (in packages.R) and load project-specific functions in R folder
+# Load packages and load project-specific functions in R folder ----------------
 suppressPackageStartupMessages(source("packages.R"))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
@@ -1764,8 +1764,8 @@ analysis_baseline <- tar_plan(
 )
 
 
-## Outputs ---------------------------------------------------------------------
-outputs_baseline <- tar_plan(
+## Outputs - Tables ------------------------------------------------------------
+outputs_tables_baseline <- tar_plan(
   ### Baseline demographics table - respondent ---------------------------------
   baseline_demo_respondent_table = create_province_table(
     baseline_demo_respondent_province,
@@ -3815,6 +3815,9 @@ outputs_baseline <- tar_plan(
   )
 )
 
+## Outputs - Excel -------------------------------------------------------------
+
+
 ## Read raw endline data -------------------------------------------------------
 
 raw_data_endline <- tar_plan(
@@ -3827,8 +3830,23 @@ processed_data_endline <- tar_plan(
   
 )
 
+## Outputs - overall -----------------------------------------------------------
+outputs_overall <- tar_plan(
+  
+)
+
+## Analysis - difference-in-difference -----------------------------------------
+analysis_comparison <- tar_plan(
+  
+)
+
+## Outputs - difference-in-difference ------------------------------------------
+outputs_comparison <- tar_plan(
+  
+)
+
 ## Reports ---------------------------------------------------------------------
-reports_baseline <- tar_plan(
+reports <- tar_plan(
   ##
 )
 
@@ -3847,9 +3865,12 @@ list(
   raw_data_baseline,
   processed_data_baseline,
   analysis_baseline,
-  outputs_baseline,
-  reports_baseline,
+  outputs_tables_baseline,
   raw_data_endline,
   processed_data_endline,
+  outputs_overall,
+  analysis_comparison,
+  outputs_comparison,
+  reports,
   deploy
 )
