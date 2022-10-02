@@ -1150,7 +1150,7 @@ analysis_baseline <- tar_plan(
           respondent_age_years < 50
       )
   ),
-  ### Baseline results - natal care
+  ### Baseline results - natal care --------------------------------------------
   baseline_natal_care = estimate_total(
     vars = c(
       "location_of_last_delivery", "number_of_prenatal_visits",
@@ -1167,7 +1167,14 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1192,7 +1199,14 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1217,7 +1231,14 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1242,7 +1263,14 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1267,7 +1295,14 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -3047,7 +3082,14 @@ outputs_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     report = FALSE
   ),
@@ -3069,7 +3111,14 @@ outputs_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     report = TRUE, format = "wide"
   ),
@@ -3091,7 +3140,14 @@ outputs_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     report = FALSE
   ),
@@ -3113,7 +3169,14 @@ outputs_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     report = FALSE
   ),
@@ -3135,7 +3198,14 @@ outputs_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     report = TRUE, format = "wide"
   ),
@@ -3158,7 +3228,14 @@ outputs_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
     ),
     report = FALSE
   ),

@@ -351,6 +351,13 @@ process_baseline_data <- function(.data) {
     difficulty_reaching_facility_no_difficulty = spc5a_6,
     time_to_postnatal_check_for_child = recode_var_categorical(spc6),
     time_to_postnatal_check_for_mother = recode_var_categorical(spc7),
+    given_malaria_treatment_during_pregnancy = ifelse(fansidar1 == 2, 0, 1),
+    took_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 1, 0, 1),
+    completed_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 4, 1, 0),
+    at_least_one_tetanus_toxoid_vaccination = ifelse(tt1 == 2, 0, 1),
+    two_or_more_tetanus_toxoid_vaccination = ifelse(tt2 != 1, 1, 0),
+    ferrous_sulfate_supplementation = ifelse(fol1 == 2, 0, 1),
+    vitamin_a_supplementation_during_pregnancy = ifelse(va1 == 2, 0, 1),
     ## Family planning
     attempted_to_delay_or_prevent_pregnancy = ifelse(pf1 == 2, 0, 1),
     benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother = bs2_1,
