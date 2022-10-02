@@ -47,7 +47,6 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("baseline_child_vita"))
-          targets::tar_make(dplyr::starts_with("baseline_deworming"))
+          targets::tar_make(dplyr::contains("survey_design"))
         shell: Rscript {0}
           
