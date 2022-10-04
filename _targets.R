@@ -11,10 +11,22 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 # Set build options ------------------------------------------------------------
 
+## Set options for survey package
 options(
   survey.lonely.psu = "adjust"  ## Adjust variance for stratum with single PSU
 )
 
+## Authenticate with Google Drive
+googledrive::drive_auth(
+  email = Sys.getenv("GOOGLE_AUTH_EMAIL"),
+  path = Sys.getenv("GOOGLE_AUTH_FILE")
+)
+
+## Authenticate with Google Sheets
+googlesheets4::gs4_auth(
+  email = Sys.getenv("GOOGLE_AUTH_EMAIL"),
+  path = Sys.getenv("GOOGLE_AUTH_FILE")
+)
 
 # Groups of targets ------------------------------------------------------------
 
@@ -36,6 +48,20 @@ data_downloads <- tar_plan(
     cue = tar_cue("thorough")
   )
 )
+
+## Supporting/reference datasets -----------------------------------------------
+data_reference <- tar_plan(
+  ### Read indicator list from Google Sheets
+  survey_indicator_list_id = googlesheets4::gs4_find() |>
+    subset(name == "zambezia_nampula_survey_indicators") |>
+    (\(x) x$id)(),
+  tar_target(
+    name = survey_indicator_list,
+    command = googlesheets4::read_sheet(ss = survey_indicator_list_id),
+    cue = tar_cue("thorough")
+  )
+)
+
 
 ## Read raw baseline data ------------------------------------------------------
 raw_data_baseline <- tar_plan(
@@ -1774,6 +1800,7 @@ outputs_tables_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_respondent_table_report = create_province_table(
@@ -1783,6 +1810,7 @@ outputs_tables_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_respondent_strata_table = create_strata_table(
@@ -1792,6 +1820,7 @@ outputs_tables_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_respondent_study_group_table = create_study_group_table(
@@ -1801,6 +1830,7 @@ outputs_tables_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_respondent_study_group_table_report = create_study_group_table(
@@ -1810,6 +1840,7 @@ outputs_tables_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_respondent_study_group_province_table = create_study_group_province_table(
@@ -1819,6 +1850,7 @@ outputs_tables_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline demographics table - child --------------------------------------
@@ -3815,9 +3847,6 @@ outputs_tables_baseline <- tar_plan(
   )
 )
 
-## Outputs - Excel -------------------------------------------------------------
-
-
 ## Read raw endline data -------------------------------------------------------
 
 raw_data_endline <- tar_plan(
@@ -3832,7 +3861,7 @@ processed_data_endline <- tar_plan(
 
 ## Outputs - overall -----------------------------------------------------------
 outputs_overall <- tar_plan(
-  
+  ### Overall table output - respondent demographics
 )
 
 ## Analysis - difference-in-difference -----------------------------------------
@@ -3862,6 +3891,7 @@ set.seed(1977)
 
 list(
   data_downloads,
+  data_reference,
   raw_data_baseline,
   processed_data_baseline,
   analysis_baseline,

@@ -11,6 +11,7 @@
 create_province_table <- function(results_province, 
                                   results_total,
                                   vars,
+                                  indicator_list,
                                   study_round = c("Baseline", "Endline"),
                                   report = FALSE,
                                   format = c("long", "wide"),
@@ -22,6 +23,7 @@ create_province_table <- function(results_province,
     create_results_tables(
       x = results_province,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = study_round,
       strata = names(results_province),
       study_group = "Overall"
@@ -29,6 +31,7 @@ create_province_table <- function(results_province,
     create_results_table(
       x = results_total,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = study_round,
       strata = "Overall",
       study_group = "Overall"
@@ -53,6 +56,7 @@ create_province_table <- function(results_province,
 create_strata_table <- function(results_strata,
                                 results_total,
                                 vars,
+                                indicator_list,
                                 study_round = c("Baseline", "Endline"),
                                 report = FALSE,
                                 format = c("long", "wide")) {
@@ -63,6 +67,7 @@ create_strata_table <- function(results_strata,
     create_results_tables(
       x = results_strata,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = rep(study_round, length(results_strata)),
       strata = names(results_strata),
       study_group = c(
@@ -72,6 +77,7 @@ create_strata_table <- function(results_strata,
     create_results_table(
       x = results_total,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = study_round,
       strata = "Overall",
       study_group = "Overall"
@@ -92,6 +98,7 @@ create_strata_table <- function(results_strata,
 create_study_group_table <- function(results_study_group,
                                      results_total,
                                      vars,
+                                     indicator_list,
                                      study_round = c("Baseline", "Endline"),
                                      report = FALSE,
                                      format = c("long", "wide"),
@@ -103,6 +110,7 @@ create_study_group_table <- function(results_study_group,
     create_results_tables(
       x = results_study_group,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = rep(study_round, length(results_study_group)),
       strata = rep("Overall", length(results_study_group)),
       study_group = names(results_study_group)
@@ -110,6 +118,7 @@ create_study_group_table <- function(results_study_group,
     create_results_table(
       x = results_total,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = study_round,
       strata = "Overall",
       study_group = "Overall"
@@ -134,6 +143,7 @@ create_study_group_table <- function(results_study_group,
 create_study_group_province_table <- function(results_study_group_province,
                                               results_study_group,
                                               vars,
+                                              indicator_list,
                                               study_round = c("Baseline", "Endline"),
                                               report = FALSE,
                                               format = c("long", "wide")) {
@@ -144,6 +154,7 @@ create_study_group_province_table <- function(results_study_group_province,
     create_results_tables(
       x = results_study_group_province,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = rep(study_round, length(results_study_group_province)),
       strata = names(results_study_group_province) |> 
         stringr::str_split(pattern = " ", simplify = TRUE) |> 
@@ -155,6 +166,7 @@ create_study_group_province_table <- function(results_study_group_province,
     create_results_tables(
       x = results_study_group,
       vars = vars,
+      indicator_list = indicator_list,
       study_round = study_round,
       strata = "Overall",
       study_group = names(results_study_group)
@@ -288,27 +300,51 @@ create_full_table <- function(baseline = NULL,
 
 ## Get variable identifiers ----------------------------------,------------------
 
-get_vars_info <- function(x, vars) {
+get_vars_info <- function(x, vars, indicator_list) {
   variable <- stringr::str_extract_all(
     string = x, 
     pattern = paste(vars, collapse = "|"),
     simplify = TRUE
-  ) |>
-    stringr::str_replace_all(
-      pattern = "_", replacement = " "
-    ) |>
-    stringr::str_to_title()
+  ) #|>
+    # stringr::str_replace_all(
+    #   pattern = "_", replacement = " "
+    # ) |>
+    # stringr::str_to_title()
+  
+  # category <- stringr::str_remove_all(
+  #   string = x,
+  #   pattern = paste(vars, collapse = "|")
+  # ) |>
+  #   stringr::str_replace_all(
+  #     pattern = "_", replacement = " "
+  #   ) |>
+  #   (\(x) ifelse(x == "", "Mean", x))()
   
   category <- stringr::str_remove_all(
-    string = x, 
+    string = x,
     pattern = paste(vars, collapse = "|")
   ) |>
     stringr::str_replace_all(
       pattern = "_", replacement = " "
-    ) |>
-    (\(x) ifelse(x == "", "Mean", x))()
+    )
   
-  data.frame(variable, category)
+  data.frame(variable, category) |>
+    dplyr::left_join(
+      indicator_list,
+      by = c("variable" = "indicator_variable")
+    ) |>
+    dplyr::mutate(
+      indicator_category = ifelse(
+        is.na(indicator_category), category, indicator_category
+      ),
+      indicator_variable = variable
+    ) |>
+    subset(
+      select = c(
+        indicator_set, indicator_set_code, indicator_variable, indicator_code,
+        indicator, indicator_label, indicator_category
+      )
+    )
 }
 
 
@@ -329,7 +365,10 @@ get_vars_info <- function(x, vars) {
 
 ## Create results table --------------------------------------------------------
 
-create_results_table <- function(x, vars, study_round, strata, study_group) {  
+create_results_table <- function(x, vars,
+                                 indicator_list,
+                                 study_round, 
+                                 strata, study_group) {  
   results_table <- data.frame(
     study_round = study_round,
     strata = strata,
@@ -340,15 +379,21 @@ create_results_table <- function(x, vars, study_round, strata, study_group) {
     (\(x) { names(x)[5:6] <- c("lcl", "ucl"); x })()
   
   results_table <- data.frame(
-    get_vars_info(x = row.names(results_table), vars = vars),
+    get_vars_info(
+      x = row.names(results_table), vars = vars, 
+      indicator_list = indicator_list
+    ),
     results_table
   )
   
   results_table
 }
 
-create_results_tables <- function(x, vars, study_round, strata, study_group) {
+create_results_tables <- function(x, vars, 
+                                  indicator_list,
+                                  study_round, strata, study_group) {
   vars <- rep(list(vars), length(x))
+  indicator_list <- rep(list(indicator_list), length(x))
   study_round <- as.list(study_round)
   strata <- as.list(strata)
   study_group <- as.list(study_group)
@@ -357,6 +402,7 @@ create_results_tables <- function(x, vars, study_round, strata, study_group) {
     f = create_results_table,
     x = x,
     vars = vars,
+    indicator_list = indicator_list,
     study_round = study_round,
     strata = strata,
     study_group = study_group
@@ -372,19 +418,19 @@ format_results_table_report <- function(results_table) {
      {
        x[["estimate"]] <- ifelse(
          #x[["estimate"]] < 1, 
-         x[["category"]] != "Mean",
+         x[["indicator_category"]] != "Mean",
          scales::percent(x[["estimate"]], accuracy = 0.01, suffix = "%"),
          scales::number(x[["estimate"]], accuracy = 0.01)
        )
        x[["lcl"]] <- ifelse(
          #x[["lcl"]] < 1,
-         x[["category"]] != "Mean",
+         x[["indicator_category"]] != "Mean",
          scales::percent(x[["lcl"]], accuracy = 0.01, suffix = "%"),
          scales::number(x[["lcl"]], accuracy = 0.01)
        )
        x[["ucl"]] <- ifelse(
          #x[["ucl"]] < 1, 
-         x[["category"]] != "Mean",
+         x[["indicator_category"]] != "Mean",
          scales::percent(x[["ucl"]], accuracy = 0.01, suffix = "%"),
          scales::number(x[["ucl"]], accuracy = 0.01)
        )
@@ -398,9 +444,16 @@ format_results_table_report <- function(results_table) {
 pivot_results_table <- function(results_table, pivot) {
   type <- unique(results_table[[pivot]])
   var_names <- c(
-    "variable", "category", "study_round", "strata", "study_group"
+    "indicator_set", "indicator", "indicator_label", "indicator_category", 
+    "study_round", "strata", "study_group"
   ) |>
     (\(x) x[x != pivot])()
+  
+  ## Trim results_table
+  results_table <- results_table |>
+    subset(
+      select = c(-indicator_set_code, -indicator_variable, -indicator_code)
+    )
   
   data.frame(
     results_table |>
