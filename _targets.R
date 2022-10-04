@@ -58,7 +58,7 @@ data_reference <- tar_plan(
   tar_target(
     name = survey_indicator_list,
     command = googlesheets4::read_sheet(ss = survey_indicator_list_id),
-    cue = tar_cue("thorough")
+    cue = tar_cue("always")
   )
 )
 
@@ -1862,6 +1862,7 @@ outputs_tables_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_child_table_report = create_province_table(
@@ -1872,6 +1873,7 @@ outputs_tables_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_child_strata_table = create_strata_table(
@@ -1882,6 +1884,7 @@ outputs_tables_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_child_study_group_table = create_study_group_table(
@@ -1892,6 +1895,7 @@ outputs_tables_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_child_study_group_table_report = create_study_group_table(
@@ -1902,6 +1906,7 @@ outputs_tables_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_child_study_group_province_table = create_study_group_province_table(
@@ -1912,6 +1917,7 @@ outputs_tables_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline demographics table - spouse -------------------------------------
@@ -1921,6 +1927,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_spouse_table_report = create_province_table(
@@ -1929,6 +1936,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_spouse_strata_table = create_strata_table(
@@ -1937,6 +1945,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_spouse_study_group_table = create_study_group_table(
@@ -1945,6 +1954,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_spouse_study_group_table_report = create_study_group_table(
@@ -1953,6 +1963,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_spouse_study_group_province_table = create_study_group_province_table(
@@ -1961,6 +1972,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household income table ------------------------------------------
@@ -1973,6 +1985,7 @@ outputs_tables_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_income_table_report = create_province_table(
@@ -1984,6 +1997,7 @@ outputs_tables_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_income_strata_table = create_strata_table(
@@ -1995,6 +2009,7 @@ outputs_tables_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_income_study_group_table = create_study_group_table(
@@ -2006,6 +2021,7 @@ outputs_tables_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_income_study_group_table_report = create_study_group_table(
@@ -2017,6 +2033,7 @@ outputs_tables_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_income_study_group_province_table = create_study_group_province_table(
@@ -2028,6 +2045,7 @@ outputs_tables_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household structure table ---------------------------------------
