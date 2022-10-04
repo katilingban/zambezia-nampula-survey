@@ -152,8 +152,9 @@ process_baseline_data <- function(.data) {
     home_ownership_own = recode_yes_no(as.integer(sdh5)),
     home_ownership_rent = recode_yes_no(as.integer(sdh6)),
     home_ownership_loan = recode_yes_no(as.integer(sdh7)),
-    number_of_rooms_in_home = haven::as_factor(sdh3),
-    number_of_bedrooms_in_home = haven::as_factor(sdh3),
+    #number_of_rooms_in_home = haven::as_factor(sdh3),
+    number_of_rooms_in_home = recode_var_categorical(sdh3),
+    number_of_bedrooms_in_home = recode_var_categorical(sdh4),
     roofing_material = recode_var_categorical(sdh1),
     floor_material = recode_var_categorical(sdh2),
     time_living_in_location_in_months = recode_time_in_location(q03),
@@ -161,33 +162,15 @@ process_baseline_data <- function(.data) {
       time_living_in_location_in_months, q03
     ),
     ## household amenities
-    communication_and_information_access_electricity = recode_yes_no(
-      as.integer(cdcg1)
-    ),
-    communication_and_information_access_cellphone = recode_yes_no(
-      as.integer(cdcg4)
-    ),
-    communication_and_information_access_computer = recode_yes_no(
-      as.integer(cdcg7)
-    ),
-    communication_and_information_access_landline = recode_yes_no(
-      as.integer(cdcg6)
-    ),
-    communication_and_information_access_radio = recode_yes_no(
-      as.integer(cdcg2)
-    ),
-    communication_and_information_access_television = recode_yes_no(
-      as.integer(cdcg3)
-    ),
-    amenities_housekeeper_childcare_employee = recode_yes_no(
-      as.integer(cdcg14)
-    ),
-    amenities_refrigerator = recode_yes_no(
-      as.integer(cdcg11)
-    ),
-    amenities_refrigerator_alternative = recode_yes_no(
-      as.integer(cdcg11a)
-    ),
+    electricity = recode_yes_no(as.integer(cdcg1)),
+    cellphone = recode_yes_no(as.integer(cdcg4)),
+    computer = recode_yes_no(as.integer(cdcg7)),
+    landline = recode_yes_no(as.integer(cdcg6)),
+    radio = recode_yes_no(as.integer(cdcg2)),
+    television = recode_yes_no(as.integer(cdcg3)),
+    housekeeper_childcare_employee = recode_yes_no(as.integer(cdcg14)),
+    refrigerator = recode_yes_no(as.integer(cdcg11)),
+    refrigerator_alternative = recode_yes_no(as.integer(cdcg11a)),
     number_of_mosquito_nets = recode_var_categorical(cdcg13),
     fuel_used_for_cooking = recode_var_categorical(cfegs1),
     location_of_food_preparation = recode_var_categorical(cfegs3),

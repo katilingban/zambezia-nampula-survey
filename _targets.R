@@ -327,130 +327,95 @@ analysis_baseline <- tar_plan(
   baseline_hh_structure = estimate_total(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_province = estimate_province(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_strata = estimate_strata(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_study_group = estimate_study_group(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_study_group_province = estimate_study_group_province(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   ### Baseline results - household amenities -----------------------------------
   baseline_hh_amenities = estimate_total(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_province = estimate_province(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_strata = estimate_strata(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_study_group = estimate_study_group(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_study_group_province = estimate_study_group_province(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
@@ -2054,9 +2019,11 @@ outputs_tables_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_structure_table_report = create_province_table(
@@ -2064,9 +2031,11 @@ outputs_tables_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_structure_strata_table = create_strata_table(
@@ -2074,9 +2043,11 @@ outputs_tables_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_structure_study_group_table = create_study_group_table(
@@ -2084,9 +2055,11 @@ outputs_tables_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_structure_study_group_table_report = create_study_group_table(
@@ -2094,9 +2067,11 @@ outputs_tables_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_structure_study_group_province_table = create_study_group_province_table(
@@ -2104,9 +2079,11 @@ outputs_tables_baseline <- tar_plan(
     baseline_hh_structure_study_group,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household amenities table ---------------------------------------
@@ -2114,120 +2091,78 @@ outputs_tables_baseline <- tar_plan(
     baseline_hh_amenities_province,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_amenities_table_report = create_province_table(
     baseline_hh_amenities_province,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_amenities_strata_table = create_strata_table(
     baseline_hh_amenities_strata,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_amenities_study_group_table = create_study_group_table(
     baseline_hh_amenities_study_group,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_amenities_study_group_table_report = create_study_group_table(
     baseline_hh_amenities_study_group,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_amenities_study_group_province_table = create_study_group_province_table(
     baseline_hh_amenities_study_group_province,
     baseline_hh_amenities_study_group,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household travel table ------------------------------------------
@@ -2241,6 +2176,7 @@ outputs_tables_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_travel_province_table_report = create_province_table(
@@ -2253,6 +2189,7 @@ outputs_tables_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_travel_strata_table = create_strata_table(
@@ -2265,6 +2202,7 @@ outputs_tables_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_travel_study_group_table = create_study_group_table(
@@ -2277,6 +2215,7 @@ outputs_tables_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_travel_study_group_table_report = create_study_group_table(
@@ -2289,6 +2228,7 @@ outputs_tables_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_travel_study_group_province_table = create_study_group_province_table(
@@ -2301,6 +2241,7 @@ outputs_tables_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household decisions table ---------------------------------------
@@ -2313,6 +2254,7 @@ outputs_tables_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_decision_province_table_report = create_province_table(
@@ -2324,6 +2266,7 @@ outputs_tables_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_decision_strata_table = create_strata_table(
@@ -2335,6 +2278,7 @@ outputs_tables_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_decision_study_group_table = create_study_group_table(
@@ -2346,6 +2290,7 @@ outputs_tables_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_decision_study_group_table_report = create_study_group_table(
@@ -2357,6 +2302,7 @@ outputs_tables_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_decision_study_group_province_table = create_study_group_province_table(
@@ -2368,16 +2314,18 @@ outputs_tables_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household community group membership table ----------------------
-  basline_hh_groups_province_table = create_province_table(
+  baseline_hh_groups_province_table = create_province_table(
     baseline_hh_groups_province,
     baseline_hh_groups,
     vars = c(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_groups_province_table_report = create_province_table(
@@ -2387,6 +2335,7 @@ outputs_tables_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_groups_strata_table = create_strata_table(
@@ -2396,6 +2345,7 @@ outputs_tables_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_groups_study_group_table = create_study_group_table(
@@ -2405,6 +2355,7 @@ outputs_tables_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report =  FALSE
   ),
   baseline_hh_groups_study_group_table_report = create_study_group_table(
@@ -2414,6 +2365,7 @@ outputs_tables_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_groups_study_group_province_table = create_study_group_province_table(
@@ -2423,6 +2375,7 @@ outputs_tables_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child anthropometry table ---------------------------------------
