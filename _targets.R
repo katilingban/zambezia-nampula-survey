@@ -2478,6 +2478,7 @@ outputs_tables_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wdds_province_table_report = create_province_table(
@@ -2488,6 +2489,7 @@ outputs_tables_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wdds_strata_table = create_strata_table(
@@ -2498,6 +2500,7 @@ outputs_tables_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wdds_study_group_table = create_study_group_table(
@@ -2508,6 +2511,7 @@ outputs_tables_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wdds_study_group_table_report = create_study_group_table(
@@ -2518,6 +2522,7 @@ outputs_tables_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wdds_study_group_province_table =  create_study_group_province_table(
@@ -2528,6 +2533,7 @@ outputs_tables_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline MDDW table ------------------------------------------------------
@@ -2539,6 +2545,7 @@ outputs_tables_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_mddw_province_table_report = create_province_table(
@@ -2549,6 +2556,7 @@ outputs_tables_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_mddw_strata_table = create_strata_table(
@@ -2559,6 +2567,7 @@ outputs_tables_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_mddw_study_group_table = create_study_group_table(
@@ -2569,6 +2578,7 @@ outputs_tables_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_mddw_study_group_table_report = create_study_group_table(
@@ -2579,6 +2589,7 @@ outputs_tables_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_mddw_study_group_province_table = create_study_group_province_table(
@@ -2589,6 +2600,7 @@ outputs_tables_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child development table -----------------------------------------
@@ -2700,6 +2712,7 @@ outputs_tables_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wash_province_table_report = create_province_table(
@@ -2713,6 +2726,7 @@ outputs_tables_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wash_strata_table = create_strata_table(
@@ -2726,6 +2740,7 @@ outputs_tables_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wash_study_group_table = create_study_group_table(
@@ -2739,6 +2754,7 @@ outputs_tables_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wash_study_group_table_report = create_study_group_table(
@@ -2752,6 +2768,7 @@ outputs_tables_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wash_study_group_province_table = create_study_group_province_table(
@@ -2765,6 +2782,7 @@ outputs_tables_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline childhood illnesses table ---------------------------------------
