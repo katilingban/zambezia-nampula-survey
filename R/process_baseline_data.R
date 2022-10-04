@@ -235,12 +235,12 @@ process_baseline_data <- function(.data) {
     open_defecation = ifelse(lusd1 == 2 | lusd4 == 6, 1, 0),
     unimproved_toilet_facility = ifelse(lusd4 == 5, 1, 0),
     limited_toilet_facility = ifelse(lusd2 == 1 & lusd4 != 5, 1, 0),
-    basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 == 5, 1, 0),
+    basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 != 5, 1, 0),
     ## Hygiene
     no_handwashing_facility = ifelse(
       mao1 == 2, 1, 
       ifelse(
-        mao1 %in% 3:4, NA, 1
+        mao1 %in% 3:4, NA, 0
       )
     ),
     limited_handwashing_facility = ifelse(

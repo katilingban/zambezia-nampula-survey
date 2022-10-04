@@ -3793,6 +3793,7 @@ outputs_tables_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wem_province_table_report = create_province_table(
@@ -3802,6 +3803,7 @@ outputs_tables_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wem_strata_table = create_strata_table(
@@ -3811,6 +3813,7 @@ outputs_tables_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wem_study_group_table = create_study_group_table(
@@ -3820,6 +3823,7 @@ outputs_tables_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wem_study_group_table_report = create_study_group_table(
@@ -3829,6 +3833,7 @@ outputs_tables_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wem_study_group_province_table = create_study_group_province_table(
@@ -3838,6 +3843,7 @@ outputs_tables_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   )
 )
