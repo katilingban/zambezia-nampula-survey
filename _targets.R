@@ -2391,6 +2391,7 @@ outputs_tables_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_anthro_province_table_report = create_province_table(
@@ -2405,6 +2406,7 @@ outputs_tables_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_anthro_strata_table = create_strata_table(
@@ -2419,6 +2421,7 @@ outputs_tables_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_anthro_study_group_table = create_study_group_table(
@@ -2433,6 +2436,7 @@ outputs_tables_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_anthro_study_group_table_report = create_study_group_table(
@@ -2447,6 +2451,7 @@ outputs_tables_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_anthro_study_group_province_table = create_study_group_province_table(
@@ -2461,6 +2466,7 @@ outputs_tables_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline WDDS table ------------------------------------------------------
