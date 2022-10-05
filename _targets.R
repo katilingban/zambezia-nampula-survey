@@ -3793,36 +3793,42 @@ outputs_tables_baseline <- tar_plan(
     baseline_child_vita_province,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_vita_province_table_report = create_province_table(
     baseline_child_vita_province,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_vita_strata_table = create_strata_table(
     baseline_child_vita_strata,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_vita_study_group_table = create_study_group_table(
     baseline_child_vita_study_group,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_vita_study_group_table_report = create_study_group_table(
     baseline_child_vita_study_group,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_vita_study_group_province_table = create_study_group_province_table(
     baseline_child_vita_study_group_province,
     baseline_child_vita_study_group,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline deworming coverage table ----------------------------------------
@@ -3830,36 +3836,42 @@ outputs_tables_baseline <- tar_plan(
     baseline_deworming_province,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_deworming_province_table_report = create_province_table(
     baseline_deworming_province,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_deworming_strata_table = create_strata_table(
     baseline_deworming_strata,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_deworming_study_group_table = create_study_group_table(
     baseline_deworming_study_group,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_deworming_study_group_table_report = create_study_group_table(
     baseline_deworming_study_group,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_deworming_study_group_province_table = create_study_group_province_table(
     baseline_deworming_study_group_province,
     baseline_deworming_study_group,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline women's decision making table -----------------------------------
