@@ -764,7 +764,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_province = estimate_province(
     vars = c(
@@ -778,7 +778,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_strata = estimate_strata(
     vars = c(
@@ -792,7 +792,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_study_group = estimate_study_group(
     vars = c(
@@ -806,7 +806,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_study_group_province = estimate_study_group_province(
     vars = c(
@@ -820,7 +820,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   ### Baseline results - WASH --------------------------------------------------
   baseline_wash = estimate_total(
@@ -2654,6 +2654,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_dev_province_table_report = create_province_table(
@@ -2670,6 +2671,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_dev_strata_table = create_strata_table(
@@ -2686,6 +2688,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_dev_study_group_table = create_study_group_table(
@@ -2702,6 +2705,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_dev_study_group_table_report = create_study_group_table(
@@ -2718,6 +2722,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_dev_study_group_province_table = create_study_group_province_table(
@@ -2734,6 +2739,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline WASH table ------------------------------------------------------
@@ -2838,6 +2844,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_province_table_report = create_province_table(
@@ -2856,6 +2863,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_ill_strata_table = create_strata_table(
@@ -2874,6 +2882,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_study_group_table = create_study_group_table(
@@ -2892,6 +2901,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_study_group_table_report = create_study_group_table(
@@ -2910,6 +2920,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_ill_study_group_province_table = create_study_group_province_table(
@@ -2928,6 +2939,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline PHQ8 and alcohol consupmtion table ------------------------------
