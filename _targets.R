@@ -764,7 +764,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_province = estimate_province(
     vars = c(
@@ -778,7 +778,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_strata = estimate_strata(
     vars = c(
@@ -792,7 +792,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_study_group = estimate_study_group(
     vars = c(
@@ -806,7 +806,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   baseline_child_dev_study_group_province = estimate_study_group_province(
     vars = c(
@@ -820,7 +820,7 @@ analysis_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
-    design = baseline_child_survey_design
+    design = baseline_hh_survey_design
   ),
   ### Baseline results - WASH --------------------------------------------------
   baseline_wash = estimate_total(
@@ -1456,7 +1456,7 @@ analysis_baseline <- tar_plan(
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
     design = baseline_child_survey_design
   ),
@@ -1471,7 +1471,7 @@ analysis_baseline <- tar_plan(
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
     design = baseline_child_survey_design
   ),
@@ -1486,7 +1486,7 @@ analysis_baseline <- tar_plan(
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
     design = baseline_child_survey_design
   ),
@@ -1501,7 +1501,7 @@ analysis_baseline <- tar_plan(
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
     design = baseline_child_survey_design
   ),
@@ -1516,7 +1516,7 @@ analysis_baseline <- tar_plan(
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
     design = baseline_child_survey_design
   ),
@@ -2654,6 +2654,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_dev_province_table_report = create_province_table(
@@ -2670,6 +2671,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_dev_strata_table = create_strata_table(
@@ -2686,6 +2688,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_dev_study_group_table = create_study_group_table(
@@ -2702,6 +2705,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_dev_study_group_table_report = create_study_group_table(
@@ -2718,6 +2722,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_dev_study_group_province_table = create_study_group_province_table(
@@ -2734,6 +2739,7 @@ outputs_tables_baseline <- tar_plan(
       "play_with_child_while_working_in_the_field",
       "play_with_child_during_free_time"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline WASH table ------------------------------------------------------
@@ -2838,6 +2844,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_province_table_report = create_province_table(
@@ -2856,6 +2863,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_ill_strata_table = create_strata_table(
@@ -2874,6 +2882,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_study_group_table = create_study_group_table(
@@ -2892,6 +2901,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_study_group_table_report = create_study_group_table(
@@ -2910,6 +2920,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_ill_study_group_province_table = create_study_group_province_table(
@@ -2928,6 +2939,7 @@ outputs_tables_baseline <- tar_plan(
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline PHQ8 and alcohol consupmtion table ------------------------------
@@ -3491,14 +3503,15 @@ outputs_tables_baseline <- tar_plan(
       "immunisation_card_retention_self_report", "immunisation_card_retention",
       "immunisation_bcg", "immunisation_polio_first_dose",
       "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
       "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
       "immunisation_measles_first_dose", "immunisation_measles_second_dose",
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_immunisation_province_table_report = create_province_table(
@@ -3508,14 +3521,15 @@ outputs_tables_baseline <- tar_plan(
       "immunisation_card_retention_self_report", "immunisation_card_retention",
       "immunisation_bcg", "immunisation_polio_first_dose",
       "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
       "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
       "immunisation_measles_first_dose", "immunisation_measles_second_dose",
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_immunisation_strata_table = create_strata_table(
@@ -3525,14 +3539,15 @@ outputs_tables_baseline <- tar_plan(
       "immunisation_card_retention_self_report", "immunisation_card_retention",
       "immunisation_bcg", "immunisation_polio_first_dose",
       "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
       "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
       "immunisation_measles_first_dose", "immunisation_measles_second_dose",
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_immunisation_study_group_table = create_study_group_table(
@@ -3542,14 +3557,15 @@ outputs_tables_baseline <- tar_plan(
       "immunisation_card_retention_self_report", "immunisation_card_retention",
       "immunisation_bcg", "immunisation_polio_first_dose",
       "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
       "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
       "immunisation_measles_first_dose", "immunisation_measles_second_dose",
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_immunisation_study_group_table_report = create_study_group_table(
@@ -3559,14 +3575,15 @@ outputs_tables_baseline <- tar_plan(
       "immunisation_card_retention_self_report", "immunisation_card_retention",
       "immunisation_bcg", "immunisation_polio_first_dose",
       "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
       "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
       "immunisation_measles_first_dose", "immunisation_measles_second_dose",
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_immunisation_study_group_province_table = create_study_group_province_table(
@@ -3576,14 +3593,15 @@ outputs_tables_baseline <- tar_plan(
       "immunisation_card_retention_self_report", "immunisation_card_retention",
       "immunisation_bcg", "immunisation_polio_first_dose",
       "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunsiation_pentavalent_first_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
       "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
       "immunisation_measles_first_dose", "immunisation_measles_second_dose",
       "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
       "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
       "immunisation_rotavirus_second_dose",
-      "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation"
+      "immunisation_age_appropriate_immunisation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child immunisation full table -----------------------------------
@@ -3591,36 +3609,42 @@ outputs_tables_baseline <- tar_plan(
     baseline_child_immunisation_full_province,
     baseline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_immunisation_full_province_table_report = create_province_table(
     baseline_child_immunisation_full_province,
     baseline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_immunisation_full_strata_table = create_strata_table(
     baseline_child_immunisation_full_strata,
     baseline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_immunisation_full_study_group_table = create_study_group_table(
     baseline_child_immunisation_full_study_group,
     baseline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_immunisation_full_study_group_table_report = create_study_group_table(
     baseline_child_immunisation_full_study_group,
     baseline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_immunisation_full_study_group_province_table = create_study_group_province_table(
     baseline_child_immunisation_full_study_group_province,
     baseline_child_immunisation_full_study_group,
     vars = "immunisation_fully_immunised",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline IYCF table ------------------------------------------------------
@@ -3633,6 +3657,7 @@ outputs_tables_baseline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_iycf_province_table_report = create_province_table(
@@ -3644,6 +3669,7 @@ outputs_tables_baseline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_iycf_strata_table = create_strata_table(
@@ -3655,6 +3681,7 @@ outputs_tables_baseline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_iycf_study_group_table = create_study_group_table(
@@ -3666,6 +3693,7 @@ outputs_tables_baseline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_iycf_study_group_table_report = create_study_group_table(
@@ -3677,6 +3705,7 @@ outputs_tables_baseline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_iycf_study_group_province_table =  create_study_group_province_table(
@@ -3688,43 +3717,50 @@ outputs_tables_baseline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline breastfeeding table ---------------------------------------------
   baseline_breastfeeding_province_table = create_province_table(
     baseline_breastfeeding_province,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_breastfeeding_province_table_report = create_province_table(
     baseline_breastfeeding_province,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_breastfeeding_strata_table = create_strata_table(
     baseline_breastfeeding_strata,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_breastfeeding_stugy_group_table = create_study_group_table(
     baseline_breastfeeding_study_group,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_breastfeeding_study_group_table_report = create_study_group_table(
     baseline_breastfeeding_study_group,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_breastfeeding_study_group_province_table = create_study_group_province_table(
     baseline_breastfeeding_study_group_province,
     baseline_breastfeeding_study_group,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline exclusive breastfeeding table -----------------------------------
@@ -3732,36 +3768,42 @@ outputs_tables_baseline <- tar_plan(
     baseline_ebf_province,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_ebf_province_table_report = create_province_table(
     baseline_ebf_province,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_ebf_strata_table = create_strata_table(
     baseline_ebf_strata,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_ebf_study_group_table = create_study_group_table(
     baseline_ebf_study_group,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_ebf_study_group_table_report = create_study_group_table(
     baseline_ebf_study_group,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_ebf_study_group_province_table = create_study_group_province_table(
     baseline_ebf_study_group_province,
     baseline_ebf_study_group,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child vitamin A coverage table ----------------------------------
@@ -3769,36 +3811,42 @@ outputs_tables_baseline <- tar_plan(
     baseline_child_vita_province,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_vita_province_table_report = create_province_table(
     baseline_child_vita_province,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_vita_strata_table = create_strata_table(
     baseline_child_vita_strata,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_vita_study_group_table = create_study_group_table(
     baseline_child_vita_study_group,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_vita_study_group_table_report = create_study_group_table(
     baseline_child_vita_study_group,
     baseline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_vita_study_group_province_table = create_study_group_province_table(
     baseline_child_vita_study_group_province,
     baseline_child_vita_study_group,
     vars = "vitamin_a_supplementation_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline deworming coverage table ----------------------------------------
@@ -3806,36 +3854,42 @@ outputs_tables_baseline <- tar_plan(
     baseline_deworming_province,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_deworming_province_table_report = create_province_table(
     baseline_deworming_province,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_deworming_strata_table = create_strata_table(
     baseline_deworming_strata,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_deworming_study_group_table = create_study_group_table(
     baseline_deworming_study_group,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_deworming_study_group_table_report = create_study_group_table(
     baseline_deworming_study_group,
     baseline_deworming,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_deworming_study_group_province_table = create_study_group_province_table(
     baseline_deworming_study_group_province,
     baseline_deworming_study_group,
     vars = "deworming_coverage",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline women's decision making table -----------------------------------
