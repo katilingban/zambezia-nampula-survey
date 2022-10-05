@@ -47,6 +47,6 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::contains("survey_design"))
+          targets::tar_make(dplyr::contains("baseline_women_anthro"))
         shell: Rscript {0}
           

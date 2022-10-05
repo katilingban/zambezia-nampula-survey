@@ -4,17 +4,29 @@
 #
 ################################################################################
 
-# Load packages (in packages.R) and load project-specific functions in R folder
+# Load packages and load project-specific functions in R folder ----------------
 suppressPackageStartupMessages(source("packages.R"))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 
 # Set build options ------------------------------------------------------------
 
+## Set options for survey package
 options(
   survey.lonely.psu = "adjust"  ## Adjust variance for stratum with single PSU
 )
 
+## Authenticate with Google Drive
+googledrive::drive_auth(
+  email = Sys.getenv("GOOGLE_AUTH_EMAIL"),
+  path = Sys.getenv("GOOGLE_AUTH_FILE")
+)
+
+## Authenticate with Google Sheets
+googlesheets4::gs4_auth(
+  email = Sys.getenv("GOOGLE_AUTH_EMAIL"),
+  path = Sys.getenv("GOOGLE_AUTH_FILE")
+)
 
 # Groups of targets ------------------------------------------------------------
 
@@ -36,6 +48,20 @@ data_downloads <- tar_plan(
     cue = tar_cue("thorough")
   )
 )
+
+## Supporting/reference datasets -----------------------------------------------
+data_reference <- tar_plan(
+  ### Read indicator list from Google Sheets
+  survey_indicator_list_id = googlesheets4::gs4_find() |>
+    subset(name == "zambezia_nampula_survey_indicators") |>
+    (\(x) x$id)(),
+  tar_target(
+    name = survey_indicator_list,
+    command = googlesheets4::read_sheet(ss = survey_indicator_list_id),
+    cue = tar_cue("always")
+  )
+)
+
 
 ## Read raw baseline data ------------------------------------------------------
 raw_data_baseline <- tar_plan(
@@ -301,130 +327,95 @@ analysis_baseline <- tar_plan(
   baseline_hh_structure = estimate_total(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_province = estimate_province(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_strata = estimate_strata(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_study_group = estimate_study_group(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_structure_study_group_province = estimate_study_group_province(
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
     design = baseline_hh_survey_design
   ),
   ### Baseline results - household amenities -----------------------------------
   baseline_hh_amenities = estimate_total(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_province = estimate_province(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_strata = estimate_strata(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_study_group = estimate_study_group(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_hh_amenities_study_group_province = estimate_study_group_province(
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
     design = baseline_hh_survey_design
@@ -1012,7 +1003,7 @@ analysis_baseline <- tar_plan(
   ### Baseline results - pregnancy characteristics -----------------------------
   baseline_pregnant = estimate_total(
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -1026,7 +1017,7 @@ analysis_baseline <- tar_plan(
   ),
   baseline_pregnant_province = estimate_province(
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -1040,7 +1031,7 @@ analysis_baseline <- tar_plan(
   ),
   baseline_pregnant_strata = estimate_strata(
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -1054,7 +1045,7 @@ analysis_baseline <- tar_plan(
   ),
   baseline_pregnant_study_group = estimate_study_group(
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -1068,7 +1059,7 @@ analysis_baseline <- tar_plan(
   ),
   baseline_pregnant_study_group_province = estimate_study_group_province(
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -1317,14 +1308,12 @@ analysis_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -1348,14 +1337,12 @@ analysis_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -1379,14 +1366,12 @@ analysis_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -1410,14 +1395,12 @@ analysis_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -1441,14 +1424,12 @@ analysis_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -1760,12 +1741,58 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design |>
       subset(respondent_sex == "Mulher")
+  ),
+  ### Baseline results - women's anthropometry ---------------------------------
+  baseline_women_anthro = estimate_total(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_province = estimate_province(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_strata = estimate_strata(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_study_group = estimate_study_group(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_study_group_province = estimate_study_group_province(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   )
 )
 
 
-## Outputs ---------------------------------------------------------------------
-outputs_baseline <- tar_plan(
+## Outputs - Tables ------------------------------------------------------------
+outputs_tables_baseline <- tar_plan(
   ### Baseline demographics table - respondent ---------------------------------
   baseline_demo_respondent_table = create_province_table(
     baseline_demo_respondent_province,
@@ -1774,6 +1801,7 @@ outputs_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_respondent_table_report = create_province_table(
@@ -1783,6 +1811,7 @@ outputs_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_respondent_strata_table = create_strata_table(
@@ -1792,6 +1821,7 @@ outputs_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_respondent_study_group_table = create_study_group_table(
@@ -1801,6 +1831,7 @@ outputs_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_respondent_study_group_table_report = create_study_group_table(
@@ -1810,6 +1841,7 @@ outputs_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_respondent_study_group_province_table = create_study_group_province_table(
@@ -1819,6 +1851,7 @@ outputs_baseline <- tar_plan(
              "respondent_language", "respondent_civil_status", 
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline demographics table - child --------------------------------------
@@ -1830,6 +1863,7 @@ outputs_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_child_table_report = create_province_table(
@@ -1840,6 +1874,7 @@ outputs_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_child_strata_table = create_strata_table(
@@ -1850,6 +1885,7 @@ outputs_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_child_study_group_table = create_study_group_table(
@@ -1860,6 +1896,7 @@ outputs_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_child_study_group_table_report = create_study_group_table(
@@ -1870,6 +1907,7 @@ outputs_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_child_study_group_province_table = create_study_group_province_table(
@@ -1880,6 +1918,7 @@ outputs_baseline <- tar_plan(
              "child_parent_age_at_birth", "child_location_of_birth",
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline demographics table - spouse -------------------------------------
@@ -1889,6 +1928,7 @@ outputs_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_spouse_table_report = create_province_table(
@@ -1897,6 +1937,7 @@ outputs_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_spouse_strata_table = create_strata_table(
@@ -1905,6 +1946,7 @@ outputs_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_spouse_study_group_table = create_study_group_table(
@@ -1913,6 +1955,7 @@ outputs_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_demo_spouse_study_group_table_report = create_study_group_table(
@@ -1921,6 +1964,7 @@ outputs_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_demo_spouse_study_group_province_table = create_study_group_province_table(
@@ -1929,6 +1973,7 @@ outputs_baseline <- tar_plan(
     vars = c("spouse_age_years", "spouse_age_group",
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household income table ------------------------------------------
@@ -1941,6 +1986,7 @@ outputs_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_income_table_report = create_province_table(
@@ -1952,6 +1998,7 @@ outputs_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_income_strata_table = create_strata_table(
@@ -1963,6 +2010,7 @@ outputs_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_income_study_group_table = create_study_group_table(
@@ -1974,6 +2022,7 @@ outputs_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_income_study_group_table_report = create_study_group_table(
@@ -1985,6 +2034,7 @@ outputs_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_income_study_group_province_table = create_study_group_province_table(
@@ -1996,6 +2046,7 @@ outputs_baseline <- tar_plan(
       "source_of_household_income", "sufficiency_of_household_income",
       "sufficiency_of_family_resource", "household_income_against_expenses"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household structure table ---------------------------------------
@@ -2004,9 +2055,11 @@ outputs_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_structure_table_report = create_province_table(
@@ -2014,9 +2067,11 @@ outputs_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_structure_strata_table = create_strata_table(
@@ -2024,9 +2079,11 @@ outputs_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_structure_study_group_table = create_study_group_table(
@@ -2034,9 +2091,11 @@ outputs_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_structure_study_group_table_report = create_study_group_table(
@@ -2044,9 +2103,11 @@ outputs_baseline <- tar_plan(
     baseline_hh_structure,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_structure_study_group_province_table = create_study_group_province_table(
@@ -2054,9 +2115,11 @@ outputs_baseline <- tar_plan(
     baseline_hh_structure_study_group,
     vars = c(
       "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
-      "number_of_bedrooms_in_home", "roofing_material", "floor_material",
-      "time_living_in_location_in_months", "time_living_in_location_group"
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household amenities table ---------------------------------------
@@ -2064,120 +2127,78 @@ outputs_baseline <- tar_plan(
     baseline_hh_amenities_province,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_amenities_table_report = create_province_table(
     baseline_hh_amenities_province,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_amenities_strata_table = create_strata_table(
     baseline_hh_amenities_strata,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_amenities_study_group_table = create_study_group_table(
     baseline_hh_amenities_study_group,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_amenities_study_group_table_report = create_study_group_table(
     baseline_hh_amenities_study_group,
     baseline_hh_amenities,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_amenities_study_group_province_table = create_study_group_province_table(
     baseline_hh_amenities_study_group_province,
     baseline_hh_amenities_study_group,
     vars = c(
-      "communication_and_information_access_electricity",
-      "communication_and_information_access_cellphone",
-      "communication_and_information_access_computer",
-      "communication_and_information_access_landline",
-      "communication_and_information_access_radio",
-      "communication_and_information_access_television",
-      "amenities_housekeeper_childcare_employee",
-      "amenities_refrigerator",
-      "amenities_refrigerator_alternative",
-      "number_of_mosquito_nets",
-      "fuel_used_for_cooking",
-      "location_of_food_preparation",
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
       "fuel_used_for_lighting"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household travel table ------------------------------------------
@@ -2191,6 +2212,7 @@ outputs_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_travel_province_table_report = create_province_table(
@@ -2203,6 +2225,7 @@ outputs_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_travel_strata_table = create_strata_table(
@@ -2215,6 +2238,7 @@ outputs_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_travel_study_group_table = create_study_group_table(
@@ -2227,6 +2251,7 @@ outputs_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_travel_study_group_table_report = create_study_group_table(
@@ -2239,6 +2264,7 @@ outputs_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_travel_study_group_province_table = create_study_group_province_table(
@@ -2251,6 +2277,7 @@ outputs_baseline <- tar_plan(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household decisions table ---------------------------------------
@@ -2263,6 +2290,7 @@ outputs_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_decision_province_table_report = create_province_table(
@@ -2274,6 +2302,7 @@ outputs_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_decision_strata_table = create_strata_table(
@@ -2285,6 +2314,7 @@ outputs_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_decision_study_group_table = create_study_group_table(
@@ -2296,6 +2326,7 @@ outputs_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_decision_study_group_table_report = create_study_group_table(
@@ -2307,6 +2338,7 @@ outputs_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_decision_study_group_province_table = create_study_group_province_table(
@@ -2318,16 +2350,18 @@ outputs_baseline <- tar_plan(
       "child_rearing", "child_discipline", "healthcare_in_pregnancy",
       "healthcare_for_child"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline household community group membership table ----------------------
-  basline_hh_groups_province_table = create_province_table(
+  baseline_hh_groups_province_table = create_province_table(
     baseline_hh_groups_province,
     baseline_hh_groups,
     vars = c(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_groups_province_table_report = create_province_table(
@@ -2337,6 +2371,7 @@ outputs_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_groups_strata_table = create_strata_table(
@@ -2346,6 +2381,7 @@ outputs_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_hh_groups_study_group_table = create_study_group_table(
@@ -2355,6 +2391,7 @@ outputs_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report =  FALSE
   ),
   baseline_hh_groups_study_group_table_report = create_study_group_table(
@@ -2364,6 +2401,7 @@ outputs_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_hh_groups_study_group_province_table = create_study_group_province_table(
@@ -2373,6 +2411,7 @@ outputs_baseline <- tar_plan(
       "group_membership", "presentation_participation", 
       "information_application", "health_tasks_participation"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child anthropometry table ---------------------------------------
@@ -2388,6 +2427,7 @@ outputs_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_anthro_province_table_report = create_province_table(
@@ -2402,6 +2442,7 @@ outputs_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_anthro_strata_table = create_strata_table(
@@ -2416,6 +2457,7 @@ outputs_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_anthro_study_group_table = create_study_group_table(
@@ -2430,6 +2472,7 @@ outputs_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_anthro_study_group_table_report = create_study_group_table(
@@ -2444,6 +2487,7 @@ outputs_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_anthro_study_group_province_table = create_study_group_province_table(
@@ -2458,6 +2502,7 @@ outputs_baseline <- tar_plan(
       "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline WDDS table ------------------------------------------------------
@@ -2469,6 +2514,7 @@ outputs_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wdds_province_table_report = create_province_table(
@@ -2479,6 +2525,7 @@ outputs_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wdds_strata_table = create_strata_table(
@@ -2489,6 +2536,7 @@ outputs_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wdds_study_group_table = create_study_group_table(
@@ -2499,6 +2547,7 @@ outputs_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wdds_study_group_table_report = create_study_group_table(
@@ -2509,6 +2558,7 @@ outputs_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wdds_study_group_province_table =  create_study_group_province_table(
@@ -2519,6 +2569,7 @@ outputs_baseline <- tar_plan(
       "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline MDDW table ------------------------------------------------------
@@ -2530,6 +2581,7 @@ outputs_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_mddw_province_table_report = create_province_table(
@@ -2540,6 +2592,7 @@ outputs_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_mddw_strata_table = create_strata_table(
@@ -2550,6 +2603,7 @@ outputs_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_mddw_study_group_table = create_study_group_table(
@@ -2560,6 +2614,7 @@ outputs_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_mddw_study_group_table_report = create_study_group_table(
@@ -2570,6 +2625,7 @@ outputs_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_mddw_study_group_province_table = create_study_group_province_table(
@@ -2580,6 +2636,7 @@ outputs_baseline <- tar_plan(
       "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child development table -----------------------------------------
@@ -2691,6 +2748,7 @@ outputs_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wash_province_table_report = create_province_table(
@@ -2704,6 +2762,7 @@ outputs_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wash_strata_table = create_strata_table(
@@ -2717,6 +2776,7 @@ outputs_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wash_study_group_table = create_study_group_table(
@@ -2730,6 +2790,7 @@ outputs_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wash_study_group_table_report = create_study_group_table(
@@ -2743,6 +2804,7 @@ outputs_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wash_study_group_province_table = create_study_group_province_table(
@@ -2756,6 +2818,7 @@ outputs_baseline <- tar_plan(
       "no_handwashing_facility", "limited_handwashing_facility",
       "basic_handwashing_facility"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline childhood illnesses table ---------------------------------------
@@ -2875,6 +2938,7 @@ outputs_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_women_phq8_province_table_report = create_province_table(
@@ -2884,6 +2948,7 @@ outputs_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_women_phq8_strata_table = create_strata_table(
@@ -2893,6 +2958,7 @@ outputs_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_women_phq8_study_group_table = create_study_group_table(
@@ -2902,6 +2968,7 @@ outputs_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_women_phq8_study_group_table_report = create_study_group_table(
@@ -2911,6 +2978,7 @@ outputs_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_women_phq8_study_group_province_table = create_study_group_province_table(
@@ -2920,6 +2988,7 @@ outputs_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline pregnant table --------------------------------------------------
@@ -2927,7 +2996,7 @@ outputs_baseline <- tar_plan(
     baseline_pregnant_province,
     baseline_pregnant,
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -2936,13 +3005,14 @@ outputs_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_province_table_report = create_province_table(
     baseline_pregnant_province,
     baseline_pregnant,
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -2951,13 +3021,14 @@ outputs_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_pregnant_strata_table = create_strata_table(
     baseline_pregnant_strata,
     baseline_pregnant,
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -2966,13 +3037,14 @@ outputs_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_study_group_table_report = create_study_group_table(
     baseline_pregnant_study_group,
     baseline_pregnant,
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -2981,13 +3053,14 @@ outputs_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_pregnant_study_group_province_table = create_study_group_province_table(
     baseline_pregnant_study_group_province,
     baseline_pregnant_study_group,
     vars = c(
-      "currently_pregnant", "weeks_of_gestation_self_report",
+      "weeks_of_gestation_self_report",
       "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
@@ -2996,6 +3069,7 @@ outputs_baseline <- tar_plan(
       "fever", "intense_abdominal_pain", "loss_of_consciousness",
       "fatigue", "plans_when_labor_begins"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline pregnant prevention of disease table ----------------------------
@@ -3007,6 +3081,7 @@ outputs_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_prevention_province_table_report = create_province_table(
@@ -3017,6 +3092,7 @@ outputs_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_pregnant_prevention_strata_table = create_strata_table(
@@ -3027,6 +3103,7 @@ outputs_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_prevention_study_group_table = create_study_group_table(
@@ -3037,6 +3114,7 @@ outputs_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_prevention_study_group_table_report = create_study_group_table(
@@ -3047,6 +3125,7 @@ outputs_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_pregnant_prevention_study_group_province_table = create_study_group_province_table(
@@ -3057,6 +3136,7 @@ outputs_baseline <- tar_plan(
       "received_vct_results", "offered_medication_to_reduce_child_risk",
       "received_mosquito_net", "slept_under_mosquito_net"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline natal care table ------------------------------------------------
@@ -3087,6 +3167,7 @@ outputs_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_natal_care_province_table_report = create_province_table(
@@ -3116,6 +3197,7 @@ outputs_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_natal_care_strata_table = create_strata_table(
@@ -3145,6 +3227,7 @@ outputs_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_natal_care_study_group_table = create_study_group_table(
@@ -3174,6 +3257,7 @@ outputs_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_natal_care_study_group_table_report = create_study_group_table(
@@ -3203,9 +3287,9 @@ outputs_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  ### Baseline family planning table -------------------------------------------
   baseline_natal_care_study_group_province_table = create_study_group_province_table(
     baseline_natal_care_study_group_province,
     baseline_natal_care_study_group,
@@ -3233,8 +3317,10 @@ outputs_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
+  ### Baseline family planning table -------------------------------------------
   baseline_family_planning_province_table = create_province_table(
     baseline_family_planning_province,
     baseline_family_planning,
@@ -3246,14 +3332,12 @@ outputs_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -3261,6 +3345,7 @@ outputs_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_family_planning_province_table_report = create_province_table(
@@ -3274,14 +3359,12 @@ outputs_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -3289,6 +3372,7 @@ outputs_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_family_planning_strata_table = create_strata_table(
@@ -3302,14 +3386,12 @@ outputs_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -3317,6 +3399,7 @@ outputs_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_family_planning_study_group_table = create_study_group_table(
@@ -3330,14 +3413,12 @@ outputs_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -3345,6 +3426,7 @@ outputs_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_family_planning_study_group_table_report = create_study_group_table(
@@ -3358,14 +3440,12 @@ outputs_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -3373,6 +3453,7 @@ outputs_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_family_planning_study_group_province_table = create_study_group_province_table(
@@ -3386,14 +3467,12 @@ outputs_baseline <- tar_plan(
       "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
       "benefit_of_waiting_for_next_pregnancy_other_reasons",
       "benefit_of_waiting_for_next_pregnancy_none",
-      "benefit_of_waiting_until_18_years_of_age",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
       "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
       "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
       "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
       "benefit_of_waiting_until_18_years_of_age_other_reasons",
       "benefit_of_waiting_until_18_years_of_age_none",
-      "problem_with_having_more_than_4_children",
       "problem_with_having_more_than_4_children_maternal_mortality",
       "problem_with_having_more_than_4_children_child_mortality",
       "problem_with_having_more_than_4_children_poverty",
@@ -3401,6 +3480,7 @@ outputs_baseline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child immunisation table ----------------------------------------
@@ -3766,6 +3846,7 @@ outputs_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wem_province_table_report = create_province_table(
@@ -3775,6 +3856,7 @@ outputs_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wem_strata_table = create_strata_table(
@@ -3784,6 +3866,7 @@ outputs_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wem_study_group_table = create_study_group_table(
@@ -3793,6 +3876,7 @@ outputs_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_wem_study_group_table_report = create_study_group_table(
@@ -3802,6 +3886,7 @@ outputs_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_wem_study_group_province_table = create_study_group_province_table(
@@ -3811,6 +3896,50 @@ outputs_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline women's anthropometry table -------------------------------------
+  baseline_women_anthro_province_table = create_province_table(
+    baseline_women_anthro_province,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_women_anthro_province_table_report = create_province_table(
+    baseline_women_anthro_province,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = TRUE, pivot = "wide"
+  ),
+  baseline_women_anthro_strata_table = create_strata_table(
+    baseline_women_anthro_strata,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_women_anthro_study_group_table = create_study_group_table(
+    baseline_women_anthro_study_group,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_women_anthro_study_group_table_report = create_study_group_table(
+    baseline_women_anthro_study_group,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_women_anthro_study_group_province_table = create_study_group_province_table(
+    baseline_women_anthro_study_group_province,
+    baseline_women_anthro_study_group,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   )
 )
@@ -3827,8 +3956,23 @@ processed_data_endline <- tar_plan(
   
 )
 
+## Outputs - overall -----------------------------------------------------------
+outputs_overall <- tar_plan(
+  ### Overall table output - respondent demographics
+)
+
+## Analysis - difference-in-difference -----------------------------------------
+analysis_comparison <- tar_plan(
+  
+)
+
+## Outputs - difference-in-difference ------------------------------------------
+outputs_comparison <- tar_plan(
+  
+)
+
 ## Reports ---------------------------------------------------------------------
-reports_baseline <- tar_plan(
+reports <- tar_plan(
   ##
 )
 
@@ -3844,12 +3988,16 @@ set.seed(1977)
 
 list(
   data_downloads,
+  data_reference,
   raw_data_baseline,
   processed_data_baseline,
   analysis_baseline,
-  outputs_baseline,
-  reports_baseline,
+  outputs_tables_baseline,
   raw_data_endline,
   processed_data_endline,
+  outputs_overall,
+  analysis_comparison,
+  outputs_comparison,
+  reports,
   deploy
 )

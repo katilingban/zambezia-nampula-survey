@@ -152,8 +152,9 @@ process_baseline_data <- function(.data) {
     home_ownership_own = recode_yes_no(as.integer(sdh5)),
     home_ownership_rent = recode_yes_no(as.integer(sdh6)),
     home_ownership_loan = recode_yes_no(as.integer(sdh7)),
-    number_of_rooms_in_home = haven::as_factor(sdh3),
-    number_of_bedrooms_in_home = haven::as_factor(sdh3),
+    #number_of_rooms_in_home = haven::as_factor(sdh3),
+    number_of_rooms_in_home = recode_var_categorical(sdh3),
+    number_of_bedrooms_in_home = recode_var_categorical(sdh4),
     roofing_material = recode_var_categorical(sdh1),
     floor_material = recode_var_categorical(sdh2),
     time_living_in_location_in_months = recode_time_in_location(q03),
@@ -161,33 +162,15 @@ process_baseline_data <- function(.data) {
       time_living_in_location_in_months, q03
     ),
     ## household amenities
-    communication_and_information_access_electricity = recode_yes_no(
-      as.integer(cdcg1)
-    ),
-    communication_and_information_access_cellphone = recode_yes_no(
-      as.integer(cdcg4)
-    ),
-    communication_and_information_access_computer = recode_yes_no(
-      as.integer(cdcg7)
-    ),
-    communication_and_information_access_landline = recode_yes_no(
-      as.integer(cdcg6)
-    ),
-    communication_and_information_access_radio = recode_yes_no(
-      as.integer(cdcg2)
-    ),
-    communication_and_information_access_television = recode_yes_no(
-      as.integer(cdcg3)
-    ),
-    amenities_housekeeper_childcare_employee = recode_yes_no(
-      as.integer(cdcg14)
-    ),
-    amenities_refrigerator = recode_yes_no(
-      as.integer(cdcg11)
-    ),
-    amenities_refrigerator_alternative = recode_yes_no(
-      as.integer(cdcg11a)
-    ),
+    electricity = recode_yes_no(as.integer(cdcg1)),
+    cellphone = recode_yes_no(as.integer(cdcg4)),
+    computer = recode_yes_no(as.integer(cdcg7)),
+    landline = recode_yes_no(as.integer(cdcg6)),
+    radio = recode_yes_no(as.integer(cdcg2)),
+    television = recode_yes_no(as.integer(cdcg3)),
+    housekeeper_childcare_employee = recode_yes_no(as.integer(cdcg14)),
+    refrigerator = recode_yes_no(as.integer(cdcg11)),
+    refrigerator_alternative = recode_yes_no(as.integer(cdcg11a)),
     number_of_mosquito_nets = recode_var_categorical(cdcg13),
     fuel_used_for_cooking = recode_var_categorical(cfegs1),
     location_of_food_preparation = recode_var_categorical(cfegs3),
@@ -252,12 +235,12 @@ process_baseline_data <- function(.data) {
     open_defecation = ifelse(lusd1 == 2 | lusd4 == 6, 1, 0),
     unimproved_toilet_facility = ifelse(lusd4 == 5, 1, 0),
     limited_toilet_facility = ifelse(lusd2 == 1 & lusd4 != 5, 1, 0),
-    basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 == 5, 1, 0),
+    basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 != 5, 1, 0),
     ## Hygiene
     no_handwashing_facility = ifelse(
       mao1 == 2, 1, 
       ifelse(
-        mao1 %in% 3:4, NA, 1
+        mao1 %in% 3:4, NA, 0
       )
     ),
     limited_handwashing_facility = ifelse(
@@ -535,6 +518,14 @@ process_baseline_data <- function(.data) {
     control_over_destiny = recode_var_categorical(von2),
     make_decision_without_husband = recode_var_categorical(von3),
     willingly_participate_in_survey = recode_var_categorical(von4),
+    ## Mother anthropometry
+    body_mass_index = mpeso / ((maltura / 100) ^ 2),
+    bmi_class = cut(
+      x = body_mass_index,
+      breaks = c(0, 18.5, 25, 30, Inf),
+      labels = c("Underweight", "Healthy weight", "Overweight", "Obese"),
+      include.lowest = TRUE, right = FALSE
+    ),
     .keep = "unused"
   ) |>
     ## Child anthropometry

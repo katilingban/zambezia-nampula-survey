@@ -22,3 +22,26 @@ download_googledrive <- function(filename,
     overwrite = overwrite
   )
 }
+
+
+read_googlesheet <- function(filename) {
+  ## Authenticate
+  # googledrive::drive_auth(
+  #   email = Sys.getenv("GOOGLE_AUTH_EMAIL"),
+  #   path = Sys.getenv("GOOGLE_AUTH_FILE")
+  # )
+  
+  ## Authenticate
+  # googlesheets4::gs4_auth(
+  #   email = Sys.getenv("GOOGLE_AUTH_EMAIL"),
+  #   path = Sys.getenv("GOOGLE_AUTH_FILE")
+  # )
+  
+  ##
+  file_id <- googlesheets4::gs4_find() |>
+    subset(name == filename) |>
+    (\(x) x$id)()
+  
+  ##
+  googlesheets4::read_sheet(ss = file_id)
+}
