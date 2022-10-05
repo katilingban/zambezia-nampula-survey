@@ -2902,6 +2902,7 @@ outputs_tables_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_women_phq8_province_table_report = create_province_table(
@@ -2911,6 +2912,7 @@ outputs_tables_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_women_phq8_strata_table = create_strata_table(
@@ -2920,6 +2922,7 @@ outputs_tables_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_women_phq8_study_group_table = create_study_group_table(
@@ -2929,6 +2932,7 @@ outputs_tables_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_women_phq8_study_group_table_report = create_study_group_table(
@@ -2938,6 +2942,7 @@ outputs_tables_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_women_phq8_study_group_province_table = create_study_group_province_table(
@@ -2947,6 +2952,7 @@ outputs_tables_baseline <- tar_plan(
       "phq8_score", "major_depression", "severe_depression",
       "at_least_major_depression", "alcohol_consumption"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline pregnant table --------------------------------------------------
