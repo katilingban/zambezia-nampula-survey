@@ -1741,6 +1741,52 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_hh_survey_design |>
       subset(respondent_sex == "Mulher")
+  ),
+  ### Baseline results - women's anthropometry ---------------------------------
+  baseline_women_anthro = estimate_total(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_province = estimate_province(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_strata = estimate_strata(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_study_group = estimate_study_group(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_women_anthro_study_group_province = estimate_study_group_province(
+    vars = c("body_mass_index", "bmi_class"),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
   )
 )
 
@@ -3850,6 +3896,49 @@ outputs_tables_baseline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline women's anthropometry table -------------------------------------
+  baseline_women_anthro_province_table = create_province_table(
+    baseline_women_anthro_province,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_women_anthro_province_table_report = create_province_table(
+    baseline_women_anthro_province,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = TRUE, pivot = "wide"
+  ),
+  baseline_women_anthro_strata_table = create_strata_table(
+    baseline_women_anthro_strata,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_women_anthro_study_group_table = create_study_group_table(
+    baseline_women_anthro_study_group,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_women_anthro_study_group_table_report = create_study_group_table(
+    baseline_women_anthro_study_group,
+    baseline_women_anthro,
+    vars = c("body_mass_index", "bmi_class"),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_women_anthro_study_group_province_table = create_study_group_province_table(
+    baseline_women_anthro_study_group_province,
+    baseline_women_anthro_study_group,
+    vars = c("body_mass_index", "bmi_class"),
     indicator_list = survey_indicator_list,
     report = FALSE
   )

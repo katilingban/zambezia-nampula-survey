@@ -518,6 +518,14 @@ process_baseline_data <- function(.data) {
     control_over_destiny = recode_var_categorical(von2),
     make_decision_without_husband = recode_var_categorical(von3),
     willingly_participate_in_survey = recode_var_categorical(von4),
+    ## Mother anthropometry
+    body_mass_index = mpeso / ((maltura / 100) ^ 2),
+    bmi_class = cut(
+      x = body_mass_index,
+      breaks = c(0, 18.5, 25, 30, Inf),
+      labels = c("Underweight", "Healthy weight", "Overweight", "Obese"),
+      include.lowest = TRUE, right = FALSE
+    ),
     .keep = "unused"
   ) |>
     ## Child anthropometry
