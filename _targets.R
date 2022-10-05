@@ -3131,6 +3131,7 @@ outputs_tables_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_natal_care_province_table_report = create_province_table(
@@ -3160,6 +3161,7 @@ outputs_tables_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_natal_care_strata_table = create_strata_table(
@@ -3189,6 +3191,7 @@ outputs_tables_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_natal_care_study_group_table = create_study_group_table(
@@ -3218,6 +3221,7 @@ outputs_tables_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_natal_care_study_group_table_report = create_study_group_table(
@@ -3247,9 +3251,9 @@ outputs_tables_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  ### Baseline family planning table -------------------------------------------
   baseline_natal_care_study_group_province_table = create_study_group_province_table(
     baseline_natal_care_study_group_province,
     baseline_natal_care_study_group,
@@ -3277,8 +3281,10 @@ outputs_tables_baseline <- tar_plan(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
+  ### Baseline family planning table -------------------------------------------
   baseline_family_planning_province_table = create_province_table(
     baseline_family_planning_province,
     baseline_family_planning,
