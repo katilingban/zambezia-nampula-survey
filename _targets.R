@@ -3718,37 +3718,43 @@ outputs_tables_baseline <- tar_plan(
   baseline_breastfeeding_province_table = create_province_table(
     baseline_breastfeeding_province,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_breastfeeding_province_table_report = create_province_table(
     baseline_breastfeeding_province,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_breastfeeding_strata_table = create_strata_table(
     baseline_breastfeeding_strata,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_breastfeeding_stugy_group_table = create_study_group_table(
     baseline_breastfeeding_study_group,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_breastfeeding_study_group_table_report = create_study_group_table(
     baseline_breastfeeding_study_group,
     baseline_breastfeeding,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_breastfeeding_study_group_province_table = create_study_group_province_table(
     baseline_breastfeeding_study_group_province,
     baseline_breastfeeding_study_group,
-    vars = c("ever_breasfed", "early_initiation_of_breastfeeding"),
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline exclusive breastfeeding table -----------------------------------
@@ -3756,36 +3762,42 @@ outputs_tables_baseline <- tar_plan(
     baseline_ebf_province,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_ebf_province_table_report = create_province_table(
     baseline_ebf_province,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_ebf_strata_table = create_strata_table(
     baseline_ebf_strata,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_ebf_study_group_table = create_study_group_table(
     baseline_ebf_study_group,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_ebf_study_group_table_report = create_study_group_table(
     baseline_ebf_study_group,
     baseline_ebf,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_ebf_study_group_province_table = create_study_group_province_table(
     baseline_ebf_study_group_province,
     baseline_ebf_study_group,
     vars = "exclusive_breastfeeding",
+    indicator_list = survey_indicator_list,
     report = FALSE
   ),
   ### Baseline child vitamin A coverage table ----------------------------------
