@@ -4421,7 +4421,15 @@ outputs_overall <- tar_plan(
     overall_iycf,
     overall_child_anthro
   ),
-  ### Create XLSX output for all tables
+  ### Baseline results all -----------------------------------------------------
+  baseline_results_all = subset(
+    overall_results_all, study_round == "Baseline"
+  ),
+  ### Endline results all ------------------------------------------------------
+  endline_results_all = subset(
+    overall_results_all, study_round == "Endline"
+  ),
+  ### Create XLSX output for all tables ----------------------------------------
   overall_results_xlsx = create_results_spreadsheet(
     sheet = as.list(
       c(unique(survey_indicator_list$indicator_set_code), "overall")
@@ -4459,6 +4467,37 @@ outputs_overall <- tar_plan(
       overall_results_all
     ),
     filename = "outputs/survey_results.xlsx"
+  ),
+  ### Create XLSX output for all baseline tables
+  tar_target(
+    name = baseline_results_xlsx,
+    command = {
+      baseline_wb <- openxlsx::createWorkbook()
+      openxlsx::addWorksheet(
+        wb = baseline_wb, sheetName = "baseline"
+      )
+      openxlsx::writeData(
+        wb = baseline_wb,
+        sheet = "baseline",
+        x = baseline_results_all
+      )
+      openxlsx::setColWidths(
+        wb = baseline_wb,
+        sheet = "baseline",
+        cols = seq_len(ncol(baseline_results_all)),
+        widths = "auto"
+      )
+      openxlsx::saveWorkbook(
+        wb = baseline_wb,
+        file = "outputs/baseline_results.xlsx",
+        overwrite = TRUE
+      )
+    }
+  ),
+  baseline_results_csv = write.csv(
+    x = baseline_results_all,
+    file = "outputs/baseline_results.csv",
+    row.names = FALSE
   )
 )
 
