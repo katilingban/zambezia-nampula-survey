@@ -184,9 +184,14 @@ create_study_group_province_table <- function(results_study_group_province,
 
 ## Create full table
 
-create_full_table <- function(baseline = NULL,
-                              endline = NULL,
-                              vars) {
+create_full_table <- function(variable_set,
+                              indicator_list = survey_indicator_list,
+                              baseline = get_tables_list("baseline", variable_set),
+                              endline = get_tables_list("endline", variable_set)) {
+  vars <- indicator_list |>
+    subset(indicator_set_code == variable_set) |>
+    (\(x) x[["indicator_variable"]])()
+  
   vars_list <- rep(list(vars), 4)
   
   if (is.null(baseline) & is.null(endline)) {
@@ -222,6 +227,7 @@ create_full_table <- function(baseline = NULL,
           f = create_results_tables,
           x = baseline[1:4],
           vars = vars_list,
+          indicator_list = rep(list(indicator_list), 4),
           study_round = "Baseline",
           strata = baseline_strata,
           study_group = baseline_study_group
@@ -231,6 +237,7 @@ create_full_table <- function(baseline = NULL,
             create_results_table(
               x = baseline[[5]],
               vars = vars,
+              indicator_list = indicator_list,
               study_round = "Baseline",
               strata = "Overall",
               study_group = "Overall"
@@ -256,7 +263,7 @@ create_full_table <- function(baseline = NULL,
             (\(x) x[ , 1])()
         )
         
-        baseline_study_group <- list(
+        endline_study_group <- list(
           "Overall",
           c(rep("Intervention", 4), "Control", rep("Intervention", 3), "Control"),
           names(endline[[3]]),
@@ -269,6 +276,7 @@ create_full_table <- function(baseline = NULL,
           f = create_results_tables,
           x = endline[1:4],
           vars = vars_list,
+          indicator_list = rep(list(indicator_list), 4),
           study_round = "Endline",
           strata = endline_strata,
           study_group = endline_study_group
@@ -278,6 +286,7 @@ create_full_table <- function(baseline = NULL,
             create_results_table(
               x = endline[[5]],
               vars = vars,
+              indicator_list = indicator_list,
               study_round = "Endline",
               strata = "Overall",
               study_group = "Overall"
@@ -297,6 +306,37 @@ create_full_table <- function(baseline = NULL,
   
   results_table
 }
+
+## Create baseline tables list
+
+get_tables_list <- function(round, variable_set) {
+  table_list <- c(
+    paste(
+      round, variable_set, 
+      c("province", "strata", "study_group", "study_group_province"),
+      sep = "_"
+    ),
+    paste(round, variable_set, sep = "_")
+  ) 
+  
+  eval(
+    parse(
+      text = paste0(
+        "list(",
+        paste(table_list, collapse = ", "),
+        ")"
+      )
+    )
+  )
+  # parse(
+  #   text = paste0(
+  #     "list(",
+  #     paste(table_list, collapse = ", "),
+  #     ")"
+  #   )
+  # )
+}
+
 
 ## Get variable identifiers ----------------------------------,------------------
 
