@@ -4012,7 +4012,454 @@ processed_data_endline <- tar_plan(
 
 ## Outputs - overall -----------------------------------------------------------
 outputs_overall <- tar_plan(
-  ### Overall table output - respondent demographics
+  ### Overall table output - respondent demographics ---------------------------
+  overall_demo_respondent = create_full_table(
+    variable_set = "demo_respondent", 
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_demo_respondent_province, 
+      baseline_demo_respondent_strata,
+      baseline_demo_respondent_study_group,
+      baseline_demo_respondent_study_group_province,
+      baseline_demo_respondent
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - child demographics --------------------------------
+  overall_demo_child = create_full_table(
+    variable_set = "demo_child",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_demo_child_province, 
+      baseline_demo_child_strata,
+      baseline_demo_child_study_group,
+      baseline_demo_child_study_group_province,
+      baseline_demo_child
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - spouse demographics -------------------------------
+  overall_demo_spouse = create_full_table(
+    variable_set = "demo_spouse",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_demo_spouse_province, 
+      baseline_demo_spouse_strata,
+      baseline_demo_spouse_study_group,
+      baseline_demo_spouse_study_group_province,
+      baseline_demo_spouse
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - household income ----------------------------------
+  overall_hh_income = create_full_table(
+    variable_set = "hh_income",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_hh_income_province, 
+      baseline_hh_income_strata,
+      baseline_hh_income_study_group,
+      baseline_hh_income_study_group_province,
+      baseline_hh_income
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - household structure -------------------------------
+  overall_hh_structure = create_full_table(
+    variable_set = "hh_structure",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_hh_structure_province, 
+      baseline_hh_structure_strata,
+      baseline_hh_structure_study_group,
+      baseline_hh_structure_study_group_province,
+      baseline_hh_structure
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - household amenities -------------------------------
+  overall_hh_amenities = create_full_table(
+    variable_set = "hh_amenities",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_hh_amenities_province, 
+      baseline_hh_amenities_strata,
+      baseline_hh_amenities_study_group,
+      baseline_hh_amenities_study_group_province,
+      baseline_hh_amenities
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - household decision --------------------------------
+  overall_hh_decision = create_full_table(
+    variable_set = "hh_decision",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_hh_decision_province, 
+      baseline_hh_decision_strata,
+      baseline_hh_decision_study_group,
+      baseline_hh_decision_study_group_province,
+      baseline_hh_decision
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - household groups ----------------------------------
+  overall_hh_groups = create_full_table(
+    variable_set = "hh_groups",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_hh_groups_province, 
+      baseline_hh_groups_strata,
+      baseline_hh_groups_study_group,
+      baseline_hh_groups_study_group_province,
+      baseline_hh_groups
+    ),
+    endline = NULL
+  ),
+  ### Overall table travel - household travel ----------------------------------
+  overall_hh_travel = create_full_table(
+    variable_set = "hh_travel",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_hh_travel_province, 
+      baseline_hh_travel_strata,
+      baseline_hh_travel_study_group,
+      baseline_hh_travel_study_group_province,
+      baseline_hh_travel
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - WASH ----------------------------------------------
+  overall_wash = create_full_table(
+    variable_set = "wash",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_wash_province, 
+      baseline_wash_strata,
+      baseline_wash_study_group,
+      baseline_wash_study_group_province,
+      baseline_wash
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - women's empowerment -------------------------------
+  overall_wem = create_full_table(
+    variable_set = "wem",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_wem_province, 
+      baseline_wem_strata,
+      baseline_wem_study_group,
+      baseline_wem_study_group_province,
+      baseline_wem
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - PHQ8 ----------------------------------------------
+  overall_women_phq8 = create_full_table(
+    variable_set = "women_phq8",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_women_phq8_province, 
+      baseline_women_phq8_strata,
+      baseline_women_phq8_study_group,
+      baseline_women_phq8_study_group_province,
+      baseline_women_phq8
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - pregnant ------------------------------------------
+  overall_pregnant = create_full_table(
+    variable_set = "pregnant",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_pregnant_province, 
+      baseline_pregnant_strata,
+      baseline_pregnant_study_group,
+      baseline_pregnant_study_group_province,
+      baseline_pregnant
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - pregnant_prevention -------------------------------
+  overall_pregnant_prevention = create_full_table(
+    variable_set = "pregnant_prevention",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_pregnant_prevention_province, 
+      baseline_pregnant_prevention_strata,
+      baseline_pregnant_prevention_study_group,
+      baseline_pregnant_prevention_study_group_province,
+      baseline_pregnant_prevention
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - natal care ----------------------------------------
+  overall_natal_care = create_full_table(
+    variable_set = "natal_care",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_natal_care_province, 
+      baseline_natal_care_strata,
+      baseline_natal_care_study_group,
+      baseline_natal_care_study_group_province,
+      baseline_natal_care
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - family planning -----------------------------------
+  overall_family_planning = create_full_table(
+    variable_set = "family_planning",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_family_planning_province, 
+      baseline_family_planning_strata,
+      baseline_family_planning_study_group,
+      baseline_family_planning_study_group_province,
+      baseline_family_planning
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - WDDS ----------------------------------------------
+  overall_wdds = create_full_table(
+    variable_set = "wdds",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_wdds_province, 
+      baseline_wdds_strata,
+      baseline_wdds_study_group,
+      baseline_wdds_study_group_province,
+      baseline_wdds
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - MDDW ----------------------------------------------
+  overall_mddw = create_full_table(
+    variable_set = "mddw",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_mddw_province, 
+      baseline_mddw_strata,
+      baseline_mddw_study_group,
+      baseline_mddw_study_group_province,
+      baseline_mddw
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - women anthropometry  ------------------------------
+  overall_women_anthro = create_full_table(
+    variable_set = "women_anthro",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_women_anthro_province, 
+      baseline_women_anthro_strata,
+      baseline_women_anthro_study_group,
+      baseline_women_anthro_study_group_province,
+      baseline_women_anthro
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - Child development  --------------------------------
+  overall_child_dev = create_full_table(
+    variable_set = "child_dev",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_dev_province, 
+      baseline_child_dev_strata,
+      baseline_child_dev_study_group,
+      baseline_child_dev_study_group_province,
+      baseline_child_dev
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - childhood illnesses -------------------------------
+  overall_child_ill = create_full_table(
+    variable_set = "child_ill",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_ill_province, 
+      baseline_child_ill_strata,
+      baseline_child_ill_study_group,
+      baseline_child_ill_study_group_province,
+      baseline_child_ill
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - child immunisation --------------------------------
+  overall_child_immunisation = create_full_table(
+    variable_set = "child_immunisation",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_immunisation_province, 
+      baseline_child_immunisation_strata,
+      baseline_child_immunisation_study_group,
+      baseline_child_immunisation_study_group_province,
+      baseline_child_immunisation
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - child immunisation full ---------------------------
+  overall_child_immunisation_full = create_full_table(
+    variable_set = "child_immunisation_full",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_immunisation_full_province, 
+      baseline_child_immunisation_full_strata,
+      baseline_child_immunisation_full_study_group,
+      baseline_child_immunisation_full_study_group_province,
+      baseline_child_immunisation_full
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - vitamin A supplementation -------------------------
+  overall_child_vita = create_full_table(
+    variable_set = "child_vita",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_vita_province, 
+      baseline_child_vita_strata,
+      baseline_child_vita_study_group,
+      baseline_child_vita_study_group_province,
+      baseline_child_vita
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - deworming -----------------------------------------
+  overall_deworming = create_full_table(
+    variable_set = "deworming",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_deworming_province, 
+      baseline_deworming_strata,
+      baseline_deworming_study_group,
+      baseline_deworming_study_group_province,
+      baseline_deworming
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - breastfeeding -------------------------------------
+  overall_breastfeeding = create_full_table(
+    variable_set = "breastfeeding",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_breastfeeding_province, 
+      baseline_breastfeeding_strata,
+      baseline_breastfeeding_study_group,
+      baseline_breastfeeding_study_group_province,
+      baseline_breastfeeding
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - exclusive breastfeeding ---------------------------
+  overall_ebf = create_full_table(
+    variable_set = "ebf",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_ebf_province, 
+      baseline_ebf_strata,
+      baseline_ebf_study_group,
+      baseline_ebf_study_group_province,
+      baseline_ebf
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - IYCF ----------------------------------------------
+  overall_iycf = create_full_table(
+    variable_set = "iycf",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_iycf_province, 
+      baseline_iycf_strata,
+      baseline_iycf_study_group,
+      baseline_iycf_study_group_province,
+      baseline_iycf
+    ),
+    endline = NULL
+  ),
+  ### Overall table output - child anthro --------------------------------------
+  overall_child_anthro = create_full_table(
+    variable_set = "child_anthro",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_anthro_province, 
+      baseline_child_anthro_strata,
+      baseline_child_anthro_study_group,
+      baseline_child_anthro_study_group_province,
+      baseline_child_anthro
+    ),
+    endline = NULL
+  ),
+  ### Overall results table ----------------------------------------------------
+  overall_results_all = rbind(
+    overall_demo_respondent,
+    overall_demo_child,
+    overall_demo_spouse,
+    overall_hh_income,
+    overall_hh_structure,
+    overall_hh_amenities,
+    overall_hh_decision,
+    overall_hh_groups,
+    overall_hh_travel,
+    overall_wash,
+    overall_wem,
+    overall_women_phq8,
+    overall_pregnant,
+    overall_pregnant_prevention,
+    overall_natal_care,
+    overall_family_planning,
+    overall_wdds,
+    overall_mddw,
+    overall_women_anthro,
+    overall_child_dev,
+    overall_child_ill,
+    overall_child_immunisation,
+    overall_child_immunisation_full,
+    overall_child_vita,
+    overall_deworming,
+    overall_breastfeeding,
+    overall_ebf,
+    overall_iycf,
+    overall_child_anthro
+  ),
+  ### Create XLSX output for all tables
+  overall_results_xlsx = create_results_spreadsheet(
+    sheet = as.list(
+      c(unique(survey_indicator_list$indicator_set_code), "overall")
+    ),
+    x = list(
+      overall_demo_respondent,
+      overall_demo_child,
+      overall_demo_spouse,
+      overall_hh_income,
+      overall_hh_structure,
+      overall_hh_amenities,
+      overall_hh_decision,
+      overall_hh_groups,
+      overall_hh_travel,
+      overall_wash,
+      overall_wem,
+      overall_women_phq8,
+      overall_pregnant,
+      overall_pregnant_prevention,
+      overall_natal_care,
+      overall_family_planning,
+      overall_wdds,
+      overall_mddw,
+      overall_women_anthro,
+      overall_child_dev,
+      overall_child_ill,
+      overall_child_immunisation,
+      overall_child_immunisation_full,
+      overall_child_vita,
+      overall_deworming,
+      overall_breastfeeding,
+      overall_ebf,
+      overall_iycf,
+      overall_child_anthro,
+      overall_results_all
+    ),
+    filename = "outputs/survey_results.xlsx"
+  )
 )
 
 ## Analysis - difference-in-difference -----------------------------------------
