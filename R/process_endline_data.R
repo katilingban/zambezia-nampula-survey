@@ -204,9 +204,9 @@ process_respondent_data <- function(df) {
     WH7 = NA_integer_,
     WH7a = NA_character_,
     WH8 = NA_integer_,
-    PREG1 = NA_integer_,
+    PREG1 = NA_character_,
     PREG2 = NA_integer_,
-    PREG3 = NA_integer_,
+    PREG3 = NA_character_,
     PMTCT1 = NA_integer_,
     PMTCT2 = NA_integer_,
     PMTCT3 = NA_integer_,
@@ -632,7 +632,7 @@ clean_child_health_types <- function(df) {
       FEVER4 = NA_integer_, 
       FEVER5 = NA_integer_,
       FEVER6 = NA_integer_, 
-      FEVER6a = NA_integer_, 
+      FEVER6a = NA_character_, 
       FEVER7 = NA_integer_, 
       ORT1 = NA_integer_, 
       ORT1a = NA_integer_, 
@@ -658,7 +658,7 @@ clean_child_health_types <- function(df) {
       CH3 = NA_integer_, 
       CH4 = NA_integer_, 
       CH5 = NA_integer_, 
-      CH5a = NA_integer_, 
+      CH5a = NA_character_, 
       CH5a_other = NA_character_, 
       PLAY1a = NA_integer_, 
       PLAY1b = NA_integer_, 
@@ -732,7 +732,7 @@ clean_child_health_types <- function(df) {
       FEVER4 = NA_integer_, 
       FEVER5 = NA_integer_,
       FEVER6 = NA_integer_, 
-      FEVER6a = NA_integer_, 
+      FEVER6a = NA_character_, 
       FEVER7 = NA_integer_, 
       ORT1 = NA_integer_, 
       ORT1a = NA_integer_, 
@@ -758,7 +758,7 @@ clean_child_health_types <- function(df) {
       CH3 = NA_integer_, 
       CH4 = NA_integer_, 
       CH5 = NA_integer_, 
-      CH5a = NA_integer_, 
+      CH5a = NA_character_, 
       CH5a_other = NA_character_, 
       PLAY1a = NA_integer_, 
       PLAY1b = NA_integer_, 
@@ -1349,6 +1349,30 @@ process_endline_data <- function(.data, survey_endline_choices) {
     alcohol_consumption = refactor_var_categorical(
       x = ment9, y = "alcohol_frequency", choices = survey_endline_choices
     ),
+    ### Pregnant ---------------------------------------------------------------
+    currently_pregnant = recode_yes_no(wh1),
+    weeks_of_gestation_self_report = NA,
+    prenatal_card_self_report = recode_yes_no(wh2),
+    prenatal_card_available = recode_yes_no(wh3),
+    malaria_during_pregnancy = recode_yes_no(wh4),
+    anemia_during_pregnancy = recode_yes_no(wh5),
+    excluded_foods_from_diet = recode_yes_no(wh6),
+    included_foods_from_diet = recode_yes_no(wh7),
+    wants_more_children = recode_yes_no(wh8),
+    pregnancy_danger_signs = ifelse(preg1 %in% c(88, 99), NA, preg1),
+    # vaginal_bleeding = preg1_1,
+    # severe_headache = preg1_2,
+    # blurry_vision = preg1_3,
+    # swollen_extremities = preg1_4,
+    # convulsions = preg1_5,
+    # fever = preg1_6,
+    # intense_abdominal_pain = preg1_7,
+    # loss_of_consciousness = preg1_8,
+    # fatigue = preg1_9,
+    plans_when_labor_begins = refactor_var_categorical(
+      x = preg2, y = "labor_action", choices = survey_endline_choices
+    ),
+    
     .keep = "unused"
   ) |>
     (\(x)
@@ -1380,6 +1404,23 @@ process_endline_data <- function(.data, survey_endline_choices) {
                )
                x 
             }
+            )(),
+          preg_recode_danger(
+            vars = "pregnancy_danger_signs",
+            .data = x,
+            prefix = "danger"
+          ) |>
+            (\(x) 
+              { 
+                names(x) <- c(
+                  "vaginal_bleeding", "severe_headache", "blurry_vision",
+                  "swollen_extremities", "convulsions", "fever",
+                  "intense_abdominal_pain", "loss_of_consciousness",
+                  "fatigue", "accelerated_diminished_fetal_movement",
+                  "danger_all", "danger_prop"
+                )
+                x 
+              }
             )()
         )
       }
