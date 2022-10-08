@@ -216,7 +216,7 @@ process_respondent_data <- function(df) {
     SPC2 = NA_integer_,
     SPC2a = NA_integer_,
     SPC2b = NA_integer_,
-    SPC3 = NA_integer_,
+    SPC3 = NA_character_,
     SPC4 = NA_integer_,
     SPC5 = NA_integer_,
     SPC5a = NA_integer_,
@@ -1368,6 +1368,44 @@ process_endline_data <- function(.data, survey_endline_choices) {
     offered_medication_to_reduce_child_risk = recode_yes_no(pmtct3),
     received_mosquito_net = recode_yes_no(idk1),
     slept_under_mosquito_net = recode_yes_no(idk2),
+    ### Natal care -------------------------------------------------------------
+    location_of_last_delivery = refactor_var_categorical(
+      x = spc1, y = "delivery_location", choices = survey_endline_choices
+    ),
+    number_of_prenatal_visits = refactor_var_categorical(
+      x = spc2, y = "delivery_location", choices = survey_endline_choices
+    ),
+    at_least_four_anc_visits = ifelse(spc2 %in% 4:5, 1, 0),
+    treated_well_during_anc = recode_yes_no(spc2a),
+    treated_well_at_delivery = recode_yes_no(spc2b),
+    # delivery_assisted_by_doctor = spc3_1,
+    # delivery_assisted_by_nurse = spc3_2,
+    # delivery_assisted_by_midwife = spc3_3,
+    # delivery_assisted_by_other_person = spc3_4,
+    # delivery_assisted_by_traditional_midwife = spc3_5,
+    # delivery_assisted_by_community_health_worker = spc3_6,
+    # delivery_assisted_by_relative_or_friend = spc3_7,
+    # delivery_assisted_by_other = spc3_8,
+    # delivery_assisted_by_nobody = spc3_9,
+    # difficulty_reaching_facility_due_to_cost = spc5a_1,
+    # difficulty_reaching_facility_due_to_distance = spc5a_2,
+    # difficulty_reaching_facility_due_to_stigma = spc5a_3,
+    # difficulty_reaching_facility_due_to_poor_roads = spc5a_4,
+    # difficulty_reaching_facility_due_to_other_reasons = spc5a_5,
+    # difficulty_reaching_facility_no_difficulty = spc5a_6,
+    # time_to_postnatal_check_for_child = recode_var_categorical(spc6),
+    # time_to_postnatal_check_for_mother = recode_var_categorical(spc7),
+    spc3 = ifelse(spc3 %in% c(88, 99), NA, spc3),
+    spc5a = ifelse(spc5a %in% c(88, 99), NA, spc5a),
+    spc6 = ifelse(spc6 %in% c(88, 99), NA, spc6),
+    spc7 = ifelse(spc7 %in% c(88, 99), NA, spc7),
+    given_malaria_treatment_during_pregnancy = recode_yes_no(fansidar1),
+    took_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 1, 0, 1),
+    completed_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 4, 1, 0),
+    at_least_one_tetanus_toxoid_vaccination = recode_yes_no(tt1),
+    two_or_more_tetanus_toxoid_vaccination = ifelse(tt2 != 1, 1, 0),
+    ferrous_sulfate_supplementation = recode_yes_no(fol1),
+    vitamin_a_supplementation_during_pregnancy = NA,
     .keep = "unused"
   ) |>
     (\(x)
@@ -1416,7 +1454,102 @@ process_endline_data <- function(.data, survey_endline_choices) {
                 )
                 x 
               }
-            )()
+            )(),
+          nc_recode_assist(vars = "spc3", .data = x, na_rm = FALSE) |>
+            (\(x)
+              {
+                names(x) <- c(
+                  "delivery_assisted_by",
+                  paste0(
+                    "delivery_assisted_by_", 
+                    c(
+                      "doctor", "nurse", "midwife", "other_person",
+                      "traditional_midwife", "community_health_worker",
+                      "relative_or_friend", "other", "nobody"
+                    )
+                  )
+                )
+                x
+              }
+            )(),
+          nc_recode_difficulties(vars = "spc5a", .data = x, na_rm = FALSE) |>
+            (\(x)
+             {
+               names(x) <- c(
+                 "difficulty_reaching_faciity",
+                 paste0(
+                   "difficulty_reaching_facility_",
+                   c(
+                     "due_to_cost", "due_to_distance", "due_to_stigma", 
+                     "due_to_poor_roads", "other", "no_difficulty"
+                   )
+                 )
+               )
+               x
+             }
+            )(),
+          nc_recode_pnc(
+            vars = c("spc6", "spc6a", "spc6b"), 
+            .data = x, 
+            prefix = "pnc_child"
+          ) |>
+            (\(x)
+              {
+                names(x)[1:2] <- paste0("pnc_child_", names(x)[1:2])
+                x
+              }
+            )() |>
+            (\(x)
+              {
+                x$time_to_postnatal_check_for_child <- ifelse(
+                  is.na(x$pnc_child_days_to_pnc), "No response",
+                  ifelse(
+                    x$pnc_child_days_to_pnc > 0 & 
+                      x$pnc_child_days_to_pnc < 3, "Menos de 3 dias",
+                    ifelse(
+                      x$pnc_child_days_to_pnc >= 3 &
+                        x$pnc_child_days_to_pnc <= 6, "De 3 a 6 dias",
+                      ifelse(
+                        x$pnc_child_days_to_pnc >= 7, "Mais de uma semana", 
+                        "Não recebeu cuidados"
+                      )
+                    )
+                  )
+                )
+                x
+              }
+            )(),
+          nc_recode_pnc(
+            vars = c("spc7", "spc7a", "spc7b"), 
+            .data = x, 
+            prefix = "pnc_mother"
+          ) |>
+            (\(x)
+             {
+               names(x)[1:2] <- paste0("pnc_mother_", names(x)[1:2])
+               x
+            }
+            )() |>
+            (\(x)
+             {
+               x$time_to_postnatal_check_for_mother <- ifelse(
+                 is.na(x$pnc_mother_days_to_pnc), "No response",
+                 ifelse(
+                   x$pnc_mother_days_to_pnc > 0 & 
+                     x$pnc_mother_days_to_pnc < 3, "Menos de 3 dias",
+                   ifelse(
+                     x$pnc_mother_days_to_pnc >= 3 &
+                       x$pnc_mother_days_to_pnc <= 6, "De 3 a 6 dias",
+                     ifelse(
+                       x$pnc_mother_days_to_pnc >= 7, "Mais de uma semana", 
+                       "Não recebeu cuidados"
+                     )
+                   )
+                 )
+               )
+               x
+             }
+           )()
         )
       }
     )()
