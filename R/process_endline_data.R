@@ -1522,6 +1522,42 @@ process_endline_data <- function(.data, survey_endline_choices) {
       )
     ),
     deworming_coverage = recode_yes_no(vas3, na_values = 8:9),
+    ### IYCF/ICFI - 6-23 months - MDD
+    eb7 = ifelse(eb7 %in% 8:9, NA, eb7),
+    nut1a = ifelse(nut1a %in% c(88, 99), NA, nut1a),
+    nut1b = ifelse(nut1b %in% c(88, 99), NA, nut1b),
+    nut1c = ifelse(nut1c %in% c(88, 99), NA, nut1c),
+    nut1d = ifelse(nut1d %in% c(88, 99), NA, nut1d),
+    nut1e = ifelse(nut1e %in% c(88, 99), NA, nut1e),
+    nut1f = ifelse(nut1f %in% c(88, 99), NA, nut1f),
+    nut1g = ifelse(nut1g %in% c(88, 99), NA, nut1g),
+    nut1h = ifelse(nut1h %in% c(88, 99), NA, nut1h),
+    nut1i = ifelse(nut1i %in% c(88, 99), NA, nut1i),
+    nut1j = ifelse(nut1j %in% c(88, 99), NA, nut1j),
+    nut1k = ifelse(nut1k %in% c(88, 99), NA, nut1k),
+    nut1l = ifelse(nut1l %in% c(88, 99), NA, nut1l),
+    nut1m = ifelse(nut1m %in% c(88, 99), NA, nut1m),
+    nut1n = ifelse(nut1n %in% c(88, 99), NA, nut1n),
+    food_group_breastmilk = ifelse(eb7 == 2, 1, 0),
+    food_group_dairy = ifelse(nut1l > 0, 1, 0),
+    food_group_starch = ifelse(nut1a > 0 | nut1c > 0, 1, 0),
+    food_group_vitamin_a_rich = ifelse(
+      nut1b > 0 | nut1d > 0 | nut1e > 0 | nut1n > 0, 1, 0
+    ),
+    food_group_other_fruits_vegetables = ifelse(nut1f > 0, 1, 0),
+    food_group_legumes = ifelse(nut1k > 0, 1, 0),
+    food_group_meat = ifelse(nut1g > 0 | nut1h > 0 | nut1j > 0, 1, 0),
+    food_group_eggs = ifelse(nut1i > 0, 1, 0),
+    food_groups_score = food_group_breastmilk + food_group_dairy + 
+      food_group_starch + food_group_vitamin_a_rich + 
+      food_group_other_fruits_vegetables +
+      food_group_legumes + food_group_meat + food_group_eggs,
+    minimum_dietary_diversity = ifelse(
+      child_age_months < 6 | child_age_months >= 24, NA,
+      ifelse(
+        food_groups_score >= 5, 1, 0
+      )
+    ),
     .keep = "unused"
   ) |>
     (\(x)
