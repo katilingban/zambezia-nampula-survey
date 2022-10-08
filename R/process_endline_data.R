@@ -1324,13 +1324,6 @@ process_endline_data <- function(.data, survey_endline_choices) {
     fever_malaria_test = ifelse(fever4 == 1 | fever5 == 1, 1, 0),
     fever_malaria_episode = recode_yes_no(fever6),
     fever_treatment = ifelse(fever6a %in% c(88, 99), NA, fever6a),
-    # fever_malaria_coartem = recode_yes_no(fiber6a_1 == 1, 1, 0),
-    # fever_malaria_amodiaquina_artesunato = ifelse(fiber6a_2 == 1, 1, 0),
-    # fever_malaria_fansidar = ifelse(fiber6a_3 == 1, 1, 0),
-    # fever_malaria_quinino = ifelse(fiber6a_4 == 1, 1, 0),
-    # fever_malaria_quinino_injection = ifelse(is.na(fiber6a_4), NA, 0),
-    # fever_malaria_artesunato = ifelse(fiber6a_6 == 1, 1, 0),
-    # fever_malaria_paracetamol_comprimido_xarope = ifelse(fiber6a_7 == 1, 1, 0),
     fever_malaria_treatment_intake = recode_yes_no(fever7),
     ### RTI --------------------------------------------------------------------
     rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
@@ -1339,11 +1332,23 @@ process_endline_data <- function(.data, survey_endline_choices) {
       x = ch4, y = "point_of_care", choices = survey_endline_choices
     ),
     rti_treatment = ifelse(ch5a %in% c(88, 99), NA, ch5a),
-    # rti_treatment_antiobioticos = ifelse(ch5a_1 == 1, 1, 0),
-    # rti_treatment_paracetamol = ifelse(ch5a_2 == 1, 1, 0),
-    # rti_treatment_aspirina = ifelse(ch5a_3 == 1, 1, 0),
-    # rti_treatment_ibuprofeno = ifelse(ch5a_4 == 1, 1, 0),
-    # rti_treatment_other = ifelse(ch5a_5 == 1, 1, 0),
+    ### Mental health ----------------------------------------------------------
+    ment1 = ifelse(ment1 %in% c(88, 99), NA, ment1),
+    ment2 = ifelse(ment2 %in% c(88, 99), NA, ment2),
+    ment3 = ifelse(ment3 %in% c(88, 99), NA, ment3),
+    ment4 = ifelse(ment4 %in% c(88, 99), NA, ment4),
+    ment5 = ifelse(ment5 %in% c(88, 99), NA, ment5),
+    ment6 = ifelse(ment6 %in% c(88, 99), NA, ment6),
+    ment7 = ifelse(ment7 %in% c(88, 99), NA, ment7),
+    ment8 = ifelse(ment8 %in% c(88, 99), NA, ment8),
+    #ment9 = ifelse(ment9 %in% c(88, 99), NA, ment9),
+    phq8_score = ment1 + ment2 + ment3 + ment4 + ment5 + ment6 + ment7 + ment8,
+    major_depression = ifelse(phq8_score > 10 & phq8_score <= 20, 1, 0),
+    severe_depression = ifelse(phq8_score > 20, 1, 0),
+    at_least_major_depression = ifelse(phq8_score > 10, 1, 0),
+    alcohol_consumption = refactor_var_categorical(
+      x = ment9, y = "alcohol_frequency", choices = survey_endline_choices
+    ),
     .keep = "unused"
   ) |>
     (\(x)
