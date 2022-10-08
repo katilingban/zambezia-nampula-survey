@@ -1566,6 +1566,19 @@ process_endline_data <- function(.data, survey_endline_choices) {
     early_initiation_of_breastfeeding = ifelse(eb2 == 1 | eb2_hours <= 1, 1, 0),
     ### Exclusive breastfeeding (less than 6 months) ---------------------------
     exclusive_breastfeeding = ifelse(eb7 == 1 & nut2 == 0, 1, 0),
+    ### Women's decision making ------------------------------------------------
+    freedom_and_control = refactor_var_categorical(
+      x = von1, y = "freedom_choice", choices = survey_endline_choices
+    ),
+    control_over_destiny = refactor_var_categorical(
+      x = von2, y = "decision_level", choices = survey_endline_choices
+    ),
+    make_decision_without_husband = refactor_var_categorical(
+      x = von3, y = "decision_frequency", choices = survey_endline_choices
+    ),
+    willingly_participate_in_survey = refactor_var_categorical(
+      x = von4, y = "survey_participation", choices = survey_endline_choices
+    ),
     .keep = "unused"
   ) |>
     (\(x)
