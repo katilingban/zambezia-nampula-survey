@@ -1032,3 +1032,351 @@ clean_child_anthro_types <- function(df) {
 }
 
 
+process_endline_data <- function(.data, survey_endline_choices) {
+  ## Add filter to remove testing data -----------------------------------------
+  dplyr::mutate(
+    .data = .data,
+    ### Demographics - respondent ----------------------------------------------
+    respondent_sex = refactor_var_categorical(
+      x = resp_sex,
+      y = "sex",
+      choices = survey_endline_choices
+    ),
+    respondent_age_years = q01,
+    respondent_age_group = refactor_age_group(
+      x = respondent_age_years,
+      breaks = c(seq(from = 15, to = 50, by = 5), Inf),
+      age_group_labels = c(
+        "15 to 19 years", "20 to 24 years", "25 to 29 years", 
+        "30 to 34 years", "35 to 39 years", "40 to 44 years", 
+        "45 to 49 years", "50 years or more")
+    ),
+    respondent_language = refactor_var_categorical(
+      x = idiomaq,
+      y = "language",
+      choices = survey_endline_choices
+    ),
+    respondent_civil_status = refactor_var_categorical(
+      x = resp_marital_status, 
+      y = "marital_status",
+      choices = survey_endline_choices
+    ),
+    respondent_education_years = ifelse(resp_edu %in% c(88, 99), NA, resp_edu),
+    respondent_education_group = refactor_age_group(
+      x = respondent_education_years,
+      breaks = c(0, 6, 12, Inf),
+      age_group_labels = c("0 to 5 years", "6 to 11 years", "12 or more years")
+    ),
+    respondent_occupation = refactor_var_categorical(
+      x = igs1,
+      y = "occupation1",
+      choices = survey_endline_choices
+    ),
+    ### Demographics - children ------------------------------------------------
+    respondent_child_relationship = refactor_var_categorical(
+      x = child_relationship,
+      y = "relationship",
+      choices = survey_endline_choices
+    ),
+    child_sex_integer = as.integer(child_sex),
+    child_sex = refactor_var_categorical(
+      x = child_sex,
+      y = "sex",
+      choices = survey_endline_choices
+    ),
+    child_age_days = calculate_age_child(
+      date_of_birth = child_birthdate,
+      survey_date = today,
+      reported_age_months = child_age,
+      age_units = "days"
+    ),
+    child_age_months = calculate_age_child(
+      date_of_birth = child_birthdate,
+      survey_date = today,
+      reported_age_months = child_age,
+      age_units = "months"
+    ),
+    child_age_years = calculate_age_child(
+      date_of_birth = child_birthdate,
+      survey_date = today,
+      reported_age_months = child_age,
+      age_units = "years"
+    ),
+    child_age_group = refactor_age_group(
+      x = child_age_months,
+      breaks = c(0, 6, 12, 24, 36, 48, 60),
+      age_group_labels = c(
+        "0 to 5 months", "6-11 months", "12 to 23 months",
+        "24 to 35 months", "36 to 47 months", "48 to 59 months"
+      )
+    ),
+    child_currently_breastfeeding = ifelse(eb1 == 2, 1, 0),
+    child_parent_age_at_birth = refactor_age_group(
+      x = resp_age_birth,
+      breaks = c(0, 15, 20, 25, 30, 35, 40, 45, 50, Inf),
+      age_group_labels = c(
+        "less than 15 years", "15 to 19 years", "20 to 24 years",
+        "25 to 29 years", "30 to 34 years", "35 to 39 years",
+        "40 to 44 years", "45 to 49 years", "50 years or more"
+      )
+    ),
+    child_location_of_birth = refactor_var_categorical(
+      x = child_birthplace,
+      y = "birth_location",
+      choices = survey_endline_choices
+    ),
+    child_caesarean_birth = ifelse(child_birthcs == 2, 0, 1),
+    child_complications_at_birth = ifelse(child_birthcomp == 2, 0, 1),
+    child_low_birth_weight = ifelse(child_birthweight == 2, 0, 1),
+    ### Demographics - spouse --------------------------------------------------
+    spouse_age_years = q02a,
+    spouse_age_group = refactor_age_group(
+      x = spouse_age_years,
+      breaks = c(seq(from = 15, to = 70, by = 5), Inf),
+      age_group_labels = c(
+        "15 to 19 years", "20 to 24 years", "25 to 29 years",
+        "30 to 34 years", "35 to 39 years", "40 to 44 years",
+        "45 to 49 years", "50 to 54 years", "55 to 59 years", 
+        "60 to 64 years", "65 to 69 years", "70 years or more"
+      )
+    ),
+    spouse_education_years = ifelse(q02d %in% c(88, 99), NA, q02d),
+    spouse_education_group = refactor_age_group(
+      x = spouse_education_years,
+      breaks = c(0, 6, 12, Inf),
+      age_group_labels = c("0 to 5 years", "6 to 11 years", "12 or more years")
+    ),
+    spouse_occupation = refactor_var_categorical(
+      x = igs2,
+      y = "occupation2",
+      choices = survey_endline_choices
+    ),
+    spouse_lives_in_home = refactor_var_categorical(
+      x = q02,
+      y = "yes_no_other",
+      choices = survey_endline_choices
+    ),
+    ### Household income -------------------------------------------------------
+    persons_living_in_household = famsize,
+    children_under_five_living_in_household = famsize1,
+    pregnant_women_living_in_household = famsize2,
+    monthly_household_income = refactor_var_categorical(
+      x = q08, y = "income4", choices = survey_endline_choices
+    ),
+    source_of_household_income = refactor_var_categorical(
+      x = ig1, y = "income1", choices = survey_endline_choices
+    ),
+    sufficiency_of_household_income = NA,
+    sufficiency_of_family_resource = NA,
+    household_income_against_expenses = NA,
+    ### Household structure ----------------------------------------------------
+    home_ownership_own = ifelse(sdh6 == 2, 0, 1),
+    home_ownership_rent = ifelse(sdh7 == 2, 0, 1),
+    home_ownership_loan = ifelse(sdh8 == 2, 0, 1),
+    #number_of_rooms_in_home = haven::as_factor(sdh3),
+    number_of_rooms_in_home = ifelse(sdh3 %in% c(88, 99), NA, sdh3) |>
+      factor(),
+    number_of_bedrooms_in_home = ifelse(sdh4 %in% c(88, 99), NA, sdh4) |>
+      factor(),
+    roofing_material = refactor_var_categorical(
+      x = sdh1, y = "roof", choices = survey_endline_choices
+    ),
+    floor_material = refactor_var_categorical(
+      x = sdh2, y = "floor", choices = survey_endline_choices
+    ),
+    time_living_in_location_in_months = ifelse(q03 >=88, NA, q03),
+    time_living_in_location_group = refactor_age_group(
+      x = time_living_in_location_in_months,
+      breaks = c(0, 1, 6, 12, 24, 36, 48, 60, 72, 84, 96, 108, 121, Inf),
+      age_group_labels = c(
+        "less than 1 month", "1 to 5 months", "6 to 11 months", 
+        "12 to 23 months", "24 to 35 months", "36 to 47 months", 
+        "48 to 59 months", "60 to 71 months", "72 to 83 monhs", 
+        "84 to 95 months", "96 to 107 months", "108 to 120 months",
+        "more than 10 years"
+      )
+    ),
+    ### Household amenities ----------------------------------------------------
+    electricity = recode_yes_no(as.integer(cdcg1)),
+    cellphone = recode_yes_no(as.integer(cdcg4)),
+    computer = recode_yes_no(as.integer(cdcg7)),
+    landline = NA,
+    radio = recode_yes_no(as.integer(cdcg2)),
+    television = recode_yes_no(as.integer(cdcg3)),
+    housekeeper_childcare_employee = recode_yes_no(as.integer(cdcg14)),
+    refrigerator = recode_yes_no(as.integer(cdcg11)),
+    refrigerator_alternative = recode_yes_no(as.integer(cdcg11a)),
+    number_of_mosquito_nets = ifelse(cdcg13 %in% c(88, 99), NA, cdcg13) |>
+      factor(),
+    fuel_used_for_cooking = refactor_var_categorical(
+      x = cfegs1, y = "fuel1", choices = survey_endline_choices
+    ),
+    location_of_food_preparation = refactor_var_categorical(
+      x = cfegs3, y = "cook_location", choices = survey_endline_choices
+    ),
+    fuel_used_for_lighting = refactor_var_categorical(
+      x = cfegs5, y = "fuel3", choices = survey_endline_choices
+    ),
+    ### Mode of daily travel ---------------------------------------------------
+    usual_mode_of_travel = refactor_var_categorical(
+      x = gi1, y = "travel1", choices = survey_endline_choices
+    ),
+    time_to_travel_to_health_centre = ifelse(gi2t %in% c(888, 998), NA, gi2t),
+    mode_of_travel_to_health_centre = refactor_var_categorical(
+      x = gi2m, y = "travel2", choices = survey_endline_choices
+    ),
+    time_to_travel_to_local_markets = ifelse(gi3t %in% c(888, 998), NA, gi3t),
+    mode_of_travel_to_local_markets = refactor_var_categorical(
+      x = gi3m, y = "travel2", choices = survey_endline_choices
+    ),
+    time_to_travel_to_primary_school = NA,
+    mode_of_travel_to_primary_school = NA,
+    time_to_travel_to_secondary_school = NA,
+    mode_of_travel_to_secondary_school = NA,
+    ### Household decision making ----------------------------------------------
+    marrying_age = refactor_var_categorical(
+      x = ge1, y = "decisions", choices = survey_endline_choices
+    ),
+    using_condoms = refactor_var_categorical(
+      x = ge2, y = "decisions", choices = survey_endline_choices
+    ),
+    household_responsibilities = refactor_var_categorical(
+      x = ge3, y = "decisions", choices = survey_endline_choices
+    ),
+    family_planning = refactor_var_categorical(
+      x = ge4, y = "decisions", choices = survey_endline_choices
+    ),
+    agricultural_tasks = refactor_var_categorical(
+      x = ge5, y = "decisions", choices = survey_endline_choices
+    ),
+    household_finances = refactor_var_categorical(
+      x = ge6, y = "decisions", choices = survey_endline_choices
+    ),
+    child_rearing = refactor_var_categorical(
+      x = ge7, y = "decisions", choices = survey_endline_choices
+    ),
+    child_discipline = refactor_var_categorical(
+      x = ge8,y = "decisions", choices = survey_endline_choices
+    ),
+    healthcare_in_pregnancy = refactor_var_categorical(
+      x = ge9, y = "decisions", choices = survey_endline_choices
+    ),
+    healthcare_for_child = refactor_var_categorical(
+      x = ge10, y = "decisions", choices = survey_endline_choices
+    ),
+    ### Community groups participation -----------------------------------------
+    group_membership = recode_yes_no(q05),
+    #group_membership_type = recode_group_type(q05, q05_spec),
+    presentation_participation = recode_yes_no(q06),
+    #presentation_topic = recode_presentation_type(q06, q06_spec),
+    #presentation_facilitator = recode_var_categorical(q06a) |>
+    #  (\(x) ifelse(x == "ONG (especifique)", q06a_spec, x))(),
+    information_application = recode_yes_no(q06b),
+    health_tasks_participation = recode_yes_no(q07),
+    #health_tasks_participation_type = recode_var_categorical(q07) |>
+    #  (\(x) ifelse(x == "Sim. Especifique", q07_spec, x))(),
+    ### Child anthropometry ----------------------------------------------------
+    ### Water ------------------------------------------------------------------
+    surface_water_source = ifelse(wt2 == 11, 1, 0),
+    unimproved_water_source = ifelse(wt2 %in% c(7, 9), 1, 0),
+    limited_water_source = ifelse(
+      wt2 %in% c(1:6, 8, 10, 12) & wt3a > 30, 1, 0
+    ),
+    basic_water_source = ifelse(
+      wt2 %in% c(1:6, 8, 10, 12) & wt3a <= 30, 1, 0
+    ),
+    sufficient_water_source = ifelse(
+      wt2 %in% 1:2 & wt4 == 1, 1, 0
+    ),
+    ### Sanitation -------------------------------------------------------------
+    open_defecation = ifelse(lusd1 == 2 | lusd4 == 6, 1, 0),
+    unimproved_toilet_facility = ifelse(lusd4 == 5, 1, 0),
+    limited_toilet_facility = ifelse(lusd2 == 1 & lusd4 != 5, 1, 0),
+    basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 != 5, 1, 0),
+    ### Hygiene ----------------------------------------------------------------
+    no_handwashing_facility = ifelse(
+      mao1 == 2, 1, 
+      ifelse(
+        mao1 %in% 3:4, NA, 0
+      )
+    ),
+    limited_handwashing_facility = ifelse(
+      mao1 == 1 & (mao1a == 2 | mao1b == 3), 1, 0
+    ),
+    basic_handwashing_facility = ifelse(
+      mao1 == 1 & mao1a == 1 & mao1b != 3, 1, 0
+    ),
+    ### Diarrhoea --------------------------------------------------------------
+    diarrhoea_episode = recode_yes_no(ort1),
+    diarrhoea_seek_treatment = recode_yes_no(ort3),
+    diarrhoea_point_of_care = refactor_var_categorical(
+      x = ort4, y = "point_of_care", choices = survey_endline_choices
+    ),
+    diarrhoea_treatment_with_ors = ifelse(
+      ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
+    ),
+    ### Fever ------------------------------------------------------------------
+    fever_episode = recode_yes_no(fever1),
+    fever_seek_treatment = recode_yes_no(fever2),
+    fever_point_of_care = refactor_var_categorical(
+      x = fever3, y = "point_of_care", choices = survey_endline_choices
+    ),
+    fever_malaria_test = ifelse(fever4 == 1 | fever5 == 1, 1, 0),
+    fever_malaria_episode = recode_yes_no(fever6),
+    fever_treatment = ifelse(fever6a %in% c(88, 99), NA, fever6a),
+    # fever_malaria_coartem = recode_yes_no(fiber6a_1 == 1, 1, 0),
+    # fever_malaria_amodiaquina_artesunato = ifelse(fiber6a_2 == 1, 1, 0),
+    # fever_malaria_fansidar = ifelse(fiber6a_3 == 1, 1, 0),
+    # fever_malaria_quinino = ifelse(fiber6a_4 == 1, 1, 0),
+    # fever_malaria_quinino_injection = ifelse(is.na(fiber6a_4), NA, 0),
+    # fever_malaria_artesunato = ifelse(fiber6a_6 == 1, 1, 0),
+    # fever_malaria_paracetamol_comprimido_xarope = ifelse(fiber6a_7 == 1, 1, 0),
+    fever_malaria_treatment_intake = recode_yes_no(fever7),
+    ### RTI --------------------------------------------------------------------
+    rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
+    rti_seek_treatment = recode_yes_no(ch3),
+    rti_point_of_care = refactor_var_categorical(
+      x = ch4, y = "point_of_care", choices = survey_endline_choices
+    ),
+    rti_treatment = ifelse(ch5a %in% c(88, 99), NA, ch5a),
+    # rti_treatment_antiobioticos = ifelse(ch5a_1 == 1, 1, 0),
+    # rti_treatment_paracetamol = ifelse(ch5a_2 == 1, 1, 0),
+    # rti_treatment_aspirina = ifelse(ch5a_3 == 1, 1, 0),
+    # rti_treatment_ibuprofeno = ifelse(ch5a_4 == 1, 1, 0),
+    # rti_treatment_other = ifelse(ch5a_5 == 1, 1, 0),
+    .keep = "unused"
+  ) |>
+    (\(x)
+      {
+        data.frame(
+          x,
+          fever_recode_malaria(vars = "fever_treatment", .data = x) |>
+            (\(x) 
+             { 
+               names(x) <- paste0(
+                 "fever_malaria_", 
+                 c(
+                   "coartem", "amodiaquina_artesunato", "fansidar", "quinino", 
+                   "quinino_injection", "artesunato", "paracetamol_xarope"
+                 )
+               )
+               x 
+            }
+            )(),
+          rti_recode_treatment(vars = "rti_treatment", .data = x) |>
+            (\(x) 
+             { 
+               names(x) <- paste0(
+                 "rti_treatment_", 
+                 c(
+                   "antibioticos", "paracetamol", "aspirina", 
+                   "ibuprofeno", "other"
+                 )
+               )
+               x 
+            }
+            )()
+        )
+      }
+    )()
+}
