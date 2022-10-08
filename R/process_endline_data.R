@@ -1512,7 +1512,7 @@ process_endline_data <- function(.data, survey_endline_choices) {
         )
       )
     ),
-    ## Vitamin A and deworming
+    ### Vitamin A and deworming ------------------------------------------------
     vas1 = ifelse(vas1 %in% 4:5, NA, vas1),
     vas2 = ifelse(vas2 %in% 4:5, NA, vas2),
     vitamin_a_supplementation_coverage = ifelse(
@@ -1522,7 +1522,7 @@ process_endline_data <- function(.data, survey_endline_choices) {
       )
     ),
     deworming_coverage = recode_yes_no(vas3, na_values = 8:9),
-    ### IYCF/ICFI - 6-23 months - MDD
+    ### IYCF/ICFI - 6-23 months - MDD ------------------------------------------
     eb7 = ifelse(eb7 %in% 8:9, NA, eb7),
     nut1a = ifelse(nut1a %in% c(88, 99), NA, nut1a),
     nut1b = ifelse(nut1b %in% c(88, 99), NA, nut1b),
@@ -1558,6 +1558,14 @@ process_endline_data <- function(.data, survey_endline_choices) {
         food_groups_score >= 5, 1, 0
       )
     ),
+    ### Breastfeeding (less than 24 months) ------------------------------------
+    eb1 = ifelse(eb1 %in% c(88, 99), NA, eb1),
+    eb2 = ifelse(eb2 %in% c(88, 99), NA, eb2),
+    nut2 = ifelse(nut2 %in% c(88, 99), NA, nut2),
+    ever_breastfed = ifelse(eb1 %in% 1:2, 1, 0),
+    early_initiation_of_breastfeeding = ifelse(eb2 == 1 | eb2_hours <= 1, 1, 0),
+    ### Exclusive breastfeeding (less than 6 months) ---------------------------
+    exclusive_breastfeeding = ifelse(eb7 == 1 & nut2 == 0, 1, 0),
     .keep = "unused"
   ) |>
     (\(x)
