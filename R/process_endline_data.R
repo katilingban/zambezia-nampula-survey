@@ -1396,6 +1396,122 @@ process_endline_data <- function(.data, survey_endline_choices) {
     bs4 = ifelse(bs4 %in% c(88, 99), NA, bs4),
     benefit_of_waiting_until_18_years_of_age = ifelse(bs3 == 6, 0, 1),
     problem_with_having_more_than_4_children = ifelse(bs4 == 6, 0, 1),
+    ### EPI --------------------------------------------------------------------
+    immunisation_card_retention_self_report = recode_yes_no(
+      imm1, na_values = 8:9
+    ),
+    immunisation_card_retention = recode_yes_no(imm2, na_values = c(88, 99)),
+    immunisation_bcg = recode_yes_no(imm3a, na_values = 4:5),
+    immunisation_polio_first_dose = recode_yes_no(imm3b, na_values = 4:5),
+    immunisation_polio_second_dose = recode_yes_no(imm3c, na_values = 4:5),
+    immunisation_polio_third_dose = recode_yes_no(imm3d, na_values = 4:5),
+    immunisation_polio_fourth_dose = recode_yes_no(imm3e, na_values = 4:5),
+    immunisation_pentavalent_first_dose = recode_yes_no(imm4a, na_values = 4:5),
+    immunisation_pentavalent_second_dose = recode_yes_no(imm4b, na_values = 4:5),
+    immunisation_pentavalent_third_dose = recode_yes_no(imm4c, na_values = 4:5),
+    immunisation_measles_first_dose = recode_yes_no(imm5, na_values = 4:5),
+    immunisation_measles_second_dose = recode_yes_no(imm5a, na_values = 4:5),
+    immunisation_pneumococcal_first_dose = recode_yes_no(imm6a, na_values = 4:5),
+    immunisation_pneumococcal_second_dose = recode_yes_no(imm6b, na_values = 4:5),
+    immunisation_pneumococcal_third_dose = recode_yes_no(imm6c, na_values = 4:5),
+    immunisation_rotavirus_first_dose = recode_yes_no(imm7a, na_values = 4:5),
+    immunisation_rotavirus_second_dose = recode_yes_no(imm7b, na_values = 4:5),
+    immunisation_fully_immunised = ifelse(
+      child_age_months >= 12 & child_age_months < 24 &
+        immunisation_bcg + 
+        immunisation_polio_first_dose +
+        immunisation_polio_second_dose + 
+        immunisation_polio_third_dose +
+        immunisation_polio_fourth_dose + 
+        immunisation_pentavalent_first_dose +
+        immunisation_pentavalent_second_dose + 
+        immunisation_pentavalent_third_dose +
+        immunisation_measles_first_dose + 
+        immunisation_measles_second_dose +
+        immunisation_pneumococcal_first_dose + 
+        immunisation_pneumococcal_second_dose +
+        immunisation_pneumococcal_third_dose + 
+        immunisation_rotavirus_first_dose +
+        immunisation_rotavirus_second_dose == 15, 1, 0
+    ),
+    immunisation_age_appropriate_immunisation = ifelse(
+      child_age_months >= 0 & child_age_months < 1.5 & 
+        immunisation_bcg == 1 &
+        immunisation_polio_first_dose == 1, 1,
+      ifelse(
+        child_age_months >= 1.5 & child_age_months < 2.5 &
+          immunisation_bcg == 1 & 
+          immunisation_polio_first_dose == 1 &
+          immunisation_polio_second_dose == 1 & 
+          immunisation_pentavalent_first_dose == 1 &
+          immunisation_pneumococcal_first_dose == 1 &
+          immunisation_rotavirus_first_dose == 1, 1,
+        ifelse(
+          child_age_months >= 2.5 & child_age_months < 3.5 &
+            immunisation_bcg == 1 & 
+            immunisation_polio_first_dose == 1 &
+            immunisation_polio_second_dose == 1 & 
+            immunisation_polio_third_dose == 1 &
+            immunisation_pentavalent_first_dose == 1 &
+            immunisation_pentavalent_second_dose == 1 &
+            immunisation_pneumococcal_first_dose == 1 &
+            immunisation_pneumococcal_second_dose == 1 &
+            immunisation_rotavirus_first_dose == 1 &
+            immunisation_rotavirus_second_dose == 1, 1,
+          ifelse(
+            child_age_months >= 3.5 & child_age_months < 9 &
+              immunisation_bcg == 1 & 
+              immunisation_polio_first_dose == 1 &
+              immunisation_polio_second_dose == 1 & 
+              immunisation_polio_third_dose == 1 &
+              immunisation_polio_fourth_dose == 1 &
+              immunisation_pentavalent_first_dose == 1 &
+              immunisation_pentavalent_second_dose == 1 &
+              immunisation_pentavalent_third_dose == 1 &
+              immunisation_pneumococcal_first_dose == 1 &
+              immunisation_pneumococcal_second_dose == 1 &
+              immunisation_pentavalent_third_dose == 1 &
+              immunisation_rotavirus_first_dose == 1 &
+              immunisation_rotavirus_second_dose == 1, 1,
+            ifelse(
+              child_age_months >= 9 & child_age_months < 18 &
+                immunisation_bcg == 1 & 
+                immunisation_polio_first_dose == 1 &
+                immunisation_polio_second_dose == 1 & 
+                immunisation_polio_third_dose == 1 &
+                immunisation_polio_fourth_dose == 1 &
+                immunisation_pentavalent_first_dose == 1 &
+                immunisation_pentavalent_second_dose == 1 &
+                immunisation_pentavalent_third_dose == 1 &
+                immunisation_pneumococcal_first_dose == 1 &
+                immunisation_pneumococcal_second_dose == 1 &
+                immunisation_pentavalent_third_dose == 1 &
+                immunisation_rotavirus_first_dose == 1 &
+                immunisation_rotavirus_second_dose == 1 &
+                immunisation_measles_first_dose == 1, 1,
+              ifelse(
+                child_age_months >= 18 &
+                  immunisation_bcg == 1 & 
+                  immunisation_polio_first_dose == 1 &
+                  immunisation_polio_second_dose == 1 & 
+                  immunisation_polio_third_dose == 1 &
+                  immunisation_polio_fourth_dose == 1 &
+                  immunisation_pentavalent_first_dose == 1 &
+                  immunisation_pentavalent_second_dose == 1 &
+                  immunisation_pentavalent_third_dose == 1 &
+                  immunisation_pneumococcal_first_dose == 1 &
+                  immunisation_pneumococcal_second_dose == 1 &
+                  immunisation_pentavalent_third_dose == 1 &
+                  immunisation_rotavirus_first_dose == 1 &
+                  immunisation_rotavirus_second_dose == 1 &
+                  immunisation_measles_first_dose == 1 &
+                  immunisation_measles_second_dose == 1, 1, 0
+              )
+            )
+          )
+        )
+      )
+    ),
     .keep = "unused"
   ) |>
     (\(x)
