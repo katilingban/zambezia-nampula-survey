@@ -1341,7 +1341,6 @@ process_endline_data <- function(.data, survey_endline_choices) {
     ment6 = ifelse(ment6 %in% c(88, 99), NA, ment6),
     ment7 = ifelse(ment7 %in% c(88, 99), NA, ment7),
     ment8 = ifelse(ment8 %in% c(88, 99), NA, ment8),
-    #ment9 = ifelse(ment9 %in% c(88, 99), NA, ment9),
     phq8_score = ment1 + ment2 + ment3 + ment4 + ment5 + ment6 + ment7 + ment8,
     major_depression = ifelse(phq8_score > 10 & phq8_score <= 20, 1, 0),
     severe_depression = ifelse(phq8_score > 20, 1, 0),
@@ -1360,19 +1359,15 @@ process_endline_data <- function(.data, survey_endline_choices) {
     included_foods_from_diet = recode_yes_no(wh7),
     wants_more_children = recode_yes_no(wh8),
     pregnancy_danger_signs = ifelse(preg1 %in% c(88, 99), NA, preg1),
-    # vaginal_bleeding = preg1_1,
-    # severe_headache = preg1_2,
-    # blurry_vision = preg1_3,
-    # swollen_extremities = preg1_4,
-    # convulsions = preg1_5,
-    # fever = preg1_6,
-    # intense_abdominal_pain = preg1_7,
-    # loss_of_consciousness = preg1_8,
-    # fatigue = preg1_9,
     plans_when_labor_begins = refactor_var_categorical(
       x = preg2, y = "labor_action", choices = survey_endline_choices
     ),
-    
+    ### PMTCT and malaria prevention -------------------------------------------
+    offered_voluntary_counselling_and_testing = recode_yes_no(pmtct1),
+    received_vct_results = recode_yes_no(pmtct2),
+    offered_medication_to_reduce_child_risk = recode_yes_no(pmtct3),
+    received_mosquito_net = recode_yes_no(idk1),
+    slept_under_mosquito_net = recode_yes_no(idk2),
     .keep = "unused"
   ) |>
     (\(x)
