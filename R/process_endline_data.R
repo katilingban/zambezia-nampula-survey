@@ -248,9 +248,9 @@ process_respondent_data <- function(df) {
     PF1 = NA_integer_,
     BS1 = NA_integer_,
     BS1a = NA_integer_,
-    BS2 = NA_integer_,
+    BS2 = NA_character_,
     BS2a = NA_character_,
-    BS3 = NA_integer_,
+    BS3 = NA_character_,
     BS4 = NA_integer_,
     ABOR1 = NA_integer_,
     ABOR1a = NA_integer_,
@@ -1378,23 +1378,6 @@ process_endline_data <- function(.data, survey_endline_choices) {
     at_least_four_anc_visits = ifelse(spc2 %in% 4:5, 1, 0),
     treated_well_during_anc = recode_yes_no(spc2a),
     treated_well_at_delivery = recode_yes_no(spc2b),
-    # delivery_assisted_by_doctor = spc3_1,
-    # delivery_assisted_by_nurse = spc3_2,
-    # delivery_assisted_by_midwife = spc3_3,
-    # delivery_assisted_by_other_person = spc3_4,
-    # delivery_assisted_by_traditional_midwife = spc3_5,
-    # delivery_assisted_by_community_health_worker = spc3_6,
-    # delivery_assisted_by_relative_or_friend = spc3_7,
-    # delivery_assisted_by_other = spc3_8,
-    # delivery_assisted_by_nobody = spc3_9,
-    # difficulty_reaching_facility_due_to_cost = spc5a_1,
-    # difficulty_reaching_facility_due_to_distance = spc5a_2,
-    # difficulty_reaching_facility_due_to_stigma = spc5a_3,
-    # difficulty_reaching_facility_due_to_poor_roads = spc5a_4,
-    # difficulty_reaching_facility_due_to_other_reasons = spc5a_5,
-    # difficulty_reaching_facility_no_difficulty = spc5a_6,
-    # time_to_postnatal_check_for_child = recode_var_categorical(spc6),
-    # time_to_postnatal_check_for_mother = recode_var_categorical(spc7),
     spc3 = ifelse(spc3 %in% c(88, 99), NA, spc3),
     spc5a = ifelse(spc5a %in% c(88, 99), NA, spc5a),
     spc6 = ifelse(spc6 %in% c(88, 99), NA, spc6),
@@ -1406,6 +1389,13 @@ process_endline_data <- function(.data, survey_endline_choices) {
     two_or_more_tetanus_toxoid_vaccination = ifelse(tt2 != 1, 1, 0),
     ferrous_sulfate_supplementation = recode_yes_no(fol1),
     vitamin_a_supplementation_during_pregnancy = NA,
+    ### Family planning --------------------------------------------------------
+    attempted_to_delay_or_prevent_pregnancy = recode_yes_no(pf1),
+    bs2 = ifelse(bs2 %in% c(88, 99), NA, bs2),
+    bs3 = ifelse(bs3 %in% c(88, 99), NA, bs3),
+    bs4 = ifelse(bs4 %in% c(88, 99), NA, bs4),
+    benefit_of_waiting_until_18_years_of_age = ifelse(bs3 == 6, 0, 1),
+    problem_with_having_more_than_4_children = ifelse(bs4 == 6, 0, 1),
     .keep = "unused"
   ) |>
     (\(x)
@@ -1549,7 +1539,58 @@ process_endline_data <- function(.data, survey_endline_choices) {
                )
                x
              }
-           )()
+           )(),
+          fp_recode_benefit_next(vars = "bs2", .data = x, fill = 1:6) |>
+            (\(x)
+             {
+               names(x) <- paste0(
+                 "benefit_of_waiting_for_next_pregnancy_",
+                 c(
+                   "less_danger_to_health_of_mother",
+                   "less_danger_to_health_of_baby",
+                   "avoid_poverty",
+                   "more_likely_that_children_are_educated",
+                   "other_reasons",
+                   "none"
+                 )
+               )
+               x
+             }
+            )(),
+          fp_recode_benefit_first(vars = "bs3", .data = x, fill = 1:6) |>
+            (\(x)
+              {
+                names(x) <- paste0(
+                  "benefit_of_waiting_until_18_years_of_age_",
+                  c(
+                    "less_danger_to_health_of_mother",
+                    "less_danger_to_health_of_baby",
+                    "avoid_poverty",
+                    "more_likely_that_children_are_educated",
+                    "other_reasons",
+                    "none"
+                  )
+                )
+                x
+              }
+            )(),
+          fp_recode_multiparity(vars = "bs4", .data = x, fill = 1:6) |>
+            (\(x)
+             {
+               names(x) <- paste0(
+                 "problem_with_having_more_than_4_children_",
+                 c(
+                   "maternal_mortality",
+                   "child_mortality",
+                   "children_poverty",
+                   "more_likely_that_children_are_not_educated",
+                   "other_reasons",
+                   "none"
+                 )
+               )
+               x
+             }
+            )()
         )
       }
     )()
