@@ -1513,14 +1513,15 @@ process_endline_data <- function(.data, survey_endline_choices) {
       )
     ),
     ## Vitamin A and deworming
-    vas1 = recode_yes_no(vas1, na_values = 4:5),
-    vas2 = recode_yes_no(vas2, na_values = 4:5),
+    vas1 = ifelse(vas1 %in% 4:5, NA, vas1),
+    vas2 = ifelse(vas2 %in% 4:5, NA, vas2),
     vitamin_a_supplementation_coverage = ifelse(
       child_age_months >= 6 & child_age_months < 12 & vas1 == 1, 1,
       ifelse(
         child_age_months >= 12 & child_age_months < 60 & vas2 == 2, 1, 0
       )
     ),
+    deworming_coverage = recode_yes_no(vas3, na_values = 8:9),
     .keep = "unused"
   ) |>
     (\(x)
