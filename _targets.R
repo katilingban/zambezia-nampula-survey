@@ -51,7 +51,7 @@ data_downloads <- tar_plan(
 
 ## Supporting/reference datasets -----------------------------------------------
 data_reference <- tar_plan(
-  ### Read indicator list from Google Sheets
+  ### Read indicator list from Google Sheets -----------------------------------
   survey_indicator_list_id = googlesheets4::gs4_find() |>
     subset(name == "zambezia_nampula_survey_indicators") |>
     (\(x) x$id)(),
@@ -59,6 +59,17 @@ data_reference <- tar_plan(
     name = survey_indicator_list,
     command = googlesheets4::read_sheet(ss = survey_indicator_list_id),
     cue = tar_cue("always")
+  ),
+  ### Read choices list for endline survey -------------------------------------
+  survey_endline_form_id = googlesheets4::gs4_find() |>
+    subset(name == "improving_nutrition_status_u5") |>
+    (\(x) x$id)(),
+  tar_target(
+    name = survey_endline_choices,
+    command = googlesheets4::read_sheet(
+      ss = survey_endline_form_id, sheet = "choices"
+    ) |>
+      subset(!is.na(list_name))
   )
 )
 
@@ -4002,12 +4013,16 @@ outputs_tables_baseline <- tar_plan(
 
 raw_data_endline <- tar_plan(
   ### Read raw endline data 
-  endline_raw_data = get_endline_data()
+  endline_raw_data = get_endline_data() |>
+    process_respondent_data() |>
+    process_child_data()
 )
 
 ## Process endline data --------------------------------------------------------
 processed_data_endline <- tar_plan(
-  
+  endline_data_processed = process_endline_data(
+    endline_raw_data, survey_endline_choices
+  )
 )
 
 ## Outputs - overall -----------------------------------------------------------

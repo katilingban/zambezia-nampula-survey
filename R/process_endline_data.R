@@ -204,9 +204,9 @@ process_respondent_data <- function(df) {
     WH7 = NA_integer_,
     WH7a = NA_character_,
     WH8 = NA_integer_,
-    PREG1 = NA_integer_,
+    PREG1 = NA_character_,
     PREG2 = NA_integer_,
-    PREG3 = NA_integer_,
+    PREG3 = NA_character_,
     PMTCT1 = NA_integer_,
     PMTCT2 = NA_integer_,
     PMTCT3 = NA_integer_,
@@ -216,7 +216,7 @@ process_respondent_data <- function(df) {
     SPC2 = NA_integer_,
     SPC2a = NA_integer_,
     SPC2b = NA_integer_,
-    SPC3 = NA_integer_,
+    SPC3 = NA_character_,
     SPC4 = NA_integer_,
     SPC5 = NA_integer_,
     SPC5a = NA_integer_,
@@ -248,9 +248,9 @@ process_respondent_data <- function(df) {
     PF1 = NA_integer_,
     BS1 = NA_integer_,
     BS1a = NA_integer_,
-    BS2 = NA_integer_,
+    BS2 = NA_character_,
     BS2a = NA_character_,
-    BS3 = NA_integer_,
+    BS3 = NA_character_,
     BS4 = NA_integer_,
     ABOR1 = NA_integer_,
     ABOR1a = NA_integer_,
@@ -632,7 +632,7 @@ clean_child_health_types <- function(df) {
       FEVER4 = NA_integer_, 
       FEVER5 = NA_integer_,
       FEVER6 = NA_integer_, 
-      FEVER6a = NA_integer_, 
+      FEVER6a = NA_character_, 
       FEVER7 = NA_integer_, 
       ORT1 = NA_integer_, 
       ORT1a = NA_integer_, 
@@ -658,7 +658,7 @@ clean_child_health_types <- function(df) {
       CH3 = NA_integer_, 
       CH4 = NA_integer_, 
       CH5 = NA_integer_, 
-      CH5a = NA_integer_, 
+      CH5a = NA_character_, 
       CH5a_other = NA_character_, 
       PLAY1a = NA_integer_, 
       PLAY1b = NA_integer_, 
@@ -732,7 +732,7 @@ clean_child_health_types <- function(df) {
       FEVER4 = NA_integer_, 
       FEVER5 = NA_integer_,
       FEVER6 = NA_integer_, 
-      FEVER6a = NA_integer_, 
+      FEVER6a = NA_character_, 
       FEVER7 = NA_integer_, 
       ORT1 = NA_integer_, 
       ORT1a = NA_integer_, 
@@ -758,7 +758,7 @@ clean_child_health_types <- function(df) {
       CH3 = NA_integer_, 
       CH4 = NA_integer_, 
       CH5 = NA_integer_, 
-      CH5a = NA_integer_, 
+      CH5a = NA_character_, 
       CH5a_other = NA_character_, 
       PLAY1a = NA_integer_, 
       PLAY1b = NA_integer_, 
@@ -1032,3 +1032,882 @@ clean_child_anthro_types <- function(df) {
 }
 
 
+process_endline_data <- function(.data, survey_endline_choices) {
+  ## Add filter to remove testing data -----------------------------------------
+  dplyr::mutate(
+    .data = .data,
+    ### Demographics - respondent ----------------------------------------------
+    respondent_sex = refactor_var_categorical(
+      x = resp_sex,
+      y = "sex",
+      choices = survey_endline_choices
+    ),
+    respondent_age_years = q01,
+    respondent_age_group = refactor_age_group(
+      x = respondent_age_years,
+      breaks = c(seq(from = 15, to = 50, by = 5), Inf),
+      age_group_labels = c(
+        "15 to 19 years", "20 to 24 years", "25 to 29 years", 
+        "30 to 34 years", "35 to 39 years", "40 to 44 years", 
+        "45 to 49 years", "50 years or more")
+    ),
+    respondent_language = refactor_var_categorical(
+      x = idiomaq,
+      y = "language",
+      choices = survey_endline_choices
+    ),
+    respondent_civil_status = refactor_var_categorical(
+      x = resp_marital_status, 
+      y = "marital_status",
+      choices = survey_endline_choices
+    ),
+    respondent_education_years = ifelse(resp_edu %in% c(88, 99), NA, resp_edu),
+    respondent_education_group = refactor_age_group(
+      x = respondent_education_years,
+      breaks = c(0, 6, 12, Inf),
+      age_group_labels = c("0 to 5 years", "6 to 11 years", "12 or more years")
+    ),
+    respondent_occupation = refactor_var_categorical(
+      x = igs1,
+      y = "occupation1",
+      choices = survey_endline_choices
+    ),
+    ### Demographics - children ------------------------------------------------
+    respondent_child_relationship = refactor_var_categorical(
+      x = child_relationship,
+      y = "relationship",
+      choices = survey_endline_choices
+    ),
+    child_sex_integer = as.integer(child_sex),
+    child_sex = refactor_var_categorical(
+      x = child_sex,
+      y = "sex",
+      choices = survey_endline_choices
+    ),
+    child_age_days = calculate_age_child(
+      date_of_birth = child_birthdate,
+      survey_date = today,
+      reported_age_months = child_age,
+      age_units = "days"
+    ),
+    child_age_months = calculate_age_child(
+      date_of_birth = child_birthdate,
+      survey_date = today,
+      reported_age_months = child_age,
+      age_units = "months"
+    ),
+    child_age_years = calculate_age_child(
+      date_of_birth = child_birthdate,
+      survey_date = today,
+      reported_age_months = child_age,
+      age_units = "years"
+    ),
+    child_age_group = refactor_age_group(
+      x = child_age_months,
+      breaks = c(0, 6, 12, 24, 36, 48, 60),
+      age_group_labels = c(
+        "0 to 5 months", "6-11 months", "12 to 23 months",
+        "24 to 35 months", "36 to 47 months", "48 to 59 months"
+      )
+    ),
+    child_currently_breastfeeding = ifelse(eb1 == 2, 1, 0),
+    child_parent_age_at_birth = refactor_age_group(
+      x = resp_age_birth,
+      breaks = c(0, 15, 20, 25, 30, 35, 40, 45, 50, Inf),
+      age_group_labels = c(
+        "less than 15 years", "15 to 19 years", "20 to 24 years",
+        "25 to 29 years", "30 to 34 years", "35 to 39 years",
+        "40 to 44 years", "45 to 49 years", "50 years or more"
+      )
+    ),
+    child_location_of_birth = refactor_var_categorical(
+      x = child_birthplace,
+      y = "birth_location",
+      choices = survey_endline_choices
+    ),
+    child_caesarean_birth = ifelse(child_birthcs == 2, 0, 1),
+    child_complications_at_birth = ifelse(child_birthcomp == 2, 0, 1),
+    child_low_birth_weight = ifelse(child_birthweight == 2, 0, 1),
+    ### Demographics - spouse --------------------------------------------------
+    spouse_age_years = q02a,
+    spouse_age_group = refactor_age_group(
+      x = spouse_age_years,
+      breaks = c(seq(from = 15, to = 70, by = 5), Inf),
+      age_group_labels = c(
+        "15 to 19 years", "20 to 24 years", "25 to 29 years",
+        "30 to 34 years", "35 to 39 years", "40 to 44 years",
+        "45 to 49 years", "50 to 54 years", "55 to 59 years", 
+        "60 to 64 years", "65 to 69 years", "70 years or more"
+      )
+    ),
+    spouse_education_years = ifelse(q02d %in% c(88, 99), NA, q02d),
+    spouse_education_group = refactor_age_group(
+      x = spouse_education_years,
+      breaks = c(0, 6, 12, Inf),
+      age_group_labels = c("0 to 5 years", "6 to 11 years", "12 or more years")
+    ),
+    spouse_occupation = refactor_var_categorical(
+      x = igs2,
+      y = "occupation2",
+      choices = survey_endline_choices
+    ),
+    spouse_lives_in_home = refactor_var_categorical(
+      x = q02,
+      y = "yes_no_other",
+      choices = survey_endline_choices
+    ),
+    ### Household income -------------------------------------------------------
+    persons_living_in_household = famsize,
+    children_under_five_living_in_household = famsize1,
+    pregnant_women_living_in_household = famsize2,
+    monthly_household_income = refactor_var_categorical(
+      x = q08, y = "income4", choices = survey_endline_choices
+    ),
+    source_of_household_income = refactor_var_categorical(
+      x = ig1, y = "income1", choices = survey_endline_choices
+    ),
+    sufficiency_of_household_income = NA,
+    sufficiency_of_family_resource = NA,
+    household_income_against_expenses = NA,
+    ### Household structure ----------------------------------------------------
+    home_ownership_own = ifelse(sdh6 == 2, 0, 1),
+    home_ownership_rent = ifelse(sdh7 == 2, 0, 1),
+    home_ownership_loan = ifelse(sdh8 == 2, 0, 1),
+    #number_of_rooms_in_home = haven::as_factor(sdh3),
+    number_of_rooms_in_home = ifelse(sdh3 %in% c(88, 99), NA, sdh3) |>
+      factor(),
+    number_of_bedrooms_in_home = ifelse(sdh4 %in% c(88, 99), NA, sdh4) |>
+      factor(),
+    roofing_material = refactor_var_categorical(
+      x = sdh1, y = "roof", choices = survey_endline_choices
+    ),
+    floor_material = refactor_var_categorical(
+      x = sdh2, y = "floor", choices = survey_endline_choices
+    ),
+    time_living_in_location_in_months = ifelse(q03 >=88, NA, q03),
+    time_living_in_location_group = refactor_age_group(
+      x = time_living_in_location_in_months,
+      breaks = c(0, 1, 6, 12, 24, 36, 48, 60, 72, 84, 96, 108, 121, Inf),
+      age_group_labels = c(
+        "less than 1 month", "1 to 5 months", "6 to 11 months", 
+        "12 to 23 months", "24 to 35 months", "36 to 47 months", 
+        "48 to 59 months", "60 to 71 months", "72 to 83 monhs", 
+        "84 to 95 months", "96 to 107 months", "108 to 120 months",
+        "more than 10 years"
+      )
+    ),
+    ### Household amenities ----------------------------------------------------
+    electricity = recode_yes_no(as.integer(cdcg1)),
+    cellphone = recode_yes_no(as.integer(cdcg4)),
+    computer = recode_yes_no(as.integer(cdcg7)),
+    landline = NA,
+    radio = recode_yes_no(as.integer(cdcg2)),
+    television = recode_yes_no(as.integer(cdcg3)),
+    housekeeper_childcare_employee = recode_yes_no(as.integer(cdcg14)),
+    refrigerator = recode_yes_no(as.integer(cdcg11)),
+    refrigerator_alternative = recode_yes_no(as.integer(cdcg11a)),
+    number_of_mosquito_nets = ifelse(cdcg13 %in% c(88, 99), NA, cdcg13) |>
+      factor(),
+    fuel_used_for_cooking = refactor_var_categorical(
+      x = cfegs1, y = "fuel1", choices = survey_endline_choices
+    ),
+    location_of_food_preparation = refactor_var_categorical(
+      x = cfegs3, y = "cook_location", choices = survey_endline_choices
+    ),
+    fuel_used_for_lighting = refactor_var_categorical(
+      x = cfegs5, y = "fuel3", choices = survey_endline_choices
+    ),
+    ### Mode of daily travel ---------------------------------------------------
+    usual_mode_of_travel = refactor_var_categorical(
+      x = gi1, y = "travel1", choices = survey_endline_choices
+    ),
+    time_to_travel_to_health_centre = ifelse(gi2t %in% c(888, 998), NA, gi2t),
+    mode_of_travel_to_health_centre = refactor_var_categorical(
+      x = gi2m, y = "travel2", choices = survey_endline_choices
+    ),
+    time_to_travel_to_local_markets = ifelse(gi3t %in% c(888, 998), NA, gi3t),
+    mode_of_travel_to_local_markets = refactor_var_categorical(
+      x = gi3m, y = "travel2", choices = survey_endline_choices
+    ),
+    time_to_travel_to_primary_school = NA,
+    mode_of_travel_to_primary_school = NA,
+    time_to_travel_to_secondary_school = NA,
+    mode_of_travel_to_secondary_school = NA,
+    ### Household decision making ----------------------------------------------
+    marrying_age = refactor_var_categorical(
+      x = ge1, y = "decisions", choices = survey_endline_choices
+    ),
+    using_condoms = refactor_var_categorical(
+      x = ge2, y = "decisions", choices = survey_endline_choices
+    ),
+    household_responsibilities = refactor_var_categorical(
+      x = ge3, y = "decisions", choices = survey_endline_choices
+    ),
+    family_planning = refactor_var_categorical(
+      x = ge4, y = "decisions", choices = survey_endline_choices
+    ),
+    agricultural_tasks = refactor_var_categorical(
+      x = ge5, y = "decisions", choices = survey_endline_choices
+    ),
+    household_finances = refactor_var_categorical(
+      x = ge6, y = "decisions", choices = survey_endline_choices
+    ),
+    child_rearing = refactor_var_categorical(
+      x = ge7, y = "decisions", choices = survey_endline_choices
+    ),
+    child_discipline = refactor_var_categorical(
+      x = ge8,y = "decisions", choices = survey_endline_choices
+    ),
+    healthcare_in_pregnancy = refactor_var_categorical(
+      x = ge9, y = "decisions", choices = survey_endline_choices
+    ),
+    healthcare_for_child = refactor_var_categorical(
+      x = ge10, y = "decisions", choices = survey_endline_choices
+    ),
+    ### Community groups participation -----------------------------------------
+    group_membership = recode_yes_no(q05),
+    #group_membership_type = recode_group_type(q05, q05_spec),
+    presentation_participation = recode_yes_no(q06),
+    #presentation_topic = recode_presentation_type(q06, q06_spec),
+    #presentation_facilitator = recode_var_categorical(q06a) |>
+    #  (\(x) ifelse(x == "ONG (especifique)", q06a_spec, x))(),
+    information_application = recode_yes_no(q06b),
+    health_tasks_participation = recode_yes_no(q07),
+    #health_tasks_participation_type = recode_var_categorical(q07) |>
+    #  (\(x) ifelse(x == "Sim. Especifique", q07_spec, x))(),
+    ### Child anthropometry ----------------------------------------------------
+    child_height_length = ifelse(flag == 1, height1, height),
+    child_standing = position,
+    child_weight = ifelse(flag == 1, weight1, weight),
+    child_muac = ifelse(flag == 1, muac1, muac),
+    global_wasting_by_muac = ifelse(child_muac < 12.5, 1, 0),
+    moderate_wasting_by_muac = ifelse(child_muac < 12.5 & child_muac >= 11.5, 1, 0),
+    severe_wasting_by_muac = ifelse(child_muac < 11.5, 1, 0),
+    severe_wasting_by_oedema = ifelse(cmalnut == 1, 1, 0),
+    ### Water ------------------------------------------------------------------
+    surface_water_source = ifelse(wt2 == 11, 1, 0),
+    unimproved_water_source = ifelse(wt2 %in% c(7, 9), 1, 0),
+    limited_water_source = ifelse(
+      wt2 %in% c(1:6, 8, 10, 12) & wt3a > 30, 1, 0
+    ),
+    basic_water_source = ifelse(
+      wt2 %in% c(1:6, 8, 10, 12) & wt3a <= 30, 1, 0
+    ),
+    sufficient_water_source = ifelse(
+      wt2 %in% 1:2 & wt4 == 1, 1, 0
+    ),
+    ### Sanitation -------------------------------------------------------------
+    open_defecation = ifelse(lusd1 == 2 | lusd4 == 6, 1, 0),
+    unimproved_toilet_facility = ifelse(lusd4 == 5, 1, 0),
+    limited_toilet_facility = ifelse(lusd2 == 1 & lusd4 != 5, 1, 0),
+    basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 != 5, 1, 0),
+    ### Hygiene ----------------------------------------------------------------
+    no_handwashing_facility = ifelse(
+      mao1 == 2, 1, 
+      ifelse(
+        mao1 %in% 3:4, NA, 0
+      )
+    ),
+    limited_handwashing_facility = ifelse(
+      mao1 == 1 & (mao1a == 2 | mao1b == 3), 1, 0
+    ),
+    basic_handwashing_facility = ifelse(
+      mao1 == 1 & mao1a == 1 & mao1b != 3, 1, 0
+    ),
+    ### Diarrhoea --------------------------------------------------------------
+    diarrhoea_episode = recode_yes_no(ort1),
+    diarrhoea_seek_treatment = recode_yes_no(ort3),
+    diarrhoea_point_of_care = refactor_var_categorical(
+      x = ort4, y = "point_of_care", choices = survey_endline_choices
+    ),
+    diarrhoea_treatment_with_ors = ifelse(
+      ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
+    ),
+    ### Fever ------------------------------------------------------------------
+    fever_episode = recode_yes_no(fever1),
+    fever_seek_treatment = recode_yes_no(fever2),
+    fever_point_of_care = refactor_var_categorical(
+      x = fever3, y = "point_of_care", choices = survey_endline_choices
+    ),
+    fever_malaria_test = ifelse(fever4 == 1 | fever5 == 1, 1, 0),
+    fever_malaria_episode = recode_yes_no(fever6),
+    fever_treatment = ifelse(fever6a %in% c(88, 99), NA, fever6a),
+    fever_malaria_treatment_intake = recode_yes_no(fever7),
+    ### RTI --------------------------------------------------------------------
+    rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
+    rti_seek_treatment = recode_yes_no(ch3),
+    rti_point_of_care = refactor_var_categorical(
+      x = ch4, y = "point_of_care", choices = survey_endline_choices
+    ),
+    rti_treatment = ifelse(ch5a %in% c(88, 99), NA, ch5a),
+    ### Mental health ----------------------------------------------------------
+    ment1 = ifelse(ment1 %in% c(88, 99), NA, ment1),
+    ment2 = ifelse(ment2 %in% c(88, 99), NA, ment2),
+    ment3 = ifelse(ment3 %in% c(88, 99), NA, ment3),
+    ment4 = ifelse(ment4 %in% c(88, 99), NA, ment4),
+    ment5 = ifelse(ment5 %in% c(88, 99), NA, ment5),
+    ment6 = ifelse(ment6 %in% c(88, 99), NA, ment6),
+    ment7 = ifelse(ment7 %in% c(88, 99), NA, ment7),
+    ment8 = ifelse(ment8 %in% c(88, 99), NA, ment8),
+    phq8_score = ment1 + ment2 + ment3 + ment4 + ment5 + ment6 + ment7 + ment8,
+    major_depression = ifelse(phq8_score > 10 & phq8_score <= 20, 1, 0),
+    severe_depression = ifelse(phq8_score > 20, 1, 0),
+    at_least_major_depression = ifelse(phq8_score > 10, 1, 0),
+    alcohol_consumption = refactor_var_categorical(
+      x = ment9, y = "alcohol_frequency", choices = survey_endline_choices
+    ),
+    ### Pregnant ---------------------------------------------------------------
+    currently_pregnant = recode_yes_no(wh1),
+    weeks_of_gestation_self_report = NA,
+    prenatal_card_self_report = recode_yes_no(wh2),
+    prenatal_card_available = recode_yes_no(wh3),
+    malaria_during_pregnancy = recode_yes_no(wh4),
+    anemia_during_pregnancy = recode_yes_no(wh5),
+    excluded_foods_from_diet = recode_yes_no(wh6),
+    included_foods_from_diet = recode_yes_no(wh7),
+    wants_more_children = recode_yes_no(wh8),
+    pregnancy_danger_signs = ifelse(preg1 %in% c(88, 99), NA, preg1),
+    plans_when_labor_begins = refactor_var_categorical(
+      x = preg2, y = "labor_action", choices = survey_endline_choices
+    ),
+    ### PMTCT and malaria prevention -------------------------------------------
+    offered_voluntary_counselling_and_testing = recode_yes_no(pmtct1),
+    received_vct_results = recode_yes_no(pmtct2),
+    offered_medication_to_reduce_child_risk = recode_yes_no(pmtct3),
+    received_mosquito_net = recode_yes_no(idk1),
+    slept_under_mosquito_net = recode_yes_no(idk2),
+    ### Natal care -------------------------------------------------------------
+    location_of_last_delivery = refactor_var_categorical(
+      x = spc1, y = "delivery_location", choices = survey_endline_choices
+    ),
+    number_of_prenatal_visits = refactor_var_categorical(
+      x = spc2, y = "delivery_location", choices = survey_endline_choices
+    ),
+    at_least_four_anc_visits = ifelse(spc2 %in% 4:5, 1, 0),
+    treated_well_during_anc = recode_yes_no(spc2a),
+    treated_well_at_delivery = recode_yes_no(spc2b),
+    spc3 = ifelse(spc3 %in% c(88, 99), NA, spc3),
+    spc5a = ifelse(spc5a %in% c(88, 99), NA, spc5a),
+    spc6 = ifelse(spc6 %in% c(88, 99), NA, spc6),
+    spc7 = ifelse(spc7 %in% c(88, 99), NA, spc7),
+    given_malaria_treatment_during_pregnancy = recode_yes_no(fansidar1),
+    took_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 1, 0, 1),
+    completed_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 4, 1, 0),
+    at_least_one_tetanus_toxoid_vaccination = recode_yes_no(tt1),
+    two_or_more_tetanus_toxoid_vaccination = ifelse(tt2 != 1, 1, 0),
+    ferrous_sulfate_supplementation = recode_yes_no(fol1),
+    vitamin_a_supplementation_during_pregnancy = NA,
+    ### Family planning --------------------------------------------------------
+    attempted_to_delay_or_prevent_pregnancy = recode_yes_no(pf1),
+    bs2 = ifelse(bs2 %in% c(88, 99), NA, bs2),
+    bs3 = ifelse(bs3 %in% c(88, 99), NA, bs3),
+    bs4 = ifelse(bs4 %in% c(88, 99), NA, bs4),
+    benefit_of_waiting_until_18_years_of_age = ifelse(bs3 == 6, 0, 1),
+    problem_with_having_more_than_4_children = ifelse(bs4 == 6, 0, 1),
+    ### EPI --------------------------------------------------------------------
+    immunisation_card_retention_self_report = recode_yes_no(
+      imm1, na_values = 8:9
+    ),
+    immunisation_card_retention = recode_yes_no(imm2, na_values = c(88, 99)),
+    immunisation_bcg = recode_yes_no(imm3a, na_values = 4:5),
+    immunisation_polio_first_dose = recode_yes_no(imm3b, na_values = 4:5),
+    immunisation_polio_second_dose = recode_yes_no(imm3c, na_values = 4:5),
+    immunisation_polio_third_dose = recode_yes_no(imm3d, na_values = 4:5),
+    immunisation_polio_fourth_dose = recode_yes_no(imm3e, na_values = 4:5),
+    immunisation_pentavalent_first_dose = recode_yes_no(imm4a, na_values = 4:5),
+    immunisation_pentavalent_second_dose = recode_yes_no(imm4b, na_values = 4:5),
+    immunisation_pentavalent_third_dose = recode_yes_no(imm4c, na_values = 4:5),
+    immunisation_measles_first_dose = recode_yes_no(imm5, na_values = 4:5),
+    immunisation_measles_second_dose = recode_yes_no(imm5a, na_values = 4:5),
+    immunisation_pneumococcal_first_dose = recode_yes_no(imm6a, na_values = 4:5),
+    immunisation_pneumococcal_second_dose = recode_yes_no(imm6b, na_values = 4:5),
+    immunisation_pneumococcal_third_dose = recode_yes_no(imm6c, na_values = 4:5),
+    immunisation_rotavirus_first_dose = recode_yes_no(imm7a, na_values = 4:5),
+    immunisation_rotavirus_second_dose = recode_yes_no(imm7b, na_values = 4:5),
+    immunisation_fully_immunised = ifelse(
+      child_age_months >= 12 & child_age_months < 24 &
+        immunisation_bcg + 
+        immunisation_polio_first_dose +
+        immunisation_polio_second_dose + 
+        immunisation_polio_third_dose +
+        immunisation_polio_fourth_dose + 
+        immunisation_pentavalent_first_dose +
+        immunisation_pentavalent_second_dose + 
+        immunisation_pentavalent_third_dose +
+        immunisation_measles_first_dose + 
+        immunisation_measles_second_dose +
+        immunisation_pneumococcal_first_dose + 
+        immunisation_pneumococcal_second_dose +
+        immunisation_pneumococcal_third_dose + 
+        immunisation_rotavirus_first_dose +
+        immunisation_rotavirus_second_dose == 15, 1, 0
+    ),
+    immunisation_age_appropriate_immunisation = ifelse(
+      child_age_months >= 0 & child_age_months < 1.5 & 
+        immunisation_bcg == 1 &
+        immunisation_polio_first_dose == 1, 1,
+      ifelse(
+        child_age_months >= 1.5 & child_age_months < 2.5 &
+          immunisation_bcg == 1 & 
+          immunisation_polio_first_dose == 1 &
+          immunisation_polio_second_dose == 1 & 
+          immunisation_pentavalent_first_dose == 1 &
+          immunisation_pneumococcal_first_dose == 1 &
+          immunisation_rotavirus_first_dose == 1, 1,
+        ifelse(
+          child_age_months >= 2.5 & child_age_months < 3.5 &
+            immunisation_bcg == 1 & 
+            immunisation_polio_first_dose == 1 &
+            immunisation_polio_second_dose == 1 & 
+            immunisation_polio_third_dose == 1 &
+            immunisation_pentavalent_first_dose == 1 &
+            immunisation_pentavalent_second_dose == 1 &
+            immunisation_pneumococcal_first_dose == 1 &
+            immunisation_pneumococcal_second_dose == 1 &
+            immunisation_rotavirus_first_dose == 1 &
+            immunisation_rotavirus_second_dose == 1, 1,
+          ifelse(
+            child_age_months >= 3.5 & child_age_months < 9 &
+              immunisation_bcg == 1 & 
+              immunisation_polio_first_dose == 1 &
+              immunisation_polio_second_dose == 1 & 
+              immunisation_polio_third_dose == 1 &
+              immunisation_polio_fourth_dose == 1 &
+              immunisation_pentavalent_first_dose == 1 &
+              immunisation_pentavalent_second_dose == 1 &
+              immunisation_pentavalent_third_dose == 1 &
+              immunisation_pneumococcal_first_dose == 1 &
+              immunisation_pneumococcal_second_dose == 1 &
+              immunisation_pentavalent_third_dose == 1 &
+              immunisation_rotavirus_first_dose == 1 &
+              immunisation_rotavirus_second_dose == 1, 1,
+            ifelse(
+              child_age_months >= 9 & child_age_months < 18 &
+                immunisation_bcg == 1 & 
+                immunisation_polio_first_dose == 1 &
+                immunisation_polio_second_dose == 1 & 
+                immunisation_polio_third_dose == 1 &
+                immunisation_polio_fourth_dose == 1 &
+                immunisation_pentavalent_first_dose == 1 &
+                immunisation_pentavalent_second_dose == 1 &
+                immunisation_pentavalent_third_dose == 1 &
+                immunisation_pneumococcal_first_dose == 1 &
+                immunisation_pneumococcal_second_dose == 1 &
+                immunisation_pentavalent_third_dose == 1 &
+                immunisation_rotavirus_first_dose == 1 &
+                immunisation_rotavirus_second_dose == 1 &
+                immunisation_measles_first_dose == 1, 1,
+              ifelse(
+                child_age_months >= 18 &
+                  immunisation_bcg == 1 & 
+                  immunisation_polio_first_dose == 1 &
+                  immunisation_polio_second_dose == 1 & 
+                  immunisation_polio_third_dose == 1 &
+                  immunisation_polio_fourth_dose == 1 &
+                  immunisation_pentavalent_first_dose == 1 &
+                  immunisation_pentavalent_second_dose == 1 &
+                  immunisation_pentavalent_third_dose == 1 &
+                  immunisation_pneumococcal_first_dose == 1 &
+                  immunisation_pneumococcal_second_dose == 1 &
+                  immunisation_pentavalent_third_dose == 1 &
+                  immunisation_rotavirus_first_dose == 1 &
+                  immunisation_rotavirus_second_dose == 1 &
+                  immunisation_measles_first_dose == 1 &
+                  immunisation_measles_second_dose == 1, 1, 0
+              )
+            )
+          )
+        )
+      )
+    ),
+    ### Vitamin A and deworming ------------------------------------------------
+    vas1 = ifelse(vas1 %in% 4:5, NA, vas1),
+    vas2 = ifelse(vas2 %in% 4:5, NA, vas2),
+    vitamin_a_supplementation_coverage = ifelse(
+      child_age_months >= 6 & child_age_months < 12 & vas1 == 1, 1,
+      ifelse(
+        child_age_months >= 12 & child_age_months < 60 & vas2 == 2, 1, 0
+      )
+    ),
+    deworming_coverage = recode_yes_no(vas3, na_values = 8:9),
+    ### IYCF/ICFI - 6-23 months - MDD ------------------------------------------
+    eb7 = ifelse(eb7 %in% 8:9, NA, eb7),
+    nut1a = ifelse(nut1a %in% c(88, 99), NA, nut1a),
+    nut1b = ifelse(nut1b %in% c(88, 99), NA, nut1b),
+    nut1c = ifelse(nut1c %in% c(88, 99), NA, nut1c),
+    nut1d = ifelse(nut1d %in% c(88, 99), NA, nut1d),
+    nut1e = ifelse(nut1e %in% c(88, 99), NA, nut1e),
+    nut1f = ifelse(nut1f %in% c(88, 99), NA, nut1f),
+    nut1g = ifelse(nut1g %in% c(88, 99), NA, nut1g),
+    nut1h = ifelse(nut1h %in% c(88, 99), NA, nut1h),
+    nut1i = ifelse(nut1i %in% c(88, 99), NA, nut1i),
+    nut1j = ifelse(nut1j %in% c(88, 99), NA, nut1j),
+    nut1k = ifelse(nut1k %in% c(88, 99), NA, nut1k),
+    nut1l = ifelse(nut1l %in% c(88, 99), NA, nut1l),
+    nut1m = ifelse(nut1m %in% c(88, 99), NA, nut1m),
+    nut1n = ifelse(nut1n %in% c(88, 99), NA, nut1n),
+    food_group_breastmilk = ifelse(eb7 == 2, 1, 0),
+    food_group_dairy = ifelse(nut1l > 0, 1, 0),
+    food_group_starch = ifelse(nut1a > 0 | nut1c > 0, 1, 0),
+    food_group_vitamin_a_rich = ifelse(
+      nut1b > 0 | nut1d > 0 | nut1e > 0 | nut1n > 0, 1, 0
+    ),
+    food_group_other_fruits_vegetables = ifelse(nut1f > 0, 1, 0),
+    food_group_legumes = ifelse(nut1k > 0, 1, 0),
+    food_group_meat = ifelse(nut1g > 0 | nut1h > 0 | nut1j > 0, 1, 0),
+    food_group_eggs = ifelse(nut1i > 0, 1, 0),
+    food_groups_score = food_group_breastmilk + food_group_dairy + 
+      food_group_starch + food_group_vitamin_a_rich + 
+      food_group_other_fruits_vegetables +
+      food_group_legumes + food_group_meat + food_group_eggs,
+    minimum_dietary_diversity = ifelse(
+      child_age_months < 6 | child_age_months >= 24, NA,
+      ifelse(
+        food_groups_score >= 5, 1, 0
+      )
+    ),
+    ### Breastfeeding (less than 24 months) ------------------------------------
+    eb1 = ifelse(eb1 %in% c(88, 99), NA, eb1),
+    eb2 = ifelse(eb2 %in% c(88, 99), NA, eb2),
+    nut2 = ifelse(nut2 %in% c(88, 99), NA, nut2),
+    ever_breastfed = ifelse(eb1 %in% 1:2, 1, 0),
+    early_initiation_of_breastfeeding = ifelse(eb2 == 1 | eb2_hours <= 1, 1, 0),
+    ### Exclusive breastfeeding (less than 6 months) ---------------------------
+    exclusive_breastfeeding = ifelse(eb7 == 1 & nut2 == 0, 1, 0),
+    ### Women's decision making ------------------------------------------------
+    freedom_and_control = refactor_var_categorical(
+      x = von1, y = "freedom_choice", choices = survey_endline_choices
+    ),
+    control_over_destiny = refactor_var_categorical(
+      x = von2, y = "decision_level", choices = survey_endline_choices
+    ),
+    make_decision_without_husband = refactor_var_categorical(
+      x = von3, y = "decision_frequency", choices = survey_endline_choices
+    ),
+    willingly_participate_in_survey = refactor_var_categorical(
+      x = von4, y = "survey_participation", choices = survey_endline_choices
+    ),
+    ### Mother anthropometry ---------------------------------------------------
+    body_mass_index = mpeso / ((maltura / 100) ^ 2),
+    bmi_class = cut(
+      x = body_mass_index,
+      breaks = c(0, 18.5, 25, 30, Inf),
+      labels = c("Underweight", "Healthy weight", "Overweight", "Obese"),
+      include.lowest = TRUE, right = FALSE
+    ),
+    .keep = "unused"
+  ) |>
+    ## Child anthropometry
+    zscorer::addWGSR(
+      sex = "child_sex_integer",
+      firstPart = "child_weight",
+      secondPart = "child_age_days",
+      index = "wfa"
+    ) |>
+    zscorer::addWGSR(
+      sex = "child_sex_integer",
+      firstPart = "child_height_length",
+      secondPart = "child_age_days",
+      standing = "child_standing",
+      index = "hfa"
+    ) |>
+    zscorer::addWGSR(
+      sex = "child_sex_integer",
+      firstPart = "child_weight",
+      secondPart = "child_height_length",
+      standing = "child_standing",
+      index = "wfh"
+    ) |>
+    (\(x) { x$hfaz <- ifelse(x$hfaz > 6 | x$hfaz < -6, NA, x$hfaz); x })() |>
+    (\(x) { x$wfaz <- ifelse(x$wfaz > 5 | x$wfaz < -6, NA, x$wfaz); x })() |>
+    (\(x) { x$wfhz <- ifelse(x$wfhz > 5 | x$wfhz < -5, NA, x$wfhz); x })() |>
+    (\(x) 
+     {
+       ## Stunting
+       x$global_stunting = ifelse(x$hfaz < -2, 1, 0)
+       x$moderate_stunting = ifelse(x$hfaz >= -3 & x$hfaz < -2, 1, 0)
+       x$severe_stunting = ifelse(x$hfaz < -3, 1, 0)
+       ## Underweight
+       x$global_underweight = ifelse(x$wfaz < -2, 1, 0)
+       x$moderate_underweight = ifelse(x$wfaz >= -3 & x$wfaz < -2, 1, 0)
+       x$severe_underweight = ifelse(x$wfaz < -3, 1, 0)
+       ## Wasting
+       x$global_wasting_by_weight_for_height = ifelse(x$wfhz < -2, 1, 0)
+       x$moderate_wasting_by_weight_for_height = ifelse(x$wfhz >= -3 & x$wfhz < -2, 1, 0)
+       x$severe_wasting_by_weight_for_height = ifelse(x$wfhz < -3, 1, 0)
+       x
+    }
+    )() |>
+    (\(x)
+      {
+        data.frame(
+          x,
+          fever_recode_malaria(vars = "fever_treatment", .data = x) |>
+            (\(x) 
+             { 
+               names(x) <- paste0(
+                 "fever_malaria_", 
+                 c(
+                   "coartem", "amodiaquina_artesunato", "fansidar", "quinino", 
+                   "quinino_injection", "artesunato", "paracetamol_xarope"
+                 )
+               )
+               x 
+            }
+            )(),
+          rti_recode_treatment(vars = "rti_treatment", .data = x) |>
+            (\(x) 
+             { 
+               names(x) <- paste0(
+                 "rti_treatment_", 
+                 c(
+                   "antibioticos", "paracetamol", "aspirina", 
+                   "ibuprofeno", "other"
+                 )
+               )
+               x 
+            }
+            )(),
+          preg_recode_danger(
+            vars = "pregnancy_danger_signs",
+            .data = x,
+            prefix = "danger"
+          ) |>
+            (\(x) 
+              { 
+                names(x) <- c(
+                  "vaginal_bleeding", "severe_headache", "blurry_vision",
+                  "swollen_extremities", "convulsions", "fever",
+                  "intense_abdominal_pain", "loss_of_consciousness",
+                  "fatigue", "accelerated_diminished_fetal_movement",
+                  "danger_all", "danger_prop"
+                )
+                x 
+              }
+            )(),
+          nc_recode_assist(vars = "spc3", .data = x, na_rm = FALSE) |>
+            (\(x)
+              {
+                names(x) <- c(
+                  "delivery_assisted_by",
+                  paste0(
+                    "delivery_assisted_by_", 
+                    c(
+                      "doctor", "nurse", "midwife", "other_person",
+                      "traditional_midwife", "community_health_worker",
+                      "relative_or_friend", "other", "nobody"
+                    )
+                  )
+                )
+                x
+              }
+            )(),
+          nc_recode_difficulties(vars = "spc5a", .data = x, na_rm = FALSE) |>
+            (\(x)
+             {
+               names(x) <- c(
+                 "difficulty_reaching_faciity",
+                 paste0(
+                   "difficulty_reaching_facility_",
+                   c(
+                     "due_to_cost", "due_to_distance", "due_to_stigma", 
+                     "due_to_poor_roads", "other", "no_difficulty"
+                   )
+                 )
+               )
+               x
+             }
+            )(),
+          nc_recode_pnc(
+            vars = c("spc6", "spc6a", "spc6b"), 
+            .data = x, 
+            prefix = "pnc_child"
+          ) |>
+            (\(x)
+              {
+                names(x)[1:2] <- paste0("pnc_child_", names(x)[1:2])
+                x
+              }
+            )() |>
+            (\(x)
+              {
+                x$time_to_postnatal_check_for_child <- ifelse(
+                  is.na(x$pnc_child_days_to_pnc), "No response",
+                  ifelse(
+                    x$pnc_child_days_to_pnc > 0 & 
+                      x$pnc_child_days_to_pnc < 3, "Menos de 3 dias",
+                    ifelse(
+                      x$pnc_child_days_to_pnc >= 3 &
+                        x$pnc_child_days_to_pnc <= 6, "De 3 a 6 dias",
+                      ifelse(
+                        x$pnc_child_days_to_pnc >= 7, "Mais de uma semana", 
+                        "Não recebeu cuidados"
+                      )
+                    )
+                  )
+                )
+                x
+              }
+            )(),
+          nc_recode_pnc(
+            vars = c("spc7", "spc7a", "spc7b"), 
+            .data = x, 
+            prefix = "pnc_mother"
+          ) |>
+            (\(x)
+             {
+               names(x)[1:2] <- paste0("pnc_mother_", names(x)[1:2])
+               x
+            }
+            )() |>
+            (\(x)
+             {
+               x$time_to_postnatal_check_for_mother <- ifelse(
+                 is.na(x$pnc_mother_days_to_pnc), "No response",
+                 ifelse(
+                   x$pnc_mother_days_to_pnc > 0 & 
+                     x$pnc_mother_days_to_pnc < 3, "Menos de 3 dias",
+                   ifelse(
+                     x$pnc_mother_days_to_pnc >= 3 &
+                       x$pnc_mother_days_to_pnc <= 6, "De 3 a 6 dias",
+                     ifelse(
+                       x$pnc_mother_days_to_pnc >= 7, "Mais de uma semana", 
+                       "Não recebeu cuidados"
+                     )
+                   )
+                 )
+               )
+               x
+             }
+           )(),
+          fp_recode_benefit_next(vars = "bs2", .data = x, fill = 1:6) |>
+            (\(x)
+             {
+               names(x) <- paste0(
+                 "benefit_of_waiting_for_next_pregnancy_",
+                 c(
+                   "less_danger_to_health_of_mother",
+                   "less_danger_to_health_of_baby",
+                   "avoid_poverty",
+                   "more_likely_that_children_are_educated",
+                   "other_reasons",
+                   "none"
+                 )
+               )
+               x
+             }
+            )(),
+          fp_recode_benefit_first(vars = "bs3", .data = x, fill = 1:6) |>
+            (\(x)
+              {
+                names(x) <- paste0(
+                  "benefit_of_waiting_until_18_years_of_age_",
+                  c(
+                    "less_danger_to_health_of_mother",
+                    "less_danger_to_health_of_baby",
+                    "avoid_poverty",
+                    "more_likely_that_children_are_educated",
+                    "other_reasons",
+                    "none"
+                  )
+                )
+                x
+              }
+            )(),
+          fp_recode_multiparity(vars = "bs4", .data = x, fill = 1:6) |>
+            (\(x)
+             {
+               names(x) <- paste0(
+                 "problem_with_having_more_than_4_children_",
+                 c(
+                   "maternal_mortality",
+                   "child_mortality",
+                   "children_poverty",
+                   "more_likely_that_children_are_not_educated",
+                   "other_reasons",
+                   "none"
+                 )
+               )
+               x
+             }
+            )()
+        )
+      }
+    )() |>
+    (\(x)
+      {
+        data.frame(
+          x,
+          wdds_recode_groups(
+            vars = wdds_map_fg_vars(
+              staples = c("nutmul1", "nutmul2"),
+              green_leafy = "nutmul10",
+              other_vita = c("nutmul11", "nutmul12"),
+              fruits_vegetables = c("nutmul13", "nutmul14"),
+              organ_meat = "nutmul6",
+              meat_fish = c("nutmul7", "nutmul8"),
+              eggs = "nutmul9",
+              legumes = c("nutmul3", "nutmul4"),
+              milk = "nutmul5"
+            ),
+            .data = x
+          ) |>
+            wdds_calculate_score(add = TRUE)
+        )
+      }
+    )() |>
+    (\(x)
+      {
+        data.frame(
+          x,
+          mddw_recode_groups(
+            vars = mddw_map_fg_vars(
+              staples = c("nutmul1", "nutmul2"),
+              pulses = "nutmul3",
+              nuts_seeds = "nutmul4",
+              milk = "nutmul5",
+              meat_fish = c("nutmul6", "nutmul7", "nutmul8"), 
+              eggs = "nutmul9", 
+              green_leafy = "nutmul10",
+              other_vita = c("nutmul11", "nutmul12"),
+              vegetables = "nutmul13",
+              fruits = "nutmul14"
+            ),
+            .data = x
+          ) |>
+          mddw_calculate_score(add = TRUE)
+        )
+      }
+    )() |>
+    (\(x)
+      {
+        play_df <- data.frame(
+          x,
+          play_recode_responses(
+            vars = paste0(
+              "play", 
+              c(paste0(1, letters[1:7]), 2, paste0(3, letters[1:6]))
+            ),
+            .data = x,
+            na_values = c(8, 9)
+          ) |>
+          (\(x)
+            {
+              names(x) <- c(
+                "sing_to_or_with_child", "take_child_for_a_walk", 
+                "play_a_game_with_child", "read_books_or_look_at_photos",
+                "tell_stories_to_child", "identify_objects_with_child",
+                "draw_things_to_or_with_child", "child_has_place_for_toys",
+                "play_with_child_during_bath", "play_with_child_while_feeding_child",
+                "play_with_child_while_changing_clothes", 
+                "play_with_child_while_working_at_home",
+                "play_with_child_while_working_in_the_field",
+                "play_with_child_during_free_time"
+              )
+              x
+            }
+          )()
+        )
+      }
+    )()
+}
