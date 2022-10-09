@@ -1276,6 +1276,14 @@ process_endline_data <- function(.data, survey_endline_choices) {
     #health_tasks_participation_type = recode_var_categorical(q07) |>
     #  (\(x) ifelse(x == "Sim. Especifique", q07_spec, x))(),
     ### Child anthropometry ----------------------------------------------------
+    child_height_length = ifelse(flag == 1, height1, height),
+    child_standing = position,
+    child_weight = ifelse(flag == 1, weight1, weight),
+    child_muac = ifelse(flag == 1, muac1, muac),
+    global_wasting_by_muac = ifelse(child_muac < 12.5, 1, 0),
+    moderate_wasting_by_muac = ifelse(child_muac < 12.5 & child_muac >= 11.5, 1, 0),
+    severe_wasting_by_muac = ifelse(child_muac < 11.5, 1, 0),
+    severe_wasting_by_oedema = ifelse(cmalnut == 1, 1, 0),
     ### Water ------------------------------------------------------------------
     surface_water_source = ifelse(wt2 == 11, 1, 0),
     unimproved_water_source = ifelse(wt2 %in% c(7, 9), 1, 0),
@@ -1579,8 +1587,57 @@ process_endline_data <- function(.data, survey_endline_choices) {
     willingly_participate_in_survey = refactor_var_categorical(
       x = von4, y = "survey_participation", choices = survey_endline_choices
     ),
+    ### Mother anthropometry ---------------------------------------------------
+    body_mass_index = mpeso / ((maltura / 100) ^ 2),
+    bmi_class = cut(
+      x = body_mass_index,
+      breaks = c(0, 18.5, 25, 30, Inf),
+      labels = c("Underweight", "Healthy weight", "Overweight", "Obese"),
+      include.lowest = TRUE, right = FALSE
+    ),
     .keep = "unused"
   ) |>
+    ## Child anthropometry
+    zscorer::addWGSR(
+      sex = "child_sex_integer",
+      firstPart = "child_weight",
+      secondPart = "child_age_days",
+      index = "wfa"
+    ) |>
+    zscorer::addWGSR(
+      sex = "child_sex_integer",
+      firstPart = "child_height_length",
+      secondPart = "child_age_days",
+      standing = "child_standing",
+      index = "hfa"
+    ) |>
+    zscorer::addWGSR(
+      sex = "child_sex_integer",
+      firstPart = "child_weight",
+      secondPart = "child_height_length",
+      standing = "child_standing",
+      index = "wfh"
+    ) |>
+    (\(x) { x$hfaz <- ifelse(x$hfaz > 6 | x$hfaz < -6, NA, x$hfaz); x })() |>
+    (\(x) { x$wfaz <- ifelse(x$wfaz > 5 | x$wfaz < -6, NA, x$wfaz); x })() |>
+    (\(x) { x$wfhz <- ifelse(x$wfhz > 5 | x$wfhz < -5, NA, x$wfhz); x })() |>
+    (\(x) 
+     {
+       ## Stunting
+       x$global_stunting = ifelse(x$hfaz < -2, 1, 0)
+       x$moderate_stunting = ifelse(x$hfaz >= -3 & x$hfaz < -2, 1, 0)
+       x$severe_stunting = ifelse(x$hfaz < -3, 1, 0)
+       ## Underweight
+       x$global_underweight = ifelse(x$wfaz < -2, 1, 0)
+       x$moderate_underweight = ifelse(x$wfaz >= -3 & x$wfaz < -2, 1, 0)
+       x$severe_underweight = ifelse(x$wfaz < -3, 1, 0)
+       ## Wasting
+       x$global_wasting_by_weight_for_height = ifelse(x$wfhz < -2, 1, 0)
+       x$moderate_wasting_by_weight_for_height = ifelse(x$wfhz >= -3 & x$wfhz < -2, 1, 0)
+       x$severe_wasting_by_weight_for_height = ifelse(x$wfhz < -3, 1, 0)
+       x
+    }
+    )() |>
     (\(x)
       {
         data.frame(
