@@ -1032,6 +1032,121 @@ clean_child_anthro_types <- function(df) {
 }
 
 
+clean_endline_ea_ids <- function(.data, survey_sampling_list) {
+  x <- .data
+  x[x$id == 95385641 & x$child_id == 1, "fgh_id"] <- 42109
+  x[x$id == 95385641 & x$child_id == 2, "fgh_id"] <- 42109
+  x[x$id == 95386444 & x$child_id == 1, "fgh_id"] <- 42109
+  x[x$id == 95385646 & x$child_id == 1, "fgh_id"] <- 42109
+  
+  x[x$id == 95288090 & x$child_id == 1, "fgh_id"] <- 42117
+  x[x$id == 95288090 & x$child_id == 2, "fgh_id"] <- 42117
+  x[x$id == 95238955 & x$child_id == 1, "fgh_id"] <- 42117
+  x[x$id == 95288325 & x$child_id == 1, "fgh_id"] <- 42117
+  x[x$id == 95238958 & x$child_id == 1, "fgh_id"] <- 42117
+  x[x$id == 95288092 & x$child_id == 1, "fgh_id"] <- 42117
+  x[x$id == 95288092 & x$child_id == 2, "fgh_id"] <- 42117
+  
+  x[x$id == 95800686 & x$child_id == 1, "fgh_id"] <- 42101
+  x[x$id == 95800683 & x$child_id == 1, "fgh_id"] <- 42101
+  
+  x[x$id == 96560307 & x$child_id == 1, "fgh_id"] <- 40807
+  x[x$id == 96560331 & x$child_id == 1, "fgh_id"] <- 40807
+  
+  x[x$id == 96625523 & x$child_id == 1, "fgh_id"] <- 40825
+  x[x$id == 96625510 & x$child_id == 1, "fgh_id"] <- 40825
+  
+  x[x$id == 95247921 & x$child_id == 1, "fgh_id"] <- 40809
+  x[x$id == 95247921 & x$child_id == 2, "fgh_id"] <- 40809
+  x[x$id == 95247911 & x$child_id == 1, "fgh_id"] <- 40809
+  x[x$id == 95191746 & x$child_id == 1, "fgh_id"] <- 40809
+  
+  x[x$id == 95782295 & x$child_id == 1, "fgh_id"] <- 40828
+  
+  x[x$id == 95348870 & x$child_id == 1, "fgh_id"] <- 40810
+  
+  x[x$id == 95351149 & x$child_id == 1, "fgh_id"] <- 40801
+  x[x$id == 95348853 & x$child_id == 1, "fgh_id"] <- 40801
+  x[x$id == 95348855 & x$child_id == 1, "fgh_id"] <- 40801
+  x[x$id == 95348859 & x$child_id == 1, "fgh_id"] <- 40801
+  x[x$id == 95348860 & x$child_id == 1, "fgh_id"] <- 40801
+  
+  x[x$id == 95656498 & x$child_id == 1, "fgh_id"] <- 40820
+  x[x$id == 95656499 & x$child_id == 1, "fgh_id"] <- 40820
+  x[x$id == 95656500 & x$child_id == 1, "fgh_id"] <- 40820
+  x[x$id == 95656501 & x$child_id == 1, "fgh_id"] <- 40820
+  x[x$id == 95656503 & x$child_id == 1, "fgh_id"] <- 40820
+  x[x$id == 95656505 & x$child_id == 1, "fgh_id"] <- 40820
+  
+  x[x$id == 95945743 & x$child_id == 1, "fgh_id"] <- 40802
+  
+  x[x$id == 95950443 & x$child_id == 1, "fgh_id"] <- 40826
+  
+  x[x$id == 96035312 & x$child_id == 1, "fgh_id"] <- 40804
+  x[x$id == 96035317 & x$child_id == 1, "fgh_id"] <- 40804
+  
+  x[x$id == 95281556 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95281559 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95334821 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95334821 & x$child_id == 2, "fgh_id"] <- 41451
+  x[x$id == 95334821 & x$child_id == 3, "fgh_id"] <- 41451
+  x[x$id == 95281557 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95281555 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95281553 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95281550 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95334753 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95334753 & x$child_id == 2, "fgh_id"] <- 41451
+  x[x$id == 95281554 & x$child_id == 1, "fgh_id"] <- 41451
+  x[x$id == 95281554 & x$child_id == 2, "fgh_id"] <- 41451
+  x[x$id == 95281551 & x$child_id == 1, "fgh_id"] <- 41451
+  
+  x[x$id == 95231324 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95230831 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95231336 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95230838 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95231327 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95231321 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95230834 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95230828 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95230767 & x$child_id == 1, "fgh_id"] <- 41452
+  x[x$id == 95231331 & x$child_id == 1, "fgh_id"] <- 41452
+  
+  x[x$id == 95334827 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334823 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334829 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334761 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334757 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334759 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334835 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334831 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334766 & x$child_id == 1, "fgh_id"] <- 41453
+  x[x$id == 95334766 & x$child_id == 2, "fgh_id"] <- 41453
+  
+  x[x$id == 96038112 & x$child_id == 1, "fgh_id"] <- 42052
+  
+  x[x$id == 95339104 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339104 & x$child_id == 2, "fgh_id"] <- 42118
+  x[x$id == 95339226 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339103 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339205 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339223 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339222 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339222 & x$child_id == 2, "fgh_id"] <- 42118
+  x[x$id == 95339096 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339102 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339206 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339093 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95339206 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95385637 & x$child_id == 1, "fgh_id"] <- 42118
+  x[x$id == 95385625 & x$child_id == 1, "fgh_id"] <- 42118
+  
+  x[x$id == 95751980 & x$child_id == 1, "fgh_id"] <- 42114
+  x[x$id == 95751980 & x$child_id == 2, "fgh_id"] <- 42114
+  
+  x
+}
+
+
 process_endline_data <- function(.data, survey_endline_choices) {
   ## Add filter to remove testing data -----------------------------------------
   dplyr::mutate(
