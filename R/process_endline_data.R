@@ -2032,7 +2032,7 @@ process_endline_data <- function(.data,
                    "difficulty_reaching_facility_",
                    c(
                      "due_to_cost", "due_to_distance", "due_to_stigma", 
-                     "due_to_poor_roads", "other", "no_difficulty"
+                     "due_to_poor_roads", "due_to_other_reasons", "no_difficulty"
                    )
                  )
                )
@@ -2143,7 +2143,7 @@ process_endline_data <- function(.data,
                  c(
                    "maternal_mortality",
                    "child_mortality",
-                   "children_poverty",
+                   "poverty",
                    "more_likely_that_children_are_not_educated",
                    "other_reasons",
                    "none"

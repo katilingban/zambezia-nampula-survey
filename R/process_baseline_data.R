@@ -355,7 +355,7 @@ process_baseline_data <- function(.data) {
     benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother = bs3a_1,
     benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby = bs3a_2,
     benefit_of_waiting_until_18_years_of_age_avoid_poverty = bs3a_3,
-    benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated = bs3a_4,
+    benefit_of_waiting_until_18_years_of_age_more_likely_that_children_are_educated = bs3a_4,
     benefit_of_waiting_until_18_years_of_age_other_reasons = bs3a_5,
     benefit_of_waiting_until_18_years_of_age_none = bs3a_6,
     problem_with_having_more_than_4_children = ifelse(bs4 == 2, 0, 1),
