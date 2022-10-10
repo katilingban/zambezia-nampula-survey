@@ -1280,6 +1280,37 @@ clean_endline_ea_ids <- function(.data, survey_sampling_list) {
   x
 }
 
+add_ea_info <- function(survey_sampling_list) {
+  x <- matrix(
+    nrow = 2, ncol = ncol(survey_sampling_list), byrow = TRUE
+  ) |>
+    data.frame() |>
+    (\(x) { names(x) <- names(survey_sampling_list); x })()
+  
+  x[1, "UNIQUE_ID"] <- max(survey_sampling_list$UNIQUE_ID) + 1
+  x[2, "UNIQUE_ID"] <- max(survey_sampling_list$UNIQUE_ID) + 2
+  
+  x[1, "FGH_ID"] <- 30754
+  x[2, "FGH_ID"] <- 30755
+  
+  x[1, "Paridade"] <- "COM"
+  x[2, "Paridade"] <- "COM"
+  
+  x[1, "Provincia"] <- "Nampula"
+  x[2, "Provincia"] <- "Nampula"
+  
+  x[1, "Distrito"] <- "Meconta"
+  x[2, "Distrito"] <- "Meconta"
+  
+  x[1, "Posto"] <- "Corrane"
+  x[2, "Posto"] <- "Corrane"
+  
+  x[1, "População.Total.-.preliminar"] <- 593
+  x[2, "População.Total.-.preliminar"] <- 317
+  
+  rbind(survey_sampling_list, x)
+}
+
 
 process_endline_data <- function(.data, survey_endline_choices) {
   ## Add filter to remove testing data -----------------------------------------
