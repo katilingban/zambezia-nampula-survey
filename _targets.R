@@ -49,6 +49,24 @@ data_downloads <- tar_plan(
   )
 )
 
+## Spatial datasets ------------------------------------------------------------
+data_spatial <- tar_plan(
+  moz_country = get_country(),
+  moz_provinces = get_provinces(),
+  moz_districts = get_districts(),
+  moz_posts = get_posts(),
+  moz_settlements = mozambique::settlements,
+  survey_provinces = subset(
+    moz_provinces, ADM1_PT %in% c("Zambezia", "Nampula")
+  ),
+  survey_districts = subset(
+    moz_districts, ADM1_PT %in% c("Zambezia", "Nampula")
+  ),
+  survey_posts = subset(
+    moz_posts, ADM1_PT %in% c("Zambezia", "Nampula")
+  )
+)
+
 ## Supporting/reference datasets -----------------------------------------------
 data_reference <- tar_plan(
   ### Read indicator list from Google Sheets -----------------------------------
@@ -121,6 +139,13 @@ raw_data_baseline <- tar_plan(
 
 ## Process baseline data -------------------------------------------------------
 processed_data_baseline <- tar_plan(
+  ### Create baseline raw data sf object ---------------------------------------
+  baseline_raw_data_sf = sf::st_as_sf(
+    x = baseline_raw_data_stata |>
+      subset(!is.na(longitude) | !is.na(latitude)),
+    coords = c("longitude", "latitude"),
+    crs = sf::st_crs(4326)
+  ),
   ### Get baseline sampling weights --------------------------------------------
   baseline_sample_weight = calculate_weights(
     .data = baseline_raw_data_stata,
@@ -4015,11 +4040,33 @@ raw_data_endline <- tar_plan(
   ### Read raw endline data 
   endline_raw_data = get_endline_data() |>
     process_respondent_data() |>
-    process_child_data()
+    process_child_data() |>
+    ### Filter out training data
+    subset(
+      (as.Date(today) >= as.Date("2022-04-04") & 
+        as.Date(today) <= as.Date("2022-05-11")) |
+        as.Date(today) >= "2022-05-21"
+    ) |>
+    ### Clean up enumeration area identifiers
+    clean_endline_ea_ids(survey_sampling_list),
+  ### Create SF object of raw endline data for cleaning
+  endline_raw_data_sf = create_data_sf(endline_raw_data)
 )
 
 ## Process endline data --------------------------------------------------------
 processed_data_endline <- tar_plan(
+  ### Get subset of data that need EAs to be cleaned/checked
+  endline_data_eas_for_checking = table(endline_raw_data$fgh_id) |> 
+    data.frame() |> 
+    (\(x) x[x$Freq < 8, "Var1"])() |>
+    as.character() |>
+    as.integer(),
+  endline_raw_data_check_sf = subset(
+    endline_raw_data_sf, 
+    as.integer(fgh_id) %in% endline_data_eas_for_checking |
+      as.integer(fgh_id) < 30000
+  ),
+  ### Process endline data
   endline_data_processed = process_endline_data(
     endline_raw_data, survey_endline_choices
   )
@@ -4528,7 +4575,13 @@ outputs_comparison <- tar_plan(
 
 ## Reports ---------------------------------------------------------------------
 reports <- tar_plan(
-  ##
+  ## Survey locations map
+  tar_render(
+    name = survey_locations_map,
+    path = "reports/endline_survey_locations.Rmd",
+    output_dir = "outputs",
+    knit_root_dir = here::here()
+  )
 )
 
 ## Deploy targets --------------------------------------------------------------
@@ -4543,6 +4596,7 @@ set.seed(1977)
 
 list(
   data_downloads,
+  data_spatial,
   data_reference,
   raw_data_baseline,
   processed_data_baseline,

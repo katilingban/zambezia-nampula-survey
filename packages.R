@@ -20,6 +20,8 @@ library(blastula)
 library(openxlsx)
 library(googleLanguageR)
 library(haven)
+library(flexdashboard)
+library(leaflet)
 
 
 ################################################################################

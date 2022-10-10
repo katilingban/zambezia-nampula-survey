@@ -727,6 +727,24 @@
       "Hash": "77bd60a6157420d4ffa93b27cf6a58b8",
       "Requirements": []
     },
+    "flexdashboard": {
+      "Package": "flexdashboard",
+      "Version": "0.6.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "48cdd2388a484f7228074265b5498047",
+      "Requirements": [
+        "bslib",
+        "htmltools",
+        "htmlwidgets",
+        "jsonlite",
+        "knitr",
+        "rmarkdown",
+        "sass",
+        "scales",
+        "shiny"
+      ]
+    },
     "fontawesome": {
       "Package": "fontawesome",
       "Version": "0.2.2",
