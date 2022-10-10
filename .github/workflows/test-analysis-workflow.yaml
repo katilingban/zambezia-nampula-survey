@@ -47,6 +47,7 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(survey_locations_map)
+          targets::tar_make(dplyr::starts_with("baseline_demo"))
+          targets::tar_make(dplyr::starts_with("endline_demo"))
         shell: Rscript {0}
           
