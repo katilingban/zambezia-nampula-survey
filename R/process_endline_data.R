@@ -2032,7 +2032,7 @@ process_endline_data <- function(.data,
                    "difficulty_reaching_facility_",
                    c(
                      "due_to_cost", "due_to_distance", "due_to_stigma", 
-                     "due_to_poor_roads", "other", "no_difficulty"
+                     "due_to_poor_roads", "due_to_other_reasons", "no_difficulty"
                    )
                  )
                )
