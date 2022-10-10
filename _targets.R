@@ -925,7 +925,7 @@ analysis_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -941,7 +941,7 @@ analysis_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -957,7 +957,7 @@ analysis_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -973,7 +973,7 @@ analysis_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -989,7 +989,7 @@ analysis_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -2876,7 +2876,7 @@ outputs_tables_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -2895,7 +2895,7 @@ outputs_tables_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -2914,7 +2914,7 @@ outputs_tables_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -2933,7 +2933,7 @@ outputs_tables_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -2952,7 +2952,7 @@ outputs_tables_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -2971,7 +2971,7 @@ outputs_tables_baseline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -4835,7 +4835,7 @@ analysis_endline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -4851,7 +4851,7 @@ analysis_endline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -4867,7 +4867,7 @@ analysis_endline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -4883,7 +4883,7 @@ analysis_endline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
@@ -4899,7 +4899,7 @@ analysis_endline <- tar_plan(
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
