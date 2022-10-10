@@ -179,7 +179,7 @@ processed_data_baseline <- tar_plan(
   baseline_child_survey_design = survey::svydesign(
     ids = ~enum1,
     fpc = ~sample_prob_obs,
-    strata = ~prov + strata,
+    strata = ~province + strata,
     data = baseline_data_weighted,
     pps = "brewer"
   ),
@@ -196,7 +196,7 @@ processed_data_baseline <- tar_plan(
   baseline_hh_survey_design = survey::svydesign(
     ids = ~enum1,
     fpc = ~sample_prob_obs,
-    strata = ~prov + strata,
+    strata = ~province + strata,
     data = baseline_data_weighted |>
       get_respondent_data(),
     pps = "brewer"
@@ -4113,6 +4113,1634 @@ processed_data_endline <- tar_plan(
   )
 )
 
+## Endline analysis -----------------------------------------------------------
+analysis_endline <- tar_plan(
+  ### endline results - demographics respondent -------------------------------
+  endline_demo_respondent = estimate_total(
+    vars = c("respondent_sex", "respondent_age_years",
+             "respondent_age_group", "respondent_language", 
+             "respondent_civil_status", "respondent_education_years",
+             "respondent_education_group", "respondent_occupation"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_respondent_province = estimate_province(
+    vars = c("respondent_sex", "respondent_age_years",
+             "respondent_age_group", "respondent_language", 
+             "respondent_civil_status", "respondent_education_years",
+             "respondent_education_group", "respondent_occupation"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_respondent_strata = estimate_strata(
+    vars = c("respondent_sex", "respondent_age_years",
+             "respondent_age_group", "respondent_language", 
+             "respondent_civil_status", "respondent_education_years",
+             "respondent_education_group", "respondent_occupation"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_respondent_study_group = estimate_study_group(
+    vars = c("respondent_sex", "respondent_age_years",
+             "respondent_age_group", "respondent_language", 
+             "respondent_civil_status", "respondent_education_years",
+             "respondent_education_group", "respondent_occupation"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_respondent_study_group_province = estimate_study_group_province(
+    vars = c("respondent_sex", "respondent_age_years",
+             "respondent_age_group", "respondent_language", 
+             "respondent_civil_status", "respondent_education_years",
+             "respondent_education_group", "respondent_occupation"),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - demographics children ---------------------------------
+  endline_demo_child = estimate_total(
+    vars = c("child_sex", "child_age_months",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = endline_child_survey_design
+  ),
+  endline_demo_child_province = estimate_province(
+    vars = c("child_sex", "child_age_months",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = endline_child_survey_design
+  ),
+  endline_demo_child_strata = estimate_strata(
+    vars = c("child_sex", "child_age_months",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = endline_child_survey_design
+  ),
+  endline_demo_child_study_group = estimate_study_group(
+    vars = c("child_sex", "child_age_months",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = endline_child_survey_design
+  ),
+  endline_demo_child_study_group_province = estimate_study_group_province(
+    vars = c("child_sex", "child_age_months",
+             "child_age_group", "child_currently_breastfeeding",
+             "child_parent_age_at_birth", "child_location_of_birth",
+             "child_caesarean_birth", "child_complications_at_birth",
+             "child_low_birth_weight"),
+    design = endline_child_survey_design
+  ),
+  ### endline results - demographics spouse -----------------------------------
+  endline_demo_spouse = estimate_total(
+    vars = c("spouse_age_years", "spouse_age_group",
+             "spouse_education_years", "spouse_education_group",
+             "spouse_occupation", "spouse_lives_in_home"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_spouse_province = estimate_province(
+    vars = c("spouse_age_years", "spouse_age_group",
+             "spouse_education_years", "spouse_education_group",
+             "spouse_occupation", "spouse_lives_in_home"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_spouse_strata = estimate_strata(
+    vars = c("spouse_age_years", "spouse_age_group",
+             "spouse_education_years", "spouse_education_group",
+             "spouse_occupation", "spouse_lives_in_home"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_spouse_study_group = estimate_study_group(
+    vars = c("spouse_age_years", "spouse_age_group",
+             "spouse_education_years", "spouse_education_group",
+             "spouse_occupation", "spouse_lives_in_home"),
+    design = endline_hh_survey_design
+  ),
+  endline_demo_spouse_study_group_province = estimate_study_group_province(
+    vars = c("spouse_age_years", "spouse_age_group",
+             "spouse_education_years", "spouse_education_group",
+             "spouse_occupation", "spouse_lives_in_home"),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - household income --------------------------------------
+  endline_hh_income = estimate_total(
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income_province = estimate_province(
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income_strata = estimate_strata(
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income_study_group = estimate_study_group(
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income_study_group_province = estimate_study_group_province(
+    vars = c(
+      "persons_living_in_household", "children_under_five_living_in_household",
+      "pregnant_women_living_in_household", "monthly_household_income",
+      "source_of_household_income", "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - household structure -----------------------------------
+  endline_hh_structure = estimate_total(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_structure_province = estimate_province(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_structure_strata = estimate_strata(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_structure_study_group = estimate_study_group(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_structure_study_group_province = estimate_study_group_province(
+    vars = c(
+      "home_ownership_own", "home_ownership_rent", "home_ownership_loan",
+      "number_of_rooms_in_home", "number_of_bedrooms_in_home", 
+      "roofing_material", "floor_material", "time_living_in_location_in_months", 
+      "time_living_in_location_group"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - household amenities -----------------------------------
+  endline_hh_amenities = estimate_total(
+    vars = c(
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_amenities_province = estimate_province(
+    vars = c(
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_amenities_strata = estimate_strata(
+    vars = c(
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_amenities_study_group = estimate_study_group(
+    vars = c(
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_amenities_study_group_province = estimate_study_group_province(
+    vars = c(
+      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "housekeeper_childcare_employee", "refrigerator", 
+      "refrigerator_alternative", "number_of_mosquito_nets",
+      "fuel_used_for_cooking", "location_of_food_preparation",
+      "fuel_used_for_lighting"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - mode of daily travel ----------------------------------
+  endline_hh_travel = estimate_total(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel_province = estimate_province(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel_strata = estimate_strata(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel_study_group = estimate_study_group(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel_study_group_province = estimate_study_group_province(
+    vars = c(
+      "usual_mode_of_travel",
+      "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - household decision making -----------------------------
+  endline_hh_decision = estimate_total(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_decision_province = estimate_province(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_decision_strata = estimate_strata(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_decision_study_group = estimate_study_group(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_decision_study_group_province = estimate_study_group_province(
+    vars = c(
+      "marrying_age", "using_condoms", "household_responsibilities",
+      "family_planning", "agricultural_tasks", "household_finances",
+      "child_rearing", "child_discipline", "healthcare_in_pregnancy",
+      "healthcare_for_child"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - household membership in community groups --------------
+  endline_hh_groups = estimate_total(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "information_application", "health_tasks_participation"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_groups_province = estimate_province(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "information_application", "health_tasks_participation"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_groups_strata = estimate_strata(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "information_application", "health_tasks_participation"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_groups_study_group = estimate_study_group(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "information_application", "health_tasks_participation"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_groups_study_group_province = estimate_study_group_province(
+    vars = c(
+      "group_membership", "presentation_participation", 
+      "information_application", "health_tasks_participation"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - child anthropometry -----------------------------------
+  endline_child_anthro = estimate_total(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
+  ),
+  endline_child_anthro_province = estimate_province(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
+  ),
+  endline_child_anthro_strata = estimate_strata(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
+  ),
+  endline_child_anthro_study_group = estimate_study_group(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
+  ),
+  endline_child_anthro_study_group_province = estimate_study_group_province(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 60)
+  ),
+  ### endline results - WDDS --------------------------------------------------
+  endline_wdds = estimate_total(
+    vars = c(
+      "wdds_staples", "wdds_green_leafy", "wdds_other_vita",
+      "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
+      "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_wdds_province = estimate_province(
+    vars = c(
+      "wdds_staples", "wdds_green_leafy", "wdds_other_vita",
+      "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
+      "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_wdds_strata = estimate_strata(
+    vars = c(
+      "wdds_staples", "wdds_green_leafy", "wdds_other_vita",
+      "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
+      "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_wdds_study_group = estimate_study_group(
+    vars = c(
+      "wdds_staples", "wdds_green_leafy", "wdds_other_vita",
+      "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
+      "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_wdds_study_group_province = estimate_study_group_province(
+    vars = c(
+      "wdds_staples", "wdds_green_leafy", "wdds_other_vita",
+      "wdds_fruits_vegetables", "wdds_organ_meat", "wdds_meat_fish",
+      "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### endline results - MDD-W -------------------------------------------------
+  endline_mddw = estimate_total(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_mddw_province = estimate_province(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_mddw_strata = estimate_strata(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_mddw_study_group = estimate_study_group(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_mddw_study_group_province = estimate_study_group_province(
+    vars = c(
+      "mddw_staples", "mddw_pulses", "mddw_nuts_seeds", "mddw_milk",
+      "mddw_meat_fish", "mddw_eggs", "mddw_green_leafy", "mddw_other_vita",
+      "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### endline results - child development -------------------------------------
+  endline_child_dev = estimate_total(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_child_dev_province = estimate_province(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_child_dev_strata = estimate_strata(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_child_dev_study_group = estimate_study_group(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_child_dev_study_group_province = estimate_study_group_province(
+    vars = c(
+      "sing_to_or_with_child", "take_child_for_a_walk", 
+      "play_a_game_with_child", "read_books_or_look_at_photos",
+      "tell_stories_to_child", "identify_objects_with_child",
+      "draw_things_to_or_with_child", "child_has_place_for_toys",
+      "play_with_child_during_bath", "play_with_child_while_feeding_child",
+      "play_with_child_while_changing_clothes", 
+      "play_with_child_while_working_at_home",
+      "play_with_child_while_working_in_the_field",
+      "play_with_child_during_free_time"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - WASH --------------------------------------------------
+  endline_wash = estimate_total(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_province = estimate_province(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_strata = estimate_strata(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_study_group = estimate_study_group(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_study_group_province = estimate_study_group_province(
+    vars = c(
+      "surface_water_source", "unimproved_water_source", "limited_water_source",
+      "basic_water_source", "sufficient_water_source",
+      "open_defecation", "unimproved_toilet_facility", "limited_toilet_facility",
+      "basic_toilet_facility",
+      "no_handwashing_facility", "limited_handwashing_facility",
+      "basic_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - period prevalence of childhood illnesses --------------
+  endline_child_ill = estimate_total(
+    vars = c(
+      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_ill_province = estimate_province(
+    vars = c(
+      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_ill_strata = estimate_strata(
+    vars = c(
+      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_ill_study_group = estimate_study_group(
+    vars = c(
+      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_ill_study_group_province = estimate_study_group_province(
+    vars = c(
+      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antiobioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  ### endline results - women's mental health and alcohol consumption ---------
+  endline_women_phq8 = estimate_total(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_women_phq8_province = estimate_province(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_women_phq8_strata = estimate_strata(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_women_phq8_study_group = estimate_study_group(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_women_phq8_study_group_province = estimate_study_group_province(
+    vars = c(
+      "phq8_score", "major_depression", "severe_depression",
+      "at_least_major_depression", "alcohol_consumption"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  ### endline results - pregnancy characteristics -----------------------------
+  endline_pregnant = estimate_total(
+    vars = c(
+      "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_province = estimate_province(
+    vars = c(
+      "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_strata = estimate_strata(
+    vars = c(
+      "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_study_group = estimate_study_group(
+    vars = c(
+      "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_study_group_province = estimate_study_group_province(
+    vars = c(
+      "weeks_of_gestation_self_report",
+      "prenatal_card_self_report", "prenatal_card_available",
+      "malaria_during_pregnancy", "anemia_during_pregnancy",
+      "excluded_foods_from_diet", "included_foods_from_diet",
+      "wants_more_children", "vaginal_bleeding", "severe_headache",
+      "blurry_vision", "swollen_extremities", "convulsions",
+      "fever", "intense_abdominal_pain", "loss_of_consciousness",
+      "fatigue", "plans_when_labor_begins"
+    ),
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  ### endline results - PMTCT and mosquito net --------------------------------
+  endline_pregnant_prevention = estimate_total(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_prevention_province = estimate_province(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_prevention_strata = estimate_strata(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_prevention_study_group = estimate_study_group(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_prevention_study_group_province = estimate_study_group_province(
+    vars = c(
+      "offered_voluntary_counselling_and_testing",
+      "received_vct_results", "offered_medication_to_reduce_child_risk",
+      "received_mosquito_net", "slept_under_mosquito_net"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### endline results - natal care --------------------------------------------
+  endline_natal_care = estimate_total(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_province = estimate_province(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_strata = estimate_strata(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_study_group = estimate_study_group(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_study_group_province = estimate_study_group_province(
+    vars = c(
+      "location_of_last_delivery", "number_of_prenatal_visits",
+      "at_least_four_anc_visits", "treated_well_during_anc",
+      "treated_well_at_delivery", "delivery_assisted_by_doctor",
+      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
+      "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
+      "given_malaria_treatment_during_pregnancy", 
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy",
+      "at_least_one_tetanus_toxoid_vaccination",
+      "two_or_more_tetanus_toxoid_vaccination",
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### endline results - Family planning ----------------------------------------------------------
+  endline_family_planning = estimate_total(
+    vars = c(
+      "attempted_to_delay_or_prevent_pregnancy",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_baby",
+      "benefit_of_waiting_for_next_pregnancy_avoid_poverty",
+      "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
+      "benefit_of_waiting_for_next_pregnancy_other_reasons",
+      "benefit_of_waiting_for_next_pregnancy_none",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
+      "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
+      "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
+      "benefit_of_waiting_until_18_years_of_age_other_reasons",
+      "benefit_of_waiting_until_18_years_of_age_none",
+      "problem_with_having_more_than_4_children_maternal_mortality",
+      "problem_with_having_more_than_4_children_child_mortality",
+      "problem_with_having_more_than_4_children_poverty",
+      "problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated",
+      "problem_with_having_more_than_4_children_other_reasons",
+      "problem_with_having_more_than_4_children_none"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_family_planning_province = estimate_province(
+    vars = c(
+      "attempted_to_delay_or_prevent_pregnancy",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_baby",
+      "benefit_of_waiting_for_next_pregnancy_avoid_poverty",
+      "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
+      "benefit_of_waiting_for_next_pregnancy_other_reasons",
+      "benefit_of_waiting_for_next_pregnancy_none",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
+      "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
+      "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
+      "benefit_of_waiting_until_18_years_of_age_other_reasons",
+      "benefit_of_waiting_until_18_years_of_age_none",
+      "problem_with_having_more_than_4_children_maternal_mortality",
+      "problem_with_having_more_than_4_children_child_mortality",
+      "problem_with_having_more_than_4_children_poverty",
+      "problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated",
+      "problem_with_having_more_than_4_children_other_reasons",
+      "problem_with_having_more_than_4_children_none"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_family_planning_strata = estimate_strata(
+    vars = c(
+      "attempted_to_delay_or_prevent_pregnancy",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_baby",
+      "benefit_of_waiting_for_next_pregnancy_avoid_poverty",
+      "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
+      "benefit_of_waiting_for_next_pregnancy_other_reasons",
+      "benefit_of_waiting_for_next_pregnancy_none",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
+      "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
+      "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
+      "benefit_of_waiting_until_18_years_of_age_other_reasons",
+      "benefit_of_waiting_until_18_years_of_age_none",
+      "problem_with_having_more_than_4_children_maternal_mortality",
+      "problem_with_having_more_than_4_children_child_mortality",
+      "problem_with_having_more_than_4_children_poverty",
+      "problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated",
+      "problem_with_having_more_than_4_children_other_reasons",
+      "problem_with_having_more_than_4_children_none"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_family_planning_study_group = estimate_study_group(
+    vars = c(
+      "attempted_to_delay_or_prevent_pregnancy",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_baby",
+      "benefit_of_waiting_for_next_pregnancy_avoid_poverty",
+      "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
+      "benefit_of_waiting_for_next_pregnancy_other_reasons",
+      "benefit_of_waiting_for_next_pregnancy_none",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
+      "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
+      "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
+      "benefit_of_waiting_until_18_years_of_age_other_reasons",
+      "benefit_of_waiting_until_18_years_of_age_none",
+      "problem_with_having_more_than_4_children_maternal_mortality",
+      "problem_with_having_more_than_4_children_child_mortality",
+      "problem_with_having_more_than_4_children_poverty",
+      "problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated",
+      "problem_with_having_more_than_4_children_other_reasons",
+      "problem_with_having_more_than_4_children_none"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_family_planning_study_group_province = estimate_study_group_province(
+    vars = c(
+      "attempted_to_delay_or_prevent_pregnancy",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_mother",
+      "benefit_of_waiting_for_next_pregnancy_less_danger_to_health_of_baby",
+      "benefit_of_waiting_for_next_pregnancy_avoid_poverty",
+      "benefit_of_waiting_for_next_pregnancy_more_likely_that_children_are_educated",
+      "benefit_of_waiting_for_next_pregnancy_other_reasons",
+      "benefit_of_waiting_for_next_pregnancy_none",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_mother",
+      "benefit_of_waiting_until_18_years_of_age_less_danger_to_health_of_baby",
+      "benefit_of_waiting_until_18_years_of_age_avoid_poverty",
+      "benefit_of_waiting_until_18_years_of_age_more_likley_that_children_are_educated",
+      "benefit_of_waiting_until_18_years_of_age_other_reasons",
+      "benefit_of_waiting_until_18_years_of_age_none",
+      "problem_with_having_more_than_4_children_maternal_mortality",
+      "problem_with_having_more_than_4_children_child_mortality",
+      "problem_with_having_more_than_4_children_poverty",
+      "problem_with_having_more_than_4_children_more_likely_that_children_are_not_educated",
+      "problem_with_having_more_than_4_children_other_reasons",
+      "problem_with_having_more_than_4_children_none"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### endline results - EPI ---------------------------------------------------
+  endline_child_immunisation = estimate_total(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_age_appropriate_immunisation"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_province = estimate_province(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_age_appropriate_immunisation"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_strata = estimate_strata(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_age_appropriate_immunisation"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_study_group = estimate_study_group(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_age_appropriate_immunisation"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_study_group_province = estimate_study_group_province(
+    vars = c(
+      "immunisation_card_retention_self_report", "immunisation_card_retention",
+      "immunisation_bcg", "immunisation_polio_first_dose",
+      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
+      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
+      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
+      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
+      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
+      "immunisation_rotavirus_second_dose",
+      "immunisation_age_appropriate_immunisation"
+    ),
+    design = endline_child_survey_design
+  ),
+  ### endline results - full immunisation -------------------------------------
+  endline_child_immunisation_full = estimate_total(
+    vars = "immunisation_fully_immunised",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  endline_child_immunisation_full_province = estimate_province(
+    vars = "immunisation_fully_immunised",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  endline_child_immunisation_full_strata = estimate_strata(
+    vars = "immunisation_fully_immunised",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  endline_child_immunisation_full_study_group = estimate_study_group(
+    vars = "immunisation_fully_immunised",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  endline_child_immunisation_full_study_group_province = estimate_study_group_province(
+    vars = "immunisation_fully_immunised",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  ### endline results - IYCF --------------------------------------------------
+  endline_iycf = estimate_total(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  endline_iycf_province = estimate_province(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  endline_iycf_strata = estimate_strata(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  endline_iycf_study_group = estimate_study_group(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  endline_iycf_study_group_province = estimate_study_group_province(
+    vars = c(
+      "food_group_breastmilk", "food_group_dairy", "food_group_starch",
+      "food_group_vitamin_a_rich", "food_group_other_fruits_vegetables",
+      "food_group_legumes", "food_group_meat", "food_group_eggs",
+      "food_groups_score", "minimum_dietary_diversity"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 24)
+  ),
+  ### endline results - breastfeeding -----------------------------------------
+  endline_breastfeeding = estimate_total(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding_province = estimate_province(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding_strata = estimate_strata(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding_study_group = estimate_study_group(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding_study_group_province = estimate_study_group_province(
+    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  ### endline results - exclusive breastfeeding -------------------------------
+  endline_ebf = estimate_total(
+    vars = "exclusive_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  endline_ebf_province = estimate_province(
+    vars = "exclusive_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  endline_ebf_strata = estimate_strata(
+    vars = "exclusive_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  endline_ebf_study_group = estimate_study_group(
+    vars = "exclusive_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  endline_ebf_study_group_province = estimate_study_group_province(
+    vars = "exclusive_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 6)
+  ),
+  ### endline results - vitamin A supplementation for children 6-59 -----------
+  endline_child_vita = estimate_total(
+    vars = "vitamin_a_supplementation_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  endline_child_vita_province = estimate_province(
+    vars = "vitamin_a_supplementation_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  endline_child_vita_strata = estimate_strata(
+    vars = "vitamin_a_supplementation_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  endline_child_vita_study_group = estimate_study_group(
+    vars = "vitamin_a_supplementation_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  endline_child_vita_study_group_province = estimate_study_group_province(
+    vars = "vitamin_a_supplementation_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6)
+  ),
+  ### endline results - deworming coverage for children 12-59 -----------------
+  endline_deworming = estimate_total(
+    vars = "deworming_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  endline_deworming_province = estimate_province(
+    vars = "deworming_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  endline_deworming_strata = estimate_strata(
+    vars = "deworming_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  endline_deworming_study_group = estimate_study_group(
+    vars = "deworming_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  endline_deworming_study_group_province = estimate_study_group_province(
+    vars = "deworming_coverage",
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 12)
+  ),
+  ### endline results - women's decision making -------------------------------
+  endline_wem = estimate_total(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_wem_province = estimate_province(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_wem_strata = estimate_strata(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_wem_study_group = estimate_study_group(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  endline_wem_study_group_province = estimate_study_group_province(
+    vars = c(
+      "freedom_and_control", "control_over_destiny",
+      "make_decision_without_husband", "willingly_participate_in_survey"
+    ),
+    design = endline_hh_survey_design |>
+      subset(respondent_sex == "Mulher")
+  ),
+  ### endline results - women's anthropometry ---------------------------------
+  endline_women_anthro = estimate_total(
+    vars = c("body_mass_index", "bmi_class"),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_women_anthro_province = estimate_province(
+    vars = c("body_mass_index", "bmi_class"),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_women_anthro_strata = estimate_strata(
+    vars = c("body_mass_index", "bmi_class"),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_women_anthro_study_group = estimate_study_group(
+    vars = c("body_mass_index", "bmi_class"),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_women_anthro_study_group_province = estimate_study_group_province(
+    vars = c("body_mass_index", "bmi_class"),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  )
+)
+
+## Outputs - endline -----------------------------------------------------------
+outputs_tables_endline <- tar_plan(
+  
+)
+
 ## Outputs - overall -----------------------------------------------------------
 outputs_overall <- tar_plan(
   ### Overall table output - respondent demographics ---------------------------
@@ -4645,6 +6273,8 @@ list(
   outputs_tables_baseline,
   raw_data_endline,
   processed_data_endline,
+  analysis_endline,
+  outputs_tables_endline,
   outputs_overall,
   analysis_comparison,
   outputs_comparison,

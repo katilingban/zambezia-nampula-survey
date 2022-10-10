@@ -32,8 +32,8 @@ estimate_province <- function(vars, design) {
   
   ## Make list of designs
   design_list <- list(
-    subset(design, subset = prov == 1),
-    subset(design, subset = prov == 2)
+    subset(design, subset = province == "Zambézia"),
+    subset(design, subset = province == "Nampula")
   )
   
   ## Estimate indicators
@@ -45,7 +45,7 @@ estimate_province <- function(vars, design) {
     deff = TRUE,
     mc.cores = 2
   ) |>
-    (\(x) { names(x) <- c("Zambezia", "Nampula"); x } )()
+    (\(x) { names(x) <- c("Zambézia", "Nampula"); x } )()
 }
 
 ## Estimate by strata ----------------------------------------------------------
@@ -59,15 +59,15 @@ estimate_strata <- function(vars, design) {
   
   ## Make list of designs
   design_list <- list(
-    subset(design, subset = strata == 1),
-    subset(design, subset = strata == 2),
-    subset(design, subset = strata == 3),
-    subset(design, subset = strata == 4),
-    subset(design, subset = strata == 5),
-    subset(design, subset = strata == 6),
-    subset(design, subset = strata == 7),
-    subset(design, subset = strata == 8),
-    subset(design, subset = strata == 9)
+    subset(design, subset = strata == "Gurúè"),
+    subset(design, subset = strata == "Lugela"),
+    subset(design, subset = strata == "Pebane"),
+    subset(design, subset = strata == "Molumbo"),
+    subset(design, subset = strata == "Rest of Zambézia"),
+    subset(design, subset = strata == "Monapo"),
+    subset(design, subset = strata == "Nacala-A-Velha"),
+    subset(design, subset = strata == "Ribáuè"),
+    subset(design, subset = strata == "Rest of Nampula")
   )
   
   ## Estimate indicators
@@ -128,10 +128,10 @@ estimate_study_group_province <- function(vars, design) {
   
   ## Make list of designs
   design_list <- list(
-    subset(design, subset = prov == 1 & study_group == "COM"),
-    subset(design, subset = prov == 1 & study_group == "INT"),
-    subset(design, subset = prov == 2 & study_group == "COM"),
-    subset(design, subset = prov == 2 & study_group == "INT")
+    subset(design, subset = province == "Zambézia" & study_group == "COM"),
+    subset(design, subset = province == "Zambézia" & study_group == "INT"),
+    subset(design, subset = province == "Nampula" & study_group == "COM"),
+    subset(design, subset = province == "Nampula" & study_group == "INT")
   )
   
   ## Estimate indicators
