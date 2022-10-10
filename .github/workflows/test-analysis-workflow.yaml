@@ -47,7 +47,9 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("baseline_iycf"))
-          targets::tar_make(dplyr::starts_with("endline_iycf"))
+          targets::tar_make(dplyr::starts_with("baseline_breastfeeding"))
+          targets::tar_make(dplyr::starts_with("endline_breastfeeding"))
+          targets::tar_make(dplyr::starts_with("baseline_ebf"))
+          targets::tar_make(dplyr::starts_with("endline_ebf"))
         shell: Rscript {0}
           
