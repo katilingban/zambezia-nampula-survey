@@ -27,7 +27,7 @@ calculate_weights <- function(.data, survey_sampling_list,
       ) |>
       subset(
         select = c(
-          hh_id, child_id, province, district, 
+          hh_id, ch_id, province, district, 
           ea_code, ea_id, strata, longitude, latitude
         )
       ) |>

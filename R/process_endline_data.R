@@ -1287,8 +1287,8 @@ clean_endline_identifiers <- function(endline_raw_data,
       y = survey_sampling_list_endline |>
         subset(
           select = c(
-            UNIQUE_ID, FGH_ID, `Cod..Concatenado.(AREA)`, Provincia, Distrito,
-            Paridade
+            UNIQUE_ID, FGH_ID, `Cod..Concatenado.(AREA)`, 
+            Provincia, Distrito, Paridade
           )
         ),
       by = c("fgh_id" = "FGH_ID")

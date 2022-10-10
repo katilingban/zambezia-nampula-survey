@@ -101,6 +101,8 @@ process_baseline_data <- function(.data) {
   
   dplyr::mutate(
     .data = .data,
+    province = haven::as_factor(prov),
+    strata = haven::as_factor(strata),
     ## demographics - head of household (respondent)
     respondent_sex = recode_var_categorical(rsex),
     respondent_age_years = recode_age_respondent(
