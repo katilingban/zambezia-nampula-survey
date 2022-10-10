@@ -47,9 +47,7 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("baseline_wdds"))
-          targets::tar_make(dplyr::starts_with("baseline_mddw"))
-          targets::tar_make(dplyr::starts_with("endline_wdds"))
-          targets::tar_make(dplyr::starts_with("endline_mddw"))
+          targets::tar_make(dplyr::starts_with("baseline_child_dev"))
+          targets::tar_make(dplyr::starts_with("endline_child_dev"))
         shell: Rscript {0}
           
