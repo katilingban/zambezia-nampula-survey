@@ -1280,6 +1280,47 @@ clean_endline_ea_ids <- function(.data, survey_sampling_list) {
   x
 }
 
+clean_endline_identifiers <- function(endline_raw_data, 
+                                      survey_sampling_list_endline) {
+  endline_raw_data |>
+    dplyr::left_join(
+      y = survey_sampling_list_endline |>
+        subset(
+          select = c(
+            UNIQUE_ID, FGH_ID, `Cod..Concatenado.(AREA)`, Provincia, Distrito,
+            Paridade
+          )
+        ),
+      by = c("fgh_id" = "FGH_ID")
+    ) |>
+    dplyr::mutate(
+      hh_id = id,
+      ch_id = paste0(
+        id, stringr::str_pad(child_id, width = 2, side = "left", pad = "0")
+      ),
+      province = factor(Provincia, levels = c("Zambézia", "Nampula")),
+      district = Distrito,
+      ea_code = `Cod..Concatenado.(AREA)`,
+      ea_id = UNIQUE_ID,
+      strata = ifelse(
+        Paridade == "COM", paste0("Rest of ", as.character(province)), district
+      ) |>
+        factor(
+          levels = c(
+            "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia",
+            "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+          )
+        ),
+      longitude = do.call(rbind, geolocation)[ , 2],
+      latitude = do.call(rbind, geolocation)[ , 1]
+    ) |>
+    subset(
+      select = c(
+        -UNIQUE_ID, -`Cod..Concatenado.(AREA)`, -Provincia, -Distrito, -Paridade
+      )
+    )
+}
+
 add_ea_info <- function(survey_sampling_list) {
   x <- matrix(
     nrow = 2, ncol = ncol(survey_sampling_list), byrow = TRUE
@@ -1312,8 +1353,8 @@ add_ea_info <- function(survey_sampling_list) {
 }
 
 
-process_endline_data <- function(.data, survey_endline_choices) {
-  ## Add filter to remove testing data -----------------------------------------
+process_endline_data <- function(.data, 
+                                 survey_endline_choices) {
   dplyr::mutate(
     .data = .data,
     ### Demographics - respondent ----------------------------------------------

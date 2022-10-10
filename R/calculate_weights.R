@@ -27,7 +27,7 @@ calculate_weights <- function(.data, survey_sampling_list,
       ) |>
       subset(
         select = c(
-          hh_id, ch_id, province, district, 
+          hh_id, child_id, province, district, 
           ea_code, ea_id, strata, longitude, latitude
         )
       ) |>
@@ -55,25 +55,10 @@ calculate_weights <- function(.data, survey_sampling_list,
       )()
   } else {
     survey_clusters <- .data |>
-      dplyr::mutate(
-        hh_id = id,
-        ch_id = paste0(
-          id, stringr::str_pad(child_id, width = 2, side = "left", pad = "0")
-        ),
-        province = factor(province),
-        district = factor(district),
-        ea_code = paste0(
-          prov, 
-          stringr::str_pad(distrito, width = 2, side = "left", pad = 0), 
-          stringr::str_pad(post, width = 3, side = "left", pad = 0), 
-          stringr::str_pad(enum1, width = 3, side = "left", pad = 0)
-        ),
-        ea_id = enum1
-      ) |>
       subset(
         select = c(
-          hh_id, ch_id, province, district, 
-          ea_code, ea_id, strata, longitude, latitude
+          hh_id, child_id, province, district, 
+          ea_code, fgh_id, ea_id, strata, longitude, latitude
         )
       ) |>
       dplyr::group_by(ea_id) |>
@@ -82,6 +67,7 @@ calculate_weights <- function(.data, survey_sampling_list,
         district = unique(district),
         strata = unique(strata),
         ea_code = unique(ea_code),
+        fgh_id = unique(fgh_id),
         ea_id = unique(ea_id),
         longitude = mean(longitude, na.rm = TRUE),
         latitude = mean(latitude, mean = TRUE),
@@ -99,13 +85,11 @@ calculate_weights <- function(.data, survey_sampling_list,
        )
       )()
   }
-  
-
 
   sample_clusters <- survey_sampling_list |>
     subset(
       select = c(
-        UNIQUE_ID, 
+        UNIQUE_ID,
         Paridade,
         `População.Total.-.preliminar`,
         `Homem.-.preliminar`,
