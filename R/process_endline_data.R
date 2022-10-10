@@ -1970,7 +1970,7 @@ process_endline_data <- function(.data,
                  "fever_malaria_", 
                  c(
                    "coartem", "amodiaquina_artesunato", "fansidar", "quinino", 
-                   "quinino_injection", "artesunato", "paracetamol_xarope"
+                   "quinino_injection", "artesunato", "paracetamol_comprimido_xarope"
                  )
                )
                x 

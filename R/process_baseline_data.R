@@ -276,7 +276,7 @@ process_baseline_data <- function(.data) {
     rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
     rti_seek_treatment = ifelse(ch3 == 1, 1, 0),
     rti_point_of_care = recode_var_categorical(ch4),
-    rti_treatment_antiobioticos = ifelse(ch5a_1 == 1, 1, 0),
+    rti_treatment_antibioticos = ifelse(ch5a_1 == 1, 1, 0),
     rti_treatment_paracetamol = ifelse(ch5a_2 == 1, 1, 0),
     rti_treatment_aspirina = ifelse(ch5a_3 == 1, 1, 0),
     rti_treatment_ibuprofeno = ifelse(ch5a_4 == 1, 1, 0),
