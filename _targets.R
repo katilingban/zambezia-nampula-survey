@@ -4049,6 +4049,8 @@ raw_data_endline <- tar_plan(
     ) |>
     ### Clean up enumeration area identifiers
     clean_endline_ea_ids(survey_sampling_list),
+  ### Update sampling list for endline
+  survey_sampling_list_endline = add_ea_info(survey_sampling_list),
   ### Create SF object of raw endline data for cleaning
   endline_raw_data_sf = create_data_sf(endline_raw_data)
 )
