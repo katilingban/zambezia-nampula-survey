@@ -4048,7 +4048,8 @@ raw_data_endline <- tar_plan(
         as.Date(today) >= "2022-05-21"
     ) |>
     ### Clean up enumeration area identifiers
-    clean_endline_ea_ids(survey_sampling_list),
+    clean_endline_ea_ids(survey_sampling_list) |>
+    clean_endline_identifiers(survey_sampling_list_endline),
   ### Update sampling list for endline
   survey_sampling_list_endline = add_ea_info(survey_sampling_list),
   ### Create SF object of raw endline data for cleaning
@@ -4068,9 +4069,47 @@ processed_data_endline <- tar_plan(
     as.integer(fgh_id) %in% endline_data_eas_for_checking |
       as.integer(fgh_id) < 30000
   ),
+  ### Get endline sampling weights --------------------------------------------
+  endline_sample_weight = calculate_weights(
+    .data = endline_raw_data,
+    survey_sampling_list_endline,
+    type = "endline"
+  ),
   ### Process endline data
   endline_data_processed = process_endline_data(
     endline_raw_data, survey_endline_choices
+  ),
+  ### Process endline data with weights ---------------------------------------
+  endline_data_weighted = dplyr::left_join(
+    x = endline_data_processed,
+    y = endline_sample_weight |>
+      subset(
+        select = c(
+          ea_id, fgh_id, study_group, 
+          cluster_sample_prob_obs, ind_sample_prob_obs,
+          sample_prob_obs, sample_weight_obs
+        )
+      ),
+    by = c("ea_id", "fgh_id")
+  ),
+  ### Set endline survey design for children ----------------------------------
+  endline_child_survey_design = survey::svydesign(
+    ids = ~ea_id,
+    fpc = ~sample_prob_obs,
+    strata = ~province + strata,
+    data = endline_data_weighted,
+    pps = "brewer"
+  ),
+  ### Set endline survey design for households/respondent ---------------------
+  endline_hh_survey_design = survey::svydesign(
+    ids = ~ea_id,
+    fpc = ~sample_prob_obs,
+    strata = ~province + strata,
+    data = endline_data_weighted |>
+      dplyr::group_by(id) |>
+      subset(child_id == 1 | is.na(child_id)) |>
+      dplyr::ungroup(),
+    pps = "brewer"
   )
 )
 
