@@ -13,7 +13,8 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 targets::tar_load(
   c(
     endline_raw_data_sf, endline_data_eas_for_checking, 
-    endline_raw_data_check_sf, baseline_raw_data_sf
+    endline_raw_data_check_sf, baseline_raw_data_sf,
+    survey_provinces, survey_districts, survey_posts
   )
 )
 ```
@@ -28,6 +29,43 @@ leaflet(width = "100%", height = "100%", padding = 0) |>
     lng = mean(sf::st_bbox(endline_raw_data_sf)[c(1, 3)]), 
     lat = mean(sf::st_bbox(endline_raw_data_sf)[c(2, 4)]),
     zoom = 8
+  ) |>
+  addPolygons(
+    data = survey_provinces,
+    fill = FALSE,
+    weight = 5,
+    opacity = 1,
+    color = "orange",
+    group = "Survey provinces"
+  ) |>
+  addPolygons(
+    data = survey_districts,
+    fill = FALSE,
+    weight = 3,
+    opacity = 1,
+    color = "orange",
+    group = "Survey districts"
+  ) |>
+  addPolygons(
+    data = survey_posts,
+    fill = TRUE,
+    fillColor = "orange",
+    fillOpacity = 0,
+    weight = 1,
+    opacity = 1,
+    color = "orange",
+    label = ~paste0(
+      "Province: ", ADM1_PT, "<br/>", 
+      "District: ", ADM2_PT, "<br/>",
+      "Post: ", ADM3_PT, "<br/>"
+    ) |>
+      lapply(htmltools::HTML),
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "12px",
+      direction = "auto"
+    ),
+    group = "Survey posts"
   ) |>
   addCircleMarkers(
     data = baseline_raw_data_sf,
@@ -96,7 +134,9 @@ leaflet(width = "100%", height = "100%", padding = 0) |>
     group = "Endline check locations"
   ) |>
   addLayersControl(
-    #baseGroups = "Prestea/Huni Valley District",
+    baseGroups = c(
+      "Survey provinces", "Survey districts", "Survey posts"
+    ),
     overlayGroups = c(
       "Baseline survey locations",
       "Endline survey locations", 

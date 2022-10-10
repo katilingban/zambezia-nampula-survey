@@ -49,6 +49,24 @@ data_downloads <- tar_plan(
   )
 )
 
+## Spatial datasets ------------------------------------------------------------
+data_spatial <- tar_plan(
+  moz_country = get_country(),
+  moz_provinces = get_provinces(),
+  moz_districts = get_districts(),
+  moz_posts = get_posts(),
+  moz_settlements = mozambique::settlements,
+  survey_provinces = subset(
+    moz_provinces, ADM1_PT %in% c("Zambezia", "Nampula")
+  ),
+  survey_districts = subset(
+    moz_districts, ADM1_PT %in% c("Zambezia", "Nampula")
+  ),
+  survey_posts = subset(
+    moz_posts, ADM1_PT %in% c("Zambezia", "Nampula")
+  )
+)
+
 ## Supporting/reference datasets -----------------------------------------------
 data_reference <- tar_plan(
   ### Read indicator list from Google Sheets -----------------------------------
@@ -4578,6 +4596,7 @@ set.seed(1977)
 
 list(
   data_downloads,
+  data_spatial,
   data_reference,
   raw_data_baseline,
   processed_data_baseline,
