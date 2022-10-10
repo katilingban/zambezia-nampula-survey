@@ -47,6 +47,6 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(endline_data_processed)
+          targets::tar_make(survey_locations_map)
         shell: Rscript {0}
           
