@@ -2143,7 +2143,7 @@ process_endline_data <- function(.data,
                  c(
                    "maternal_mortality",
                    "child_mortality",
-                   "children_poverty",
+                   "poverty",
                    "more_likely_that_children_are_not_educated",
                    "other_reasons",
                    "none"
