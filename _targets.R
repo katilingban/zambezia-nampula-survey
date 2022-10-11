@@ -7969,7 +7969,13 @@ outputs_overall <- tar_plan(
       baseline_demo_respondent_study_group_province,
       baseline_demo_respondent
     ),
-    endline = NULL
+    endline = list(
+      endline_demo_respondent_province, 
+      endline_demo_respondent_strata,
+      endline_demo_respondent_study_group,
+      endline_demo_respondent_study_group_province,
+      endline_demo_respondent
+    )
   ),
   ### Overall table output - child demographics --------------------------------
   overall_demo_child = create_full_table(
@@ -7982,7 +7988,13 @@ outputs_overall <- tar_plan(
       baseline_demo_child_study_group_province,
       baseline_demo_child
     ),
-    endline = NULL
+    endline = list(
+      endline_demo_child_province, 
+      endline_demo_child_strata,
+      endline_demo_child_study_group,
+      endline_demo_child_study_group_province,
+      endline_demo_child
+    )
   ),
   ### Overall table output - spouse demographics -------------------------------
   overall_demo_spouse = create_full_table(
@@ -7995,7 +8007,13 @@ outputs_overall <- tar_plan(
       baseline_demo_spouse_study_group_province,
       baseline_demo_spouse
     ),
-    endline = NULL
+    endline = list(
+      endline_demo_spouse_province, 
+      endline_demo_spouse_strata,
+      endline_demo_spouse_study_group,
+      endline_demo_spouse_study_group_province,
+      endline_demo_spouse
+    )
   ),
   ### Overall table output - household income ----------------------------------
   overall_hh_income = create_full_table(
@@ -8008,7 +8026,13 @@ outputs_overall <- tar_plan(
       baseline_hh_income_study_group_province,
       baseline_hh_income
     ),
-    endline = NULL
+    endline = list(
+      endline_hh_income_province, 
+      endline_hh_income_strata,
+      endline_hh_income_study_group,
+      endline_hh_income_study_group_province,
+      endline_hh_income
+    )
   ),
   ### Overall table output - household structure -------------------------------
   overall_hh_structure = create_full_table(
@@ -8021,7 +8045,13 @@ outputs_overall <- tar_plan(
       baseline_hh_structure_study_group_province,
       baseline_hh_structure
     ),
-    endline = NULL
+    endline = list(
+      endline_hh_structure_province, 
+      endline_hh_structure_strata,
+      endline_hh_structure_study_group,
+      endline_hh_structure_study_group_province,
+      endline_hh_structure
+    )
   ),
   ### Overall table output - household amenities -------------------------------
   overall_hh_amenities = create_full_table(
@@ -8034,7 +8064,13 @@ outputs_overall <- tar_plan(
       baseline_hh_amenities_study_group_province,
       baseline_hh_amenities
     ),
-    endline = NULL
+    endline = list(
+      endline_hh_amenities_province, 
+      endline_hh_amenities_strata,
+      endline_hh_amenities_study_group,
+      endline_hh_amenities_study_group_province,
+      endline_hh_amenities
+    )
   ),
   ### Overall table output - household decision --------------------------------
   overall_hh_decision = create_full_table(
@@ -8047,7 +8083,13 @@ outputs_overall <- tar_plan(
       baseline_hh_decision_study_group_province,
       baseline_hh_decision
     ),
-    endline = NULL
+    endline = list(
+      endline_hh_decision_province, 
+      endline_hh_decision_strata,
+      endline_hh_decision_study_group,
+      endline_hh_decision_study_group_province,
+      endline_hh_decision
+    )
   ),
   ### Overall table output - household groups ----------------------------------
   overall_hh_groups = create_full_table(
@@ -8060,7 +8102,13 @@ outputs_overall <- tar_plan(
       baseline_hh_groups_study_group_province,
       baseline_hh_groups
     ),
-    endline = NULL
+    endline = list(
+      endline_hh_groups_province, 
+      endline_hh_groups_strata,
+      endline_hh_groups_study_group,
+      endline_hh_groups_study_group_province,
+      endline_hh_groups
+    )
   ),
   ### Overall table travel - household travel ----------------------------------
   overall_hh_travel = create_full_table(
@@ -8073,7 +8121,13 @@ outputs_overall <- tar_plan(
       baseline_hh_travel_study_group_province,
       baseline_hh_travel
     ),
-    endline = NULL
+    endline = list(
+      endline_hh_travel_province, 
+      endline_hh_travel_strata,
+      endline_hh_travel_study_group,
+      endline_hh_travel_study_group_province,
+      endline_hh_travel
+    )
   ),
   ### Overall table output - WASH ----------------------------------------------
   overall_wash = create_full_table(
@@ -8086,7 +8140,13 @@ outputs_overall <- tar_plan(
       baseline_wash_study_group_province,
       baseline_wash
     ),
-    endline = NULL
+    endline = list(
+      endline_wash_province, 
+      endline_wash_strata,
+      endline_wash_study_group,
+      endline_wash_study_group_province,
+      endline_wash
+    )
   ),
   ### Overall table output - women's empowerment -------------------------------
   overall_wem = create_full_table(
@@ -8099,7 +8159,13 @@ outputs_overall <- tar_plan(
       baseline_wem_study_group_province,
       baseline_wem
     ),
-    endline = NULL
+    endline = list(
+      endline_wem_province, 
+      endline_wem_strata,
+      endline_wem_study_group,
+      endline_wem_study_group_province,
+      endline_wem
+    )
   ),
   ### Overall table output - PHQ8 ----------------------------------------------
   overall_women_phq8 = create_full_table(
@@ -8112,7 +8178,13 @@ outputs_overall <- tar_plan(
       baseline_women_phq8_study_group_province,
       baseline_women_phq8
     ),
-    endline = NULL
+    endline = list(
+      endline_women_phq8_province, 
+      endline_women_phq8_strata,
+      endline_women_phq8_study_group,
+      endline_women_phq8_study_group_province,
+      endline_women_phq8
+    )
   ),
   ### Overall table output - pregnant ------------------------------------------
   overall_pregnant = create_full_table(
@@ -8125,7 +8197,13 @@ outputs_overall <- tar_plan(
       baseline_pregnant_study_group_province,
       baseline_pregnant
     ),
-    endline = NULL
+    endline = list(
+      endline_pregnant_province, 
+      endline_pregnant_strata,
+      endline_pregnant_study_group,
+      endline_pregnant_study_group_province,
+      endline_pregnant
+    )
   ),
   ### Overall table output - pregnant_prevention -------------------------------
   overall_pregnant_prevention = create_full_table(
@@ -8138,7 +8216,13 @@ outputs_overall <- tar_plan(
       baseline_pregnant_prevention_study_group_province,
       baseline_pregnant_prevention
     ),
-    endline = NULL
+    endline = list(
+      endline_pregnant_prevention_province, 
+      endline_pregnant_prevention_strata,
+      endline_pregnant_prevention_study_group,
+      endline_pregnant_prevention_study_group_province,
+      endline_pregnant_prevention
+    )
   ),
   ### Overall table output - natal care ----------------------------------------
   overall_natal_care = create_full_table(
@@ -8151,7 +8235,13 @@ outputs_overall <- tar_plan(
       baseline_natal_care_study_group_province,
       baseline_natal_care
     ),
-    endline = NULL
+    endline = list(
+      endline_natal_care_province, 
+      endline_natal_care_strata,
+      endline_natal_care_study_group,
+      endline_natal_care_study_group_province,
+      endline_natal_care
+    )
   ),
   ### Overall table output - family planning -----------------------------------
   overall_family_planning = create_full_table(
@@ -8164,7 +8254,13 @@ outputs_overall <- tar_plan(
       baseline_family_planning_study_group_province,
       baseline_family_planning
     ),
-    endline = NULL
+    endline = list(
+      endline_family_planning_province, 
+      endline_family_planning_strata,
+      endline_family_planning_study_group,
+      endline_family_planning_study_group_province,
+      endline_family_planning
+    )
   ),
   ### Overall table output - WDDS ----------------------------------------------
   overall_wdds = create_full_table(
@@ -8177,7 +8273,13 @@ outputs_overall <- tar_plan(
       baseline_wdds_study_group_province,
       baseline_wdds
     ),
-    endline = NULL
+    endline = list(
+      endline_wdds_province, 
+      endline_wdds_strata,
+      endline_wdds_study_group,
+      endline_wdds_study_group_province,
+      endline_wdds
+    )
   ),
   ### Overall table output - MDDW ----------------------------------------------
   overall_mddw = create_full_table(
@@ -8190,7 +8292,13 @@ outputs_overall <- tar_plan(
       baseline_mddw_study_group_province,
       baseline_mddw
     ),
-    endline = NULL
+    endline = list(
+      endline_mddw_province, 
+      endline_mddw_strata,
+      endline_mddw_study_group,
+      endline_mddw_study_group_province,
+      endline_mddw
+    )
   ),
   ### Overall table output - women anthropometry  ------------------------------
   overall_women_anthro = create_full_table(
@@ -8203,7 +8311,13 @@ outputs_overall <- tar_plan(
       baseline_women_anthro_study_group_province,
       baseline_women_anthro
     ),
-    endline = NULL
+    endline = list(
+      endline_women_anthro_province, 
+      endline_women_anthro_strata,
+      endline_women_anthro_study_group,
+      endline_women_anthro_study_group_province,
+      endline_women_anthro
+    )
   ),
   ### Overall table output - Child development  --------------------------------
   overall_child_dev = create_full_table(
@@ -8216,7 +8330,13 @@ outputs_overall <- tar_plan(
       baseline_child_dev_study_group_province,
       baseline_child_dev
     ),
-    endline = NULL
+    endline = list(
+      endline_child_dev_province, 
+      endline_child_dev_strata,
+      endline_child_dev_study_group,
+      endline_child_dev_study_group_province,
+      endline_child_dev
+    )
   ),
   ### Overall table output - childhood illnesses -------------------------------
   overall_child_ill = create_full_table(
@@ -8229,7 +8349,13 @@ outputs_overall <- tar_plan(
       baseline_child_ill_study_group_province,
       baseline_child_ill
     ),
-    endline = NULL
+    endline = list(
+      endline_child_ill_province, 
+      endline_child_ill_strata,
+      endline_child_ill_study_group,
+      endline_child_ill_study_group_province,
+      endline_child_ill
+    )
   ),
   ### Overall table output - child immunisation --------------------------------
   overall_child_immunisation = create_full_table(
@@ -8242,7 +8368,13 @@ outputs_overall <- tar_plan(
       baseline_child_immunisation_study_group_province,
       baseline_child_immunisation
     ),
-    endline = NULL
+    endline = list(
+      endline_child_immunisation_province, 
+      endline_child_immunisation_strata,
+      endline_child_immunisation_study_group,
+      endline_child_immunisation_study_group_province,
+      endline_child_immunisation
+    )
   ),
   ### Overall table output - child immunisation full ---------------------------
   overall_child_immunisation_full = create_full_table(
@@ -8255,7 +8387,13 @@ outputs_overall <- tar_plan(
       baseline_child_immunisation_full_study_group_province,
       baseline_child_immunisation_full
     ),
-    endline = NULL
+    endline = list(
+      endline_child_immunisation_full_province, 
+      endline_child_immunisation_full_strata,
+      endline_child_immunisation_full_study_group,
+      endline_child_immunisation_full_study_group_province,
+      endline_child_immunisation_full
+    )
   ),
   ### Overall table output - vitamin A supplementation -------------------------
   overall_child_vita = create_full_table(
@@ -8268,7 +8406,13 @@ outputs_overall <- tar_plan(
       baseline_child_vita_study_group_province,
       baseline_child_vita
     ),
-    endline = NULL
+    endline = list(
+      endline_child_vita_province, 
+      endline_child_vita_strata,
+      endline_child_vita_study_group,
+      endline_child_vita_study_group_province,
+      endline_child_vita
+    )
   ),
   ### Overall table output - deworming -----------------------------------------
   overall_deworming = create_full_table(
@@ -8281,7 +8425,13 @@ outputs_overall <- tar_plan(
       baseline_deworming_study_group_province,
       baseline_deworming
     ),
-    endline = NULL
+    endline = list(
+      endline_deworming_province, 
+      endline_deworming_strata,
+      endline_deworming_study_group,
+      endline_deworming_study_group_province,
+      endline_deworming
+    )
   ),
   ### Overall table output - breastfeeding -------------------------------------
   overall_breastfeeding = create_full_table(
@@ -8294,7 +8444,13 @@ outputs_overall <- tar_plan(
       baseline_breastfeeding_study_group_province,
       baseline_breastfeeding
     ),
-    endline = NULL
+    endline = list(
+      endline_breastfeeding_province, 
+      endline_breastfeeding_strata,
+      endline_breastfeeding_study_group,
+      endline_breastfeeding_study_group_province,
+      endline_breastfeeding
+    )
   ),
   ### Overall table output - exclusive breastfeeding ---------------------------
   overall_ebf = create_full_table(
@@ -8307,7 +8463,13 @@ outputs_overall <- tar_plan(
       baseline_ebf_study_group_province,
       baseline_ebf
     ),
-    endline = NULL
+    endline = list(
+      endline_ebf_province, 
+      endline_ebf_strata,
+      endline_ebf_study_group,
+      endline_ebf_study_group_province,
+      endline_ebf
+    )
   ),
   ### Overall table output - IYCF ----------------------------------------------
   overall_iycf = create_full_table(
@@ -8320,7 +8482,13 @@ outputs_overall <- tar_plan(
       baseline_iycf_study_group_province,
       baseline_iycf
     ),
-    endline = NULL
+    endline = list(
+      endline_iycf_province, 
+      endline_iycf_strata,
+      endline_iycf_study_group,
+      endline_iycf_study_group_province,
+      endline_iycf
+    )
   ),
   ### Overall table output - child anthro --------------------------------------
   overall_child_anthro = create_full_table(
@@ -8333,7 +8501,13 @@ outputs_overall <- tar_plan(
       baseline_child_anthro_study_group_province,
       baseline_child_anthro
     ),
-    endline = NULL
+    endline = list(
+      endline_child_anthro_province, 
+      endline_child_anthro_strata,
+      endline_child_anthro_study_group,
+      endline_child_anthro_study_group_province,
+      endline_child_anthro
+    )
   ),
   ### Overall results table ----------------------------------------------------
   overall_results_all = rbind(
@@ -8443,6 +8617,11 @@ outputs_overall <- tar_plan(
   baseline_results_csv = write.csv(
     x = baseline_results_all,
     file = "outputs/baseline_results.csv",
+    row.names = FALSE
+  ),
+  endline_results_csv = write.csv(
+    x = endline_results_all,
+    file = "outputs/endline_results.csv",
     row.names = FALSE
   )
 )
