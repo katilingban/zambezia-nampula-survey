@@ -810,4 +810,436 @@ rbind(
 ```
 
 <br/>
+
+## Child wasting by weight-for-height z-score
+
+```{r child_wasting_whz, echo = FALSE}
+child_wasting_province_overall <- baseline_child_anthro_province_table |>
+  subset(
+    indicator_label %in% c(
+      "Weight-for-height z-score", "Child wasting by weight-for-height z-score"
+    ),
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+child_wasting_strata <- baseline_child_anthro_strata_table |>
+  subset(
+    indicator_label %in% c(
+      "Weight-for-height z-score", "Child wasting by weight-for-height z-score"
+    ) &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+child_wasting_study_group <- baseline_child_anthro_study_group_table |>
+  subset(
+    indicator_label %in% c(
+      "Weight-for-height z-score", "Child wasting by weight-for-height z-score"
+    ) &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  child_wasting_province_overall,
+  child_wasting_strata,
+  child_wasting_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 3)
+      x[ , 5:13] <- round(x[ , 5:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Weight-for-Height z-score" = 3, 
+      "Global Wasting" = 3, 
+      "Moderate Wasting" = 3, 
+      "Severe Wasting" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Child wasting by mid-upper arm circumference
+
+```{r child_wasting_muac, echo = FALSE}
+child_wasting_province_overall <- baseline_child_anthro_province_table |>
+  subset(
+    indicator_label %in% c(
+      "Mid-upper arm circumference (cms)", "Child wasting by mid-upper arm circumference"
+    ),
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+child_wasting_strata <- baseline_child_anthro_strata_table |>
+  subset(
+    indicator_label %in% c(
+      "Mid-upper arm circumference (cms)", "Child wasting by mid-upper arm circumference"
+    ) &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+child_wasting_study_group <- baseline_child_anthro_study_group_table |>
+  subset(
+    indicator_label %in% c(
+      "Mid-upper arm circumference (cms)", "Child wasting by mid-upper arm circumference"
+    ) &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  child_wasting_province_overall,
+  child_wasting_strata,
+  child_wasting_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 3)
+      x[ , 5:13] <- round(x[ , 5:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Mid-Upper Arm Circumference (cms)" = 3, 
+      "Global Wasting" = 3, 
+      "Moderate Wasting" = 3, 
+      "Severe Wasting" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Severe wasting by nutritional oedema
+
+```{r child_wasting_oedema, echo = FALSE}
+child_oedema_province_overall <- baseline_child_anthro_province_table |>
+  subset(
+    indicator_label == "Child wasting by oedema",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+child_oedema_strata <- baseline_child_anthro_strata_table |>
+  subset(
+    indicator_label == "Child wasting by oedema" &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+child_oedema_study_group <- baseline_child_anthro_study_group_table |>
+  subset(
+    indicator_label == "Child wasting by oedema" &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  child_oedema_province_overall,
+  child_oedema_strata,
+  child_oedema_study_group
+) |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", "Estimate", "95% LCL", "95% UCL"),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Severe wasting by oedema" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+## Infant and young chlid feeding
+
+### Food groups consumed
+
+#### By province and overall
+
+```{r child_food_groups, echo = FALSE}
+baseline_iycf_province_table_report |>
+  subset(
+    !indicator_category %in% c("Mean", "Minimum dietary diversity"),
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Food group", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  )
+```
+
+#### By study group and overall
+
+```{r child_food_groups_study_group, echo = FALSE}
+baseline_iycf_study_group_table_report |>
+  subset(
+    !indicator_category %in% c("Mean", "Minimum dietary diversity"),
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Food group", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  )
+```
+
+### Minimum dietary diversity
+
+```{r iycf_mdd, echo = FALSE}
+mdd_province_overall <- baseline_iycf_province_table |>
+  subset(
+    indicator_label %in% c("Food groups score", "Minimum dietary diversity"),
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+ 
+mdd_strata <- baseline_iycf_strata_table |>
+  subset(
+    indicator_label %in% c("Food groups score", "Minimum dietary diversity") &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+mdd_study_group <- baseline_iycf_study_group_table |>
+  subset(
+    indicator_label %in% c("Food groups score", "Minimum dietary diversity") &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+ 
+rbind(
+  mdd_province_overall, mdd_strata, mdd_study_group
+) |>
+  (\(x) x[ , c(1, 2, 4, 6, 3, 5, 7)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 2)
+      x[ , 5:7]  <- round(x[ , 5:7] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 2)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Food Groups Score" = 3,
+      "Minimum dietary diversity" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Minimum meal frequency
+
+This indicator cannot be calculated using the baseline data provided by UNICEF Mozambique. Specifically, the dataset provided has information on the frequency of solid or semi-solid feeds by children discretised rather than kept in actual number of feeds as reported by the respondent. The discretisation was also done in such a way that does not match groupings in the indicator definition.
+
+### Minimum adequate diet
+
+This indicator cannot be calculated using the baseline data provided by UNICEF Mozambique. This compound indicator requires information about minimum meal frequency to be calculated. As described above, the dataset provided by UNICEF Mozambique does not allow for the calculation of the minimum meal frequency.
+
+## Period prevalence of childhood illnesses
+
+
+
+
+<br/>
 <br/>
