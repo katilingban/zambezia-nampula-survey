@@ -1238,6 +1238,87 @@ This indicator cannot be calculated using the baseline data provided by UNICEF M
 
 ## Period prevalence of childhood illnesses
 
+```{r child_illness, echo = FALSE}
+child_ill_province_overall <- baseline_child_ill_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+child_ill_strata <- baseline_child_ill_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+child_ill_study_group <- baseline_child_ill_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  child_ill_province_overall,
+  child_ill_strata,
+  child_ill_study_group
+) |>
+  (\(x) x[ , c(1, 2, 5, 8, 3, 6, 9, 4, 7, 10)])() |>
+  (\(x)
+    {
+      x[ , 2:10]  <- round(x[ , 2:10] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Diarrhoea" = 3, 
+      "Fever" = 3, 
+      "Cough" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
 
 
 
