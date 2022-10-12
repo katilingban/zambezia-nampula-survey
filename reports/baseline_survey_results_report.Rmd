@@ -615,6 +615,199 @@ baseline_hh_decision_study_group_table_report |>
   )
 ```
 
+<br/>
+
+## Child Stunting
+
+```{r child_stunting, echo = FALSE}
+child_stunting_province_overall <- baseline_child_anthro_province_table |>
+  subset(
+    indicator_variable %in% c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting"
+    ),
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+child_stunting_strata <- baseline_child_anthro_strata_table |>
+  subset(
+    indicator_variable %in% c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting"
+    ) &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+child_stunting_study_group <- baseline_child_anthro_study_group_table |>
+  subset(
+    indicator_variable %in% c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting"
+    ) &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  child_stunting_province_overall,
+  child_stunting_strata,
+  child_stunting_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 3)
+      x[ , 5:13] <- round(x[ , 5:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Height-for-Age z-score" = 3, 
+      "Global Stunting" = 3, 
+      "Moderate Stunting" = 3, 
+      "Severe Stunting" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Child underweight
+
+```{r child_underweight, echo = FALSE}
+child_underweight_province_overall <- baseline_child_anthro_province_table |>
+  subset(
+    indicator_variable %in% c(
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight"
+    ),
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+child_underweight_strata <- baseline_child_anthro_strata_table |>
+  subset(
+    indicator_variable %in% c(
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight"
+    ) &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+child_underweight_study_group <- baseline_child_anthro_study_group_table |>
+  subset(
+    indicator_variable %in% c(
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight"
+    ) &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  child_underweight_province_overall,
+  child_underweight_strata,
+  child_underweight_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 3)
+      x[ , 5:13] <- round(x[ , 5:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Weight-for-Age z-score" = 3, 
+      "Global Underweight" = 3, 
+      "Moderate Underweight" = 3, 
+      "Severe Underweight" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
 
 <br/>
 <br/>
