@@ -8638,10 +8638,17 @@ outputs_comparison <- tar_plan(
 
 ## Reports ---------------------------------------------------------------------
 reports <- tar_plan(
-  ## Survey locations map
+  ### Survey locations map -----------------------------------------------------
   tar_render(
     name = survey_locations_map,
     path = "reports/endline_survey_locations.Rmd",
+    output_dir = "outputs",
+    knit_root_dir = here::here()
+  ),
+  ### Baseline report ----------------------------------------------------------
+  tar_render(
+    name = baseline_survey_results_report,
+    path = "reports/baseline_survey_results_report.Rmd",
     output_dir = "outputs",
     knit_root_dir = here::here()
   )

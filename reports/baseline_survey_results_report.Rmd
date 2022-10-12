@@ -1,0 +1,620 @@
+---
+title: "Improving nutrition status for under 5 children in Zambezia and Nampula"
+subtitle: "Baseline survey results"
+author: 
+    - name: Mark Myatt
+    - name: Ernest Guevarra
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    self_contained: true
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE,
+  echo = FALSE
+)
+
+suppressPackageStartupMessages(source("packages.R"))
+for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
+
+targets::tar_load(dplyr::starts_with("baseline"))
+```
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+
+<br/>
+
+## Demographics - respondent
+
+### By province and overall
+
+```{r demo_respondent, echo = FALSE}
+baseline_demo_respondent_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Sex" = 3, "Age (years)" = 1, "Age group" = 9, "Language" = 11, 
+      "Civil staus" = 6, "Number of years of formal education" = 1, 
+      "Number of years of formal education (grouped)" = 4, "Occupation" = 6
+    )
+  )
+```
+
+### By study group and overall
+
+```{r demo_respondent_study_group, echo = FALSE}
+baseline_demo_respondent_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Sex" = 3, "Age (years)" = 1, "Age group" = 9, "Language" = 11, 
+      "Civil staus" = 6, "Number of years of formal education" = 1, 
+      "Number of years of formal education (grouped)" = 4, "Occupation" = 6
+    )
+  )
+```
+
+<br/>
+
+## Demographics - child
+
+### By province and overall
+
+```{r demo_child, echo = FALSE}
+baseline_demo_child_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Sex" = 3, "Age (months)" = 1, "Age group" = 7, 
+      "Current breastfeeding status" = 1, "Carer's age at birth" = 10, 
+      "Location of birth" = 4, "Mode of delivery" = 1, 
+      "Presence of complications" = 1, "Birth weight" = 1
+    )
+  )
+```
+
+### By study group and overall
+
+```{r demo_child_study_group, echo = FALSE}
+baseline_demo_child_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Sex" = 3, "Age (months)" = 1, "Age group" = 7, 
+      "Current breastfeeding status" = 1, "Carer's age at birth" = 10, 
+      "Location of birth" = 4, "Mode of delivery" = 1, 
+      "Presence of complications" = 1, "Birth weight" = 1
+    )
+  )
+```
+
+<br/>
+
+## Demographics - spouse
+
+### By province and overall
+
+```{r demo_spouse, echo = FALSE}
+baseline_demo_spouse_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Age (years)" = 1, "Age group" = 13, 
+      "Number of years of format education" = 1, 
+      "Number of years of formal education (grouped)" = 4, 
+      "Occupation" = 6, "Lives at home" = 3
+    )
+  )
+```
+
+### By study group and overall
+
+```{r demo_spouse_study_group, echo = FALSE}
+baseline_demo_spouse_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Age (years)" = 1, "Age group" = 13, 
+      "Number of years of format education" = 1, 
+      "Number of years of formal education (grouped)" = 4, 
+      "Occupation" = 6, "Lives at home" = 3
+    )
+  )
+```
+
+<br/>
+
+## Household income
+
+### By province and overall
+
+```{r hh_income, echo = FALSE}
+baseline_hh_income_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Number of persons living in household" = 1, 
+      "Number of under 5 years children living in household" = 1, 
+      "Number of pregnant women living in household" = 1, 
+      "Monthly household income" = 11, 
+      "Source of household income" = 9, 
+      "Sufficiency of household income" = 4,
+      "Sufficiency of family resource" = 4,
+      "Household income against household expenses" = 4
+    )
+  )
+```
+
+### By study group and overall
+
+```{r hh_income_study_group, echo = FALSE}
+baseline_hh_income_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Number of persons living in household" = 1, 
+      "Number of under 5 years children living in household" = 1, 
+      "Number of pregnant women living in household" = 1, 
+      "Monthly household income" = 11, 
+      "Source of household income" = 9, 
+      "Sufficiency of household income" = 4,
+      "Sufficiency of family resource" = 4,
+      "Household income against household expenses" = 4
+    )
+  )
+```
+
+<br/>
+
+## Household structure
+
+### By province and overall
+
+```{r hh_structure, echo = FALSE}
+baseline_hh_structure_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Home ownership" = 3, 
+      "Number of rooms in home" = 11, 
+      "Number of bedrooms in home" = 9, 
+      "Roofing material" = 7, 
+      "Flooring material" = 6, 
+      "Number of months living in current location" = 1,
+      "Number of months living in current location (grouped)" = 14
+    )
+  )
+```
+
+### By study group and overall
+
+```{r hh_structure_study_group, echo = FALSE}
+baseline_hh_structure_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Home ownership" = 3, 
+      "Number of rooms in home" = 11, 
+      "Number of bedrooms in home" = 9, 
+      "Roofing material" = 7, 
+      "Flooring material" = 6, 
+      "Number of months living in current location" = 1,
+      "Number of months living in current location (grouped)" = 14
+    )
+  )
+```
+
+<br/>
+
+## Household amenities
+
+### By province and overall
+
+```{r hh_amenities, echo = FALSE}
+baseline_hh_amenities_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Communication and information access" = 6, 
+      "Amenities" = 3, 
+      "Number of mosquito nets owned" = 5, 
+      "Fuel used for cooking" = 8, 
+      "Location of food preparation" = 4, 
+      "Fuel used for lighting" = 6
+    )
+  )
+```
+
+### By study group and overall
+
+```{r hh_amenities_study_group, echo = FALSE}
+baseline_hh_amenities_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Communication and information access" = 6, 
+      "Amenities" = 3, 
+      "Number of mosquito nets owned" = 5, 
+      "Fuel used for cooking" = 8, 
+      "Location of food preparation" = 4, 
+      "Fuel used for lighting" = 6
+    )
+  )
+```
+
+<br/>
+
+## Mode of daily travel
+
+### By province and overall
+
+```{r hh_travel, echo = FALSE}
+baseline_hh_travel_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Usual mode of travel" = 8,
+      "Time to travel to health centre (minutes)" = 1,
+      "Mode of travel to health centre" = 8, 
+      "Time to travel to local markets (minutes)" = 1, 
+      "Mode of travel to local markets" = 8, 
+      "Time to travel to primary school (minutes)" = 1, 
+      "Mode of travel to primary school" = 8,
+      "Time to travel to secondary school (minutes)" = 1, 
+      "Mode of travel to secondary school" = 8
+    )
+  )
+```
+
+### By study group and overall
+
+```{r hh_travel_study_group, echo = FALSE}
+baseline_hh_travel_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Usual mode of travel" = 8,
+      "Time to travel to health centre (minutes)" = 1,
+      "Mode of travel to health centre" = 8, 
+      "Time to travel to local markets (minutes)" = 1, 
+      "Mode of travel to local markets" = 8, 
+      "Time to travel to primary school (minutes)" = 1, 
+      "Mode of travel to primary school" = 8,
+      "Time to travel to secondary school (minutes)" = 1, 
+      "Mode of travel to secondary school" = 8
+    )
+  )
+```
+
+<br/>
+
+## Household decision making
+
+### By province and overall
+
+```{r hh_decision, echo = FALSE}
+baseline_hh_decision_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Marrying age" = 4,
+      "Using condoms" = 4,
+      "Household responsibilities" = 4, 
+      "Family planning" = 4, 
+      "Agricultural tasks" = 4, 
+      "Household finances" = 4, 
+      "Child rearing" = 4,
+      "Child discipline" = 4, 
+      "Healthcare in pregnancy" = 4,
+      "Healthcare for child" = 4
+    )
+  )
+```
+
+### By study group and overall
+
+```{r hh_decision_study_group, echo = FALSE}
+baseline_hh_decision_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Marrying age" = 4,
+      "Using condoms" = 4,
+      "Household responsibilities" = 4, 
+      "Family planning" = 4, 
+      "Agricultural tasks" = 4, 
+      "Household finances" = 4, 
+      "Child rearing" = 4,
+      "Child discipline" = 4, 
+      "Healthcare in pregnancy" = 4,
+      "Healthcare for child" = 4
+    )
+  )
+```
+
+
+<br/>
+<br/>
