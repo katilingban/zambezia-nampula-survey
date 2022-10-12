@@ -2898,72 +2898,58 @@ outputs_tables_baseline <- tar_plan(
   baseline_child_ill_province_table = create_province_table(
     baseline_child_ill_province,
     baseline_child_ill,
-    vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_province_table_report = create_province_table(
     baseline_child_ill_province,
     baseline_child_ill,
-    vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_child_ill_strata_table = create_strata_table(
     baseline_child_ill_strata,
     baseline_child_ill,
-    vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_child_ill_study_group_table = create_study_group_table(
     baseline_child_ill_study_group,
     baseline_child_ill,
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_ill_study_group_table_report = create_study_group_table(
+    baseline_child_ill_study_group,
+    baseline_child_ill,
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_ill_study_group_province_table = create_study_group_province_table(
+    baseline_child_ill_study_group_province,
+    baseline_child_ill_study_group,
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline treatment seeking for childhood illnesses table -----------------
+  baseline_child_ill_treatment_province_table = create_province_table(
+    baseline_child_ill_treatment_province,
+    baseline_child_ill_treatment,
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_seek_treatment", "fever_point_of_care",
       "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
       "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
       "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
@@ -2971,18 +2957,18 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_child_ill_study_group_table_report = create_study_group_table(
-    baseline_child_ill_study_group,
-    baseline_child_ill,
+  baseline_child_ill_treatment_province_table_report = create_province_table(
+    baseline_child_ill_treatment_province,
+    baseline_child_ill_treatment,
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_seek_treatment", "fever_point_of_care",
       "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
       "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
       "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
@@ -2990,18 +2976,75 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  baseline_child_ill_study_group_province_table = create_study_group_province_table(
-    baseline_child_ill_study_group_province,
-    baseline_child_ill_study_group,
+  baseline_child_ill_treatment_strata_table = create_strata_table(
+    baseline_child_ill_treatment_strata,
+    baseline_child_ill_treatment,
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_seek_treatment", "fever_point_of_care",
       "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
       "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_ill_treatment_study_group_table = create_study_group_table(
+    baseline_child_ill_treatment_study_group,
+    baseline_child_ill_treatment,
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_ill_treatment_study_group_table_report = create_study_group_table(
+    baseline_child_ill_treatment_study_group,
+    baseline_child_ill_treatment,
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_ill_treatment_study_group_province_table = create_study_group_province_table(
+    baseline_child_ill_treatment_study_group_province,
+    baseline_child_ill_treatment_study_group,
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
       "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
@@ -4867,88 +4910,119 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design
   ),
-  ### endline results - period prevalence of childhood illnesses --------------
+  ### endline results - period prevalence of childhood illnesses ---------------
   endline_child_ill = estimate_total(
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
+      "diarrhoea_episode", "fever_episode", "rti_episode"
     ),
     design = endline_child_survey_design
   ),
   endline_child_ill_province = estimate_province(
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
+      "diarrhoea_episode", "fever_episode", "rti_episode"
     ),
     design = endline_child_survey_design
   ),
   endline_child_ill_strata = estimate_strata(
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
+      "diarrhoea_episode", "fever_episode", "rti_episode"
     ),
     design = endline_child_survey_design
   ),
   endline_child_ill_study_group = estimate_study_group(
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
+      "diarrhoea_episode", "fever_episode", "rti_episode"
     ),
     design = endline_child_survey_design
   ),
   endline_child_ill_study_group_province = estimate_study_group_province(
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_episode", "fever_episode", "rti_episode"
+    ),
+    design = endline_child_survey_design
+  ),
+  ### endline results - treatment seeking for childhood illnesses --------------
+  endline_child_ill_treatment = estimate_total(
+    vars = c(
+      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_seek_treatment", "fever_point_of_care",
       "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
       "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
       "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
     ),
     design = endline_child_survey_design
   ),
-  ### endline results - women's mental health and alcohol consumption ---------
+  endline_child_ill_treatment_province = estimate_province(
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_ill_treatment_strata = estimate_strata(
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_ill_treatment_study_group = estimate_study_group(
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_ill_treatment_study_group_province = estimate_study_group_province(
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    design = endline_child_survey_design
+  ),
+  ### endline results - women's mental health and alcohol consumption ----------
   endline_women_phq8 = estimate_total(
     vars = c(
       "phq8_score", "major_depression", "severe_depression",
@@ -4989,7 +5063,7 @@ analysis_endline <- tar_plan(
     design = endline_hh_survey_design |>
       subset(respondent_sex == "Mulher")
   ),
-  ### endline results - pregnancy characteristics -----------------------------
+  ### endline results - pregnancy characteristics ------------------------------
   endline_pregnant = estimate_total(
     vars = c(
       "weeks_of_gestation_self_report",
@@ -6819,72 +6893,58 @@ outputs_tables_endline <- tar_plan(
   endline_child_ill_province_table = create_province_table(
     endline_child_ill_province,
     endline_child_ill,
-    vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
   endline_child_ill_province_table_report = create_province_table(
     endline_child_ill_province,
     endline_child_ill,
-    vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   endline_child_ill_strata_table = create_strata_table(
     endline_child_ill_strata,
     endline_child_ill,
-    vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
-      "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
   endline_child_ill_study_group_table = create_study_group_table(
     endline_child_ill_study_group,
     endline_child_ill,
+    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_child_ill_study_group_table_report = create_study_group_table(
+    endline_child_ill_study_group,
+    endline_child_ill,
+    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_child_ill_study_group_province_table = create_study_group_province_table(
+    endline_child_ill_study_group_province,
+    endline_child_ill_study_group,
+    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Endline childhood illnesses treatment seeking table ----------------------
+  endline_child_ill_treatment_province_table = create_province_table(
+    endline_child_ill_treatment_province,
+    endline_child_ill_treatment,
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_seek_treatment", "fever_point_of_care",
       "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
       "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
       "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
@@ -6892,18 +6952,18 @@ outputs_tables_endline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  endline_child_ill_study_group_table_report = create_study_group_table(
-    endline_child_ill_study_group,
-    endline_child_ill,
+  endline_child_ill_treatment_province_table_report = create_province_table(
+    endline_child_ill_treatment_province,
+    endline_child_ill_treatment,
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_seek_treatment", "fever_point_of_care",
       "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
       "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
       "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
@@ -6911,18 +6971,75 @@ outputs_tables_endline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  endline_child_ill_study_group_province_table = create_study_group_province_table(
-    endline_child_ill_study_group_province,
-    endline_child_ill_study_group,
+  endline_child_ill_treatment_strata_table = create_strata_table(
+    endline_child_ill_treatment_strata,
+    endline_child_ill_treatment,
     vars = c(
-      "diarrhoea_episode", "diarrhoea_seek_treatment", 
+      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
-      "fever_episode", "fever_seek_treatment", "fever_point_of_care",
+      "fever_seek_treatment", "fever_point_of_care",
       "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
       "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
       "fever_malaria_quinino", "fever_malaria_quinino_injection",
       "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake", "rti_episode", "rti_seek_treatment", 
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_child_ill_treatment_study_group_table = create_study_group_table(
+    endline_child_ill_treatment_study_group,
+    endline_child_ill_treatment,
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_child_ill_treatment_study_group_table_report = create_study_group_table(
+    endline_child_ill_treatment_study_group,
+    endline_child_ill_treatment,
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
+      "rti_point_of_care", "rti_treatment_antibioticos",
+      "rti_treatment_paracetamol", "rti_treatment_aspirina",
+      "rti_treatment_ibuprofeno", "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_child_ill_treatment_study_group_province_table = create_study_group_province_table(
+    endline_child_ill_treatment_study_group_province,
+    endline_child_ill_treatment_study_group,
+    vars = c(
+      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", "diarrhoea_treatment_with_ors", 
+      "fever_seek_treatment", "fever_point_of_care",
+      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
+      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
+      "fever_malaria_quinino", "fever_malaria_quinino_injection",
+      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake", "rti_seek_treatment", 
       "rti_point_of_care", "rti_treatment_antibioticos",
       "rti_treatment_paracetamol", "rti_treatment_aspirina",
       "rti_treatment_ibuprofeno", "rti_treatment_other"
