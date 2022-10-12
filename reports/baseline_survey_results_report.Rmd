@@ -1320,7 +1320,266 @@ rbind(
   )
 ```
 
+### Treatment seeking for diarrhoea
 
+#### By province and overall
+
+```{r diarrhoea_treatment, echo = FALSE, eval = FALSE}
+baseline_child_ill_treatment_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Marrying age" = 4,
+      "Using condoms" = 4,
+      "Household responsibilities" = 4, 
+      "Family planning" = 4, 
+      "Agricultural tasks" = 4, 
+      "Household finances" = 4, 
+      "Child rearing" = 4,
+      "Child discipline" = 4, 
+      "Healthcare in pregnancy" = 4,
+      "Healthcare for child" = 4
+    )
+  )
+```
+
+#### By study group and overall
+
+```{r diarrhoea_treatment_study_group, echo = FALSE, eval = FALSE}
+baseline_child_ill_treatment_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Marrying age" = 4,
+      "Using condoms" = 4,
+      "Household responsibilities" = 4, 
+      "Family planning" = 4, 
+      "Agricultural tasks" = 4, 
+      "Household finances" = 4, 
+      "Child rearing" = 4,
+      "Child discipline" = 4, 
+      "Healthcare in pregnancy" = 4,
+      "Healthcare for child" = 4
+    )
+  )
+```
+
+<br/>
+
+## Water, sanitation, and hygiene
+
+### Water
+
+```{r water, echo = FALSE}
+water_province_overall <- baseline_wash_province_table |>
+  subset(
+    indicator_label == "Water source",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+water_strata <- baseline_wash_strata_table |>
+  subset(
+    indicator_label == "Water source" &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+water_study_group <- baseline_wash_study_group_table |>
+  subset(
+    indicator_label == "Water source" &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  water_province_overall,
+  water_strata,
+  water_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16] <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Surface water" = 3, 
+      "Unimproved" = 3, 
+      "Limited" = 3, 
+      "Basic" = 3,
+      "Sufficient" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Sanitation
+
+```{r sanitation, echo = FALSE}
+sanitation_province_overall <- baseline_wash_province_table |>
+  subset(
+    indicator_label == "Toilet facility",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+sanitation_strata <- baseline_wash_strata_table |>
+  subset(
+    indicator_label == "Toilet facility" &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+sanitation_study_group <- baseline_wash_study_group_table |>
+  subset(
+    indicator_label == "Toilet facility" &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  water_province_overall,
+  water_strata,
+  water_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:13] <- round(x[ , 2:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Open defecation" = 3, 
+      "Unimproved" = 3, 
+      "Limited" = 3, 
+      "Basic" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Hygiene
 
 <br/>
 <br/>
