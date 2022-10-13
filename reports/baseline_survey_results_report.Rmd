@@ -1713,5 +1713,905 @@ rbind(
 
 ### Hygiene
 
+```{r hygiene, echo = FALSE}
+hygiene_province_overall <- baseline_wash_province_table |>
+  subset(
+    indicator_label == "Handwashing facility",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+hygiene_strata <- baseline_wash_strata_table |>
+  subset(
+    indicator_label == "Handwashing facility" &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+hygiene_study_group <- baseline_wash_study_group_table |>
+  subset(
+    indicator_label == "Handwashing facility" &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  hygiene_province_overall,
+  hygiene_strata,
+  hygiene_study_group
+) |>
+  (\(x) x[ , c(1, 2, 5, 8, 3, 6, 9, 4, 7, 10)])() |>
+  (\(x)
+    {
+      x[ , 2:10] <- round(x[ , 2:10] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "No facility" = 3, 
+      "Limited" = 3, 
+      "Basic" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Vitamin A supplementation and deworming
+
+```{r vita, echo = FALSE}
+vita_province_overall <- rbind(
+  baseline_child_vita_province_table,
+  baseline_deworming_province_table
+) |>
+  subset(select = c(indicator_label, strata, estimate, lcl, ucl)) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+vita_strata <- rbind(
+  baseline_child_vita_strata_table,
+  baseline_deworming_strata_table
+) |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+vita_study_group <- rbind(
+  baseline_child_vita_study_group_table,
+  baseline_deworming_study_group_table
+) |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_label, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  vita_province_overall,
+  vita_strata,
+  vita_study_group
+) |>
+  (\(x) x[ , c(1, 2, 4, 6, 3, 5, 7)])() |>
+  (\(x)
+    {
+      x[ , 2:7] <- round(x[ , 2:7] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 2)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Vitamin A supplementation" = 3, 
+      "Deworming" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Childhoood immunisation
+
+### Immunisation card retention
+
+```{r immunisation_card, echo = FALSE}
+card_province_overall <- rbind(
+  baseline_child_immunisation_card_self_report_province_table,
+  baseline_child_immunisation_card_available_province_table
+) |>
+  subset(select = c(indicator_category, strata, estimate, lcl, ucl)) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+card_strata <- rbind(
+  baseline_child_immunisation_card_self_report_strata_table,
+  baseline_child_immunisation_card_available_strata_table
+) |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+card_study_group <- rbind(
+  baseline_child_immunisation_card_self_report_study_group_table,
+  baseline_child_immunisation_card_available_study_group_table
+) |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  card_province_overall,
+  card_strata,
+  card_study_group
+) |>
+  (\(x) x[ , c(1, 2, 4, 6, 3, 5, 7)])() |>
+  (\(x)
+    {
+      x[ , 2:7] <- round(x[ , 2:7] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 2)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Has immunisation card (self-report)" = 3, 
+      "Immunisaiton card available" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Bacillus Calmette–Guérin vaccine
+
+```{r bcg, echo = FALSE}
+bcg_province_overall <- baseline_child_immunisation_bcg_province_table |>
+  subset(select = c(indicator_label, strata, estimate, lcl, ucl)) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+bcg_strata <- baseline_child_immunisation_bcg_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+bcg_study_group <- baseline_child_immunisation_bcg_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_label, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  bcg_province_overall,
+  bcg_strata,
+  bcg_study_group
+) |>
+  (\(x)
+    {
+      x[ , 2:4] <- round(x[ , 2:4] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", "Estimate", "95% LCL", "95% UCL"),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "BCG vaccination" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Oral polio vaccine
+
+```{r opv, echo = FALSE}
+opv_province_overall <- rbind(
+  baseline_child_immunisation_opv_province_table,
+  baseline_child_immunisation_set1_province_table,
+  baseline_child_immunisation_set2_province_table,
+  baseline_child_immunisation_set3_province_table
+) |>
+  subset(
+    indicator_label == "Polio",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+opv_strata <- rbind(
+  baseline_child_immunisation_opv_strata_table,
+  baseline_child_immunisation_set1_strata_table,
+  baseline_child_immunisation_set2_strata_table,
+  baseline_child_immunisation_set3_strata_table
+) |>
+  subset(
+    indicator_label == "Polio" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+opv_study_group <- rbind(
+  baseline_child_immunisation_opv_study_group_table,
+  baseline_child_immunisation_set1_study_group_table,
+  baseline_child_immunisation_set2_study_group_table,
+  baseline_child_immunisation_set3_study_group_table
+) |>
+  subset(
+    indicator_label == "Polio" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  opv_province_overall,
+  opv_strata,
+  opv_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:13] <- round(x[ , 2:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "OPV first dose" = 3, 
+      "OPV second dose" = 3,
+      "OPV third dose" = 3,
+      "OPV fourth dose" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Pentavalent vaccine
+
+```{r penta, echo = FALSE}
+penta_province_overall <- rbind(
+  baseline_child_immunisation_set1_province_table,
+  baseline_child_immunisation_set2_province_table,
+  baseline_child_immunisation_set3_province_table
+) |>
+  subset(
+    indicator_label == "Pentavalent",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+penta_strata <- rbind(
+  baseline_child_immunisation_set1_strata_table,
+  baseline_child_immunisation_set2_strata_table,
+  baseline_child_immunisation_set3_strata_table
+) |>
+  subset(
+    indicator_label == "Pentavalent" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+penta_study_group <- rbind(
+  baseline_child_immunisation_set1_study_group_table,
+  baseline_child_immunisation_set2_study_group_table,
+  baseline_child_immunisation_set3_study_group_table
+) |>
+  subset(
+    indicator_label == "Pentavalent" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  penta_province_overall,
+  penta_strata,
+  penta_study_group
+) |>
+  (\(x) x[ , c(1, 2, 5, 8, 3, 6, 9, 4, 7, 10)])() |>
+  (\(x)
+    {
+      x[ , 2:10] <- round(x[ , 2:10] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Pentavalent vaccine first dose" = 3, 
+      "Pentavalent vaccine second dose" = 3,
+      "Pentavalent vaccine third dose" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Pneumococcal vaccine
+
+```{r pneumo, echo = FALSE}
+pneumo_province_overall <- rbind(
+  baseline_child_immunisation_set1_province_table,
+  baseline_child_immunisation_set2_province_table,
+  baseline_child_immunisation_set3_province_table
+) |>
+  subset(
+    indicator_label == "Pneumococcal",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+pneumo_strata <- rbind(
+  baseline_child_immunisation_set1_strata_table,
+  baseline_child_immunisation_set2_strata_table,
+  baseline_child_immunisation_set3_strata_table
+) |>
+  subset(
+    indicator_label == "Pneumococcal" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+pneumo_study_group <- rbind(
+  baseline_child_immunisation_set1_study_group_table,
+  baseline_child_immunisation_set2_study_group_table,
+  baseline_child_immunisation_set3_study_group_table
+) |>
+  subset(
+    indicator_label == "Pneumococcal" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  pneumo_province_overall,
+  pneumo_strata,
+  pneumo_study_group
+) |>
+  (\(x) x[ , c(1, 2, 5, 8, 3, 6, 9, 4, 7, 10)])() |>
+  (\(x)
+    {
+      x[ , 2:10] <- round(x[ , 2:10] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Pneumococcal vaccine first dose" = 3, 
+      "Pneumococcal vaccine second dose" = 3,
+      "Pneumococcal vaccine third dose" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Rotavirus vaccine
+
+```{r rotavirus, echo = FALSE}
+rota_province_overall <- rbind(
+  baseline_child_immunisation_set1_province_table,
+  baseline_child_immunisation_set2_province_table,
+  baseline_child_immunisation_set3_province_table
+) |>
+  subset(
+    indicator_label == "Rotavirus",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+rota_strata <- rbind(
+  baseline_child_immunisation_set1_strata_table,
+  baseline_child_immunisation_set2_strata_table,
+  baseline_child_immunisation_set3_strata_table
+) |>
+  subset(
+    indicator_label == "Rotavirus" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+rota_study_group <- rbind(
+  baseline_child_immunisation_set1_study_group_table,
+  baseline_child_immunisation_set2_study_group_table,
+  baseline_child_immunisation_set3_study_group_table
+) |>
+  subset(
+    indicator_label == "Rotavirus" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  rota_province_overall,
+  rota_strata,
+  rota_study_group
+) |>
+  (\(x) x[ , c(1, 2, 4, 6, 3, 5, 7)])() |>
+  (\(x)
+    {
+      x[ , 2:7] <- round(x[ , 2:7] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 2)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Rotavirus vaccine first dose" = 3, 
+      "Rotavirus vaccine second dose" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Measles vaccine
+
+```{r measles, echo = FALSE}
+measles_province_overall <- baseline_child_immunisation_measles_province_table |>
+  subset(select = c(indicator_category, strata, estimate, lcl, ucl)) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+measles_strata <- baseline_child_immunisation_measles_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+measles_study_group <- baseline_child_immunisation_measles_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  measles_province_overall,
+  measles_strata,
+  measles_study_group
+) |>
+  (\(x) x[ , c(1, 2, 4, 6, 3, 5, 7)])() |>
+  (\(x)
+    {
+      x[ , 2:7] <- round(x[ , 2:7] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 2)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Measles vaccine first dose" = 3, 
+      "Measles vaccine second dose" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Childhood development
+
+### By province and overall
+
+```{r child_dev, echo = FALSE}
+baseline_child_dev_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  (\(x) x[c(2, 6, 7, 1, 4, 5, 3, 8:14), ])() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Walking" = 1,
+      "Object identification" = 2,
+      "Singing and storytelling" = 3, 
+      "Playtime" = 8
+    )
+  )
+```
+
+### By study group and overall
+
+```{r child_dev_study_group, echo = FALSE}
+baseline_child_dev_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  (\(x) x[c(2, 6, 7, 1, 4, 5, 3, 8:14), ])() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Walking" = 1,
+      "Object identification" = 2,
+      "Singing and storytelling" = 3, 
+      "Playtime" = 8
+    )
+  )
+```
+
+<br/>
+
+## PMTCT and malaria prevention
+
+<br/>
+
+## 
+
 <br/>
 <br/>
