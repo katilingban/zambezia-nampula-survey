@@ -97,10 +97,15 @@ hash_data <- function(x,
 #
 ################################################################################
 
-process_baseline_data <- function(.data) {
-  
+process_baseline_data <- function(.data, spss_data) {
+  dplyr::left_join(
+    .data,
+    process_immunisation_spss(.data = spss_data) |>
+      subset(select = -famsize1),
+    by = c("sbjnum", "cid")
+  ) |>
   dplyr::mutate(
-    .data = .data,
+    #.data = .data,
     province = haven::as_factor(prov),
     strata = haven::as_factor(strata),
     ## demographics - head of household (respondent)
@@ -246,10 +251,10 @@ process_baseline_data <- function(.data) {
       )
     ),
     limited_handwashing_facility = ifelse(
-      mao1 == 1 & (mao1a == 2 | mao1b == 3), 1, 0
+      no_handwashing_facility == 0 & (mao1a == 2 | mao1b == 3), 1, 0
     ),
     basic_handwashing_facility = ifelse(
-      mao1 == 1 & mao1a == 1 & mao1b != 3, 1, 0
+      no_handwashing_facility == 0 & mao1a == 1 & mao1b != 3, 1, 0
     ),
     ## Diarrhoea
     diarrhoea_episode = ifelse(ort1 == 2, 0, 1),
@@ -366,23 +371,23 @@ process_baseline_data <- function(.data) {
     problem_with_having_more_than_4_children_other_reasons = bs4a_5,
     problem_with_having_more_than_4_children_none = bs4a_6,
     ## EPI
-    immunisation_card_retention_self_report = ifelse(imm1 == 2, 0, 1),
-    immunisation_card_retention = ifelse(imm2 == 1, 1, 0),
-    immunisation_bcg = ifelse(imm2a1 == 1, 1, 0),
-    immunisation_polio_first_dose = ifelse(imm2a2 %in% 1:4, 1, 0),
-    immunisation_polio_second_dose = ifelse(imm2a2 %in% 2:4, 1, 0),
-    immunisation_polio_third_dose = ifelse(imm2a2 %in% 3:4, 1, 0),
-    immunisation_polio_fourth_dose = ifelse(imm2a2 == 4, 1, 0),
-    immunisation_pentavalent_first_dose = ifelse(imm2a3 %in% 1:3, 1, 0),
-    immunisation_pentavalent_second_dose = ifelse(imm2a3 %in% 2:3, 1, 0),
-    immunisation_pentavalent_third_dose = ifelse(imm2a3 == 3, 1, 0),
-    immunisation_measles_first_dose = ifelse(imm2a4 %in% 1:2, 1, 0),
-    immunisation_measles_second_dose = ifelse(imm2a4 == 2, 1, 0),
-    immunisation_pneumococcal_first_dose = ifelse(imm2a5 %in% 1:3, 1, 0),
-    immunisation_pneumococcal_second_dose = ifelse(imm2a5 %in% 2:3, 1, 0),
-    immunisation_pneumococcal_third_dose = ifelse(imm2a5 == 3, 1, 0),
-    immunisation_rotavirus_first_dose = ifelse(imm2a6 %in% 1:2, 1, 0),
-    immunisation_rotavirus_second_dose = ifelse(imm2a6 == 2, 1, 0),
+    immunisation_card_retention_self_report = recode_yes_no(imm1x, na_values = 888888),
+    immunisation_card_retention = ifelse(imm2x == 1, 1, 0),
+    immunisation_bcg = ifelse(imm2a1x == 988888, 0, 1),
+    immunisation_polio_first_dose = ifelse(imm2a2x %in% 1:4, 1, 0),
+    immunisation_polio_second_dose = ifelse(imm2a2x %in% 2:4, 1, 0),
+    immunisation_polio_third_dose = ifelse(imm2a2x %in% 3:4, 1, 0),
+    immunisation_polio_fourth_dose = ifelse(imm2a2x == 4, 1, 0),
+    immunisation_pentavalent_first_dose = ifelse(imm2a3x %in% 1:3, 1, 0),
+    immunisation_pentavalent_second_dose = ifelse(imm2a3x %in% 2:3, 1, 0),
+    immunisation_pentavalent_third_dose = ifelse(imm2a3x == 3, 1, 0),
+    immunisation_measles_first_dose = ifelse(imm2a4x %in% 1:2, 1, 0),
+    immunisation_measles_second_dose = ifelse(imm2a4x == 2, 1, 0),
+    immunisation_pneumococcal_first_dose = ifelse(imm2a5x %in% 1:3, 1, 0),
+    immunisation_pneumococcal_second_dose = ifelse(imm2a5x %in% 2:3, 1, 0),
+    immunisation_pneumococcal_third_dose = ifelse(imm2a5x == 3, 1, 0),
+    immunisation_rotavirus_first_dose = ifelse(imm2a6x %in% 1:2, 1, 0),
+    immunisation_rotavirus_second_dose = ifelse(imm2a6x == 2, 1, 0),
     immunisation_fully_immunised = ifelse(
       child_age_months >= 12 & child_age_months < 24 &
         immunisation_bcg + 
@@ -645,6 +650,61 @@ process_baseline_data <- function(.data) {
               }
             )()
         )
+      }
+    )()
+}
+
+
+process_immunisation_spss <- function(.data) {
+  lapply(
+    X = 1:10,
+    FUN = get_columns,
+    .data = .data
+  ) |>
+    dplyr::bind_rows() |>
+    subset(cid <= famsize1)
+}
+
+
+collapse_wide_data_rows <- function(.data) {
+  apply(
+    X = .data,
+    MARGIN = 1,
+    FUN = collapse_wide_data_row
+  )
+}
+
+collapse_wide_data_row <- function(.data) {
+  lapply(
+    X = seq_len(.data["FAMSIZE1"]),
+    FUN = get_columns,
+    .data = .data
+  ) |>
+    dplyr::bind_rows()
+}
+
+
+get_columns <- function(x, .data) {
+  col_names <- names(.data)[stringr::str_detect(names(.data), pattern = paste0("I_", x, "_IMM"))]
+  
+  .data |>
+    subset(
+      select = eval(
+        parse(
+          text = 'c("SbjNum", "FAMSIZE1", col_names)'
+        )
+      )
+    ) |>
+    dplyr::mutate(
+      cid = x
+    ) |>
+    (\(x) 
+      { 
+        names(x) <- c(
+          "sbjnum", "famsize1", "imm1x", "imm2x", "imm2a1x", "imm2a2x", "imm2a3x", 
+          "imm2a4x", "imm2a5x", "imm2a6x", "cid"
+        )
+        x
       }
     )()
 }
