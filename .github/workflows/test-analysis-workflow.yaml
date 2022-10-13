@@ -49,5 +49,11 @@ jobs:
         run: |
           targets::tar_make(dplyr::starts_with("baseline_child_ill"))
           targets::tar_make(dplyr::starts_with("endline_child_ill"))
+          targets::tar_make(dplyr::starts_with("baseline_diarrhoea"))
+          targets::tar_make(dplyr::starts_with("endline_diarrhoea"))
+          targets::tar_make(dplyr::starts_with("baseline_fever"))
+          targets::tar_make(dplyr::starts_with("endline_fever"))
+          targets::tar_make(dplyr::starts_with("baseline_rti"))
+          targets::tar_make(dplyr::starts_with("endline_rti"))
         shell: Rscript {0}
           

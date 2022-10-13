@@ -1636,24 +1636,32 @@
         mao1 == 1 & mao1a == 1 & mao1b != 3, 1, 0
       ),
       ### Diarrhoea --------------------------------------------------------------
-      diarrhoea_episode = recode_yes_no(ort1),
+      diarrhoea_episode = recode_yes_no(ort1, na_values = c(8, 9)),
       diarrhoea_seek_treatment = recode_yes_no(ort3),
       diarrhoea_point_of_care = refactor_var_categorical(
         x = ort4, y = "point_of_care", choices = survey_endline_choices
       ),
       diarrhoea_treatment_with_ors = ifelse(
-        ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
+        ort5a %in% c(8, 9) | ort5b %in% c(8, 9) | ort5c %in% c(8, 9), NA,
+        ifelse(
+          ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
+        )
       ),
       ### Fever ------------------------------------------------------------------
-      fever_episode = recode_yes_no(fever1),
+      fever_episode = recode_yes_no(fever1, na_values = c(8, 9)),
       fever_seek_treatment = recode_yes_no(fever2),
       fever_point_of_care = refactor_var_categorical(
         x = fever3, y = "point_of_care", choices = survey_endline_choices
       ),
-      fever_malaria_test = ifelse(fever4 == 1 | fever5 == 1, 1, 0),
-      fever_malaria_episode = recode_yes_no(fever6),
+      fever_malaria_test = ifelse(
+        fever4 %in% c(8, 9) | fever5 %in% c(8, 9), NA,
+        ifelse(
+          fever4 == 1 | fever5 == 1, 1, 0
+        )
+      ),
+      fever_malaria_episode = recode_yes_no(fever6, na_values = c(8, 9)),
       fever_treatment = ifelse(fever6a %in% c(88, 99), NA, fever6a),
-      fever_malaria_treatment_intake = recode_yes_no(fever7),
+      fever_malaria_treatment_intake = recode_yes_no(fever7, na_values = c(8, 9)),
       ### RTI --------------------------------------------------------------------
       rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
       rti_seek_treatment = recode_yes_no(ch3),

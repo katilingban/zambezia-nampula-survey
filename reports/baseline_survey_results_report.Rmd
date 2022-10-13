@@ -1324,8 +1324,8 @@ rbind(
 
 #### By province and overall
 
-```{r diarrhoea_treatment, echo = FALSE, eval = FALSE}
-baseline_child_ill_treatment_province_table_report |>
+```{r diarrhoea_treatment, echo = FALSE}
+baseline_diarrhoea_treatment_province_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -1346,24 +1346,17 @@ baseline_child_ill_treatment_province_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Marrying age" = 4,
-      "Using condoms" = 4,
-      "Household responsibilities" = 4, 
-      "Family planning" = 4, 
-      "Agricultural tasks" = 4, 
-      "Household finances" = 4, 
-      "Child rearing" = 4,
-      "Child discipline" = 4, 
-      "Healthcare in pregnancy" = 4,
-      "Healthcare for child" = 4
+      "Treatment for diarrhoea" = 1,
+      "Point-of-care for diarrhoea" = 7,
+      "Use of oral rehydration solution" = 1
     )
   )
 ```
 
 #### By study group and overall
 
-```{r diarrhoea_treatment_study_group, echo = FALSE, eval = FALSE}
-baseline_child_ill_treatment_study_group_table_report |>
+```{r diarrhoea_treatment_study_group, echo = FALSE}
+baseline_diarrhoea_treatment_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -1384,16 +1377,155 @@ baseline_child_ill_treatment_study_group_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Marrying age" = 4,
-      "Using condoms" = 4,
-      "Household responsibilities" = 4, 
-      "Family planning" = 4, 
-      "Agricultural tasks" = 4, 
-      "Household finances" = 4, 
-      "Child rearing" = 4,
-      "Child discipline" = 4, 
-      "Healthcare in pregnancy" = 4,
-      "Healthcare for child" = 4
+      "Treatment for diarrhoea" = 1,
+      "Point-of-care for diarrhoea" = 7,
+      "Use of oral rehydration solution" = 1
+    )
+  )
+```
+
+### Treatment seeking for fever
+
+#### By province and overall
+
+```{r fever_treatment, echo = FALSE}
+rbind(
+  baseline_fever_treatment_province_table_report,
+  baseline_malaria_test_province_table_report,
+  baseline_malaria_treatment_province_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Treatment for fever" = 1,
+      "Point-of-care for fever" = 7,
+      "Malaria testing" = 2,
+      "Malaria treatment" = 7,
+      "Malaria treatment consumption" = 1
+    )
+  )
+```
+
+#### By study group and overall
+
+```{r fever_treatment_study_group, echo = FALSE}
+rbind(
+  baseline_fever_treatment_study_group_table_report,
+  baseline_malaria_test_study_group_table_report,
+  baseline_malaria_treatment_study_group_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Treatment for fever" = 1,
+      "Point-of-care for fever" = 7,
+      "Malaria testing" = 2,
+      "Malaria treatment" = 7,
+      "Malaria treatment consumption" = 1
+    )
+  )
+```
+
+### Treatment seeking for cough
+
+#### By province and overall
+
+```{r cough_treatment, echo = FALSE}
+rbind(
+  baseline_rti_treatment_province_table_report,
+  baseline_rti_treatment_type_province_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Treatment for cough" = 1,
+      "Point-of-care for cough" = 6,
+      "Treatment for cough" = 5
+    )
+  )
+```
+
+#### By study group and overall
+
+```{r cough_treatment_study_group, echo = FALSE}
+rbind(
+  baseline_rti_treatment_study_group_table_report,
+  baseline_rti_treatment_type_study_group_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Treatment for cough" = 1,
+      "Point-of-care for cough" = 6,
+      "Treatment for cough" = 5
     )
   )
 ```

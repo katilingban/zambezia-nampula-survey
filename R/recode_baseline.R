@@ -26,6 +26,7 @@ get_respondent_data <- function(.data) {
 recode_var_categorical <- function(var, 
                                    na_values = c("[NÃO LER] Não sabe", 
                                                  "[NÃO LER] Não responde",
+                                                 "[NÃO LER]  Não responde",
                                                  "NR", "NS","NSA"),
                                    replacement = "No response") {
   haven::as_factor(var) |>
