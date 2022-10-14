@@ -2607,11 +2607,913 @@ baseline_child_dev_study_group_table_report |>
 
 <br/>
 
-## PMTCT and malaria prevention
+## Pregnancy
+
+### By province and overall
+
+```{r pregnant, echo = FALSE}
+rbind(
+  baseline_pregnant_card_province_table_report,
+  baseline_pregnant_card_available_province_table_report,
+  baseline_pregnant_province_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Prenatal card" = 2,
+      "Gestational age in weeks (self-reported)" = 1,
+      "Pregnancy condition" = 2,
+      "Diet during pregnancy" = 2,
+      "Plans after pregnancy" = 1,
+      "Pregnancy danger signs" = 9,
+      "Plans when labour begins" = 7
+    )
+  )
+```
+
+### By study group and overall
+
+```{r pregnant_study_group, echo = FALSE}
+rbind(
+  baseline_pregnant_card_study_group_table_report,
+  baseline_pregnant_card_available_study_group_table_report,
+  baseline_pregnant_study_group_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Prenatal card" = 2,
+      "Gestational age in weeks (self-reported)" = 1,
+      "Pregnancy condition" = 2,
+      "Diet during pregnancy" = 2,
+      "Plans after pregnancy" = 1,
+      "Pregnancy danger signs" = 9,
+      "Plans when labour begins" = 7
+    )
+  )
+```
 
 <br/>
 
-## 
+## PMTCT and malaria prevention
+
+### By province and overall
+
+```{r preg_prevention, echo = FALSE}
+rbind(
+  baseline_pregnant_vct1_province_table_report,
+  baseline_pregnant_vct2_province_table_report,
+  baseline_pregnant_vct3_province_table_report,
+  baseline_pregnant_prevention_province_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Prevention of mother-to-child transmission" = 3,
+      "Malaria prevention" = 2
+    )
+  )
+```
+
+### By study group and overall
+
+```{r preg_prevention_study_group, echo = FALSE}
+rbind(
+  baseline_pregnant_vct1_study_group_table_report,
+  baseline_pregnant_vct2_study_group_table_report,
+  baseline_pregnant_vct3_study_group_table_report,
+  baseline_pregnant_prevention_study_group_table_report
+) |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Prevention of mother-to-child transmission" = 3,
+      "Malaria prevention" = 2
+    )
+  )
+```
+
+<br/>
+
+## Pre- and post-natal care
+
+### By province and overall
+
+```{r natal_care, echo = FALSE}
+baseline_natal_care_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Location of last delivery" = 6,
+      "Number of prenatal visits" = 7,
+      "Prenatal care coverage" = 1, 
+      "Experience during prenatal care" = 1,
+      "Experience during delivery" = 1,
+      "Person assisting during delivery" = 9,
+      "Difficulties reaching facility" = 6,
+      "Time to postnatal check for child" = 5,
+      "Time to postnatal check for mother" = 5,
+      "Malaria medication during pregnancy" = 3,
+      "Tetanus toxoid vaccination during pregnancy" = 2,
+      "Ferrous sulfate supplementation" = 1,
+      "Vitamin A supplementation" = 1
+    )
+  )
+```
+
+### By study group and overall
+
+```{r natal_care_study_group, echo = FALSE}
+baseline_natal_care_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Location of last delivery" = 6,
+      "Number of prenatal visits" = 7,
+      "Prenatal care coverage" = 1, 
+      "Experience during prenatal care" = 1,
+      "Experience during delivery" = 1,
+      "Person assisting during delivery" = 9,
+      "Difficulties reaching facility" = 6,
+      "Time to postnatal check for child" = 5,
+      "Time to postnatal check for mother" = 5,
+      "Malaria medication during pregnancy" = 3,
+      "Tetanus toxoid vaccination during pregnancy" = 2,
+      "Ferrous sulfate supplementation" = 1,
+      "Vitamin A supplementation" = 1
+    )
+  )
+```
+
+<br/>
+
+## Family planning
+
+### By province and overall
+
+```{r family_planning, echo = FALSE}
+baseline_family_planning_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Use of family planning methods" = 1,
+      "Benefit of waiting for next pregnancy" = 6,
+      "Benefit of waiting until 18 years of age before getting pregnant" = 6, 
+      "Problem with having more than 4 children" = 6
+    )
+  )
+```
+
+### By study group and overall
+
+```{r family_planning_study_group, echo = FALSE}
+baseline_family_planning_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Use of family planning methods" = 1,
+      "Benefit of waiting for next pregnancy" = 6,
+      "Benefit of waiting until 18 years of age before getting pregnant" = 6, 
+      "Problem with having more than 4 children" = 6
+    )
+  )
+```
+
+<br/>
+
+## Women's anthropometry
+
+```{r women_anthro, echo = FALSE}
+bmi_province_overall <- baseline_women_anthro_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+bmi_strata <- baseline_women_anthro_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+bmi_study_group <- baseline_women_anthro_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  bmi_province_overall,
+  bmi_strata,
+  bmi_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 1)
+      x[ , 5:16] <- round(x[ , 5:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean BMI" = 3, 
+      "Underweight" = 3, 
+      "Healthy weight" = 3, 
+      "Overweight" = 3,
+      "Obese" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Women's dietary diversity score
+
+### Food groups by province and overall
+
+```{r wdds, echo = FALSE}
+baseline_wdds_province_table_report |>
+  subset(
+    indicator_label == "WDDS food group",
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "WDDS food group" = 9
+    )
+  )
+```
+
+### Food groups by study group and overall
+
+```{r wdds_study_group, echo = FALSE}
+baseline_wdds_study_group_table_report |>
+  subset(
+    indicator_label == "WDDS food group",
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "WDDS food group" = 9
+    )
+  )
+```
+
+### Mean women's dietary diversity score
+
+```{r wdds_strata, echo = FALSE}
+wdds_province_overall <- baseline_wdds_province_table |>
+  subset(
+    indicator_label == "Women's Dietary Diversity Score (WDDS)",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+wdds_strata <- baseline_wdds_strata_table |>
+  subset(
+    indicator_label == "Women's Dietary Diversity Score (WDDS)" &
+      strata != "Overall",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+wdds_study_group <- baseline_wdds_study_group_table |>
+  subset(
+    indicator_label == "Women's Dietary Diversity Score (WDDS)" &
+      study_group != "Overall",
+    select = c(indicator_label, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  wdds_province_overall,
+  wdds_strata,
+  wdds_study_group
+) |>
+  (\(x)
+    {
+      x[ , 2:4] <- round(x[ , 2:4], digits = 3)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", "Estimate", "95% LCL", "95% UCL"),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean WDDS" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Minimum dietary diversity for women
+
+### Food groups by province and overall
+
+```{r mddw, echo = FALSE}
+baseline_mddw_province_table_report |>
+  subset(
+    indicator_label == "MDD-W food group",
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "MDD-W food group" = 10
+    )
+  )
+```
+
+### Food groups by study group and overall
+
+```{r mddw_study_group, echo = FALSE}
+baseline_mddw_study_group_table_report |>
+  subset(
+    indicator_label == "MDD-W food group",
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "MDD-W food group" = 10
+    )
+  )
+```
+
+### Minimum dietary diversity for women
+
+```{r mddw_strata, echo = FALSE}
+mddw_province_overall <- baseline_mddw_province_table |>
+  subset(
+    indicator_label != "MDD-W food group",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+mddw_strata <- baseline_mddw_strata_table |>
+  subset(
+    indicator_label != "MDD-W food group" &
+      strata != "Overall",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+mddw_study_group <- baseline_mddw_study_group_table |>
+  subset(
+    indicator_label != "MDD-W food group" &
+      study_group != "Overall",
+    select = c(indicator_label, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  mddw_province_overall,
+  mddw_strata,
+  mddw_study_group
+) |>
+  (\(x) x[ , c(1, 2, 4, 6, 3, 5, 7)])() |>
+  (\(x)
+    {
+      x[ , 2:4] <- round(x[ , 2:4], digits = 3)
+      x[ , 5:7] <- round(x[ , 5:7] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 2)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean MDD-W food group score" = 3,
+      "MDD-W" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Women's decision making
+
+### By province and overall
+
+```{r wem, echo = FALSE}
+baseline_wem_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Freedom of choice" = 5,
+      "Control over destiny" = 5,
+      "Make decision without husband" = 5, 
+      "Willingly participated in survey" = 5
+    )
+  )
+```
+
+### By study group and overall
+
+```{r wem_study_group, echo = FALSE}
+baseline_wem_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Freedom of choice" = 5,
+      "Control over destiny" = 5,
+      "Make decision without husband" = 5, 
+      "Willingly participated in survey" = 5
+    )
+  )
+```
+
+<br/>
+
+## Women's mental health
+
+```{r phq8, echo = FALSE}
+phq8_province_overall <- baseline_women_phq8_province_table |>
+  subset(
+    indicator_label != "Alcohol consumption",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )() 
+
+phq8_strata <- baseline_women_phq8_strata_table |>
+  subset(
+    indicator_label != "Alcohol consumption" &
+      strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+phq8_study_group <- baseline_women_phq8_study_group_table |>
+  subset(
+    indicator_label != "Alcohol consumption" &
+      study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  phq8_province_overall,
+  phq8_strata,
+  phq8_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4] <- round(x[ , 2:4], digits = 3)
+      x[ , 5:13] <- round(x[ , 5:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean PHQ8 score" = 3,
+      "Major depression" = 3,
+      "Severe depression" = 3,
+      "At least major depression" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+## Women's alcohol consumption
+
+### By province and overall
+
+```{r alcohol, echo = FALSE}
+baseline_women_phq8_province_table_report |>
+  subset(
+    indicator_label == "Alcohol consumption",
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  )
+```
+
+### By study group and overall
+
+```{r alcohol_study_group, echo = FALSE}
+baseline_women_phq8_study_group_table_report |>
+  subset(
+    indicator_label == "Alcohol consumption",
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  )
+```
 
 <br/>
 <br/>

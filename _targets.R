@@ -1212,11 +1212,62 @@ analysis_baseline <- tar_plan(
     design = baseline_hh_survey_design |>
       subset(respondent_sex == "Mulher")
   ),
+  ### Baseline results - pregnancy prenatal card -------------------------------
+  baseline_pregnant_card = estimate_total(
+    vars = "prenatal_card_self_report",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_province = estimate_province(
+    vars = "prenatal_card_self_report",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_strata = estimate_strata(
+    vars = "prenatal_card_self_report",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_study_group = estimate_study_group(
+    vars = "prenatal_card_self_report",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_study_group_province = estimate_study_group_province(
+    vars = "prenatal_card_self_report",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  ### Baseline results - pregnancy prenatal card available ---------------------
+  baseline_pregnant_card_available = estimate_total(
+    vars = "prenatal_card_available",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_available_province = estimate_province(
+    vars = "prenatal_card_available",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_available_strata = estimate_strata(
+    vars = "prenatal_card_available",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_available_study_group = estimate_study_group(
+    vars = "prenatal_card_available",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  baseline_pregnant_card_available_study_group_province = estimate_study_group_province(
+    vars = "prenatal_card_available",
+    design = baseline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
   ### Baseline results - pregnancy characteristics -----------------------------
   baseline_pregnant = estimate_total(
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -1230,7 +1281,6 @@ analysis_baseline <- tar_plan(
   baseline_pregnant_province = estimate_province(
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -1244,7 +1294,6 @@ analysis_baseline <- tar_plan(
   baseline_pregnant_strata = estimate_strata(
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -1258,7 +1307,6 @@ analysis_baseline <- tar_plan(
   baseline_pregnant_study_group = estimate_study_group(
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -1272,7 +1320,6 @@ analysis_baseline <- tar_plan(
   baseline_pregnant_study_group_province = estimate_study_group_province(
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -1283,13 +1330,147 @@ analysis_baseline <- tar_plan(
     design = baseline_hh_survey_design |>
       subset(currently_pregnant == 1)
   ),
-  ### Baseline results - PMTCT and mosquito net --------------------------------
+  ### Baseline results - PMTCT -------------------------------------------------
+  baseline_pregnant_vct1 = estimate_total(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct1_province = estimate_province(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct1_strata = estimate_strata(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct1_study_group = estimate_study_group(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct1_study_group_province = estimate_study_group_province(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - PMTCT -------------------------------------------------
+  baseline_pregnant_vct2 = estimate_total(
+    vars = "received_vct_results",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct2_province = estimate_province(
+    vars = "received_vct_results",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct2_strata = estimate_strata(
+    vars = "received_vct_results",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct2_study_group = estimate_study_group(
+    vars = "received_vct_results",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct2_study_group_province = estimate_study_group_province(
+    vars = "received_vct_results",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - PMTCT -------------------------------------------------
+  baseline_pregnant_vct3 = estimate_total(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct3_province = estimate_province(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct3_strata = estimate_strata(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct3_study_group = estimate_study_group(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_pregnant_vct3_study_group_province = estimate_study_group_province(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - mosquito net ------------------------------------------
   baseline_pregnant_prevention = estimate_total(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = baseline_hh_survey_design |>
       subset(
         respondent_sex == "Mulher" & 
@@ -1298,11 +1479,7 @@ analysis_baseline <- tar_plan(
       )
   ),
   baseline_pregnant_prevention_province = estimate_province(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = baseline_hh_survey_design |>
       subset(
         respondent_sex == "Mulher" & 
@@ -1311,11 +1488,7 @@ analysis_baseline <- tar_plan(
       )
   ),
   baseline_pregnant_prevention_strata = estimate_strata(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = baseline_hh_survey_design |>
       subset(
         respondent_sex == "Mulher" & 
@@ -1324,11 +1497,7 @@ analysis_baseline <- tar_plan(
       )
   ),
   baseline_pregnant_prevention_study_group = estimate_study_group(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = baseline_hh_survey_design |>
       subset(
         respondent_sex == "Mulher" & 
@@ -1337,11 +1506,7 @@ analysis_baseline <- tar_plan(
       )
   ),
   baseline_pregnant_prevention_study_group_province = estimate_study_group_province(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = baseline_hh_survey_design |>
       subset(
         respondent_sex == "Mulher" & 
@@ -3674,13 +3839,84 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
+  ### Baseline pregnant card table ---------------------------------------------
+  baseline_pregnant_card_province_table = create_province_table(
+    baseline_pregnant_card_province,
+    baseline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_card_province_table_report = create_province_table(
+    baseline_pregnant_card_province,
+    baseline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_card_strata_table = create_strata_table(
+    baseline_pregnant_card_strata,
+    baseline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_card_study_group_table_report = create_study_group_table(
+    baseline_pregnant_card_study_group,
+    baseline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_card_study_group_province_table = create_study_group_province_table(
+    baseline_pregnant_card_study_group_province,
+    baseline_pregnant_card_study_group,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline pregnant card available table -----------------------------------
+  baseline_pregnant_card_available_province_table = create_province_table(
+    baseline_pregnant_card_available_province,
+    baseline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_card_available_province_table_report = create_province_table(
+    baseline_pregnant_card_available_province,
+    baseline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_card_available_strata_table = create_strata_table(
+    baseline_pregnant_card_available_strata,
+    baseline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_card_available_study_group_table_report = create_study_group_table(
+    baseline_pregnant_card_available_study_group,
+    baseline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_card_available_study_group_province_table = create_study_group_province_table(
+    baseline_pregnant_card_available_study_group_province,
+    baseline_pregnant_card_available_study_group,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
   ### Baseline pregnant table --------------------------------------------------
   baseline_pregnant_province_table = create_province_table(
     baseline_pregnant_province,
     baseline_pregnant,
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -3696,7 +3932,6 @@ outputs_tables_baseline <- tar_plan(
     baseline_pregnant,
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -3712,7 +3947,6 @@ outputs_tables_baseline <- tar_plan(
     baseline_pregnant,
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -3728,7 +3962,6 @@ outputs_tables_baseline <- tar_plan(
     baseline_pregnant,
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -3744,7 +3977,6 @@ outputs_tables_baseline <- tar_plan(
     baseline_pregnant_study_group,
     vars = c(
       "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -3755,70 +3987,175 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
+  ### Baseline pregnant vct1 table ---------------------------------------------
+  baseline_pregnant_vct1_province_table = create_province_table(
+    baseline_pregnant_vct1_province,
+    baseline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct1_province_table_report = create_province_table(
+    baseline_pregnant_vct1_province,
+    baseline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_vct1_strata_table = create_strata_table(
+    baseline_pregnant_vct1_strata,
+    baseline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct1_study_group_table = create_study_group_table(
+    baseline_pregnant_vct1_study_group,
+    baseline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct1_study_group_table_report = create_study_group_table(
+    baseline_pregnant_vct1_study_group,
+    baseline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_vct1_study_group_province_table = create_study_group_province_table(
+    baseline_pregnant_vct1_study_group_province,
+    baseline_pregnant_vct1_study_group,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline pregnant vct2 table ---------------------------------------------
+  baseline_pregnant_vct2_province_table = create_province_table(
+    baseline_pregnant_vct2_province,
+    baseline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct2_province_table_report = create_province_table(
+    baseline_pregnant_vct2_province,
+    baseline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_vct2_strata_table = create_strata_table(
+    baseline_pregnant_vct2_strata,
+    baseline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct2_study_group_table = create_study_group_table(
+    baseline_pregnant_vct2_study_group,
+    baseline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct2_study_group_table_report = create_study_group_table(
+    baseline_pregnant_vct2_study_group,
+    baseline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_vct2_study_group_province_table = create_study_group_province_table(
+    baseline_pregnant_vct2_study_group_province,
+    baseline_pregnant_vct2_study_group,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline pregnant vct3 table ---------------------------------------------
+  baseline_pregnant_vct3_province_table = create_province_table(
+    baseline_pregnant_vct3_province,
+    baseline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct3_province_table_report = create_province_table(
+    baseline_pregnant_vct3_province,
+    baseline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_vct3_strata_table = create_strata_table(
+    baseline_pregnant_vct3_strata,
+    baseline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct3_study_group_table = create_study_group_table(
+    baseline_pregnant_vct3_study_group,
+    baseline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pregnant_vct3_study_group_table_report = create_study_group_table(
+    baseline_pregnant_vct3_study_group,
+    baseline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pregnant_vct3_study_group_province_table = create_study_group_province_table(
+    baseline_pregnant_vct3_study_group_province,
+    baseline_pregnant_vct3_study_group,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
   ### Baseline pregnant prevention of disease table ----------------------------
   baseline_pregnant_prevention_province_table = create_province_table(
     baseline_pregnant_prevention_province,
     baseline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_prevention_province_table_report = create_province_table(
     baseline_pregnant_prevention_province,
     baseline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_pregnant_prevention_strata_table = create_strata_table(
     baseline_pregnant_prevention_strata,
     baseline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_prevention_study_group_table = create_study_group_table(
     baseline_pregnant_prevention_study_group,
     baseline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
   baseline_pregnant_prevention_study_group_table_report = create_study_group_table(
     baseline_pregnant_prevention_study_group,
     baseline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
   baseline_pregnant_prevention_study_group_province_table = create_study_group_province_table(
     baseline_pregnant_prevention_study_group_province,
     baseline_pregnant_prevention_study_group,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
     report = FALSE
   ),

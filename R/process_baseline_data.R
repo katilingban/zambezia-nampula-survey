@@ -287,7 +287,9 @@ process_baseline_data <- function(.data, spss_data) {
     rti_treatment_ibuprofeno = ifelse(ch5a_4 == 1, 1, 0),
     rti_treatment_other = ifelse(ch5a_5 == 1, 1, 0),
     ## Mental health
-    phq8_score = ment1 + ment2 + ment3 + ment4 + ment5 + ment6 + ment7 + ment8,
+    phq8_score = (ment1 - 1) + (ment2 - 1) + (ment3 - 1) + 
+      (ment4 - 1) + (ment5 - 1) + (ment6 - 1) + 
+      (ment7 - 1) + (ment8 - 1),
     major_depression = ifelse(phq8_score > 10 & phq8_score <= 20, 1, 0),
     severe_depression = ifelse(phq8_score > 20, 1, 0),
     at_least_major_depression = ifelse(phq8_score > 10, 1, 0),
