@@ -2768,7 +2768,14 @@ rbind(
 ### By province and overall
 
 ```{r natal_care, echo = FALSE}
-baseline_natal_care_province_table_report |>
+rbind(
+  baseline_natal_care_province_table_report,
+  baseline_natal_care_malaria1_province_table_report,
+  baseline_natal_care_malaria2_province_table_report,
+  baseline_natal_care_tetanus1_province_table_report,
+  baseline_natal_care_tetanus2_province_table_report,
+  baseline_natal_care_supplement_province_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -2809,7 +2816,14 @@ baseline_natal_care_province_table_report |>
 ### By study group and overall
 
 ```{r natal_care_study_group, echo = FALSE}
-baseline_natal_care_study_group_table_report |>
+rbind(
+  baseline_natal_care_study_group_table_report,
+  baseline_natal_care_malaria1_study_group_table_report,
+  baseline_natal_care_malaria2_study_group_table_report,
+  baseline_natal_care_tetanus1_study_group_table_report,
+  baseline_natal_care_tetanus2_study_group_table_report,
+  baseline_natal_care_supplement_study_group_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -3514,6 +3528,7 @@ baseline_women_phq8_study_group_table_report |>
     bold = TRUE
   )
 ```
+
 
 <br/>
 <br/>

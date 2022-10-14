@@ -1531,14 +1531,7 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1563,14 +1556,7 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1595,14 +1581,7 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1627,14 +1606,7 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     design = baseline_hh_survey_design |>
       subset(
@@ -1659,12 +1631,217 @@ analysis_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - natal care - malaria ----------------------------------
+  baseline_natal_care_malaria1 = estimate_total(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria1_province = estimate_province(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria1_strata = estimate_strata(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria1_study_group = estimate_study_group(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria1_study_group_province = estimate_study_group_province(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - natal care - malaria treatment intake -----------------
+  baseline_natal_care_malaria2 = estimate_total(
+    vars = c(
       "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria2_province = estimate_province(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria2_strata = estimate_strata(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria2_study_group = estimate_study_group(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_malaria2_study_group_province = estimate_study_group_province(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - natal care - tetanus ----------------------------------
+  baseline_natal_care_tetanus1 = estimate_total(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus1_province = estimate_province(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus1_strata = estimate_strata(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus1_study_group = estimate_study_group(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus1_study_group_province = estimate_study_group_province(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - natal care - tetanus ----------------------------------
+  baseline_natal_care_tetanus2 = estimate_total(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus2_province = estimate_province(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus2_strata = estimate_strata(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus2_study_group = estimate_study_group(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_tetanus2_study_group_province = estimate_study_group_province(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - natal care - supplements ------------------------------
+  baseline_natal_care_supplement = estimate_total(
+    vars = c(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
@@ -1675,7 +1852,55 @@ analysis_baseline <- tar_plan(
           respondent_age_years < 50
       )
   ),
-  ### Baseline results - Family planning ----------------------------------------------------------
+  baseline_natal_care_supplement_province = estimate_province(
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_supplement_strata = estimate_strata(
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_supplement_study_group = estimate_study_group(
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  baseline_natal_care_supplement_study_group_province = estimate_study_group_province(
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    design = baseline_hh_survey_design |>
+      subset(
+        respondent_sex == "Mulher" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Baseline results - Family planning ---------------------------------------
   baseline_family_planning = estimate_total(
     vars = c(
       "attempted_to_delay_or_prevent_pregnancy",
@@ -4178,14 +4403,7 @@ outputs_tables_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -4208,14 +4426,7 @@ outputs_tables_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -4238,14 +4449,7 @@ outputs_tables_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -4268,14 +4472,7 @@ outputs_tables_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -4298,14 +4495,7 @@ outputs_tables_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -4328,12 +4518,256 @@ outputs_tables_baseline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline natal care - malaria - table ------------------------------------
+  baseline_natal_care_malaria1_province_table = create_province_table(
+    baseline_natal_care_malaria1_province,
+    baseline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_malaria1_province_table_report = create_province_table(
+    baseline_natal_care_malaria1_province,
+    baseline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_malaria1_strata_table = create_strata_table(
+    baseline_natal_care_malaria1_strata,
+    baseline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_malaria1_study_group_table = create_study_group_table(
+    baseline_natal_care_malaria1_study_group,
+    baseline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_malaria1_study_group_table_report = create_study_group_table(
+    baseline_natal_care_malaria1_study_group,
+    baseline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_malaria1_study_group_province_table = create_study_group_province_table(
+    baseline_natal_care_malaria1_study_group_province,
+    baseline_natal_care_malaria1_study_group,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline natal care - malaria - table ------------------------------------
+  baseline_natal_care_malaria2_province_table = create_province_table(
+    baseline_natal_care_malaria2_province,
+    baseline_natal_care_malaria2,
+    vars = c(
       "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_malaria2_province_table_report = create_province_table(
+    baseline_natal_care_malaria2_province,
+    baseline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_malaria2_strata_table = create_strata_table(
+    baseline_natal_care_malaria2_strata,
+    baseline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_malaria2_study_group_table = create_study_group_table(
+    baseline_natal_care_malaria2_study_group,
+    baseline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_malaria2_study_group_table_report = create_study_group_table(
+    baseline_natal_care_malaria2_study_group,
+    baseline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_malaria2_study_group_province_table = create_study_group_province_table(
+    baseline_natal_care_malaria2_study_group_province,
+    baseline_natal_care_malaria2_study_group,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline natal care - tetanus1 - table -----------------------------------
+  baseline_natal_care_tetanus1_province_table = create_province_table(
+    baseline_natal_care_tetanus1_province,
+    baseline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_tetanus1_province_table_report = create_province_table(
+    baseline_natal_care_tetanus1_province,
+    baseline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_tetanus1_strata_table = create_strata_table(
+    baseline_natal_care_tetanus1_strata,
+    baseline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_tetanus1_study_group_table = create_study_group_table(
+    baseline_natal_care_tetanus1_study_group,
+    baseline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_tetanus1_study_group_table_report = create_study_group_table(
+    baseline_natal_care_tetanus1_study_group,
+    baseline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_tetanus1_study_group_province_table = create_study_group_province_table(
+    baseline_natal_care_tetanus1_study_group_province,
+    baseline_natal_care_tetanus1_study_group,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline natal care - tetanus2 - table -----------------------------------
+  baseline_natal_care_tetanus2_province_table = create_province_table(
+    baseline_natal_care_tetanus2_province,
+    baseline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_tetanus2_province_table_report = create_province_table(
+    baseline_natal_care_tetanus2_province,
+    baseline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_tetanus2_strata_table = create_strata_table(
+    baseline_natal_care_tetanus2_strata,
+    baseline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_tetanus2_study_group_table = create_study_group_table(
+    baseline_natal_care_tetanus2_study_group,
+    baseline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_tetanus2_study_group_table_report = create_study_group_table(
+    baseline_natal_care_tetanus2_study_group,
+    baseline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_tetanus2_study_group_province_table = create_study_group_province_table(
+    baseline_natal_care_tetanus2_study_group_province,
+    baseline_natal_care_tetanus2_study_group,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline natal care - supplements - table --------------------------------
+  baseline_natal_care_supplement_province_table = create_province_table(
+    baseline_natal_care_supplement_province,
+    baseline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_supplement_province_table_report = create_province_table(
+    baseline_natal_care_supplement_province,
+    baseline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_supplement_strata_table = create_strata_table(
+    baseline_natal_care_supplement_strata,
+    baseline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_supplement_study_group_table = create_study_group_table(
+    baseline_natal_care_supplement_study_group,
+    baseline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_natal_care_supplement_study_group_table_report = create_study_group_table(
+    baseline_natal_care_supplement_study_group,
+    baseline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_natal_care_supplement_study_group_province_table = create_study_group_province_table(
+    baseline_natal_care_supplement_study_group_province,
+    baseline_natal_care_supplement_study_group,
+    vars = c(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
@@ -10203,7 +10637,8 @@ reports <- tar_plan(
     name = baseline_survey_results_report,
     path = "reports/baseline_survey_results_report.Rmd",
     output_dir = "outputs",
-    knit_root_dir = here::here()
+    knit_root_dir = here::here(),
+    cue = tar_cue("always")
   )
 )
 
