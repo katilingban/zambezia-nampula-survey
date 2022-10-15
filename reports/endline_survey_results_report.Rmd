@@ -1,6 +1,6 @@
 ---
 title: "Improving nutrition status for under 5 children in Zambezia and Nampula"
-subtitle: "Baseline survey results"
+subtitle: "Endline survey results"
 author: 
     - name: Mark Myatt
     - name: Ernest Guevarra
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 suppressPackageStartupMessages(source("packages.R"))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
-targets::tar_load(dplyr::starts_with("baseline"))
+targets::tar_load(dplyr::starts_with("endline"))
 ```
 
 <style type="text/css">
@@ -40,7 +40,7 @@ targets::tar_load(dplyr::starts_with("baseline"))
 ### By province and overall
 
 ```{r demo_respondent, echo = FALSE}
-baseline_demo_respondent_table_report |>
+endline_demo_respondent_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -61,9 +61,9 @@ baseline_demo_respondent_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Sex" = 3, "Age (years)" = 1, "Age group" = 9, "Language" = 11, 
-      "Civil staus" = 6, "Number of years of formal education" = 1, 
-      "Number of years of formal education (grouped)" = 4, "Occupation" = 6
+      "Sex" = 2, "Age (years)" = 1, "Age group" = 9, "Language" = 7, 
+      "Civil staus" = 7, "Number of years of formal education" = 1, 
+      "Number of years of formal education (grouped)" = 4, "Occupation" = 8
     )
   )
 ```
@@ -71,7 +71,7 @@ baseline_demo_respondent_table_report |>
 ### By study group and overall
 
 ```{r demo_respondent_study_group, echo = FALSE}
-baseline_demo_respondent_study_group_table_report |>
+endline_demo_respondent_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -92,9 +92,9 @@ baseline_demo_respondent_study_group_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Sex" = 3, "Age (years)" = 1, "Age group" = 9, "Language" = 11, 
-      "Civil staus" = 6, "Number of years of formal education" = 1, 
-      "Number of years of formal education (grouped)" = 4, "Occupation" = 6
+      "Sex" = 2, "Age (years)" = 1, "Age group" = 9, "Language" = 7, 
+      "Civil staus" = 7, "Number of years of formal education" = 1, 
+      "Number of years of formal education (grouped)" = 4, "Occupation" = 8
     )
   )
 ```
@@ -106,7 +106,7 @@ baseline_demo_respondent_study_group_table_report |>
 ### By province and overall
 
 ```{r demo_child, echo = FALSE}
-baseline_demo_child_table_report |>
+endline_demo_child_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -127,9 +127,9 @@ baseline_demo_child_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Sex" = 3, "Age (months)" = 1, "Age group" = 7, 
+      "Sex" = 2, "Age (months)" = 1, "Age group" = 7, 
       "Current breastfeeding status" = 1, "Carer's age at birth" = 10, 
-      "Location of birth" = 4, "Mode of delivery" = 1, 
+      "Location of birth" = 3, "Mode of delivery" = 1, 
       "Presence of complications" = 1, "Birth weight" = 1
     )
   )
@@ -138,7 +138,7 @@ baseline_demo_child_table_report |>
 ### By study group and overall
 
 ```{r demo_child_study_group, echo = FALSE}
-baseline_demo_child_study_group_table_report |>
+endline_demo_child_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -159,9 +159,9 @@ baseline_demo_child_study_group_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Sex" = 3, "Age (months)" = 1, "Age group" = 7, 
+      "Sex" = 2, "Age (months)" = 1, "Age group" = 7, 
       "Current breastfeeding status" = 1, "Carer's age at birth" = 10, 
-      "Location of birth" = 4, "Mode of delivery" = 1, 
+      "Location of birth" = 3, "Mode of delivery" = 1, 
       "Presence of complications" = 1, "Birth weight" = 1
     )
   )
@@ -174,7 +174,7 @@ baseline_demo_child_study_group_table_report |>
 ### By province and overall
 
 ```{r demo_spouse, echo = FALSE}
-baseline_demo_spouse_table_report |>
+endline_demo_spouse_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -198,7 +198,7 @@ baseline_demo_spouse_table_report |>
       "Age (years)" = 1, "Age group" = 13, 
       "Number of years of formal education" = 1, 
       "Number of years of formal education (grouped)" = 4, 
-      "Occupation" = 6, "Lives at home" = 3
+      "Occupation" = 9, "Lives at home" = 4
     )
   )
 ```
@@ -206,7 +206,7 @@ baseline_demo_spouse_table_report |>
 ### By study group and overall
 
 ```{r demo_spouse_study_group, echo = FALSE}
-baseline_demo_spouse_study_group_table_report |>
+endline_demo_spouse_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -230,7 +230,7 @@ baseline_demo_spouse_study_group_table_report |>
       "Age (years)" = 1, "Age group" = 13, 
       "Number of years of formal education" = 1, 
       "Number of years of formal education (grouped)" = 4, 
-      "Occupation" = 6, "Lives at home" = 3
+      "Occupation" = 9, "Lives at home" = 4
     )
   )
 ```
@@ -242,7 +242,10 @@ baseline_demo_spouse_study_group_table_report |>
 ### By province and overall
 
 ```{r hh_income, echo = FALSE}
-baseline_hh_income_table_report |>
+rbind(
+  endline_hh_income_table_report,
+  endline_hh_income1_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -278,7 +281,10 @@ baseline_hh_income_table_report |>
 ### By study group and overall
 
 ```{r hh_income_study_group, echo = FALSE}
-baseline_hh_income_study_group_table_report |>
+rbind(
+  endline_hh_income_study_group_table_report,
+  endline_hh_income1_study_group_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -318,7 +324,7 @@ baseline_hh_income_study_group_table_report |>
 ### By province and overall
 
 ```{r hh_structure, echo = FALSE}
-baseline_hh_structure_table_report |>
+endline_hh_structure_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -340,10 +346,10 @@ baseline_hh_structure_table_report |>
   kableExtra::pack_rows(
     index = c(
       "Home ownership" = 3, 
-      "Number of rooms in home" = 11, 
-      "Number of bedrooms in home" = 9, 
-      "Roofing material" = 7, 
-      "Flooring material" = 6, 
+      "Number of rooms in home" = 14, 
+      "Number of bedrooms in home" = 10, 
+      "Roofing material" = 11, 
+      "Flooring material" = 11, 
       "Number of months living in current location" = 1,
       "Number of months living in current location (grouped)" = 14
     )
@@ -353,7 +359,7 @@ baseline_hh_structure_table_report |>
 ### By study group and overall
 
 ```{r hh_structure_study_group, echo = FALSE}
-baseline_hh_structure_study_group_table_report |>
+endline_hh_structure_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -375,10 +381,10 @@ baseline_hh_structure_study_group_table_report |>
   kableExtra::pack_rows(
     index = c(
       "Home ownership" = 3, 
-      "Number of rooms in home" = 11, 
-      "Number of bedrooms in home" = 9, 
-      "Roofing material" = 7, 
-      "Flooring material" = 6, 
+      "Number of rooms in home" = 14, 
+      "Number of bedrooms in home" = 10, 
+      "Roofing material" = 11, 
+      "Flooring material" = 11, 
       "Number of months living in current location" = 1,
       "Number of months living in current location (grouped)" = 14
     )
@@ -392,13 +398,26 @@ baseline_hh_structure_study_group_table_report |>
 ### By province and overall
 
 ```{r hh_amenities, echo = FALSE}
-baseline_hh_amenities_table_report |>
+endline_hh_amenities_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
       -study_round, -study_group
     )
   ) |>
+  (\(x)
+    {
+      rbind(
+        x[1:3, ],
+        x[1, ] |>
+          (\(x) { x[1, ] <- c("Landline", rep(NA_character_, 9)); x })()
+      ) |>
+        rbind(
+          x[4:nrow(x), ]
+        ) |>
+        (\(x) { x[9, 1] <- "Refrigerator - alternative"; x } )()
+    }
+  )() |>
   knitr::kable(
     row.names = FALSE,
     col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
@@ -426,13 +445,26 @@ baseline_hh_amenities_table_report |>
 ### By study group and overall
 
 ```{r hh_amenities_study_group, echo = FALSE}
-baseline_hh_amenities_study_group_table_report |>
+endline_hh_amenities_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
       -study_round, -strata
     )
   ) |>
+  (\(x)
+    {
+      rbind(
+        x[1:3, ],
+        x[1, ] |>
+          (\(x) { x[1, ] <- c("Landline", rep(NA_character_, 9)); x })()
+      ) |>
+        rbind(
+          x[4:nrow(x), ]
+        ) |>
+        (\(x) { x[9, 1] <- "Refrigerator - alternative"; x } )()
+    }
+  )() |>
   knitr::kable(
     row.names = FALSE,
     col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
@@ -464,7 +496,10 @@ baseline_hh_amenities_study_group_table_report |>
 ### By province and overall
 
 ```{r hh_travel, echo = FALSE}
-baseline_hh_travel_province_table_report |>
+rbind(
+  endline_hh_travel_province_table_report,
+  endline_hh_travel1_province_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -485,15 +520,15 @@ baseline_hh_travel_province_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Usual mode of travel" = 8,
+      "Usual mode of travel" = 9,
       "Time to travel to health centre (minutes)" = 1,
-      "Mode of travel to health centre" = 8, 
+      "Mode of travel to health centre" = 7, 
       "Time to travel to local markets (minutes)" = 1, 
-      "Mode of travel to local markets" = 8, 
+      "Mode of travel to local markets" = 7, 
       "Time to travel to primary school (minutes)" = 1, 
-      "Mode of travel to primary school" = 8,
+      "Mode of travel to primary school" = 7,
       "Time to travel to secondary school (minutes)" = 1, 
-      "Mode of travel to secondary school" = 8
+      "Mode of travel to secondary school" = 7
     )
   )
 ```
@@ -501,7 +536,10 @@ baseline_hh_travel_province_table_report |>
 ### By study group and overall
 
 ```{r hh_travel_study_group, echo = FALSE}
-baseline_hh_travel_study_group_table_report |>
+rbind(
+  endline_hh_travel_study_group_table_report,
+  endline_hh_travel1_study_group_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -522,15 +560,15 @@ baseline_hh_travel_study_group_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Usual mode of travel" = 8,
+      "Usual mode of travel" = 9,
       "Time to travel to health centre (minutes)" = 1,
-      "Mode of travel to health centre" = 8, 
+      "Mode of travel to health centre" = 7, 
       "Time to travel to local markets (minutes)" = 1, 
-      "Mode of travel to local markets" = 8, 
+      "Mode of travel to local markets" = 7, 
       "Time to travel to primary school (minutes)" = 1, 
-      "Mode of travel to primary school" = 8,
+      "Mode of travel to primary school" = 7,
       "Time to travel to secondary school (minutes)" = 1, 
-      "Mode of travel to secondary school" = 8
+      "Mode of travel to secondary school" = 7
     )
   )
 ```
@@ -542,7 +580,7 @@ baseline_hh_travel_study_group_table_report |>
 ### By province and overall
 
 ```{r hh_decision, echo = FALSE}
-baseline_hh_decision_province_table_report |>
+endline_hh_decision_province_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -563,16 +601,16 @@ baseline_hh_decision_province_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Marrying age" = 4,
-      "Using condoms" = 4,
-      "Household responsibilities" = 4, 
-      "Family planning" = 4, 
-      "Agricultural tasks" = 4, 
-      "Household finances" = 4, 
-      "Child rearing" = 4,
-      "Child discipline" = 4, 
-      "Healthcare in pregnancy" = 4,
-      "Healthcare for child" = 4
+      "Marrying age" = 5,
+      "Using condoms" = 5,
+      "Household responsibilities" = 5, 
+      "Family planning" = 5, 
+      "Agricultural tasks" = 5, 
+      "Household finances" = 5, 
+      "Child rearing" = 5,
+      "Child discipline" = 5, 
+      "Healthcare in pregnancy" = 5,
+      "Healthcare for child" = 5
     )
   )
 ```
@@ -580,7 +618,7 @@ baseline_hh_decision_province_table_report |>
 ### By study group and overall
 
 ```{r hh_decision_study_group, echo = FALSE}
-baseline_hh_decision_study_group_table_report |>
+endline_hh_decision_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -601,16 +639,16 @@ baseline_hh_decision_study_group_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Marrying age" = 4,
-      "Using condoms" = 4,
-      "Household responsibilities" = 4, 
-      "Family planning" = 4, 
-      "Agricultural tasks" = 4, 
-      "Household finances" = 4, 
-      "Child rearing" = 4,
-      "Child discipline" = 4, 
-      "Healthcare in pregnancy" = 4,
-      "Healthcare for child" = 4
+      "Marrying age" = 5,
+      "Using condoms" = 5,
+      "Household responsibilities" = 5, 
+      "Family planning" = 5, 
+      "Agricultural tasks" = 5, 
+      "Household finances" = 5, 
+      "Child rearing" = 5,
+      "Child discipline" = 5, 
+      "Healthcare in pregnancy" = 5,
+      "Healthcare for child" = 5
     )
   )
 ```
@@ -620,7 +658,7 @@ baseline_hh_decision_study_group_table_report |>
 ## Child Stunting
 
 ```{r child_stunting, echo = FALSE}
-child_stunting_province_overall <- baseline_child_anthro_province_table |>
+child_stunting_province_overall <- endline_child_anthro_province_table |>
   subset(
     indicator_variable %in% c(
       "hfaz", "global_stunting", "moderate_stunting", "severe_stunting"
@@ -641,7 +679,7 @@ child_stunting_province_overall <- baseline_child_anthro_province_table |>
    }
   )()
 
-child_stunting_strata <- baseline_child_anthro_strata_table |>
+child_stunting_strata <- endline_child_anthro_strata_table |>
   subset(
     indicator_variable %in% c(
       "hfaz", "global_stunting", "moderate_stunting", "severe_stunting"
@@ -655,7 +693,7 @@ child_stunting_strata <- baseline_child_anthro_strata_table |>
     names_sep = "_"
   )
 
-child_stunting_study_group <- baseline_child_anthro_study_group_table |>
+child_stunting_study_group <- endline_child_anthro_study_group_table |>
   subset(
     indicator_variable %in% c(
       "hfaz", "global_stunting", "moderate_stunting", "severe_stunting"
@@ -717,7 +755,7 @@ rbind(
 ## Child underweight
 
 ```{r child_underweight, echo = FALSE}
-child_underweight_province_overall <- baseline_child_anthro_province_table |>
+child_underweight_province_overall <- endline_child_anthro_province_table |>
   subset(
     indicator_variable %in% c(
       "wfaz", "global_underweight", "moderate_underweight", "severe_underweight"
@@ -738,7 +776,7 @@ child_underweight_province_overall <- baseline_child_anthro_province_table |>
    }
   )()
 
-child_underweight_strata <- baseline_child_anthro_strata_table |>
+child_underweight_strata <- endline_child_anthro_strata_table |>
   subset(
     indicator_variable %in% c(
       "wfaz", "global_underweight", "moderate_underweight", "severe_underweight"
@@ -752,7 +790,7 @@ child_underweight_strata <- baseline_child_anthro_strata_table |>
     names_sep = "_"
   )
 
-child_underweight_study_group <- baseline_child_anthro_study_group_table |>
+child_underweight_study_group <- endline_child_anthro_study_group_table |>
   subset(
     indicator_variable %in% c(
       "wfaz", "global_underweight", "moderate_underweight", "severe_underweight"
@@ -814,7 +852,7 @@ rbind(
 ## Child wasting by weight-for-height z-score
 
 ```{r child_wasting_whz, echo = FALSE}
-child_wasting_province_overall <- baseline_child_anthro_province_table |>
+child_wasting_province_overall <- endline_child_anthro_province_table |>
   subset(
     indicator_label %in% c(
       "Weight-for-height z-score", "Child wasting by weight-for-height z-score"
@@ -835,7 +873,7 @@ child_wasting_province_overall <- baseline_child_anthro_province_table |>
    }
   )()
 
-child_wasting_strata <- baseline_child_anthro_strata_table |>
+child_wasting_strata <- endline_child_anthro_strata_table |>
   subset(
     indicator_label %in% c(
       "Weight-for-height z-score", "Child wasting by weight-for-height z-score"
@@ -849,7 +887,7 @@ child_wasting_strata <- baseline_child_anthro_strata_table |>
     names_sep = "_"
   )
 
-child_wasting_study_group <- baseline_child_anthro_study_group_table |>
+child_wasting_study_group <- endline_child_anthro_study_group_table |>
   subset(
     indicator_label %in% c(
       "Weight-for-height z-score", "Child wasting by weight-for-height z-score"
@@ -911,7 +949,7 @@ rbind(
 ## Child wasting by mid-upper arm circumference
 
 ```{r child_wasting_muac, echo = FALSE}
-child_wasting_province_overall <- baseline_child_anthro_province_table |>
+child_wasting_province_overall <- endline_child_anthro_province_table |>
   subset(
     indicator_label %in% c(
       "Mid-upper arm circumference (cms)", "Child wasting by mid-upper arm circumference"
@@ -932,7 +970,7 @@ child_wasting_province_overall <- baseline_child_anthro_province_table |>
    }
   )()
 
-child_wasting_strata <- baseline_child_anthro_strata_table |>
+child_wasting_strata <- endline_child_anthro_strata_table |>
   subset(
     indicator_label %in% c(
       "Mid-upper arm circumference (cms)", "Child wasting by mid-upper arm circumference"
@@ -946,7 +984,7 @@ child_wasting_strata <- baseline_child_anthro_strata_table |>
     names_sep = "_"
   )
 
-child_wasting_study_group <- baseline_child_anthro_study_group_table |>
+child_wasting_study_group <- endline_child_anthro_study_group_table |>
   subset(
     indicator_label %in% c(
       "Mid-upper arm circumference (cms)", "Child wasting by mid-upper arm circumference"
@@ -1008,7 +1046,7 @@ rbind(
 ## Severe wasting by nutritional oedema
 
 ```{r child_wasting_oedema, echo = FALSE}
-child_oedema_province_overall <- baseline_child_anthro_province_table |>
+child_oedema_province_overall <- endline_child_anthro_province_table |>
   subset(
     indicator_label == "Child wasting by oedema",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -1027,7 +1065,7 @@ child_oedema_province_overall <- baseline_child_anthro_province_table |>
    }
   )()
 
-child_oedema_strata <- baseline_child_anthro_strata_table |>
+child_oedema_strata <- endline_child_anthro_strata_table |>
   subset(
     indicator_label == "Child wasting by oedema" &
       strata != "Overall",
@@ -1039,7 +1077,7 @@ child_oedema_strata <- baseline_child_anthro_strata_table |>
     names_sep = "_"
   )
 
-child_oedema_study_group <- baseline_child_anthro_study_group_table |>
+child_oedema_study_group <- endline_child_anthro_study_group_table |>
   subset(
     indicator_label == "Child wasting by oedema" &
       study_group != "Overall",
@@ -1096,7 +1134,7 @@ rbind(
 #### By province and overall
 
 ```{r child_food_groups, echo = FALSE}
-baseline_iycf_province_table_report |>
+endline_iycf_province_table_report |>
   subset(
     !indicator_category %in% c("Mean", "Minimum dietary diversity"),
     select = c(
@@ -1121,7 +1159,7 @@ baseline_iycf_province_table_report |>
 #### By study group and overall
 
 ```{r child_food_groups_study_group, echo = FALSE}
-baseline_iycf_study_group_table_report |>
+endline_iycf_study_group_table_report |>
   subset(
     !indicator_category %in% c("Mean", "Minimum dietary diversity"),
     select = c(
@@ -1146,7 +1184,7 @@ baseline_iycf_study_group_table_report |>
 ### Minimum dietary diversity
 
 ```{r iycf_mdd, echo = FALSE}
-mdd_province_overall <- baseline_iycf_province_table |>
+mdd_province_overall <- endline_iycf_province_table |>
   subset(
     indicator_label %in% c("Food groups score", "Minimum dietary diversity"),
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -1165,7 +1203,7 @@ mdd_province_overall <- baseline_iycf_province_table |>
    }
   )()
  
-mdd_strata <- baseline_iycf_strata_table |>
+mdd_strata <- endline_iycf_strata_table |>
   subset(
     indicator_label %in% c("Food groups score", "Minimum dietary diversity") &
       strata != "Overall",
@@ -1177,7 +1215,7 @@ mdd_strata <- baseline_iycf_strata_table |>
     names_sep = "_"
   )
 
-mdd_study_group <- baseline_iycf_study_group_table |>
+mdd_study_group <- endline_iycf_study_group_table |>
   subset(
     indicator_label %in% c("Food groups score", "Minimum dietary diversity") &
       study_group != "Overall",
@@ -1230,16 +1268,16 @@ rbind(
 
 ### Minimum meal frequency
 
-This indicator cannot be calculated using the baseline data provided by UNICEF Mozambique. Specifically, the dataset provided has information on the frequency of solid or semi-solid feeds by children discretised rather than kept in actual number of feeds as reported by the respondent. The discretisation was also done in such a way that does not match groupings in the indicator definition.
+This indicator cannot be calculated using the endline data provided by UNICEF Mozambique. Specifically, the dataset provided has information on the frequency of solid or semi-solid feeds by children discretised rather than kept in actual number of feeds as reported by the respondent. The discretisation was also done in such a way that does not match groupings in the indicator definition.
 
 ### Minimum adequate diet
 
-This indicator cannot be calculated using the baseline data provided by UNICEF Mozambique. This compound indicator requires information about minimum meal frequency to be calculated. As described above, the dataset provided by UNICEF Mozambique does not allow for the calculation of the minimum meal frequency.
+This indicator cannot be calculated using the endline data provided by UNICEF Mozambique. This compound indicator requires information about minimum meal frequency to be calculated. As described above, the dataset provided by UNICEF Mozambique does not allow for the calculation of the minimum meal frequency.
 
 ## Period prevalence of childhood illnesses
 
 ```{r child_illness, echo = FALSE}
-child_ill_province_overall <- baseline_child_ill_province_table |>
+child_ill_province_overall <- endline_child_ill_province_table |>
   subset(
     select = c(indicator_category, strata, estimate, lcl, ucl)
   ) |>
@@ -1257,7 +1295,7 @@ child_ill_province_overall <- baseline_child_ill_province_table |>
    }
   )()
 
-child_ill_strata <- baseline_child_ill_strata_table |>
+child_ill_strata <- endline_child_ill_strata_table |>
   subset(
     strata != "Overall",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -1268,7 +1306,7 @@ child_ill_strata <- baseline_child_ill_strata_table |>
     names_sep = "_"
   )
 
-child_ill_study_group <- baseline_child_ill_study_group_table |>
+child_ill_study_group <- endline_child_ill_study_group_table |>
   subset(
     study_group != "Overall",
     select = c(indicator_category, study_group, estimate, lcl, ucl)
@@ -1325,7 +1363,10 @@ rbind(
 #### By province and overall
 
 ```{r diarrhoea_treatment, echo = FALSE}
-baseline_diarrhoea_treatment_province_table_report |>
+rbind(
+  endline_diarrhoea_treatment_province_table_report,
+  endline_diarrhoea_treatment1_province_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -1347,7 +1388,7 @@ baseline_diarrhoea_treatment_province_table_report |>
   kableExtra::pack_rows(
     index = c(
       "Treatment for diarrhoea" = 1,
-      "Point-of-care for diarrhoea" = 7,
+      "Point-of-care for diarrhoea" = 8,
       "Use of oral rehydration solution" = 1
     )
   )
@@ -1356,7 +1397,10 @@ baseline_diarrhoea_treatment_province_table_report |>
 #### By study group and overall
 
 ```{r diarrhoea_treatment_study_group, echo = FALSE}
-baseline_diarrhoea_treatment_study_group_table_report |>
+rbind(
+  endline_diarrhoea_treatment_study_group_table_report,
+  endline_diarrhoea_treatment1_study_group_table_report
+) |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -1378,7 +1422,7 @@ baseline_diarrhoea_treatment_study_group_table_report |>
   kableExtra::pack_rows(
     index = c(
       "Treatment for diarrhoea" = 1,
-      "Point-of-care for diarrhoea" = 7,
+      "Point-of-care for diarrhoea" = 8,
       "Use of oral rehydration solution" = 1
     )
   )
@@ -1390,9 +1434,11 @@ baseline_diarrhoea_treatment_study_group_table_report |>
 
 ```{r fever_treatment, echo = FALSE}
 rbind(
-  baseline_fever_treatment_province_table_report,
-  baseline_malaria_test_province_table_report,
-  baseline_malaria_treatment_province_table_report
+  endline_fever_treatment_province_table_report,
+  endline_fever_treatment1_province_table_report,
+  endline_malaria_test_province_table_report,
+  endline_malaria_test1_province_table_report,
+  endline_malaria_treatment_province_table_report
 ) |>
   subset(
     select = c(
@@ -1415,7 +1461,7 @@ rbind(
   kableExtra::pack_rows(
     index = c(
       "Treatment for fever" = 1,
-      "Point-of-care for fever" = 7,
+      "Point-of-care for fever" = 8,
       "Malaria testing" = 2,
       "Malaria treatment" = 7,
       "Malaria treatment consumption" = 1
@@ -1427,9 +1473,11 @@ rbind(
 
 ```{r fever_treatment_study_group, echo = FALSE}
 rbind(
-  baseline_fever_treatment_study_group_table_report,
-  baseline_malaria_test_study_group_table_report,
-  baseline_malaria_treatment_study_group_table_report
+  endline_fever_treatment_study_group_table_report,
+  endline_fever_treatment1_study_group_table_report,
+  endline_malaria_test_study_group_table_report,
+  endline_malaria_test1_study_group_table_report,
+  endline_malaria_treatment_study_group_table_report
 ) |>
   subset(
     select = c(
@@ -1452,7 +1500,7 @@ rbind(
   kableExtra::pack_rows(
     index = c(
       "Treatment for fever" = 1,
-      "Point-of-care for fever" = 7,
+      "Point-of-care for fever" = 8,
       "Malaria testing" = 2,
       "Malaria treatment" = 7,
       "Malaria treatment consumption" = 1
@@ -1466,8 +1514,9 @@ rbind(
 
 ```{r cough_treatment, echo = FALSE}
 rbind(
-  baseline_rti_treatment_province_table_report,
-  baseline_rti_treatment_type_province_table_report
+  endline_rti_treatment_province_table_report,
+  endline_rti_treatment1_province_table_report,
+  endline_rti_treatment_type_province_table_report
 ) |>
   subset(
     select = c(
@@ -1490,7 +1539,7 @@ rbind(
   kableExtra::pack_rows(
     index = c(
       "Treatment for cough" = 1,
-      "Point-of-care for cough" = 6,
+      "Point-of-care for cough" = 8,
       "Treatment for cough" = 5
     )
   )
@@ -1500,8 +1549,9 @@ rbind(
 
 ```{r cough_treatment_study_group, echo = FALSE}
 rbind(
-  baseline_rti_treatment_study_group_table_report,
-  baseline_rti_treatment_type_study_group_table_report
+  endline_rti_treatment_study_group_table_report,
+  endline_rti_treatment1_study_group_table_report,
+  endline_rti_treatment_type_study_group_table_report
 ) |>
   subset(
     select = c(
@@ -1524,7 +1574,7 @@ rbind(
   kableExtra::pack_rows(
     index = c(
       "Treatment for cough" = 1,
-      "Point-of-care for cough" = 6,
+      "Point-of-care for cough" = 8,
       "Treatment for cough" = 5
     )
   )
@@ -1537,7 +1587,7 @@ rbind(
 ### Water
 
 ```{r water, echo = FALSE}
-water_province_overall <- baseline_wash_province_table |>
+water_province_overall <- endline_wash_province_table |>
   subset(
     indicator_label == "Water source",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -1556,7 +1606,7 @@ water_province_overall <- baseline_wash_province_table |>
    }
   )()
 
-water_strata <- baseline_wash_strata_table |>
+water_strata <- endline_wash_strata_table |>
   subset(
     indicator_label == "Water source" &
       strata != "Overall",
@@ -1568,7 +1618,7 @@ water_strata <- baseline_wash_strata_table |>
     names_sep = "_"
   )
 
-water_study_group <- baseline_wash_study_group_table |>
+water_study_group <- endline_wash_study_group_table |>
   subset(
     indicator_label == "Water source" &
       study_group != "Overall",
@@ -1626,7 +1676,7 @@ rbind(
 ### Sanitation
 
 ```{r sanitation, echo = FALSE}
-sanitation_province_overall <- baseline_wash_province_table |>
+sanitation_province_overall <- endline_wash_province_table |>
   subset(
     indicator_label == "Toilet facility",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -1645,7 +1695,7 @@ sanitation_province_overall <- baseline_wash_province_table |>
    }
   )()
 
-sanitation_strata <- baseline_wash_strata_table |>
+sanitation_strata <- endline_wash_strata_table |>
   subset(
     indicator_label == "Toilet facility" &
       strata != "Overall",
@@ -1657,7 +1707,7 @@ sanitation_strata <- baseline_wash_strata_table |>
     names_sep = "_"
   )
 
-sanitation_study_group <- baseline_wash_study_group_table |>
+sanitation_study_group <- endline_wash_study_group_table |>
   subset(
     indicator_label == "Toilet facility" &
       study_group != "Overall",
@@ -1714,7 +1764,7 @@ rbind(
 ### Hygiene
 
 ```{r hygiene, echo = FALSE}
-hygiene_province_overall <- baseline_wash_province_table |>
+hygiene_province_overall <- endline_wash_province_table |>
   subset(
     indicator_label == "Handwashing facility",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -1733,7 +1783,7 @@ hygiene_province_overall <- baseline_wash_province_table |>
    }
   )()
 
-hygiene_strata <- baseline_wash_strata_table |>
+hygiene_strata <- endline_wash_strata_table |>
   subset(
     indicator_label == "Handwashing facility" &
       strata != "Overall",
@@ -1745,7 +1795,7 @@ hygiene_strata <- baseline_wash_strata_table |>
     names_sep = "_"
   )
 
-hygiene_study_group <- baseline_wash_study_group_table |>
+hygiene_study_group <- endline_wash_study_group_table |>
   subset(
     indicator_label == "Handwashing facility" &
       study_group != "Overall",
@@ -1804,8 +1854,8 @@ rbind(
 
 ```{r vita, echo = FALSE}
 vita_province_overall <- rbind(
-  baseline_child_vita_province_table,
-  baseline_deworming_province_table
+  endline_child_vita_province_table,
+  endline_deworming_province_table
 ) |>
   subset(select = c(indicator_label, strata, estimate, lcl, ucl)) |>
   tidyr::pivot_wider(
@@ -1823,8 +1873,8 @@ vita_province_overall <- rbind(
   )()
 
 vita_strata <- rbind(
-  baseline_child_vita_strata_table,
-  baseline_deworming_strata_table
+  endline_child_vita_strata_table,
+  endline_deworming_strata_table
 ) |>
   subset(
     strata != "Overall",
@@ -1837,8 +1887,8 @@ vita_strata <- rbind(
   )
 
 vita_study_group <- rbind(
-  baseline_child_vita_study_group_table,
-  baseline_deworming_study_group_table
+  endline_child_vita_study_group_table,
+  endline_deworming_study_group_table
 ) |>
   subset(
     study_group != "Overall",
@@ -1898,8 +1948,8 @@ rbind(
 
 ```{r immunisation_card, echo = FALSE}
 card_province_overall <- rbind(
-  baseline_child_immunisation_card_self_report_province_table,
-  baseline_child_immunisation_card_available_province_table
+  endline_child_immunisation_card_self_report_province_table,
+  endline_child_immunisation_card_available_province_table
 ) |>
   subset(select = c(indicator_category, strata, estimate, lcl, ucl)) |>
   tidyr::pivot_wider(
@@ -1917,8 +1967,8 @@ card_province_overall <- rbind(
   )() 
 
 card_strata <- rbind(
-  baseline_child_immunisation_card_self_report_strata_table,
-  baseline_child_immunisation_card_available_strata_table
+  endline_child_immunisation_card_self_report_strata_table,
+  endline_child_immunisation_card_available_strata_table
 ) |>
   subset(
     strata != "Overall",
@@ -1931,8 +1981,8 @@ card_strata <- rbind(
   )
 
 card_study_group <- rbind(
-  baseline_child_immunisation_card_self_report_study_group_table,
-  baseline_child_immunisation_card_available_study_group_table
+  endline_child_immunisation_card_self_report_study_group_table,
+  endline_child_immunisation_card_available_study_group_table
 ) |>
   subset(
     study_group != "Overall",
@@ -1963,7 +2013,7 @@ rbind(
     align = "r"
   ) |>
   kableExtra::kable_paper(
-    lightable_options = "striped", full_width = TRUE, font_size = 12
+    lightable_options = "striped", full_width = FALSE, font_size = 12
   ) |>
   kableExtra::add_header_above(
     header = c(
@@ -1987,7 +2037,7 @@ rbind(
 ### Bacillus Calmette–Guérin vaccine
 
 ```{r bcg, echo = FALSE}
-bcg_province_overall <- baseline_child_immunisation_bcg_province_table |>
+bcg_province_overall <- endline_child_immunisation_bcg_province_table |>
   subset(select = c(indicator_label, strata, estimate, lcl, ucl)) |>
   tidyr::pivot_wider(
     names_from = indicator_label,
@@ -2003,7 +2053,7 @@ bcg_province_overall <- baseline_child_immunisation_bcg_province_table |>
    }
   )() 
 
-bcg_strata <- baseline_child_immunisation_bcg_strata_table |>
+bcg_strata <- endline_child_immunisation_bcg_strata_table |>
   subset(
     strata != "Overall",
     select = c(indicator_label, strata, estimate, lcl, ucl)
@@ -2014,7 +2064,7 @@ bcg_strata <- baseline_child_immunisation_bcg_strata_table |>
     names_sep = "_"
   )
 
-bcg_study_group <- baseline_child_immunisation_bcg_study_group_table |>
+bcg_study_group <- endline_child_immunisation_bcg_study_group_table |>
   subset(
     study_group != "Overall",
     select = c(indicator_label, study_group, estimate, lcl, ucl)
@@ -2067,10 +2117,10 @@ rbind(
 
 ```{r opv, echo = FALSE}
 opv_province_overall <- rbind(
-  baseline_child_immunisation_opv_province_table,
-  baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  endline_child_immunisation_opv_province_table,
+  endline_child_immunisation_set1_province_table,
+  endline_child_immunisation_set2_province_table,
+  endline_child_immunisation_set3_province_table
 ) |>
   subset(
     indicator_label == "Polio",
@@ -2091,10 +2141,10 @@ opv_province_overall <- rbind(
   )() 
 
 opv_strata <- rbind(
-  baseline_child_immunisation_opv_strata_table,
-  baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  endline_child_immunisation_opv_strata_table,
+  endline_child_immunisation_set1_strata_table,
+  endline_child_immunisation_set2_strata_table,
+  endline_child_immunisation_set3_strata_table
 ) |>
   subset(
     indicator_label == "Polio" & strata != "Overall",
@@ -2107,10 +2157,10 @@ opv_strata <- rbind(
   )
 
 opv_study_group <- rbind(
-  baseline_child_immunisation_opv_study_group_table,
-  baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  endline_child_immunisation_opv_study_group_table,
+  endline_child_immunisation_set1_study_group_table,
+  endline_child_immunisation_set2_study_group_table,
+  endline_child_immunisation_set3_study_group_table
 ) |>
   subset(
     indicator_label == "Polio" & study_group != "Overall",
@@ -2168,9 +2218,9 @@ rbind(
 
 ```{r penta, echo = FALSE}
 penta_province_overall <- rbind(
-  baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  endline_child_immunisation_set1_province_table,
+  endline_child_immunisation_set2_province_table,
+  endline_child_immunisation_set3_province_table
 ) |>
   subset(
     indicator_label == "Pentavalent",
@@ -2191,9 +2241,9 @@ penta_province_overall <- rbind(
   )() 
 
 penta_strata <- rbind(
-  baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  endline_child_immunisation_set1_strata_table,
+  endline_child_immunisation_set2_strata_table,
+  endline_child_immunisation_set3_strata_table
 ) |>
   subset(
     indicator_label == "Pentavalent" & strata != "Overall",
@@ -2206,9 +2256,9 @@ penta_strata <- rbind(
   )
 
 penta_study_group <- rbind(
-  baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  endline_child_immunisation_set1_study_group_table,
+  endline_child_immunisation_set2_study_group_table,
+  endline_child_immunisation_set3_study_group_table
 ) |>
   subset(
     indicator_label == "Pentavalent" & study_group != "Overall",
@@ -2265,9 +2315,9 @@ rbind(
 
 ```{r pneumo, echo = FALSE}
 pneumo_province_overall <- rbind(
-  baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  endline_child_immunisation_set1_province_table,
+  endline_child_immunisation_set2_province_table,
+  endline_child_immunisation_set3_province_table
 ) |>
   subset(
     indicator_label == "Pneumococcal",
@@ -2288,9 +2338,9 @@ pneumo_province_overall <- rbind(
   )() 
 
 pneumo_strata <- rbind(
-  baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  endline_child_immunisation_set1_strata_table,
+  endline_child_immunisation_set2_strata_table,
+  endline_child_immunisation_set3_strata_table
 ) |>
   subset(
     indicator_label == "Pneumococcal" & strata != "Overall",
@@ -2303,9 +2353,9 @@ pneumo_strata <- rbind(
   )
 
 pneumo_study_group <- rbind(
-  baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  endline_child_immunisation_set1_study_group_table,
+  endline_child_immunisation_set2_study_group_table,
+  endline_child_immunisation_set3_study_group_table
 ) |>
   subset(
     indicator_label == "Pneumococcal" & study_group != "Overall",
@@ -2362,9 +2412,9 @@ rbind(
 
 ```{r rotavirus, echo = FALSE}
 rota_province_overall <- rbind(
-  baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  endline_child_immunisation_set1_province_table,
+  endline_child_immunisation_set2_province_table,
+  endline_child_immunisation_set3_province_table
 ) |>
   subset(
     indicator_label == "Rotavirus",
@@ -2385,9 +2435,9 @@ rota_province_overall <- rbind(
   )() 
 
 rota_strata <- rbind(
-  baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  endline_child_immunisation_set1_strata_table,
+  endline_child_immunisation_set2_strata_table,
+  endline_child_immunisation_set3_strata_table
 ) |>
   subset(
     indicator_label == "Rotavirus" & strata != "Overall",
@@ -2400,9 +2450,9 @@ rota_strata <- rbind(
   )
 
 rota_study_group <- rbind(
-  baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  endline_child_immunisation_set1_study_group_table,
+  endline_child_immunisation_set2_study_group_table,
+  endline_child_immunisation_set3_study_group_table
 ) |>
   subset(
     indicator_label == "Rotavirus" & study_group != "Overall",
@@ -2433,7 +2483,7 @@ rbind(
     align = "r"
   ) |>
   kableExtra::kable_paper(
-    lightable_options = "striped", full_width = TRUE, font_size = 12
+    lightable_options = "striped", full_width = FALSE, font_size = 12
   ) |>
   kableExtra::add_header_above(
     header = c(
@@ -2457,7 +2507,7 @@ rbind(
 ### Measles vaccine
 
 ```{r measles, echo = FALSE}
-measles_province_overall <- baseline_child_immunisation_measles_province_table |>
+measles_province_overall <- endline_child_immunisation_measles_province_table |>
   subset(select = c(indicator_category, strata, estimate, lcl, ucl)) |>
   tidyr::pivot_wider(
     names_from = indicator_category,
@@ -2473,7 +2523,7 @@ measles_province_overall <- baseline_child_immunisation_measles_province_table |
    }
   )() 
 
-measles_strata <- baseline_child_immunisation_measles_strata_table |>
+measles_strata <- endline_child_immunisation_measles_strata_table |>
   subset(
     strata != "Overall",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -2484,7 +2534,7 @@ measles_strata <- baseline_child_immunisation_measles_strata_table |>
     names_sep = "_"
   )
 
-measles_study_group <- baseline_child_immunisation_measles_study_group_table |>
+measles_study_group <- endline_child_immunisation_measles_study_group_table |>
   subset(
     study_group != "Overall",
     select = c(indicator_category, study_group, estimate, lcl, ucl)
@@ -2514,7 +2564,7 @@ rbind(
     align = "r"
   ) |>
   kableExtra::kable_paper(
-    lightable_options = "striped", full_width = TRUE, font_size = 12
+    lightable_options = "striped", full_width = FALSE, font_size = 12
   ) |>
   kableExtra::add_header_above(
     header = c(
@@ -2539,8 +2589,8 @@ rbind(
 
 ```{r full_immunisation, echo = FALSE}
 full_province_overall <- rbind(
-  baseline_child_immunisation_full_province_table,
-  baseline_child_immunisation_age_appropriate_province_table
+  endline_child_immunisation_full_province_table,
+  endline_child_immunisation_age_appropriate_province_table
 ) |>
   subset(select = c(indicator_category, strata, estimate, lcl, ucl)) |>
   tidyr::pivot_wider(
@@ -2558,8 +2608,8 @@ full_province_overall <- rbind(
   )() 
 
 full_strata <- rbind(
-  baseline_child_immunisation_full_strata_table,
-  baseline_child_immunisation_age_appropriate_strata_table
+  endline_child_immunisation_full_strata_table,
+  endline_child_immunisation_age_appropriate_strata_table
 ) |>
   subset(
     strata != "Overall",
@@ -2572,8 +2622,8 @@ full_strata <- rbind(
   )
 
 full_study_group <- rbind(
-  baseline_child_immunisation_full_study_group_table,
-  baseline_child_immunisation_age_appropriate_study_group_table
+  endline_child_immunisation_full_study_group_table,
+  endline_child_immunisation_age_appropriate_study_group_table
 ) |>
   subset(
     study_group != "Overall",
@@ -2632,7 +2682,7 @@ rbind(
 ### By province and overall
 
 ```{r child_dev, echo = FALSE}
-baseline_child_dev_province_table_report |>
+endline_child_dev_province_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -2665,7 +2715,7 @@ baseline_child_dev_province_table_report |>
 ### By study group and overall
 
 ```{r child_dev_study_group, echo = FALSE}
-baseline_child_dev_study_group_table_report |>
+endline_child_dev_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -2703,9 +2753,9 @@ baseline_child_dev_study_group_table_report |>
 
 ```{r pregnant, echo = FALSE}
 rbind(
-  baseline_pregnant_card_province_table_report,
-  baseline_pregnant_card_available_province_table_report,
-  baseline_pregnant_province_table_report
+  endline_pregnant_card_province_table_report,
+  endline_pregnant_card_available_province_table_report,
+  endline_pregnant_province_table_report
 ) |>
   subset(
     select = c(
@@ -2713,6 +2763,23 @@ rbind(
       -study_round, -study_group
     )
   ) |>
+    (\(x)
+    {
+      rbind(
+        x[1:2, ],
+        x[1, ] |>
+          (\(x) 
+            { 
+              x[1, ] <- c("Mean", rep(NA_character_, 9))
+              x 
+            }
+          )()
+      ) |>
+        rbind(
+          x[3:nrow(x), ]
+        )
+    }
+  )() |>
   knitr::kable(
     row.names = FALSE,
     col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
@@ -2742,9 +2809,9 @@ rbind(
 
 ```{r pregnant_study_group, echo = FALSE}
 rbind(
-  baseline_pregnant_card_study_group_table_report,
-  baseline_pregnant_card_available_study_group_table_report,
-  baseline_pregnant_study_group_table_report
+  endline_pregnant_card_study_group_table_report,
+  endline_pregnant_card_available_study_group_table_report,
+  endline_pregnant_study_group_table_report
 ) |>
   subset(
     select = c(
@@ -2752,6 +2819,23 @@ rbind(
       -study_round, -strata
     )
   ) |>
+  (\(x)
+    {
+      rbind(
+        x[1:2, ],
+        x[1, ] |>
+          (\(x) 
+            { 
+              x[1, ] <- c("Mean", rep(NA_character_, 9))
+              x 
+            }
+          )()
+      ) |>
+        rbind(
+          x[3:nrow(x), ]
+        )
+    }
+  )() |>
   knitr::kable(
     row.names = FALSE,
     col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
@@ -2785,10 +2869,10 @@ rbind(
 
 ```{r preg_prevention, echo = FALSE}
 rbind(
-  baseline_pregnant_vct1_province_table_report,
-  baseline_pregnant_vct2_province_table_report,
-  baseline_pregnant_vct3_province_table_report,
-  baseline_pregnant_prevention_province_table_report
+  endline_pregnant_vct1_province_table_report,
+  endline_pregnant_vct2_province_table_report,
+  endline_pregnant_vct3_province_table_report,
+  endline_pregnant_prevention_province_table_report
 ) |>
   subset(
     select = c(
@@ -2820,10 +2904,10 @@ rbind(
 
 ```{r preg_prevention_study_group, echo = FALSE}
 rbind(
-  baseline_pregnant_vct1_study_group_table_report,
-  baseline_pregnant_vct2_study_group_table_report,
-  baseline_pregnant_vct3_study_group_table_report,
-  baseline_pregnant_prevention_study_group_table_report
+  endline_pregnant_vct1_study_group_table_report,
+  endline_pregnant_vct2_study_group_table_report,
+  endline_pregnant_vct3_study_group_table_report,
+  endline_pregnant_prevention_study_group_table_report
 ) |>
   subset(
     select = c(
@@ -2859,12 +2943,13 @@ rbind(
 
 ```{r natal_care, echo = FALSE}
 rbind(
-  baseline_natal_care_province_table_report,
-  baseline_natal_care_malaria1_province_table_report,
-  baseline_natal_care_malaria2_province_table_report,
-  baseline_natal_care_tetanus1_province_table_report,
-  baseline_natal_care_tetanus2_province_table_report,
-  baseline_natal_care_supplement_province_table_report
+  endline_natal_care_province_table_report,
+  endline_natal_care1_province_table_report,
+  endline_natal_care_malaria1_province_table_report,
+  endline_natal_care_malaria2_province_table_report,
+  endline_natal_care_tetanus1_province_table_report,
+  endline_natal_care_tetanus2_province_table_report,
+  endline_natal_care_supplement_province_table_report
 ) |>
   subset(
     select = c(
@@ -2872,6 +2957,14 @@ rbind(
       -study_round, -study_group
     )
   ) |>
+  (\(x)
+    {
+      rbind(
+        x,
+        x[1, ] <- c("Received vitamin A tablets", rep(NA_character_, 9))
+      ) 
+    }
+  )() |>
   knitr::kable(
     row.names = FALSE,
     col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
@@ -2886,7 +2979,7 @@ rbind(
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Location of last delivery" = 6,
+      "Location of last delivery" = 7,
       "Number of prenatal visits" = 7,
       "Prenatal care coverage" = 1, 
       "Experience during prenatal care" = 1,
@@ -2907,12 +3000,13 @@ rbind(
 
 ```{r natal_care_study_group, echo = FALSE}
 rbind(
-  baseline_natal_care_study_group_table_report,
-  baseline_natal_care_malaria1_study_group_table_report,
-  baseline_natal_care_malaria2_study_group_table_report,
-  baseline_natal_care_tetanus1_study_group_table_report,
-  baseline_natal_care_tetanus2_study_group_table_report,
-  baseline_natal_care_supplement_study_group_table_report
+  endline_natal_care_study_group_table_report,
+  endline_natal_care1_study_group_table_report,
+  endline_natal_care_malaria1_study_group_table_report,
+  endline_natal_care_malaria2_study_group_table_report,
+  endline_natal_care_tetanus1_study_group_table_report,
+  endline_natal_care_tetanus2_study_group_table_report,
+  endline_natal_care_supplement_study_group_table_report
 ) |>
   subset(
     select = c(
@@ -2920,6 +3014,14 @@ rbind(
       -study_round, -strata
     )
   ) |>
+  (\(x)
+    {
+      rbind(
+        x,
+        x[1, ] <- c("Received vitamin A tablets", rep(NA_character_, 9))
+      ) 
+    }
+  )() |>
   knitr::kable(
     row.names = FALSE,
     col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
@@ -2934,7 +3036,7 @@ rbind(
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Location of last delivery" = 6,
+      "Location of last delivery" = 7,
       "Number of prenatal visits" = 7,
       "Prenatal care coverage" = 1, 
       "Experience during prenatal care" = 1,
@@ -2958,7 +3060,7 @@ rbind(
 ### By province and overall
 
 ```{r family_planning, echo = FALSE}
-baseline_family_planning_province_table_report |>
+endline_family_planning_province_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -2990,7 +3092,7 @@ baseline_family_planning_province_table_report |>
 ### By study group and overall
 
 ```{r family_planning_study_group, echo = FALSE}
-baseline_family_planning_study_group_table_report |>
+endline_family_planning_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -3024,7 +3126,7 @@ baseline_family_planning_study_group_table_report |>
 ## Women's anthropometry
 
 ```{r women_anthro, echo = FALSE}
-bmi_province_overall <- baseline_women_anthro_province_table |>
+bmi_province_overall <- endline_women_anthro_province_table |>
   subset(
     select = c(indicator_category, strata, estimate, lcl, ucl)
   ) |>
@@ -3042,7 +3144,7 @@ bmi_province_overall <- baseline_women_anthro_province_table |>
    }
   )()
 
-bmi_strata <- baseline_women_anthro_strata_table |>
+bmi_strata <- endline_women_anthro_strata_table |>
   subset(
     strata != "Overall",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -3052,7 +3154,7 @@ bmi_strata <- baseline_women_anthro_strata_table |>
     values_from = c(estimate, lcl, ucl),
     names_sep = "_"
   )
-bmi_study_group <- baseline_women_anthro_study_group_table |>
+bmi_study_group <- endline_women_anthro_study_group_table |>
   subset(
     study_group != "Overall",
     select = c(indicator_category, study_group, estimate, lcl, ucl)
@@ -3114,7 +3216,7 @@ rbind(
 ### Food groups by province and overall
 
 ```{r wdds, echo = FALSE}
-baseline_wdds_province_table_report |>
+endline_wdds_province_table_report |>
   subset(
     indicator_label == "WDDS food group",
     select = c(
@@ -3144,7 +3246,7 @@ baseline_wdds_province_table_report |>
 ### Food groups by study group and overall
 
 ```{r wdds_study_group, echo = FALSE}
-baseline_wdds_study_group_table_report |>
+endline_wdds_study_group_table_report |>
   subset(
     indicator_label == "WDDS food group",
     select = c(
@@ -3174,7 +3276,7 @@ baseline_wdds_study_group_table_report |>
 ### Mean women's dietary diversity score
 
 ```{r wdds_strata, echo = FALSE}
-wdds_province_overall <- baseline_wdds_province_table |>
+wdds_province_overall <- endline_wdds_province_table |>
   subset(
     indicator_label == "Women's Dietary Diversity Score (WDDS)",
     select = c(indicator_label, strata, estimate, lcl, ucl)
@@ -3193,7 +3295,7 @@ wdds_province_overall <- baseline_wdds_province_table |>
    }
   )() 
 
-wdds_strata <- baseline_wdds_strata_table |>
+wdds_strata <- endline_wdds_strata_table |>
   subset(
     indicator_label == "Women's Dietary Diversity Score (WDDS)" &
       strata != "Overall",
@@ -3205,7 +3307,7 @@ wdds_strata <- baseline_wdds_strata_table |>
     names_sep = "_"
   )
 
-wdds_study_group <- baseline_wdds_study_group_table |>
+wdds_study_group <- endline_wdds_study_group_table |>
   subset(
     indicator_label == "Women's Dietary Diversity Score (WDDS)" &
       study_group != "Overall",
@@ -3262,7 +3364,7 @@ rbind(
 ### Food groups by province and overall
 
 ```{r mddw, echo = FALSE}
-baseline_mddw_province_table_report |>
+endline_mddw_province_table_report |>
   subset(
     indicator_label == "MDD-W food group",
     select = c(
@@ -3292,7 +3394,7 @@ baseline_mddw_province_table_report |>
 ### Food groups by study group and overall
 
 ```{r mddw_study_group, echo = FALSE}
-baseline_mddw_study_group_table_report |>
+endline_mddw_study_group_table_report |>
   subset(
     indicator_label == "MDD-W food group",
     select = c(
@@ -3322,7 +3424,7 @@ baseline_mddw_study_group_table_report |>
 ### Minimum dietary diversity for women
 
 ```{r mddw_strata, echo = FALSE}
-mddw_province_overall <- baseline_mddw_province_table |>
+mddw_province_overall <- endline_mddw_province_table |>
   subset(
     indicator_label != "MDD-W food group",
     select = c(indicator_label, strata, estimate, lcl, ucl)
@@ -3341,7 +3443,7 @@ mddw_province_overall <- baseline_mddw_province_table |>
    }
   )() 
 
-mddw_strata <- baseline_mddw_strata_table |>
+mddw_strata <- endline_mddw_strata_table |>
   subset(
     indicator_label != "MDD-W food group" &
       strata != "Overall",
@@ -3353,7 +3455,7 @@ mddw_strata <- baseline_mddw_strata_table |>
     names_sep = "_"
   )
 
-mddw_study_group <- baseline_mddw_study_group_table |>
+mddw_study_group <- endline_mddw_study_group_table |>
   subset(
     indicator_label != "MDD-W food group" &
       study_group != "Overall",
@@ -3413,7 +3515,7 @@ rbind(
 ### By province and overall
 
 ```{r wem, echo = FALSE}
-baseline_wem_province_table_report |>
+endline_wem_province_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -3434,10 +3536,10 @@ baseline_wem_province_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Freedom of choice" = 5,
-      "Control over destiny" = 5,
-      "Make decision without husband" = 5, 
-      "Willingly participated in survey" = 5
+      "Freedom of choice" = 6,
+      "Control over destiny" = 6,
+      "Make decision without husband" = 6, 
+      "Willingly participated in survey" = 6
     )
   )
 ```
@@ -3445,7 +3547,7 @@ baseline_wem_province_table_report |>
 ### By study group and overall
 
 ```{r wem_study_group, echo = FALSE}
-baseline_wem_study_group_table_report |>
+endline_wem_study_group_table_report |>
   subset(
     select = c(
       -indicator_label, -indicator_set, -indicator, 
@@ -3466,10 +3568,10 @@ baseline_wem_study_group_table_report |>
   ) |>
   kableExtra::pack_rows(
     index = c(
-      "Freedom of choice" = 5,
-      "Control over destiny" = 5,
-      "Make decision without husband" = 5, 
-      "Willingly participated in survey" = 5
+      "Freedom of choice" = 6,
+      "Control over destiny" = 6,
+      "Make decision without husband" = 6, 
+      "Willingly participated in survey" = 6
     )
   )
 ```
@@ -3479,7 +3581,7 @@ baseline_wem_study_group_table_report |>
 ## Women's mental health
 
 ```{r phq8, echo = FALSE}
-phq8_province_overall <- baseline_women_phq8_province_table |>
+phq8_province_overall <- endline_women_phq8_province_table |>
   subset(
     indicator_label != "Alcohol consumption",
     select = c(indicator_category, strata, estimate, lcl, ucl)
@@ -3498,7 +3600,7 @@ phq8_province_overall <- baseline_women_phq8_province_table |>
    }
   )() 
 
-phq8_strata <- baseline_women_phq8_strata_table |>
+phq8_strata <- endline_women_phq8_strata_table |>
   subset(
     indicator_label != "Alcohol consumption" &
       strata != "Overall",
@@ -3510,7 +3612,7 @@ phq8_strata <- baseline_women_phq8_strata_table |>
     names_sep = "_"
   )
 
-phq8_study_group <- baseline_women_phq8_study_group_table |>
+phq8_study_group <- endline_women_phq8_study_group_table |>
   subset(
     indicator_label != "Alcohol consumption" &
       study_group != "Overall",
@@ -3572,7 +3674,7 @@ rbind(
 ### By province and overall
 
 ```{r alcohol, echo = FALSE}
-baseline_women_phq8_province_table_report |>
+endline_women_phq8_province_table_report |>
   subset(
     indicator_label == "Alcohol consumption",
     select = c(
@@ -3597,7 +3699,7 @@ baseline_women_phq8_province_table_report |>
 ### By study group and overall
 
 ```{r alcohol_study_group, echo = FALSE}
-baseline_women_phq8_study_group_table_report |>
+endline_women_phq8_study_group_table_report |>
   subset(
     indicator_label == "Alcohol consumption",
     select = c(
