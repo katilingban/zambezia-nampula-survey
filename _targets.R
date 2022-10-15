@@ -2335,6 +2335,32 @@ analysis_baseline <- tar_plan(
     design = baseline_child_survey_design |>
       subset(child_age_months >= 12 & child_age_months < 24)
   ),
+  ### Baseline results - full immunisation -------------------------------------
+  baseline_child_immunisation_age_appropriate = estimate_total(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_age_appropriate_province = estimate_province(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_age_appropriate_strata = estimate_strata(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_age_appropriate_study_group = estimate_study_group(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  baseline_child_immunisation_age_appropriate_study_group_province = estimate_study_group_province(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 12 & child_age_months < 24)
+  ),
   ### Baseline results - IYCF --------------------------------------------------
   baseline_iycf = estimate_total(
     vars = c(
@@ -2497,7 +2523,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   baseline_wem_province = estimate_province(
     vars = c(
@@ -2505,7 +2531,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   baseline_wem_strata = estimate_strata(
     vars = c(
@@ -2513,7 +2539,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   baseline_wem_study_group = estimate_study_group(
     vars = c(
@@ -2521,7 +2547,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   baseline_wem_study_group_province = estimate_study_group_province(
     vars = c(
@@ -2529,7 +2555,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   ### Baseline results - women's anthropometry ---------------------------------
   baseline_women_anthro = estimate_total(
@@ -5420,6 +5446,49 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
+  ### Baseline child immunisation full table -----------------------------------
+  baseline_child_immunisation_age_appropriate_province_table = create_province_table(
+    baseline_child_immunisation_age_appropriate_province,
+    baseline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_age_appropriate_province_table_report = create_province_table(
+    baseline_child_immunisation_age_appropriate_province,
+    baseline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_age_appropriate_strata_table = create_strata_table(
+    baseline_child_immunisation_age_appropriate_strata,
+    baseline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_age_appropriate_study_group_table = create_study_group_table(
+    baseline_child_immunisation_age_appropriate_study_group,
+    baseline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_age_appropriate_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_age_appropriate_study_group,
+    baseline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_age_appropriate_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_age_appropriate_study_group_province,
+    baseline_child_immunisation_age_appropriate_study_group,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
   ### Baseline IYCF table ------------------------------------------------------
   baseline_iycf_province_table = create_province_table(
     baseline_iycf_province,
@@ -5977,8 +6046,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     design = endline_hh_survey_design
   ),
@@ -5986,8 +6054,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     design = endline_hh_survey_design
   ),
@@ -5995,8 +6062,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     design = endline_hh_survey_design
   ),
@@ -6004,8 +6070,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     design = endline_hh_survey_design
   ),
@@ -6013,8 +6078,48 @@ analysis_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - household income set 2----------------------------------
+  endline_hh_income1 = estimate_total(
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income1_province = estimate_province(
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income1_strata = estimate_strata(
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income1_study_group = estimate_study_group(
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_income1_study_group_province = estimate_study_group_province(
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
     ),
     design = endline_hh_survey_design
   ),
@@ -6064,54 +6169,54 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design
   ),
-  ### endline results - household amenities -----------------------------------
+  ### endline results - household amenities ------------------------------------
   endline_hh_amenities = estimate_total(
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     design = endline_hh_survey_design
   ),
   endline_hh_amenities_province = estimate_province(
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     design = endline_hh_survey_design
   ),
   endline_hh_amenities_strata = estimate_strata(
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     design = endline_hh_survey_design
   ),
   endline_hh_amenities_study_group = estimate_study_group(
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     design = endline_hh_survey_design
   ),
   endline_hh_amenities_study_group_province = estimate_study_group_province(
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     design = endline_hh_survey_design
   ),
@@ -6120,9 +6225,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     design = endline_hh_survey_design
   ),
@@ -6130,9 +6233,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     design = endline_hh_survey_design
   ),
@@ -6140,9 +6241,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     design = endline_hh_survey_design
   ),
@@ -6150,9 +6249,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     design = endline_hh_survey_design
   ),
@@ -6160,7 +6257,41 @@ analysis_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### endline results - mode of daily travel set 2 -----------------------------
+  endline_hh_travel1 = estimate_total(
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel1_province = estimate_province(
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel1_strata = estimate_strata(
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel1_study_group = estimate_study_group(
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_hh_travel1_study_group_province = estimate_study_group_province(
+    vars = c(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
@@ -6323,7 +6454,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6336,7 +6467,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6349,7 +6480,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6362,7 +6493,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6375,7 +6506,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6389,7 +6520,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6402,7 +6533,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6415,7 +6546,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6428,7 +6559,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6441,7 +6572,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -6573,7 +6704,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design
   ),
-  ### endline results - period prevalence of childhood illnesses ---------------
+  ### Endline results - period prevalence of childhood illnesses --------------
   endline_child_ill = estimate_total(
     vars = c(
       "diarrhoea_episode", "fever_episode", "rti_episode"
@@ -6606,44 +6737,65 @@ analysis_endline <- tar_plan(
   ),
   ### Endline results - treatment seeking for diarrhoea -----------------------
   endline_diarrhoea_treatment = estimate_total(
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     design = endline_child_survey_design |>
       subset(diarrhoea_episode == 1)
   ),
   endline_diarrhoea_treatment_province = estimate_province(
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     design = endline_child_survey_design |>
       subset(diarrhoea_episode == 1)
   ),
   endline_diarrhoea_treatment_strata = estimate_strata(
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     design = endline_child_survey_design |>
       subset(diarrhoea_episode == 1)
   ),
   endline_diarrhoea_treatment_study_group = estimate_study_group(
+    vars = "diarrhoea_seek_treatment",
+    design = endline_child_survey_design |>
+      subset(diarrhoea_episode == 1)
+  ),
+  endline_diarrhoea_treatment_study_group_province = estimate_study_group_province(
+    vars = "diarrhoea_seek_treatment",
+    design = endline_child_survey_design |>
+      subset(diarrhoea_episode == 1)
+  ),
+  ### Endline results - treatment seeking for diarrhoea -----------------------
+  endline_diarrhoea_treatment1 = estimate_total(
     vars = c(
-      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", 
       "diarrhoea_treatment_with_ors"
     ),
     design = endline_child_survey_design |>
       subset(diarrhoea_episode == 1)
   ),
-  endline_diarrhoea_treatment_study_group_province = estimate_study_group_province(
+  endline_diarrhoea_treatment1_province = estimate_province(
     vars = c(
-      "diarrhoea_seek_treatment", 
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    design = endline_child_survey_design |>
+      subset(diarrhoea_episode == 1)
+  ),
+  endline_diarrhoea_treatment1_strata = estimate_strata(
+    vars = c(
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    design = endline_child_survey_design |>
+      subset(diarrhoea_episode == 1)
+  ),
+  endline_diarrhoea_treatment1_study_group = estimate_study_group(
+    vars = c(
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    design = endline_child_survey_design |>
+      subset(diarrhoea_episode == 1)
+  ),
+  endline_diarrhoea_treatment1_study_group_province = estimate_study_group_province(
+    vars = c(
       "diarrhoea_point_of_care", 
       "diarrhoea_treatment_with_ors"
     ),
@@ -6652,110 +6804,246 @@ analysis_endline <- tar_plan(
   ),
   ### Endline results - treatment seeking for fever ---------------------------
   endline_fever_treatment = estimate_total(
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     design = endline_child_survey_design |>
       subset(fever_episode == 1)
   ),
   endline_fever_treatment_province = estimate_province(
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     design = endline_child_survey_design |>
       subset(fever_episode == 1)
   ),
   endline_fever_treatment_strata = estimate_strata(
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     design = endline_child_survey_design |>
       subset(fever_episode == 1)
   ),
   endline_fever_treatment_study_group = estimate_study_group(
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     design = endline_child_survey_design |>
       subset(fever_episode == 1)
   ),
   endline_fever_treatment_study_group_province = estimate_study_group_province(
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     design = endline_child_survey_design |>
       subset(fever_episode == 1)
   ),
+  ### Endline results - treatment seeking for fever ---------------------------
+  endline_fever_treatment1 = estimate_total(
+    vars = "fever_point_of_care",
+    design = endline_child_survey_design |>
+      subset(fever_episode == 1)
+  ),
+  endline_fever_treatment1_province = estimate_province(
+    vars = "fever_point_of_care",
+    design = endline_child_survey_design |>
+      subset(fever_episode == 1)
+  ),
+  endline_fever_treatment1_strata = estimate_strata(
+    vars = "fever_point_of_care",
+    design = endline_child_survey_design |>
+      subset(fever_episode == 1)
+  ),
+  endline_fever_treatment1_study_group = estimate_study_group(
+    vars = "fever_point_of_care",
+    design = endline_child_survey_design |>
+      subset(fever_episode == 1)
+  ),
+  endline_fever_treatment1_study_group_province = estimate_study_group_province(
+    vars = "fever_point_of_care",
+    design = endline_child_survey_design |>
+      subset(fever_episode == 1)
+  ),
+  ### Endline results - treatment for malaria ---------------------------------
+  endline_malaria_test = estimate_total(
+    vars = "fever_malaria_test",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test_province = estimate_province(
+    vars = "fever_malaria_test",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test_strata = estimate_strata(
+    vars = "fever_malaria_test",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test_study_group = estimate_study_group(
+    vars = "fever_malaria_test",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test_study_group_province = estimate_study_group_province(
+    vars = "fever_malaria_test",
+    design = endline_child_survey_design
+  ),
+  ### Endline results - treatment for malaria ---------------------------------
+  endline_malaria_test1 = estimate_total(
+    vars = "fever_malaria_episode",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test1_province = estimate_province(
+    vars = "fever_malaria_episode",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test1_strata = estimate_strata(
+    vars = "fever_malaria_episode",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test1_study_group = estimate_study_group(
+    vars = "fever_malaria_episode",
+    design = endline_child_survey_design
+  ),
+  endline_malaria_test1_study_group_province = estimate_study_group_province(
+    vars = "fever_malaria_episode",
+    design = endline_child_survey_design
+  ),
+  ### Endline results - malaria treatment -------------------------------------
+  endline_malaria_treatment = estimate_total(
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_malaria_treatment_province = estimate_province(
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_malaria_treatment_strata = estimate_strata(
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_malaria_treatment_study_group = estimate_study_group(
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_malaria_treatment_study_group_province = estimate_study_group_province(
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    design = endline_child_survey_design
+  ),
   ### Endline results - treatment seeking for RTI -----------------------------
   endline_rti_treatment = estimate_total(
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     design = endline_child_survey_design |>
       subset(rti_episode == 1)
   ),
   endline_rti_treatment_province = estimate_province(
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     design = endline_child_survey_design |>
       subset(rti_episode == 1)
   ),
   endline_rti_treatment_strata = estimate_strata(
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     design = endline_child_survey_design |>
       subset(rti_episode == 1)
   ),
   endline_rti_treatment_study_group = estimate_study_group(
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     design = endline_child_survey_design |>
       subset(rti_episode == 1)
   ),
   endline_rti_treatment_study_group_province = estimate_study_group_province(
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     design = endline_child_survey_design |>
       subset(rti_episode == 1)
+  ),
+  ### Endline results - treatment seeking for RTI -----------------------------
+  endline_rti_treatment1 = estimate_total(
+    vars = "rti_point_of_care",
+    design = endline_child_survey_design |>
+      subset(rti_episode == 1)
+  ),
+  endline_rti_treatment1_province = estimate_province(
+    vars = "rti_point_of_care",
+    design = endline_child_survey_design |>
+      subset(rti_episode == 1)
+  ),
+  endline_rti_treatment1_strata = estimate_strata(
+    vars = "rti_point_of_care",
+    design = endline_child_survey_design |>
+      subset(rti_episode == 1)
+  ),
+  endline_rti_treatment1_study_group = estimate_study_group(
+    vars = "rti_point_of_care",
+    design = endline_child_survey_design |>
+      subset(rti_episode == 1)
+  ),
+  endline_rti_treatment1_study_group_province = estimate_study_group_province(
+    vars = "rti_point_of_care",
+    design = endline_child_survey_design |>
+      subset(rti_episode == 1)
+  ),
+  ### Endline results - treatment for RTI -------------------------------------
+  endline_rti_treatment_type = estimate_total(
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    design = endline_child_survey_design |>
+      subset(rti_seek_treatment == 1)
+  ),
+  endline_rti_treatment_type_province = estimate_province(
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    design = endline_child_survey_design |>
+      subset(rti_seek_treatment == 1)
+  ),
+  endline_rti_treatment_type_strata = estimate_strata(
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    design = endline_child_survey_design |>
+      subset(rti_seek_treatment == 1)
+  ),
+  endline_rti_treatment_type_study_group = estimate_study_group(
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    design = endline_child_survey_design |>
+      subset(rti_seek_treatment == 1)
+  ),
+  endline_rti_treatment_type_study_group_province = estimate_study_group_province(
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    design = endline_child_survey_design |>
+      subset(rti_seek_treatment == 1)
   ),
   ### endline results - women's mental health and alcohol consumption ----------
   endline_women_phq8 = estimate_total(
@@ -6764,7 +7052,7 @@ analysis_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_women_phq8_province = estimate_province(
     vars = c(
@@ -6772,7 +7060,7 @@ analysis_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_women_phq8_strata = estimate_strata(
     vars = c(
@@ -6780,7 +7068,7 @@ analysis_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_women_phq8_study_group = estimate_study_group(
     vars = c(
@@ -6788,7 +7076,7 @@ analysis_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_women_phq8_study_group_province = estimate_study_group_province(
     vars = c(
@@ -6796,13 +7084,63 @@ analysis_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
-  ### endline results - pregnancy characteristics ------------------------------
+  ### Endline results - pregnancy prenatal card -------------------------------
+  endline_pregnant_card = estimate_total(
+    vars = "prenatal_card_self_report",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_province = estimate_province(
+    vars = "prenatal_card_self_report",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_strata = estimate_strata(
+    vars = "prenatal_card_self_report",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_study_group = estimate_study_group(
+    vars = "prenatal_card_self_report",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_study_group_province = estimate_study_group_province(
+    vars = "prenatal_card_self_report",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  ### Endline results - pregnancy prenatal card available ---------------------
+  endline_pregnant_card_available = estimate_total(
+    vars = "prenatal_card_available",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_available_province = estimate_province(
+    vars = "prenatal_card_available",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_available_strata = estimate_strata(
+    vars = "prenatal_card_available",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_available_study_group = estimate_study_group(
+    vars = "prenatal_card_available",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  endline_pregnant_card_available_study_group_province = estimate_study_group_province(
+    vars = "prenatal_card_available",
+    design = endline_hh_survey_design |>
+      subset(currently_pregnant == 1)
+  ),
+  ### Endline results - pregnancy characteristics -----------------------------
   endline_pregnant = estimate_total(
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -6815,8 +7153,6 @@ analysis_endline <- tar_plan(
   ),
   endline_pregnant_province = estimate_province(
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -6829,8 +7165,6 @@ analysis_endline <- tar_plan(
   ),
   endline_pregnant_strata = estimate_strata(
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -6843,8 +7177,6 @@ analysis_endline <- tar_plan(
   ),
   endline_pregnant_study_group = estimate_study_group(
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -6857,8 +7189,6 @@ analysis_endline <- tar_plan(
   ),
   endline_pregnant_study_group_province = estimate_study_group_province(
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -6869,208 +7199,243 @@ analysis_endline <- tar_plan(
     design = endline_hh_survey_design |>
       subset(currently_pregnant == 1)
   ),
-  ### endline results - PMTCT and mosquito net --------------------------------
-  endline_pregnant_prevention = estimate_total(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+  ### Endline results - PMTCT -------------------------------------------------
+  endline_pregnant_vct1 = estimate_total(
+    vars = "offered_voluntary_counselling_and_testing",
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct1_province = estimate_province(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct1_strata = estimate_strata(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct1_study_group = estimate_study_group(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct1_study_group_province = estimate_study_group_province(
+    vars = "offered_voluntary_counselling_and_testing",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - PMTCT -------------------------------------------------
+  endline_pregnant_vct2 = estimate_total(
+    vars = "received_vct_results",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct2_province = estimate_province(
+    vars = "received_vct_results",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct2_strata = estimate_strata(
+    vars = "received_vct_results",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct2_study_group = estimate_study_group(
+    vars = "received_vct_results",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct2_study_group_province = estimate_study_group_province(
+    vars = "received_vct_results",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - PMTCT -------------------------------------------------
+  endline_pregnant_vct3 = estimate_total(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct3_province = estimate_province(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct3_strata = estimate_strata(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct3_study_group = estimate_study_group(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_pregnant_vct3_study_group_province = estimate_study_group_province(
+    vars = "offered_medication_to_reduce_child_risk",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - mosquito net ------------------------------------------
+  endline_pregnant_prevention = estimate_total(
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_pregnant_prevention_province = estimate_province(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_pregnant_prevention_strata = estimate_strata(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_pregnant_prevention_study_group = estimate_study_group(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_pregnant_prevention_study_group_province = estimate_study_group_province(
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
-  ### endline results - natal care --------------------------------------------
+  ### Endline results - natal care --------------------------------------------
   endline_natal_care = estimate_total(
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_natal_care_province = estimate_province(
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_natal_care_strata = estimate_strata(
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_natal_care_study_group = estimate_study_group(
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
   endline_natal_care_study_group_province = estimate_study_group_province(
+    vars = "location_of_last_delivery",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - natal care --------------------------------------------
+  endline_natal_care1 = estimate_total(
     vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
       "delivery_assisted_by_traditional_midwife",
       "delivery_assisted_by_community_health_worker",
       "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
@@ -7080,23 +7445,358 @@ analysis_endline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
   ),
-  ### endline results - Family planning ----------------------------------------------------------
+  endline_natal_care1_province = estimate_province(
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care1_strata = estimate_strata(
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care1_study_group = estimate_study_group(
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care1_study_group_province = estimate_study_group_province(
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - natal care - malaria ----------------------------------
+  endline_natal_care_malaria1 = estimate_total(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria1_province = estimate_province(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria1_strata = estimate_strata(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria1_study_group = estimate_study_group(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria1_study_group_province = estimate_study_group_province(
+    vars = "given_malaria_treatment_during_pregnancy",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - natal care - malaria treatment intake -----------------
+  endline_natal_care_malaria2 = estimate_total(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria2_province = estimate_province(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria2_strata = estimate_strata(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria2_study_group = estimate_study_group(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_malaria2_study_group_province = estimate_study_group_province(
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - natal care - tetanus ----------------------------------
+  endline_natal_care_tetanus1 = estimate_total(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus1_province = estimate_province(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus1_strata = estimate_strata(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus1_study_group = estimate_study_group(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus1_study_group_province = estimate_study_group_province(
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - natal care - tetanus ----------------------------------
+  endline_natal_care_tetanus2 = estimate_total(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus2_province = estimate_province(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus2_strata = estimate_strata(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus2_study_group = estimate_study_group(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_tetanus2_study_group_province = estimate_study_group_province(
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  ### Endline results - natal care - supplements ------------------------------
+  endline_natal_care_supplement = estimate_total(
+    vars = "ferrous_sulfate_supplementation",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_supplement_province = estimate_province(
+    vars = "ferrous_sulfate_supplementation",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_supplement_strata = estimate_strata(
+    vars = "ferrous_sulfate_supplementation",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_supplement_study_group = estimate_study_group(
+    vars = "ferrous_sulfate_supplementation",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  endline_natal_care_supplement_study_group_province = estimate_study_group_province(
+    vars = "ferrous_sulfate_supplementation",
+    design = endline_hh_survey_design |>
+      subset(
+        respondent_sex == "Female" & 
+          respondent_age_years >= 15 & 
+          respondent_age_years < 50
+      )
+  ),
+  
+  ### endline results - Family planning ----------------------------------------
   endline_family_planning = estimate_total(
     vars = c(
       "attempted_to_delay_or_prevent_pregnancy",
@@ -7121,7 +7821,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7150,7 +7850,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7179,7 +7879,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7208,7 +7908,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7237,7 +7937,7 @@ analysis_endline <- tar_plan(
     ),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7318,6 +8018,269 @@ analysis_endline <- tar_plan(
     ),
     design = endline_child_survey_design
   ),
+  ### endline results - card self-report --------------------------------------
+  endline_child_immunisation_card_self_report = estimate_total(
+    vars = "immunisation_card_retention_self_report",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_self_report_province = estimate_province(
+    vars = "immunisation_card_retention_self_report",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_self_report_strata = estimate_strata(
+    vars = "immunisation_card_retention_self_report",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_self_report_study_group = estimate_study_group(
+    vars = "immunisation_card_retention_self_report",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_self_report_study_group_province = estimate_study_group_province(
+    vars = "immunisation_card_retention_self_report",
+    design = endline_child_survey_design
+  ),
+  ### endline results - card available ----------------------------------------
+  endline_child_immunisation_card_available = estimate_total(
+    vars = "immunisation_card_retention",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_available_province = estimate_province(
+    vars = "immunisation_card_retention",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_available_strata = estimate_strata(
+    vars = "immunisation_card_retention",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_available_study_group = estimate_study_group(
+    vars = "immunisation_card_retention",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_card_available_study_group_province = estimate_study_group_province(
+    vars = "immunisation_card_retention",
+    design = endline_child_survey_design
+  ),
+  ### endline results - BCG ---------------------------------------------------
+  endline_child_immunisation_bcg = estimate_total(
+    vars = "immunisation_bcg",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_bcg_province = estimate_province(
+    vars = "immunisation_bcg",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_bcg_strata = estimate_strata(
+    vars = "immunisation_bcg",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_bcg_study_group = estimate_study_group(
+    vars = "immunisation_bcg",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_bcg_study_group_province = estimate_study_group_province(
+    vars = "immunisation_bcg",
+    design = endline_child_survey_design
+  ),
+  ### endline results - OPV first dose ----------------------------------------
+  endline_child_immunisation_opv = estimate_total(
+    vars = "immunisation_polio_first_dose",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_opv_province = estimate_province(
+    vars = "immunisation_polio_first_dose",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_opv_strata = estimate_strata(
+    vars = "immunisation_polio_first_dose",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_opv_study_group = estimate_study_group(
+    vars = "immunisation_polio_first_dose",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_opv_study_group_province = estimate_study_group_province(
+    vars = "immunisation_polio_first_dose",
+    design = endline_child_survey_design
+  ),
+  ### endline results - set1 (OPV2, Penta1, Pneumo1, Rota1) -------------------
+  endline_child_immunisation_set1 = estimate_total(
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 42)
+  ),
+  endline_child_immunisation_set1_province = estimate_province(
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 42)
+  ),
+  endline_child_immunisation_set1_strata = estimate_strata(
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 42)
+  ),
+  endline_child_immunisation_set1_study_group = estimate_study_group(
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 42)
+  ),
+  endline_child_immunisation_set1_study_group_province = estimate_study_group_province(
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 42)
+  ),
+  ### endline results - set2 (OPV2, Penta1, Pneumo1, Rota1) --------------------
+  endline_child_immunisation_set2 = estimate_total(
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  endline_child_immunisation_set2_province = estimate_province(
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  endline_child_immunisation_set2_strata = estimate_strata(
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  endline_child_immunisation_set2_study_group = estimate_study_group(
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  endline_child_immunisation_set2_study_group_province = estimate_study_group_province(
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  ### endline results - set3 (OPV2, Penta1, Pneumo1, Rota1) --------------------------------
+  endline_child_immunisation_set3 = estimate_total(
+    vars = c(
+      "immunisation_polio_fourth_dose",
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  endline_child_immunisation_set3_province = estimate_province(
+    vars = c(
+      "immunisation_polio_fourth_dose",
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  endline_child_immunisation_set3_strata = estimate_strata(
+    vars = c(
+      "immunisation_polio_fourth_dose",
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  endline_child_immunisation_set3_study_group = estimate_study_group(
+    vars = c(
+      "immunisation_polio_fourth_dose",
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  endline_child_immunisation_set3_study_group_province = estimate_study_group_province(
+    vars = c(
+      "immunisation_polio_fourth_dose",
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  ### endline results - measles -----------------------------------------------
+  endline_child_immunisation_measles = estimate_total(
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_measles_province = estimate_province(
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_measles_strata = estimate_strata(
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_measles_study_group = estimate_study_group(
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_measles_study_group_province = estimate_study_group_province(
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    design = endline_child_survey_design
+  ),
   ### endline results - full immunisation -------------------------------------
   endline_child_immunisation_full = estimate_total(
     vars = "immunisation_fully_immunised",
@@ -7343,6 +8306,27 @@ analysis_endline <- tar_plan(
     vars = "immunisation_fully_immunised",
     design = endline_child_survey_design |>
       subset(child_age_months >= 12 & child_age_months < 24)
+  ),
+  ### endline results - full immunisation - age-appropriate --------------------
+  endline_child_immunisation_age_appropriate = estimate_total(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_age_appropriate_province = estimate_province(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_age_appropriate_strata = estimate_strata(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_age_appropriate_study_group = estimate_study_group(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = endline_child_survey_design
+  ),
+  endline_child_immunisation_age_appropriate_study_group_province = estimate_study_group_province(
+    vars = "immunisation_age_appropriate_immunisation",
+    design = endline_child_survey_design
   ),
   ### endline results - IYCF --------------------------------------------------
   endline_iycf = estimate_total(
@@ -7506,7 +8490,7 @@ analysis_endline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_wem_province = estimate_province(
     vars = c(
@@ -7514,7 +8498,7 @@ analysis_endline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_wem_strata = estimate_strata(
     vars = c(
@@ -7522,7 +8506,7 @@ analysis_endline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_wem_study_group = estimate_study_group(
     vars = c(
@@ -7530,7 +8514,7 @@ analysis_endline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   endline_wem_study_group_province = estimate_study_group_province(
     vars = c(
@@ -7538,14 +8522,14 @@ analysis_endline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = endline_hh_survey_design |>
-      subset(respondent_sex == "Mulher")
+      subset(respondent_sex == "Female")
   ),
   ### endline results - women's anthropometry ---------------------------------
   endline_women_anthro = estimate_total(
     vars = c("body_mass_index", "bmi_class"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7554,7 +8538,7 @@ analysis_endline <- tar_plan(
     vars = c("body_mass_index", "bmi_class"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7563,7 +8547,7 @@ analysis_endline <- tar_plan(
     vars = c("body_mass_index", "bmi_class"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7572,7 +8556,7 @@ analysis_endline <- tar_plan(
     vars = c("body_mass_index", "bmi_class"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7581,7 +8565,7 @@ analysis_endline <- tar_plan(
     vars = c("body_mass_index", "bmi_class"),
     design = endline_hh_survey_design |>
       subset(
-        respondent_sex == "Mulher" & 
+        respondent_sex == "Female" & 
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
@@ -7599,6 +8583,7 @@ outputs_tables_endline <- tar_plan(
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_respondent_table_report = create_province_table(
@@ -7609,6 +8594,7 @@ outputs_tables_endline <- tar_plan(
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_demo_respondent_strata_table = create_strata_table(
@@ -7619,6 +8605,7 @@ outputs_tables_endline <- tar_plan(
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_respondent_study_group_table = create_study_group_table(
@@ -7629,6 +8616,7 @@ outputs_tables_endline <- tar_plan(
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_respondent_study_group_table_report = create_study_group_table(
@@ -7639,6 +8627,7 @@ outputs_tables_endline <- tar_plan(
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_demo_respondent_study_group_province_table = create_study_group_province_table(
@@ -7649,6 +8638,7 @@ outputs_tables_endline <- tar_plan(
              "respondent_education_years", "respondent_education_group", 
              "respondent_occupation"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline demographics table - child --------------------------------------
@@ -7661,6 +8651,7 @@ outputs_tables_endline <- tar_plan(
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_child_table_report = create_province_table(
@@ -7672,6 +8663,7 @@ outputs_tables_endline <- tar_plan(
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_demo_child_strata_table = create_strata_table(
@@ -7683,6 +8675,7 @@ outputs_tables_endline <- tar_plan(
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_child_study_group_table = create_study_group_table(
@@ -7694,6 +8687,7 @@ outputs_tables_endline <- tar_plan(
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_child_study_group_table_report = create_study_group_table(
@@ -7705,6 +8699,7 @@ outputs_tables_endline <- tar_plan(
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_demo_child_study_group_province_table = create_study_group_province_table(
@@ -7716,6 +8711,7 @@ outputs_tables_endline <- tar_plan(
              "child_caesarean_birth", "child_complications_at_birth",
              "child_low_birth_weight"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline demographics table - spouse -------------------------------------
@@ -7726,6 +8722,7 @@ outputs_tables_endline <- tar_plan(
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_spouse_table_report = create_province_table(
@@ -7735,6 +8732,7 @@ outputs_tables_endline <- tar_plan(
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_demo_spouse_strata_table = create_strata_table(
@@ -7744,6 +8742,7 @@ outputs_tables_endline <- tar_plan(
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_spouse_study_group_table = create_study_group_table(
@@ -7753,6 +8752,7 @@ outputs_tables_endline <- tar_plan(
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_demo_spouse_study_group_table_report = create_study_group_table(
@@ -7762,6 +8762,7 @@ outputs_tables_endline <- tar_plan(
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_demo_spouse_study_group_province_table = create_study_group_province_table(
@@ -7771,6 +8772,7 @@ outputs_tables_endline <- tar_plan(
              "spouse_education_years", "spouse_education_group",
              "spouse_occupation", "spouse_lives_in_home"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline household income table ------------------------------------------
@@ -7780,10 +8782,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_income_table_report = create_province_table(
@@ -7792,10 +8794,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_income_strata_table = create_strata_table(
@@ -7804,10 +8806,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_income_study_group_table = create_study_group_table(
@@ -7816,10 +8818,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_income_study_group_table_report = create_study_group_table(
@@ -7828,10 +8830,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_income_study_group_province_table = create_study_group_province_table(
@@ -7840,10 +8842,83 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "persons_living_in_household", "children_under_five_living_in_household",
       "pregnant_women_living_in_household", "monthly_household_income",
-      "source_of_household_income", "sufficiency_of_household_income",
-      "sufficiency_of_family_resource", "household_income_against_expenses"
+      "source_of_household_income"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline household income set 2 table -------------------------------------
+  endline_hh_income1_table = create_province_table(
+    endline_hh_income1_province,
+    endline_hh_income1,
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hh_income1_table_report = create_province_table(
+    endline_hh_income1_province,
+    endline_hh_income1,
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hh_income1_strata_table = create_strata_table(
+    endline_hh_income1_strata,
+    endline_hh_income1,
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hh_income1_study_group_table = create_study_group_table(
+    endline_hh_income1_study_group,
+    endline_hh_income1,
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hh_income1_study_group_table_report = create_study_group_table(
+    endline_hh_income1_study_group,
+    endline_hh_income1,
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hh_income1_study_group_province_table = create_study_group_province_table(
+    endline_hh_income1_study_group_province,
+    endline_hh_income1_study_group,
+    vars = c(
+      "sufficiency_of_household_income",
+      "sufficiency_of_family_resource", 
+      "household_income_against_expenses"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline household structure table ---------------------------------------
@@ -7857,6 +8932,7 @@ outputs_tables_endline <- tar_plan(
       "time_living_in_location_group"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_structure_table_report = create_province_table(
@@ -7869,6 +8945,7 @@ outputs_tables_endline <- tar_plan(
       "time_living_in_location_group"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_structure_strata_table = create_strata_table(
@@ -7881,6 +8958,7 @@ outputs_tables_endline <- tar_plan(
       "time_living_in_location_group"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_structure_study_group_table = create_study_group_table(
@@ -7893,6 +8971,7 @@ outputs_tables_endline <- tar_plan(
       "time_living_in_location_group"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_structure_study_group_table_report = create_study_group_table(
@@ -7905,6 +8984,7 @@ outputs_tables_endline <- tar_plan(
       "time_living_in_location_group"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_structure_study_group_province_table = create_study_group_province_table(
@@ -7917,6 +8997,7 @@ outputs_tables_endline <- tar_plan(
       "time_living_in_location_group"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline household amenities table ---------------------------------------
@@ -7924,78 +9005,84 @@ outputs_tables_endline <- tar_plan(
     endline_hh_amenities_province,
     endline_hh_amenities,
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_amenities_table_report = create_province_table(
     endline_hh_amenities_province,
     endline_hh_amenities,
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_amenities_strata_table = create_strata_table(
     endline_hh_amenities_strata,
     endline_hh_amenities,
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_amenities_study_group_table = create_study_group_table(
     endline_hh_amenities_study_group,
     endline_hh_amenities,
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_amenities_study_group_table_report = create_study_group_table(
     endline_hh_amenities_study_group,
     endline_hh_amenities,
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_amenities_study_group_province_table = create_study_group_province_table(
     endline_hh_amenities_study_group_province,
     endline_hh_amenities_study_group,
     vars = c(
-      "electricity", "cellphone", "computer", "landline", "radio", "television",
+      "electricity", "cellphone", "computer", "radio", "television",
       "housekeeper_childcare_employee", "refrigerator", 
-      "refrigerator_alternative", "number_of_mosquito_nets",
-      "fuel_used_for_cooking", "location_of_food_preparation",
-      "fuel_used_for_lighting"
+      "refrigerator_alternative", 
+      "number_of_mosquito_nets", "fuel_used_for_cooking", 
+      "location_of_food_preparation", "fuel_used_for_lighting"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline household travel table ------------------------------------------
@@ -8005,11 +9092,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_travel_province_table_report = create_province_table(
@@ -8018,11 +9104,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_travel_strata_table = create_strata_table(
@@ -8031,11 +9116,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_travel_study_group_table = create_study_group_table(
@@ -8044,11 +9128,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_travel_study_group_table_report = create_study_group_table(
@@ -8057,11 +9140,10 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
-      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
-      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_travel_study_group_province_table = create_study_group_province_table(
@@ -8070,11 +9152,77 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "usual_mode_of_travel",
       "time_to_travel_to_health_centre", "mode_of_travel_to_health_centre",
-      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets",
+      "time_to_travel_to_local_markets", "mode_of_travel_to_local_markets"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline household travel set 2 table -------------------------------------
+  endline_hh_travel1_province_table = create_province_table(
+    endline_hh_travel1_province,
+    endline_hh_travel1,
+    vars = c(
       "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
       "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hh_travel1_province_table_report = create_province_table(
+    endline_hh_travel1_province,
+    endline_hh_travel1,
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hh_travel1_strata_table = create_strata_table(
+    endline_hh_travel1_strata,
+    endline_hh_travel1,
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hh_travel1_study_group_table = create_study_group_table(
+    endline_hh_travel1_study_group,
+    endline_hh_travel1,
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hh_travel1_study_group_table_report = create_study_group_table(
+    endline_hh_travel1_study_group,
+    endline_hh_travel1,
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hh_travel1_study_group_province_table = create_study_group_province_table(
+    endline_hh_travel1_study_group_province,
+    endline_hh_travel1_study_group,
+    vars = c(
+      "time_to_travel_to_primary_school", "mode_of_travel_to_primary_school",
+      "time_to_travel_to_secondary_school", "mode_of_travel_to_secondary_school"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline household decisions table ---------------------------------------
@@ -8088,6 +9236,7 @@ outputs_tables_endline <- tar_plan(
       "healthcare_for_child"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_decision_province_table_report = create_province_table(
@@ -8100,6 +9249,7 @@ outputs_tables_endline <- tar_plan(
       "healthcare_for_child"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_decision_strata_table = create_strata_table(
@@ -8112,6 +9262,7 @@ outputs_tables_endline <- tar_plan(
       "healthcare_for_child"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_decision_study_group_table = create_study_group_table(
@@ -8124,6 +9275,7 @@ outputs_tables_endline <- tar_plan(
       "healthcare_for_child"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_decision_study_group_table_report = create_study_group_table(
@@ -8136,6 +9288,7 @@ outputs_tables_endline <- tar_plan(
       "healthcare_for_child"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_decision_study_group_province_table = create_study_group_province_table(
@@ -8148,6 +9301,7 @@ outputs_tables_endline <- tar_plan(
       "healthcare_for_child"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline household community group membership table ----------------------
@@ -8159,6 +9313,7 @@ outputs_tables_endline <- tar_plan(
       "information_application", "health_tasks_participation"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_groups_province_table_report = create_province_table(
@@ -8169,6 +9324,7 @@ outputs_tables_endline <- tar_plan(
       "information_application", "health_tasks_participation"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_groups_strata_table = create_strata_table(
@@ -8179,6 +9335,7 @@ outputs_tables_endline <- tar_plan(
       "information_application", "health_tasks_participation"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_hh_groups_study_group_table = create_study_group_table(
@@ -8189,6 +9346,7 @@ outputs_tables_endline <- tar_plan(
       "information_application", "health_tasks_participation"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report =  FALSE
   ),
   endline_hh_groups_study_group_table_report = create_study_group_table(
@@ -8199,6 +9357,7 @@ outputs_tables_endline <- tar_plan(
       "information_application", "health_tasks_participation"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_hh_groups_study_group_province_table = create_study_group_province_table(
@@ -8209,6 +9368,7 @@ outputs_tables_endline <- tar_plan(
       "information_application", "health_tasks_participation"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline child anthropometry table ---------------------------------------
@@ -8225,6 +9385,7 @@ outputs_tables_endline <- tar_plan(
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_anthro_province_table_report = create_province_table(
@@ -8240,6 +9401,7 @@ outputs_tables_endline <- tar_plan(
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_anthro_strata_table = create_strata_table(
@@ -8255,6 +9417,7 @@ outputs_tables_endline <- tar_plan(
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_anthro_study_group_table = create_study_group_table(
@@ -8270,6 +9433,7 @@ outputs_tables_endline <- tar_plan(
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_anthro_study_group_table_report = create_study_group_table(
@@ -8285,6 +9449,7 @@ outputs_tables_endline <- tar_plan(
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_anthro_study_group_province_table = create_study_group_province_table(
@@ -8300,6 +9465,7 @@ outputs_tables_endline <- tar_plan(
       "severe_wasting_by_muac", "severe_wasting_by_oedema"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline WDDS table ------------------------------------------------------
@@ -8312,6 +9478,7 @@ outputs_tables_endline <- tar_plan(
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wdds_province_table_report = create_province_table(
@@ -8323,6 +9490,7 @@ outputs_tables_endline <- tar_plan(
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_wdds_strata_table = create_strata_table(
@@ -8334,6 +9502,7 @@ outputs_tables_endline <- tar_plan(
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wdds_study_group_table = create_study_group_table(
@@ -8345,6 +9514,7 @@ outputs_tables_endline <- tar_plan(
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wdds_study_group_table_report = create_study_group_table(
@@ -8356,6 +9526,7 @@ outputs_tables_endline <- tar_plan(
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_wdds_study_group_province_table =  create_study_group_province_table(
@@ -8367,6 +9538,7 @@ outputs_tables_endline <- tar_plan(
       "wdds_eggs", "wdds_legumes", "wdds_milk", "wdds"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline MDDW table ------------------------------------------------------
@@ -8379,6 +9551,7 @@ outputs_tables_endline <- tar_plan(
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_mddw_province_table_report = create_province_table(
@@ -8390,6 +9563,7 @@ outputs_tables_endline <- tar_plan(
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_mddw_strata_table = create_strata_table(
@@ -8401,6 +9575,7 @@ outputs_tables_endline <- tar_plan(
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_mddw_study_group_table = create_study_group_table(
@@ -8412,6 +9587,7 @@ outputs_tables_endline <- tar_plan(
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_mddw_study_group_table_report = create_study_group_table(
@@ -8423,6 +9599,7 @@ outputs_tables_endline <- tar_plan(
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_mddw_study_group_province_table = create_study_group_province_table(
@@ -8434,6 +9611,7 @@ outputs_tables_endline <- tar_plan(
       "mddw_vegetables", "mddw_fruits", "mddw_score", "mddw"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline child development table -----------------------------------------
@@ -8452,6 +9630,7 @@ outputs_tables_endline <- tar_plan(
       "play_with_child_during_free_time"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_dev_province_table_report = create_province_table(
@@ -8469,6 +9648,7 @@ outputs_tables_endline <- tar_plan(
       "play_with_child_during_free_time"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_dev_strata_table = create_strata_table(
@@ -8486,6 +9666,7 @@ outputs_tables_endline <- tar_plan(
       "play_with_child_during_free_time"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_dev_study_group_table = create_study_group_table(
@@ -8503,6 +9684,7 @@ outputs_tables_endline <- tar_plan(
       "play_with_child_during_free_time"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_dev_study_group_table_report = create_study_group_table(
@@ -8520,6 +9702,7 @@ outputs_tables_endline <- tar_plan(
       "play_with_child_during_free_time"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_dev_study_group_province_table = create_study_group_province_table(
@@ -8537,6 +9720,7 @@ outputs_tables_endline <- tar_plan(
       "play_with_child_during_free_time"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline WASH table ------------------------------------------------------
@@ -8552,6 +9736,7 @@ outputs_tables_endline <- tar_plan(
       "basic_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wash_province_table_report = create_province_table(
@@ -8566,6 +9751,7 @@ outputs_tables_endline <- tar_plan(
       "basic_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_wash_strata_table = create_strata_table(
@@ -8580,6 +9766,7 @@ outputs_tables_endline <- tar_plan(
       "basic_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wash_study_group_table = create_study_group_table(
@@ -8594,6 +9781,7 @@ outputs_tables_endline <- tar_plan(
       "basic_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wash_study_group_table_report = create_study_group_table(
@@ -8608,6 +9796,7 @@ outputs_tables_endline <- tar_plan(
       "basic_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_wash_study_group_province_table = create_study_group_province_table(
@@ -8622,268 +9811,624 @@ outputs_tables_endline <- tar_plan(
       "basic_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline childhood illnesses table ---------------------------------------
   endline_child_ill_province_table = create_province_table(
     endline_child_ill_province,
     endline_child_ill,
-    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_ill_province_table_report = create_province_table(
     endline_child_ill_province,
     endline_child_ill,
-    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_ill_strata_table = create_strata_table(
     endline_child_ill_strata,
     endline_child_ill,
-    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_ill_study_group_table = create_study_group_table(
     endline_child_ill_study_group,
     endline_child_ill,
-    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_ill_study_group_table_report = create_study_group_table(
     endline_child_ill_study_group,
     endline_child_ill,
-    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_ill_study_group_province_table = create_study_group_province_table(
     endline_child_ill_study_group_province,
     endline_child_ill_study_group,
-    vars = c("diarrhoea_episode", "fever_episode", "rti_episode"),
+    vars = c("diarrhoea_episode","fever_episode", "rti_episode"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline treatment seeking for diarrhoea table ---------------------------
   endline_diarrhoea_treatment_province_table = create_province_table(
     endline_diarrhoea_treatment_province,
     endline_diarrhoea_treatment,
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_diarrhoea_treatment_province_table_report = create_province_table(
     endline_diarrhoea_treatment_province,
     endline_diarrhoea_treatment,
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_diarrhoea_treatment_strata_table = create_strata_table(
     endline_diarrhoea_treatment_strata,
     endline_diarrhoea_treatment,
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_diarrhoea_treatment_study_group_table = create_study_group_table(
     endline_diarrhoea_treatment_study_group,
     endline_diarrhoea_treatment,
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_diarrhoea_treatment_study_group_table_report = create_study_group_table(
     endline_diarrhoea_treatment_study_group,
     endline_diarrhoea_treatment,
-    vars = c(
-      "diarrhoea_seek_treatment", 
-      "diarrhoea_point_of_care", 
-      "diarrhoea_treatment_with_ors"
-    ),
+    vars = "diarrhoea_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_diarrhoea_treatment_study_group_province_table = create_study_group_province_table(
     endline_diarrhoea_treatment_study_group_province,
     endline_diarrhoea_treatment_study_group,
+    vars = "diarrhoea_seek_treatment",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline treatment seeking for diarrhoea table ---------------------------
+  endline_diarrhoea_treatment1_province_table = create_province_table(
+    endline_diarrhoea_treatment1_province,
+    endline_diarrhoea_treatment1,
     vars = c(
-      "diarrhoea_seek_treatment", 
       "diarrhoea_point_of_care", 
       "diarrhoea_treatment_with_ors"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
-  ### Endline treatment seeking for fever table -------------------------------
+  endline_diarrhoea_treatment1_province_table_report = create_province_table(
+    endline_diarrhoea_treatment1_province,
+    endline_diarrhoea_treatment1,
+    vars = c(
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_diarrhoea_treatment1_strata_table = create_strata_table(
+    endline_diarrhoea_treatment1_strata,
+    endline_diarrhoea_treatment1,
+    vars = c(
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_diarrhoea_treatment1_study_group_table = create_study_group_table(
+    endline_diarrhoea_treatment1_study_group,
+    endline_diarrhoea_treatment1,
+    vars = c(
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_diarrhoea_treatment1_study_group_table_report = create_study_group_table(
+    endline_diarrhoea_treatment1_study_group,
+    endline_diarrhoea_treatment1,
+    vars = c(
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_diarrhoea_treatment1_study_group_province_table = create_study_group_province_table(
+    endline_diarrhoea_treatment1_study_group_province,
+    endline_diarrhoea_treatment1_study_group,
+    vars = c(
+      "diarrhoea_point_of_care", 
+      "diarrhoea_treatment_with_ors"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline treatment for fever table ---------------------------------------
   endline_fever_treatment_province_table = create_province_table(
     endline_fever_treatment_province,
     endline_fever_treatment,
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_fever_treatment_province_table_report = create_province_table(
     endline_fever_treatment_province,
     endline_fever_treatment,
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_fever_treatment_strata_table = create_strata_table(
     endline_fever_treatment_strata,
     endline_fever_treatment,
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_fever_treatment_study_group_table = create_study_group_table(
     endline_fever_treatment_study_group,
     endline_fever_treatment,
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_fever_treatment_study_group_table_report = create_study_group_table(
     endline_fever_treatment_study_group,
     endline_fever_treatment,
-    vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
-      "fever_malaria_treatment_intake"
-    ),
+    vars = "fever_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_fever_treatment_study_group_province_table = create_study_group_province_table(
     endline_fever_treatment_study_group_province,
     endline_fever_treatment_study_group,
+    vars = "fever_seek_treatment",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline treatment for fever table ---------------------------------------
+  endline_fever_treatment1_province_table = create_province_table(
+    endline_fever_treatment1_province,
+    endline_fever_treatment1,
+    vars = "fever_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fever_treatment1_province_table_report = create_province_table(
+    endline_fever_treatment1_province,
+    endline_fever_treatment1,
+    vars = "fever_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_fever_treatment1_strata_table = create_strata_table(
+    endline_fever_treatment1_strata,
+    endline_fever_treatment1,
+    vars = "fever_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fever_treatment1_study_group_table = create_study_group_table(
+    endline_fever_treatment1_study_group,
+    endline_fever_treatment1,
+    vars = "fever_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fever_treatment1_study_group_table_report = create_study_group_table(
+    endline_fever_treatment1_study_group,
+    endline_fever_treatment1,
+    vars = "fever_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_fever_treatment1_study_group_province_table = create_study_group_province_table(
+    endline_fever_treatment1_study_group_province,
+    endline_fever_treatment1_study_group,
+    vars = "fever_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline malaria test for fever table ------------------------------------
+  endline_malaria_test_province_table = create_province_table(
+    endline_malaria_test_province,
+    endline_malaria_test,
+    vars = "fever_malaria_test",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_test_province_table_report = create_province_table(
+    endline_malaria_test_province,
+    endline_malaria_test,
+    vars = "fever_malaria_test",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_malaria_test_strata_table = create_strata_table(
+    endline_malaria_test_strata,
+    endline_malaria_test,
+    vars = "fever_malaria_test",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_test_study_group_table = create_study_group_table(
+    endline_malaria_test_study_group,
+    endline_malaria_test,
+    vars = "fever_malaria_test",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_test_study_group_table_report = create_study_group_table(
+    endline_malaria_test_study_group,
+    endline_malaria_test,
+    vars = "fever_malaria_test",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_malaria_test_study_group_province_table = create_study_group_province_table(
+    endline_malaria_test_study_group_province,
+    endline_malaria_test_study_group,
+    vars = "fever_malaria_test",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline malaria test for fever table ------------------------------------
+  endline_malaria_test1_province_table = create_province_table(
+    endline_malaria_test1_province,
+    endline_malaria_test1,
+    vars = "fever_malaria_episode",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_test1_province_table_report = create_province_table(
+    endline_malaria_test1_province,
+    endline_malaria_test1,
+    vars = "fever_malaria_episode",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_malaria_test1_strata_table = create_strata_table(
+    endline_malaria_test1_strata,
+    endline_malaria_test1,
+    vars = "fever_malaria_episode",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_test1_study_group_table = create_study_group_table(
+    endline_malaria_test1_study_group,
+    endline_malaria_test1,
+    vars = "fever_malaria_episode",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_test1_study_group_table_report = create_study_group_table(
+    endline_malaria_test1_study_group,
+    endline_malaria_test1,
+    vars = "fever_malaria_episode",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_malaria_test1_study_group_province_table = create_study_group_province_table(
+    endline_malaria_test1_study_group_province,
+    endline_malaria_test1_study_group,
+    vars = "fever_malaria_episode",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline treatment for malaria table -------------------------------------
+  endline_malaria_treatment_province_table = create_province_table(
+    endline_malaria_treatment_province,
+    endline_malaria_treatment,
     vars = c(
-      "fever_seek_treatment", "fever_point_of_care",
-      "fever_malaria_test", "fever_malaria_episode", "fever_malaria_coartem",
-      "fever_malaria_amodiaquina_artesunato", "fever_malaria_fansidar", 
-      "fever_malaria_quinino", "fever_malaria_quinino_injection",
-      "fever_malaria_artesunato", "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
       "fever_malaria_treatment_intake"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_treatment_province_table_report = create_province_table(
+    endline_malaria_treatment_province,
+    endline_malaria_treatment,
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_malaria_treatment_strata_table = create_strata_table(
+    endline_malaria_treatment_strata,
+    endline_malaria_treatment,
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_treatment_study_group_table = create_study_group_table(
+    endline_malaria_treatment_study_group,
+    endline_malaria_treatment,
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_malaria_treatment_study_group_table_report = create_study_group_table(
+    endline_malaria_treatment_study_group,
+    endline_malaria_treatment,
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_malaria_treatment_study_group_province_table = create_study_group_province_table(
+    endline_malaria_treatment_study_group_province,
+    endline_malaria_treatment_study_group,
+    vars = c(
+      "fever_malaria_coartem", "fever_malaria_amodiaquina_artesunato", 
+      "fever_malaria_fansidar", "fever_malaria_quinino", 
+      "fever_malaria_quinino_injection", "fever_malaria_artesunato", 
+      "fever_malaria_paracetamol_comprimido_xarope",
+      "fever_malaria_treatment_intake"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline treatment seeking for RTI table ---------------------------------
   endline_rti_treatment_province_table = create_province_table(
     endline_rti_treatment_province,
     endline_rti_treatment,
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_rti_treatment_province_table_report = create_province_table(
     endline_rti_treatment_province,
     endline_rti_treatment,
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_rti_treatment_strata_table = create_strata_table(
     endline_rti_treatment_strata,
     endline_rti_treatment,
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_rti_treatment_study_group_table = create_study_group_table(
     endline_rti_treatment_study_group,
     endline_rti_treatment,
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_rti_treatment_study_group_table_report = create_study_group_table(
     endline_rti_treatment_study_group,
     endline_rti_treatment,
-    vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
-    ),
+    vars = "rti_seek_treatment",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_rti_treatment_study_group_province_table = create_study_group_province_table(
     endline_rti_treatment_study_group_province,
     endline_rti_treatment_study_group,
+    vars = "rti_seek_treatment",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline treatment seeking for RTI table ---------------------------------
+  endline_rti_treatment1_province_table = create_province_table(
+    endline_rti_treatment1_province,
+    endline_rti_treatment1,
+    vars = "rti_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rti_treatment1_province_table_report = create_province_table(
+    endline_rti_treatment1_province,
+    endline_rti_treatment1,
+    vars = "rti_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rti_treatment1_strata_table = create_strata_table(
+    endline_rti_treatment1_strata,
+    endline_rti_treatment1,
+    vars = "rti_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rti_treatment1_study_group_table = create_study_group_table(
+    endline_rti_treatment1_study_group,
+    endline_rti_treatment1,
+    vars = "rti_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rti_treatment1_study_group_table_report = create_study_group_table(
+    endline_rti_treatment1_study_group,
+    endline_rti_treatment1,
+    vars = "rti_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rti_treatment1_study_group_province_table = create_study_group_province_table(
+    endline_rti_treatment1_study_group_province,
+    endline_rti_treatment1_study_group,
+    vars = "rti_point_of_care",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline treatment for RTI table -----------------------------------------
+  endline_rti_treatment_type_province_table = create_province_table(
+    endline_rti_treatment_type_province,
+    endline_rti_treatment_type,
     vars = c(
-      "rti_seek_treatment", "rti_point_of_care", "rti_treatment_antibioticos",
-      "rti_treatment_paracetamol", "rti_treatment_aspirina",
-      "rti_treatment_ibuprofeno", "rti_treatment_other"
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rti_treatment_type_province_table_report = create_province_table(
+    endline_rti_treatment_type_province,
+    endline_rti_treatment_type,
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rti_treatment_type_strata_table = create_strata_table(
+    endline_rti_treatment_type_strata,
+    endline_rti_treatment_type,
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rti_treatment_type_study_group_table = create_study_group_table(
+    endline_rti_treatment_type_study_group,
+    endline_rti_treatment_type,
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rti_treatment_type_study_group_table_report = create_study_group_table(
+    endline_rti_treatment_type_study_group,
+    endline_rti_treatment_type,
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rti_treatment_type_study_group_province_table = create_study_group_province_table(
+    endline_rti_treatment_type_study_group_province,
+    endline_rti_treatment_type_study_group,
+    vars = c(
+      "rti_treatment_antibioticos", "rti_treatment_paracetamol", 
+      "rti_treatment_aspirina", "rti_treatment_ibuprofeno", 
+      "rti_treatment_other"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline PHQ8 and alcohol consupmtion table ------------------------------
@@ -8895,6 +10440,7 @@ outputs_tables_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_women_phq8_province_table_report = create_province_table(
@@ -8905,6 +10451,7 @@ outputs_tables_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_women_phq8_strata_table = create_strata_table(
@@ -8915,6 +10462,7 @@ outputs_tables_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_women_phq8_study_group_table = create_study_group_table(
@@ -8925,6 +10473,7 @@ outputs_tables_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_women_phq8_study_group_table_report = create_study_group_table(
@@ -8935,6 +10484,7 @@ outputs_tables_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_women_phq8_study_group_province_table = create_study_group_province_table(
@@ -8945,6 +10495,89 @@ outputs_tables_endline <- tar_plan(
       "at_least_major_depression", "alcohol_consumption"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline pregnant card table ---------------------------------------------
+  endline_pregnant_card_province_table = create_province_table(
+    endline_pregnant_card_province,
+    endline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_card_province_table_report = create_province_table(
+    endline_pregnant_card_province,
+    endline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_card_strata_table = create_strata_table(
+    endline_pregnant_card_strata,
+    endline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_card_study_group_table_report = create_study_group_table(
+    endline_pregnant_card_study_group,
+    endline_pregnant_card,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_card_study_group_province_table = create_study_group_province_table(
+    endline_pregnant_card_study_group_province,
+    endline_pregnant_card_study_group,
+    vars = "prenatal_card_self_report",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline pregnant card available table -----------------------------------
+  endline_pregnant_card_available_province_table = create_province_table(
+    endline_pregnant_card_available_province,
+    endline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_card_available_province_table_report = create_province_table(
+    endline_pregnant_card_available_province,
+    endline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_card_available_strata_table = create_strata_table(
+    endline_pregnant_card_available_strata,
+    endline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_card_available_study_group_table_report = create_study_group_table(
+    endline_pregnant_card_available_study_group,
+    endline_pregnant_card_available,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_card_available_study_group_province_table = create_study_group_province_table(
+    endline_pregnant_card_available_study_group_province,
+    endline_pregnant_card_available_study_group,
+    vars = "prenatal_card_available",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline pregnant table --------------------------------------------------
@@ -8952,8 +10585,6 @@ outputs_tables_endline <- tar_plan(
     endline_pregnant_province,
     endline_pregnant,
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -8962,14 +10593,13 @@ outputs_tables_endline <- tar_plan(
       "fatigue", "plans_when_labor_begins"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_pregnant_province_table_report = create_province_table(
     endline_pregnant_province,
     endline_pregnant,
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -8978,14 +10608,13 @@ outputs_tables_endline <- tar_plan(
       "fatigue", "plans_when_labor_begins"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_pregnant_strata_table = create_strata_table(
     endline_pregnant_strata,
     endline_pregnant,
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -8994,14 +10623,13 @@ outputs_tables_endline <- tar_plan(
       "fatigue", "plans_when_labor_begins"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_pregnant_study_group_table_report = create_study_group_table(
     endline_pregnant_study_group,
     endline_pregnant,
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -9010,14 +10638,13 @@ outputs_tables_endline <- tar_plan(
       "fatigue", "plans_when_labor_begins"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_pregnant_study_group_province_table = create_study_group_province_table(
     endline_pregnant_study_group_province,
     endline_pregnant_study_group,
     vars = c(
-      "weeks_of_gestation_self_report",
-      "prenatal_card_self_report", "prenatal_card_available",
       "malaria_during_pregnancy", "anemia_during_pregnancy",
       "excluded_foods_from_diet", "included_foods_from_diet",
       "wants_more_children", "vaginal_bleeding", "severe_headache",
@@ -9026,235 +10653,263 @@ outputs_tables_endline <- tar_plan(
       "fatigue", "plans_when_labor_begins"
     ),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline pregnant vct1 table ---------------------------------------------
+  endline_pregnant_vct1_province_table = create_province_table(
+    endline_pregnant_vct1_province,
+    endline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct1_province_table_report = create_province_table(
+    endline_pregnant_vct1_province,
+    endline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_vct1_strata_table = create_strata_table(
+    endline_pregnant_vct1_strata,
+    endline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct1_study_group_table = create_study_group_table(
+    endline_pregnant_vct1_study_group,
+    endline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct1_study_group_table_report = create_study_group_table(
+    endline_pregnant_vct1_study_group,
+    endline_pregnant_vct1,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_vct1_study_group_province_table = create_study_group_province_table(
+    endline_pregnant_vct1_study_group_province,
+    endline_pregnant_vct1_study_group,
+    vars = "offered_voluntary_counselling_and_testing",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline pregnant vct2 table ---------------------------------------------
+  endline_pregnant_vct2_province_table = create_province_table(
+    endline_pregnant_vct2_province,
+    endline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct2_province_table_report = create_province_table(
+    endline_pregnant_vct2_province,
+    endline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_vct2_strata_table = create_strata_table(
+    endline_pregnant_vct2_strata,
+    endline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct2_study_group_table = create_study_group_table(
+    endline_pregnant_vct2_study_group,
+    endline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct2_study_group_table_report = create_study_group_table(
+    endline_pregnant_vct2_study_group,
+    endline_pregnant_vct2,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_vct2_study_group_province_table = create_study_group_province_table(
+    endline_pregnant_vct2_study_group_province,
+    endline_pregnant_vct2_study_group,
+    vars = "received_vct_results",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline pregnant vct3 table ---------------------------------------------
+  endline_pregnant_vct3_province_table = create_province_table(
+    endline_pregnant_vct3_province,
+    endline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct3_province_table_report = create_province_table(
+    endline_pregnant_vct3_province,
+    endline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_vct3_strata_table = create_strata_table(
+    endline_pregnant_vct3_strata,
+    endline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct3_study_group_table = create_study_group_table(
+    endline_pregnant_vct3_study_group,
+    endline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_pregnant_vct3_study_group_table_report = create_study_group_table(
+    endline_pregnant_vct3_study_group,
+    endline_pregnant_vct3,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_pregnant_vct3_study_group_province_table = create_study_group_province_table(
+    endline_pregnant_vct3_study_group_province,
+    endline_pregnant_vct3_study_group,
+    vars = "offered_medication_to_reduce_child_risk",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline pregnant prevention of disease table ----------------------------
   endline_pregnant_prevention_province_table = create_province_table(
     endline_pregnant_prevention_province,
     endline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_pregnant_prevention_province_table_report = create_province_table(
     endline_pregnant_prevention_province,
     endline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_pregnant_prevention_strata_table = create_strata_table(
     endline_pregnant_prevention_strata,
     endline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_pregnant_prevention_study_group_table = create_study_group_table(
     endline_pregnant_prevention_study_group,
     endline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_pregnant_prevention_study_group_table_report = create_study_group_table(
     endline_pregnant_prevention_study_group,
     endline_pregnant_prevention,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_pregnant_prevention_study_group_province_table = create_study_group_province_table(
     endline_pregnant_prevention_study_group_province,
     endline_pregnant_prevention_study_group,
-    vars = c(
-      "offered_voluntary_counselling_and_testing",
-      "received_vct_results", "offered_medication_to_reduce_child_risk",
-      "received_mosquito_net", "slept_under_mosquito_net"
-    ),
+    vars = c("received_mosquito_net", "slept_under_mosquito_net"),
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline natal care table ------------------------------------------------
   endline_natal_care_province_table = create_province_table(
     endline_natal_care_province,
     endline_natal_care,
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_natal_care_province_table_report = create_province_table(
     endline_natal_care_province,
     endline_natal_care,
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_natal_care_strata_table = create_strata_table(
     endline_natal_care_strata,
     endline_natal_care,
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_natal_care_study_group_table = create_study_group_table(
     endline_natal_care_study_group,
     endline_natal_care,
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = FALSE
   ),
   endline_natal_care_study_group_table_report = create_study_group_table(
     endline_natal_care_study_group,
     endline_natal_care,
-    vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
-      "delivery_assisted_by_traditional_midwife",
-      "delivery_assisted_by_community_health_worker",
-      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
-      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
-      "difficulty_reaching_facility_due_to_distance",
-      "difficulty_reaching_facility_due_to_stigma",
-      "difficulty_reaching_facility_due_to_poor_roads",
-      "difficulty_reaching_facility_due_to_other_reasons",
-      "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
-      "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
-      "ferrous_sulfate_supplementation",
-      "vitamin_a_supplementation_during_pregnancy"
-    ),
+    vars = "location_of_last_delivery",
     indicator_list = survey_indicator_list,
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_natal_care_study_group_province_table = create_study_group_province_table(
     endline_natal_care_study_group_province,
     endline_natal_care_study_group,
+    vars = "location_of_last_delivery",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline natal care table ------------------------------------------------
+  endline_natal_care1_province_table = create_province_table(
+    endline_natal_care1_province,
+    endline_natal_care1,
     vars = c(
-      "location_of_last_delivery", "number_of_prenatal_visits",
-      "at_least_four_anc_visits", "treated_well_during_anc",
-      "treated_well_at_delivery", "delivery_assisted_by_doctor",
-      "delivery_assisted_by_nurse", "delivery_assisted_by_midwife",
-      "delivery_assisted_by_other_person", 
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
       "delivery_assisted_by_traditional_midwife",
       "delivery_assisted_by_community_health_worker",
       "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
@@ -9264,16 +10919,405 @@ outputs_tables_endline <- tar_plan(
       "difficulty_reaching_facility_due_to_poor_roads",
       "difficulty_reaching_facility_due_to_other_reasons",
       "difficulty_reaching_facility_no_difficulty",
-      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother",
-      "given_malaria_treatment_during_pregnancy", 
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care1_province_table_report = create_province_table(
+    endline_natal_care1_province,
+    endline_natal_care1,
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care1_strata_table = create_strata_table(
+    endline_natal_care1_strata,
+    endline_natal_care1,
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care1_study_group_table = create_study_group_table(
+    endline_natal_care1_study_group,
+    endline_natal_care1,
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care1_study_group_table_report = create_study_group_table(
+    endline_natal_care1_study_group,
+    endline_natal_care1,
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care1_study_group_province_table = create_study_group_province_table(
+    endline_natal_care1_study_group_province,
+    endline_natal_care1_study_group,
+    vars = c(
+      "number_of_prenatal_visits", "at_least_four_anc_visits", 
+      "treated_well_during_anc", "treated_well_at_delivery", 
+      "delivery_assisted_by_doctor", "delivery_assisted_by_nurse", 
+      "delivery_assisted_by_midwife", "delivery_assisted_by_other_person", 
+      "delivery_assisted_by_traditional_midwife",
+      "delivery_assisted_by_community_health_worker",
+      "delivery_assisted_by_relative_or_friend", "delivery_assisted_by_other", 
+      "delivery_assisted_by_nobody", "difficulty_reaching_facility_due_to_cost",
+      "difficulty_reaching_facility_due_to_distance",
+      "difficulty_reaching_facility_due_to_stigma",
+      "difficulty_reaching_facility_due_to_poor_roads",
+      "difficulty_reaching_facility_due_to_other_reasons",
+      "difficulty_reaching_facility_no_difficulty",
+      "time_to_postnatal_check_for_child", "time_to_postnatal_check_for_mother"
+    ),
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline natal care - malaria - table ------------------------------------
+  endline_natal_care_malaria1_province_table = create_province_table(
+    endline_natal_care_malaria1_province,
+    endline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_malaria1_province_table_report = create_province_table(
+    endline_natal_care_malaria1_province,
+    endline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_malaria1_strata_table = create_strata_table(
+    endline_natal_care_malaria1_strata,
+    endline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_malaria1_study_group_table = create_study_group_table(
+    endline_natal_care_malaria1_study_group,
+    endline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_malaria1_study_group_table_report = create_study_group_table(
+    endline_natal_care_malaria1_study_group,
+    endline_natal_care_malaria1,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_malaria1_study_group_province_table = create_study_group_province_table(
+    endline_natal_care_malaria1_study_group_province,
+    endline_natal_care_malaria1_study_group,
+    vars = "given_malaria_treatment_during_pregnancy",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline natal care - malaria - table ------------------------------------
+  endline_natal_care_malaria2_province_table = create_province_table(
+    endline_natal_care_malaria2_province,
+    endline_natal_care_malaria2,
+    vars = c(
       "took_malaria_treatment_during_pregnancy",
-      "completed_malaria_treatment_during_pregnancy",
-      "at_least_one_tetanus_toxoid_vaccination",
-      "two_or_more_tetanus_toxoid_vaccination",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_malaria2_province_table_report = create_province_table(
+    endline_natal_care_malaria2_province,
+    endline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_malaria2_strata_table = create_strata_table(
+    endline_natal_care_malaria2_strata,
+    endline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_malaria2_study_group_table = create_study_group_table(
+    endline_natal_care_malaria2_study_group,
+    endline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_malaria2_study_group_table_report = create_study_group_table(
+    endline_natal_care_malaria2_study_group,
+    endline_natal_care_malaria2,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_malaria2_study_group_province_table = create_study_group_province_table(
+    endline_natal_care_malaria2_study_group_province,
+    endline_natal_care_malaria2_study_group,
+    vars = c(
+      "took_malaria_treatment_during_pregnancy",
+      "completed_malaria_treatment_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline natal care - tetanus1 - table -----------------------------------
+  endline_natal_care_tetanus1_province_table = create_province_table(
+    endline_natal_care_tetanus1_province,
+    endline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_tetanus1_province_table_report = create_province_table(
+    endline_natal_care_tetanus1_province,
+    endline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_tetanus1_strata_table = create_strata_table(
+    endline_natal_care_tetanus1_strata,
+    endline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_tetanus1_study_group_table = create_study_group_table(
+    endline_natal_care_tetanus1_study_group,
+    endline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_tetanus1_study_group_table_report = create_study_group_table(
+    endline_natal_care_tetanus1_study_group,
+    endline_natal_care_tetanus1,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list, 
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_tetanus1_study_group_province_table = create_study_group_province_table(
+    endline_natal_care_tetanus1_study_group_province,
+    endline_natal_care_tetanus1_study_group,
+    vars = "at_least_one_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline natal care - tetanus2 - table -----------------------------------
+  endline_natal_care_tetanus2_province_table = create_province_table(
+    endline_natal_care_tetanus2_province,
+    endline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_tetanus2_province_table_report = create_province_table(
+    endline_natal_care_tetanus2_province,
+    endline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_tetanus2_strata_table = create_strata_table(
+    endline_natal_care_tetanus2_strata,
+    endline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_tetanus2_study_group_table = create_study_group_table(
+    endline_natal_care_tetanus2_study_group,
+    endline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_tetanus2_study_group_table_report = create_study_group_table(
+    endline_natal_care_tetanus2_study_group,
+    endline_natal_care_tetanus2,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_tetanus2_study_group_province_table = create_study_group_province_table(
+    endline_natal_care_tetanus2_study_group_province,
+    endline_natal_care_tetanus2_study_group,
+    vars = "two_or_more_tetanus_toxoid_vaccination",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline natal care - supplements - table --------------------------------
+  endline_natal_care_supplement_province_table = create_province_table(
+    endline_natal_care_supplement_province,
+    endline_natal_care_supplement,
+    vars = c(
       "ferrous_sulfate_supplementation",
       "vitamin_a_supplementation_during_pregnancy"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_supplement_province_table_report = create_province_table(
+    endline_natal_care_supplement_province,
+    endline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_supplement_strata_table = create_strata_table(
+    endline_natal_care_supplement_strata,
+    endline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_supplement_study_group_table = create_study_group_table(
+    endline_natal_care_supplement_study_group,
+    endline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_natal_care_supplement_study_group_table_report = create_study_group_table(
+    endline_natal_care_supplement_study_group,
+    endline_natal_care_supplement,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_natal_care_supplement_study_group_province_table = create_study_group_province_table(
+    endline_natal_care_supplement_study_group_province,
+    endline_natal_care_supplement_study_group,
+    vars = c(
+      "ferrous_sulfate_supplementation",
+      "vitamin_a_supplementation_during_pregnancy"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline family planning table -------------------------------------------
@@ -9301,7 +11345,8 @@ outputs_tables_endline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_family_planning_province_table_report = create_province_table(
@@ -9328,7 +11373,8 @@ outputs_tables_endline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_family_planning_strata_table = create_strata_table(
@@ -9355,7 +11401,8 @@ outputs_tables_endline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_family_planning_study_group_table = create_study_group_table(
@@ -9382,7 +11429,8 @@ outputs_tables_endline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_family_planning_study_group_table_report = create_study_group_table(
@@ -9409,7 +11457,8 @@ outputs_tables_endline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_family_planning_study_group_province_table = create_study_group_province_table(
@@ -9436,116 +11485,496 @@ outputs_tables_endline <- tar_plan(
       "problem_with_having_more_than_4_children_other_reasons",
       "problem_with_having_more_than_4_children_none"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
-  ### Endline child immunisation table ----------------------------------------
-  endline_child_immunisation_province_table = create_province_table(
-    endline_child_immunisation_province,
-    endline_child_immunisation,
-    vars = c(
-      "immunisation_card_retention_self_report", "immunisation_card_retention",
-      "immunisation_bcg", "immunisation_polio_first_dose",
-      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
-      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
-      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
-      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
-      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
-      "immunisation_rotavirus_second_dose",
-      "immunisation_age_appropriate_immunisation"
-    ),
-    indicator_list = survey_indicator_list,
+  ### Endline child immunisation card self-report table -----------------------
+  endline_child_immunisation_card_self_report_province_table = create_province_table(
+    endline_child_immunisation_card_self_report_province,
+    endline_child_immunisation_card_self_report,
+    vars = "immunisation_card_retention_self_report",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
-  endline_child_immunisation_province_table_report = create_province_table(
-    endline_child_immunisation_province,
-    endline_child_immunisation,
-    vars = c(
-      "immunisation_card_retention_self_report", "immunisation_card_retention",
-      "immunisation_bcg", "immunisation_polio_first_dose",
-      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
-      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
-      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
-      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
-      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
-      "immunisation_rotavirus_second_dose",
-      "immunisation_age_appropriate_immunisation"
-    ),
-    indicator_list = survey_indicator_list,
+  endline_child_immunisation_card_self_report_province_table_report = create_province_table(
+    endline_child_immunisation_card_self_report_province,
+    endline_child_immunisation_card_self_report,
+    vars = "immunisation_card_retention_self_report",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
-  endline_child_immunisation_strata_table = create_strata_table(
-    endline_child_immunisation_strata,
-    endline_child_immunisation,
-    vars = c(
-      "immunisation_card_retention_self_report", "immunisation_card_retention",
-      "immunisation_bcg", "immunisation_polio_first_dose",
-      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
-      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
-      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
-      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
-      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
-      "immunisation_rotavirus_second_dose",
-      "immunisation_age_appropriate_immunisation"
-    ),
-    indicator_list = survey_indicator_list,
+  endline_child_immunisation_card_self_report_strata_table = create_strata_table(
+    endline_child_immunisation_card_self_report_strata,
+    endline_child_immunisation_card_self_report,
+    vars = "immunisation_card_retention_self_report",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
-  endline_child_immunisation_study_group_table = create_study_group_table(
-    endline_child_immunisation_study_group,
-    endline_child_immunisation,
-    vars = c(
-      "immunisation_card_retention_self_report", "immunisation_card_retention",
-      "immunisation_bcg", "immunisation_polio_first_dose",
-      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
-      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
-      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
-      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
-      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
-      "immunisation_rotavirus_second_dose",
-      "immunisation_age_appropriate_immunisation"
-    ),
-    indicator_list = survey_indicator_list,
+  endline_child_immunisation_card_self_report_study_group_table = create_study_group_table(
+    endline_child_immunisation_card_self_report_study_group,
+    endline_child_immunisation_card_self_report,
+    vars = "immunisation_card_retention_self_report",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
-  endline_child_immunisation_study_group_table_report = create_study_group_table(
-    endline_child_immunisation_study_group,
-    endline_child_immunisation,
-    vars = c(
-      "immunisation_card_retention_self_report", "immunisation_card_retention",
-      "immunisation_bcg", "immunisation_polio_first_dose",
-      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
-      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
-      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
-      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
-      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
-      "immunisation_rotavirus_second_dose",
-      "immunisation_age_appropriate_immunisation"
-    ),
-    indicator_list = survey_indicator_list,
+  endline_child_immunisation_card_self_report_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_card_self_report_study_group,
+    endline_child_immunisation_card_self_report,
+    vars = "immunisation_card_retention_self_report",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
-  endline_child_immunisation_study_group_province_table = create_study_group_province_table(
-    endline_child_immunisation_study_group_province,
-    endline_child_immunisation_study_group,
+  endline_child_immunisation_card_self_report_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_card_self_report_study_group_province,
+    endline_child_immunisation_card_self_report_study_group,
+    vars = "immunisation_card_retention_self_report",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation card available table -------------------------
+  endline_child_immunisation_card_available_province_table = create_province_table(
+    endline_child_immunisation_card_available_province,
+    endline_child_immunisation_card_available,
+    vars = "immunisation_card_retention",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_card_available_province_table_report = create_province_table(
+    endline_child_immunisation_card_available_province,
+    endline_child_immunisation_card_available,
+    vars = "immunisation_card_retention",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_card_available_strata_table = create_strata_table(
+    endline_child_immunisation_card_available_strata,
+    endline_child_immunisation_card_available,
+    vars = "immunisation_card_retention",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_card_available_study_group_table = create_study_group_table(
+    endline_child_immunisation_card_available_study_group,
+    endline_child_immunisation_card_available,
+    vars = "immunisation_card_retention",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_card_available_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_card_available_study_group,
+    endline_child_immunisation_card_available,
+    vars = "immunisation_card_retention",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_card_available_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_card_available_study_group_province,
+    endline_child_immunisation_card_available_study_group,
+    vars = "immunisation_card_retention",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation - BCG - table --------------------------------
+  endline_child_immunisation_bcg_province_table = create_province_table(
+    endline_child_immunisation_bcg_province,
+    endline_child_immunisation_bcg,
+    vars = "immunisation_bcg",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_bcg_province_table_report = create_province_table(
+    endline_child_immunisation_bcg_province,
+    endline_child_immunisation_bcg,
+    vars = "immunisation_bcg",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_bcg_strata_table = create_strata_table(
+    endline_child_immunisation_bcg_strata,
+    endline_child_immunisation_bcg,
+    vars = "immunisation_bcg",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_bcg_study_group_table = create_study_group_table(
+    endline_child_immunisation_bcg_study_group,
+    endline_child_immunisation_bcg,
+    vars = "immunisation_bcg",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_bcg_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_bcg_study_group,
+    endline_child_immunisation_bcg,
+    vars = "immunisation_bcg",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_bcg_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_bcg_study_group_province,
+    endline_child_immunisation_bcg_study_group,
+    vars = "immunisation_bcg",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation - OPV1 - table -------------------------------
+  endline_child_immunisation_opv_province_table = create_province_table(
+    endline_child_immunisation_opv_province,
+    endline_child_immunisation_opv,
+    vars = "immunisation_polio_first_dose",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_opv_province_table_report = create_province_table(
+    endline_child_immunisation_opv_province,
+    endline_child_immunisation_opv,
+    vars = "immunisation_polio_first_dose",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_opv_strata_table = create_strata_table(
+    endline_child_immunisation_opv_strata,
+    endline_child_immunisation_opv,
+    vars = "immunisation_polio_first_dose",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_opv_study_group_table = create_study_group_table(
+    endline_child_immunisation_opv_study_group,
+    endline_child_immunisation_opv,
+    vars = "immunisation_polio_first_dose",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_opv_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_opv_study_group,
+    endline_child_immunisation_opv,
+    vars = "immunisation_polio_first_dose",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_opv_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_opv_study_group_province,
+    endline_child_immunisation_opv_study_group,
+    vars = "immunisation_polio_first_dose",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation set 1 table ----------------------------------
+  endline_child_immunisation_set1_province_table = create_province_table(
+    endline_child_immunisation_set1_province,
+    endline_child_immunisation_set1,
     vars = c(
-      "immunisation_card_retention_self_report", "immunisation_card_retention",
-      "immunisation_bcg", "immunisation_polio_first_dose",
-      "immunisation_polio_second_dose", "immunisation_polio_third_dose",
-      "immunisation_polio_fourth_dose", "immunisation_pentavalent_first_dose",
-      "immunisation_pentavalent_second_dose", "immunisation_pentavalent_third_dose",
-      "immunisation_measles_first_dose", "immunisation_measles_second_dose",
-      "immunisation_pneumococcal_first_dose", "immunisation_pneumococcal_second_dose",
-      "immunisation_pneumococcal_third_dose", "immunisation_rotavirus_first_dose",
-      "immunisation_rotavirus_second_dose",
-      "immunisation_age_appropriate_immunisation"
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set1_province_table_report = create_province_table(
+    endline_child_immunisation_set1_province,
+    endline_child_immunisation_set1,
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_set1_strata_table = create_strata_table(
+    endline_child_immunisation_set1_strata,
+    endline_child_immunisation_set1,
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set1_study_group_table = create_study_group_table(
+    endline_child_immunisation_set1_study_group,
+    endline_child_immunisation_set1,
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set1_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_set1_study_group,
+    endline_child_immunisation_set1,
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_set1_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_set1_study_group_province,
+    endline_child_immunisation_set1_study_group,
+    vars = c(
+      "immunisation_polio_second_dose", 
+      "immunisation_pentavalent_first_dose",
+      "immunisation_pneumococcal_first_dose", 
+      "immunisation_rotavirus_first_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation set2 table -----------------------------------
+  endline_child_immunisation_set2_province_table = create_province_table(
+    endline_child_immunisation_set2_province,
+    endline_child_immunisation_set2,
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set2_province_table_report = create_province_table(
+    endline_child_immunisation_set2_province,
+    endline_child_immunisation_set2,
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_set2_strata_table = create_strata_table(
+    endline_child_immunisation_set2_strata,
+    endline_child_immunisation_set2,
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set2_study_group_table = create_study_group_table(
+    endline_child_immunisation_set2_study_group,
+    endline_child_immunisation_set2,
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set2_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_set2_study_group,
+    endline_child_immunisation_set2,
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_set2_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_set2_study_group_province,
+    endline_child_immunisation_set2_study_group,
+    vars = c(
+      "immunisation_polio_third_dose",
+      "immunisation_pentavalent_second_dose", 
+      "immunisation_pneumococcal_second_dose",
+      "immunisation_rotavirus_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation set3 table -----------------------------------
+  endline_child_immunisation_set3_province_table = create_province_table(
+    endline_child_immunisation_set3_province,
+    endline_child_immunisation_set3,
+    vars = c(
+      "immunisation_polio_fourth_dose", 
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set3_province_table_report = create_province_table(
+    endline_child_immunisation_set3_province,
+    endline_child_immunisation_set3,
+    vars = c(
+      "immunisation_polio_fourth_dose", 
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_set3_strata_table = create_strata_table(
+    endline_child_immunisation_set3_strata,
+    endline_child_immunisation_set3,
+    vars = c(
+      "immunisation_polio_fourth_dose", 
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set3_study_group_table = create_study_group_table(
+    endline_child_immunisation_set3_study_group,
+    endline_child_immunisation_set3,
+    vars = c(
+      "immunisation_polio_fourth_dose", 
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_set3_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_set3_study_group,
+    endline_child_immunisation_set3,
+    vars = c(
+      "immunisation_polio_fourth_dose", 
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_set3_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_set3_study_group_province,
+    endline_child_immunisation_set3_study_group,
+    vars = c(
+      "immunisation_polio_fourth_dose", 
+      "immunisation_pentavalent_third_dose",
+      "immunisation_pneumococcal_third_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation - measles - table ----------------------------
+  endline_child_immunisation_measles_province_table = create_province_table(
+    endline_child_immunisation_measles_province,
+    endline_child_immunisation_measles,
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_measles_province_table_report = create_province_table(
+    endline_child_immunisation_measles_province,
+    endline_child_immunisation_measles,
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_measles_strata_table = create_strata_table(
+    endline_child_immunisation_measles_strata,
+    endline_child_immunisation_measles,
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_measles_study_group_table = create_study_group_table(
+    endline_child_immunisation_measles_study_group,
+    endline_child_immunisation_measles,
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_measles_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_measles_study_group,
+    endline_child_immunisation_measles,
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_measles_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_measles_study_group_province,
+    endline_child_immunisation_measles_study_group,
+    vars = c(
+      "immunisation_measles_first_dose", "immunisation_measles_second_dose"
+    ),
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline child immunisation full table -----------------------------------
@@ -9553,42 +11982,97 @@ outputs_tables_endline <- tar_plan(
     endline_child_immunisation_full_province,
     endline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_immunisation_full_province_table_report = create_province_table(
     endline_child_immunisation_full_province,
     endline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_immunisation_full_strata_table = create_strata_table(
     endline_child_immunisation_full_strata,
     endline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_immunisation_full_study_group_table = create_study_group_table(
     endline_child_immunisation_full_study_group,
     endline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_immunisation_full_study_group_table_report = create_study_group_table(
     endline_child_immunisation_full_study_group,
     endline_child_immunisation_full,
     vars = "immunisation_fully_immunised",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_immunisation_full_study_group_province_table = create_study_group_province_table(
     endline_child_immunisation_full_study_group_province,
     endline_child_immunisation_full_study_group,
     vars = "immunisation_fully_immunised",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline child immunisation full table -----------------------------------
+  endline_child_immunisation_age_appropriate_province_table = create_province_table(
+    endline_child_immunisation_age_appropriate_province,
+    endline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_age_appropriate_province_table_report = create_province_table(
+    endline_child_immunisation_age_appropriate_province,
+    endline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_age_appropriate_strata_table = create_strata_table(
+    endline_child_immunisation_age_appropriate_strata,
+    endline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_age_appropriate_study_group_table = create_study_group_table(
+    endline_child_immunisation_age_appropriate_study_group,
+    endline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_child_immunisation_age_appropriate_study_group_table_report = create_study_group_table(
+    endline_child_immunisation_age_appropriate_study_group,
+    endline_child_immunisation_age_appropriate,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_child_immunisation_age_appropriate_study_group_province_table = create_study_group_province_table(
+    endline_child_immunisation_age_appropriate_study_group_province,
+    endline_child_immunisation_age_appropriate_study_group,
+    vars = "immunisation_age_appropriate_immunisation",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline IYCF table ------------------------------------------------------
@@ -9601,7 +12085,8 @@ outputs_tables_endline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_iycf_province_table_report = create_province_table(
@@ -9613,7 +12098,8 @@ outputs_tables_endline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_iycf_strata_table = create_strata_table(
@@ -9625,7 +12111,8 @@ outputs_tables_endline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_iycf_study_group_table = create_study_group_table(
@@ -9637,7 +12124,8 @@ outputs_tables_endline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_iycf_study_group_table_report = create_study_group_table(
@@ -9649,7 +12137,8 @@ outputs_tables_endline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_iycf_study_group_province_table =  create_study_group_province_table(
@@ -9661,7 +12150,8 @@ outputs_tables_endline <- tar_plan(
       "food_group_legumes", "food_group_meat", "food_group_eggs",
       "food_groups_score", "minimum_dietary_diversity"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline breastfeeding table ---------------------------------------------
@@ -9669,42 +12159,48 @@ outputs_tables_endline <- tar_plan(
     endline_breastfeeding_province,
     endline_breastfeeding,
     vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_breastfeeding_province_table_report = create_province_table(
     endline_breastfeeding_province,
     endline_breastfeeding,
     vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_breastfeeding_strata_table = create_strata_table(
     endline_breastfeeding_strata,
     endline_breastfeeding,
     vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_breastfeeding_stugy_group_table = create_study_group_table(
     endline_breastfeeding_study_group,
     endline_breastfeeding,
     vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_breastfeeding_study_group_table_report = create_study_group_table(
     endline_breastfeeding_study_group,
     endline_breastfeeding,
     vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_breastfeeding_study_group_province_table = create_study_group_province_table(
     endline_breastfeeding_study_group_province,
     endline_breastfeeding_study_group,
     vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline exclusive breastfeeding table -----------------------------------
@@ -9712,42 +12208,48 @@ outputs_tables_endline <- tar_plan(
     endline_ebf_province,
     endline_ebf,
     vars = "exclusive_breastfeeding",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_ebf_province_table_report = create_province_table(
     endline_ebf_province,
     endline_ebf,
     vars = "exclusive_breastfeeding",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_ebf_strata_table = create_strata_table(
     endline_ebf_strata,
     endline_ebf,
     vars = "exclusive_breastfeeding",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_ebf_study_group_table = create_study_group_table(
     endline_ebf_study_group,
     endline_ebf,
     vars = "exclusive_breastfeeding",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_ebf_study_group_table_report = create_study_group_table(
     endline_ebf_study_group,
     endline_ebf,
     vars = "exclusive_breastfeeding",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_ebf_study_group_province_table = create_study_group_province_table(
     endline_ebf_study_group_province,
     endline_ebf_study_group,
     vars = "exclusive_breastfeeding",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline child vitamin A coverage table ----------------------------------
@@ -9755,42 +12257,48 @@ outputs_tables_endline <- tar_plan(
     endline_child_vita_province,
     endline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_vita_province_table_report = create_province_table(
     endline_child_vita_province,
     endline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_vita_strata_table = create_strata_table(
     endline_child_vita_strata,
     endline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_vita_study_group_table = create_study_group_table(
     endline_child_vita_study_group,
     endline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_child_vita_study_group_table_report = create_study_group_table(
     endline_child_vita_study_group,
     endline_child_vita,
     vars = "vitamin_a_supplementation_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_child_vita_study_group_province_table = create_study_group_province_table(
     endline_child_vita_study_group_province,
     endline_child_vita_study_group,
     vars = "vitamin_a_supplementation_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline deworming coverage table ----------------------------------------
@@ -9798,42 +12306,48 @@ outputs_tables_endline <- tar_plan(
     endline_deworming_province,
     endline_deworming,
     vars = "deworming_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_deworming_province_table_report = create_province_table(
     endline_deworming_province,
     endline_deworming,
     vars = "deworming_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_deworming_strata_table = create_strata_table(
     endline_deworming_strata,
     endline_deworming,
     vars = "deworming_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_deworming_study_group_table = create_study_group_table(
     endline_deworming_study_group,
     endline_deworming,
     vars = "deworming_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_deworming_study_group_table_report = create_study_group_table(
     endline_deworming_study_group,
     endline_deworming,
     vars = "deworming_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_deworming_study_group_province_table = create_study_group_province_table(
     endline_deworming_study_group_province,
     endline_deworming_study_group,
     vars = "deworming_coverage",
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline women's decision making table -----------------------------------
@@ -9844,7 +12358,8 @@ outputs_tables_endline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wem_province_table_report = create_province_table(
@@ -9854,7 +12369,8 @@ outputs_tables_endline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_wem_strata_table = create_strata_table(
@@ -9864,7 +12380,8 @@ outputs_tables_endline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wem_study_group_table = create_study_group_table(
@@ -9874,7 +12391,8 @@ outputs_tables_endline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_wem_study_group_table_report = create_study_group_table(
@@ -9884,7 +12402,8 @@ outputs_tables_endline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_wem_study_group_province_table = create_study_group_province_table(
@@ -9894,7 +12413,8 @@ outputs_tables_endline <- tar_plan(
       "freedom_and_control", "control_over_destiny",
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   ### Endline women's anthropometry table -------------------------------------
@@ -9902,42 +12422,48 @@ outputs_tables_endline <- tar_plan(
     endline_women_anthro_province,
     endline_women_anthro,
     vars = c("body_mass_index", "bmi_class"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_women_anthro_province_table_report = create_province_table(
     endline_women_anthro_province,
     endline_women_anthro,
     vars = c("body_mass_index", "bmi_class"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, pivot = "wide"
   ),
   endline_women_anthro_strata_table = create_strata_table(
     endline_women_anthro_strata,
     endline_women_anthro,
     vars = c("body_mass_index", "bmi_class"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_women_anthro_study_group_table = create_study_group_table(
     endline_women_anthro_study_group,
     endline_women_anthro,
     vars = c("body_mass_index", "bmi_class"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   ),
   endline_women_anthro_study_group_table_report = create_study_group_table(
     endline_women_anthro_study_group,
     endline_women_anthro,
     vars = c("body_mass_index", "bmi_class"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = TRUE, format = "wide"
   ),
   endline_women_anthro_study_group_province_table = create_study_group_province_table(
     endline_women_anthro_study_group_province,
     endline_women_anthro_study_group,
     vars = c("body_mass_index", "bmi_class"),
-    indicator_list = survey_indicator_list,
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
     report = FALSE
   )
 )
@@ -10018,7 +12544,12 @@ outputs_overall <- tar_plan(
       endline_hh_income_strata,
       endline_hh_income_study_group,
       endline_hh_income_study_group_province,
-      endline_hh_income
+      endline_hh_income,
+      endline_hh_income1_province, 
+      endline_hh_income1_strata,
+      endline_hh_income1_study_group,
+      endline_hh_income1_study_group_province,
+      endline_hh_income1
     )
   ),
   ### Overall table output - household structure -------------------------------
@@ -10113,7 +12644,12 @@ outputs_overall <- tar_plan(
       endline_hh_travel_strata,
       endline_hh_travel_study_group,
       endline_hh_travel_study_group_province,
-      endline_hh_travel
+      endline_hh_travel,
+      endline_hh_travel1_province, 
+      endline_hh_travel1_strata,
+      endline_hh_travel1_study_group,
+      endline_hh_travel1_study_group_province,
+      endline_hh_travel1
     )
   ),
   ### Overall table output - WASH ----------------------------------------------
@@ -10178,18 +12714,68 @@ outputs_overall <- tar_plan(
     variable_set = "pregnant",
     indicator_list = survey_indicator_list,
     baseline = list(
+      baseline_pregnant_card_province, 
+      baseline_pregnant_card_strata,
+      baseline_pregnant_card_study_group,
+      baseline_pregnant_card_study_group_province,
+      baseline_pregnant_card,
+      baseline_pregnant_card_available_province, 
+      baseline_pregnant_card_available_strata,
+      baseline_pregnant_card_available_study_group,
+      baseline_pregnant_card_available_study_group_province,
+      baseline_pregnant_card_available,
       baseline_pregnant_province, 
       baseline_pregnant_strata,
       baseline_pregnant_study_group,
       baseline_pregnant_study_group_province,
-      baseline_pregnant
+      baseline_pregnant,
+      baseline_pregnant_vct1_province, 
+      baseline_pregnant_vct1_strata,
+      baseline_pregnant_vct1_study_group,
+      baseline_pregnant_vct1_study_group_province,
+      baseline_pregnant_vct1,
+      baseline_pregnant_vct2_province, 
+      baseline_pregnant_vct2_strata,
+      baseline_pregnant_vct2_study_group,
+      baseline_pregnant_vct2_study_group_province,
+      baseline_pregnant_vct2,
+      baseline_pregnant_vct3_province, 
+      baseline_pregnant_vct3_strata,
+      baseline_pregnant_vct3_study_group,
+      baseline_pregnant_vct3_study_group_province,
+      baseline_pregnant_vct3
     ),
     endline = list(
+      endline_pregnant_card_province, 
+      endline_pregnant_card_strata,
+      endline_pregnant_card_study_group,
+      endline_pregnant_card_study_group_province,
+      endline_pregnant_card,
+      endline_pregnant_card_available_province, 
+      endline_pregnant_card_available_strata,
+      endline_pregnant_card_available_study_group,
+      endline_pregnant_card_available_study_group_province,
+      endline_pregnant_card_available,
       endline_pregnant_province, 
       endline_pregnant_strata,
       endline_pregnant_study_group,
       endline_pregnant_study_group_province,
-      endline_pregnant
+      endline_pregnant,
+      endline_pregnant_vct1_province, 
+      endline_pregnant_vct1_strata,
+      endline_pregnant_vct1_study_group,
+      endline_pregnant_vct1_study_group_province,
+      endline_pregnant_vct1,
+      endline_pregnant_vct2_province, 
+      endline_pregnant_vct2_strata,
+      endline_pregnant_vct2_study_group,
+      endline_pregnant_vct2_study_group_province,
+      endline_pregnant_vct2,
+      endline_pregnant_vct3_province, 
+      endline_pregnant_vct3_strata,
+      endline_pregnant_vct3_study_group,
+      endline_pregnant_vct3_study_group_province,
+      endline_pregnant_vct3
     )
   ),
   ### Overall table output - pregnant_prevention -------------------------------
@@ -10220,14 +12806,69 @@ outputs_overall <- tar_plan(
       baseline_natal_care_strata,
       baseline_natal_care_study_group,
       baseline_natal_care_study_group_province,
-      baseline_natal_care
+      baseline_natal_care,
+      baseline_natal_care_malaria1_province, 
+      baseline_natal_care_malaria1_strata,
+      baseline_natal_care_malaria1_study_group,
+      baseline_natal_care_malaria1_study_group_province,
+      baseline_natal_care_malaria1,
+      baseline_natal_care_malaria2_province, 
+      baseline_natal_care_malaria2_strata,
+      baseline_natal_care_malaria2_study_group,
+      baseline_natal_care_malaria2_study_group_province,
+      baseline_natal_care_malaria2,
+      baseline_natal_care_tetanus1_province, 
+      baseline_natal_care_tetanus1_strata,
+      baseline_natal_care_tetanus1_study_group,
+      baseline_natal_care_tetanus1_study_group_province,
+      baseline_natal_care_tetanus1,
+      baseline_natal_care_tetanus2_province, 
+      baseline_natal_care_tetanus2_strata,
+      baseline_natal_care_tetanus2_study_group,
+      baseline_natal_care_tetanus2_study_group_province,
+      baseline_natal_care_tetanus2,
+      baseline_natal_care_supplement_province, 
+      baseline_natal_care_supplement_strata,
+      baseline_natal_care_supplement_study_group,
+      baseline_natal_care_supplement_study_group_province,
+      baseline_natal_care_supplement
     ),
     endline = list(
       endline_natal_care_province, 
       endline_natal_care_strata,
       endline_natal_care_study_group,
       endline_natal_care_study_group_province,
-      endline_natal_care
+      endline_natal_care,
+      endline_natal_care1_province, 
+      endline_natal_care1_strata,
+      endline_natal_care1_study_group,
+      endline_natal_care1_study_group_province,
+      endline_natal_care1,
+      endline_natal_care_malaria1_province, 
+      endline_natal_care_malaria1_strata,
+      endline_natal_care_malaria1_study_group,
+      endline_natal_care_malaria1_study_group_province,
+      endline_natal_care_malaria1,
+      endline_natal_care_malaria2_province, 
+      endline_natal_care_malaria2_strata,
+      endline_natal_care_malaria2_study_group,
+      endline_natal_care_malaria2_study_group_province,
+      endline_natal_care_malaria2,
+      endline_natal_care_tetanus1_province, 
+      endline_natal_care_tetanus1_strata,
+      endline_natal_care_tetanus1_study_group,
+      endline_natal_care_tetanus1_study_group_province,
+      endline_natal_care_tetanus1,
+      endline_natal_care_tetanus2_province, 
+      endline_natal_care_tetanus2_strata,
+      endline_natal_care_tetanus2_study_group,
+      endline_natal_care_tetanus2_study_group_province,
+      endline_natal_care_tetanus2,
+      endline_natal_care_supplement_province, 
+      endline_natal_care_supplement_strata,
+      endline_natal_care_supplement_study_group,
+      endline_natal_care_supplement_study_group_province,
+      endline_natal_care_supplement
     )
   ),
   ### Overall table output - family planning -----------------------------------
@@ -10334,14 +12975,94 @@ outputs_overall <- tar_plan(
       baseline_child_ill_strata,
       baseline_child_ill_study_group,
       baseline_child_ill_study_group_province,
-      baseline_child_ill
+      baseline_child_ill,
+      baseline_diarrhoea_treatment_province, 
+      baseline_diarrhoea_treatment_strata,
+      baseline_diarrhoea_treatment_study_group,
+      baseline_diarrhoea_treatment_study_group_province,
+      baseline_diarrhoea_treatment,
+      baseline_fever_treatment_province, 
+      baseline_fever_treatment_strata,
+      baseline_fever_treatment_study_group,
+      baseline_fever_treatment_study_group_province,
+      baseline_fever_treatment,
+      baseline_malaria_test_province, 
+      baseline_malaria_test_strata,
+      baseline_malaria_test_study_group,
+      baseline_malaria_test_study_group_province,
+      baseline_malaria_test,
+      baseline_malaria_treatment_province, 
+      baseline_malaria_treatment_strata,
+      baseline_malaria_treatment_study_group,
+      baseline_malaria_treatment_study_group_province,
+      baseline_malaria_treatment,
+      baseline_rti_treatment_province, 
+      baseline_rti_treatment_strata,
+      baseline_rti_treatment_study_group,
+      baseline_rti_treatment_study_group_province,
+      baseline_rti_treatment,
+      baseline_rti_treatment_type_province, 
+      baseline_rti_treatment_type_strata,
+      baseline_rti_treatment_type_study_group,
+      baseline_rti_treatment_type_study_group_province,
+      baseline_rti_treatment_type
     ),
     endline = list(
       endline_child_ill_province, 
       endline_child_ill_strata,
       endline_child_ill_study_group,
       endline_child_ill_study_group_province,
-      endline_child_ill
+      endline_child_ill,
+      endline_diarrhoea_treatment_province, 
+      endline_diarrhoea_treatment_strata,
+      endline_diarrhoea_treatment_study_group,
+      endline_diarrhoea_treatment_study_group_province,
+      endline_diarrhoea_treatment,
+      endline_diarrhoea_treatment1_province, 
+      endline_diarrhoea_treatment1_strata,
+      endline_diarrhoea_treatment1_study_group,
+      endline_diarrhoea_treatment1_study_group_province,
+      endline_diarrhoea_treatment1,
+      endline_fever_treatment_province, 
+      endline_fever_treatment_strata,
+      endline_fever_treatment_study_group,
+      endline_fever_treatment_study_group_province,
+      endline_fever_treatment,
+      endline_fever_treatment1_province, 
+      endline_fever_treatment1_strata,
+      endline_fever_treatment1_study_group,
+      endline_fever_treatment1_study_group_province,
+      endline_fever_treatment1,
+      endline_malaria_test_province, 
+      endline_malaria_test_strata,
+      endline_malaria_test_study_group,
+      endline_malaria_test_study_group_province,
+      endline_malaria_test,
+      endline_malaria_test1_province, 
+      endline_malaria_test1_strata,
+      endline_malaria_test1_study_group,
+      endline_malaria_test1_study_group_province,
+      endline_malaria_test1,
+      endline_malaria_treatment_province, 
+      endline_malaria_treatment_strata,
+      endline_malaria_treatment_study_group,
+      endline_malaria_treatment_study_group_province,
+      endline_malaria_treatment,
+      endline_rti_treatment_province, 
+      endline_rti_treatment_strata,
+      endline_rti_treatment_study_group,
+      endline_rti_treatment_study_group_province,
+      endline_rti_treatment,
+      endline_rti_treatment1_province, 
+      endline_rti_treatment1_strata,
+      endline_rti_treatment1_study_group,
+      endline_rti_treatment1_study_group_province,
+      endline_rti_treatment1,
+      endline_rti_treatment_type_province, 
+      endline_rti_treatment_type_strata,
+      endline_rti_treatment_type_study_group,
+      endline_rti_treatment_type_study_group_province,
+      endline_rti_treatment_type
     )
   ),
   ### Overall table output - child immunisation --------------------------------
@@ -10349,18 +13070,78 @@ outputs_overall <- tar_plan(
     variable_set = "child_immunisation",
     indicator_list = survey_indicator_list,
     baseline = list(
-      baseline_child_immunisation_province, 
-      baseline_child_immunisation_strata,
-      baseline_child_immunisation_study_group,
-      baseline_child_immunisation_study_group_province,
-      baseline_child_immunisation
+      baseline_child_immunisation_card_self_report_province, 
+      baseline_child_immunisation_card_self_report_strata,
+      baseline_child_immunisation_card_self_report_study_group,
+      baseline_child_immunisation_card_self_report_study_group_province,
+      baseline_child_immunisation_card_self_report,
+      baseline_child_immunisation_card_available_province, 
+      baseline_child_immunisation_card_available_strata,
+      baseline_child_immunisation_card_available_study_group,
+      baseline_child_immunisation_card_available_study_group_province,
+      baseline_child_immunisation_card_available,
+      baseline_child_immunisation_bcg_province, 
+      baseline_child_immunisation_bcg_strata,
+      baseline_child_immunisation_bcg_study_group,
+      baseline_child_immunisation_bcg_study_group_province,
+      baseline_child_immunisation_bcg,
+      baseline_child_immunisation_opv_province, 
+      baseline_child_immunisation_opv_strata,
+      baseline_child_immunisation_opv_study_group,
+      baseline_child_immunisation_opv_study_group_province,
+      baseline_child_immunisation_opv,
+      baseline_child_immunisation_set1_province, 
+      baseline_child_immunisation_set1_strata,
+      baseline_child_immunisation_set1_study_group,
+      baseline_child_immunisation_set1_study_group_province,
+      baseline_child_immunisation_set1,
+      baseline_child_immunisation_set2_province, 
+      baseline_child_immunisation_set2_strata,
+      baseline_child_immunisation_set2_study_group,
+      baseline_child_immunisation_set2_study_group_province,
+      baseline_child_immunisation_set2,
+      baseline_child_immunisation_set3_province, 
+      baseline_child_immunisation_set3_strata,
+      baseline_child_immunisation_set3_study_group,
+      baseline_child_immunisation_set3_study_group_province,
+      baseline_child_immunisation_set3
     ),
     endline = list(
-      endline_child_immunisation_province, 
-      endline_child_immunisation_strata,
-      endline_child_immunisation_study_group,
-      endline_child_immunisation_study_group_province,
-      endline_child_immunisation
+      endline_child_immunisation_card_self_report_province, 
+      endline_child_immunisation_card_self_report_strata,
+      endline_child_immunisation_card_self_report_study_group,
+      endline_child_immunisation_card_self_report_study_group_province,
+      endline_child_immunisation_card_self_report,
+      endline_child_immunisation_card_available_province, 
+      endline_child_immunisation_card_available_strata,
+      endline_child_immunisation_card_available_study_group,
+      endline_child_immunisation_card_available_study_group_province,
+      endline_child_immunisation_card_available,
+      endline_child_immunisation_bcg_province, 
+      endline_child_immunisation_bcg_strata,
+      endline_child_immunisation_bcg_study_group,
+      endline_child_immunisation_bcg_study_group_province,
+      endline_child_immunisation_bcg,
+      endline_child_immunisation_opv_province, 
+      endline_child_immunisation_opv_strata,
+      endline_child_immunisation_opv_study_group,
+      endline_child_immunisation_opv_study_group_province,
+      endline_child_immunisation_opv,
+      endline_child_immunisation_set1_province, 
+      endline_child_immunisation_set1_strata,
+      endline_child_immunisation_set1_study_group,
+      endline_child_immunisation_set1_study_group_province,
+      endline_child_immunisation_set1,
+      endline_child_immunisation_set2_province, 
+      endline_child_immunisation_set2_strata,
+      endline_child_immunisation_set2_study_group,
+      endline_child_immunisation_set2_study_group_province,
+      endline_child_immunisation_set2,
+      endline_child_immunisation_set3_province, 
+      endline_child_immunisation_set3_strata,
+      endline_child_immunisation_set3_study_group,
+      endline_child_immunisation_set3_study_group_province,
+      endline_child_immunisation_set3
     )
   ),
   ### Overall table output - child immunisation full ---------------------------
@@ -10372,14 +13153,24 @@ outputs_overall <- tar_plan(
       baseline_child_immunisation_full_strata,
       baseline_child_immunisation_full_study_group,
       baseline_child_immunisation_full_study_group_province,
-      baseline_child_immunisation_full
+      baseline_child_immunisation_full,
+      baseline_child_immunisation_age_appropriate_province, 
+      baseline_child_immunisation_age_appropriate_strata,
+      baseline_child_immunisation_age_appropriate_study_group,
+      baseline_child_immunisation_age_appropriate_study_group_province,
+      baseline_child_immunisation_age_appropriate
     ),
     endline = list(
       endline_child_immunisation_full_province, 
       endline_child_immunisation_full_strata,
       endline_child_immunisation_full_study_group,
       endline_child_immunisation_full_study_group_province,
-      endline_child_immunisation_full
+      endline_child_immunisation_full,
+      endline_child_immunisation_age_appropriate_province, 
+      endline_child_immunisation_age_appropriate_strata,
+      endline_child_immunisation_age_appropriate_study_group,
+      endline_child_immunisation_age_appropriate_study_group_province,
+      endline_child_immunisation_age_appropriate
     )
   ),
   ### Overall table output - vitamin A supplementation -------------------------
@@ -10601,6 +13392,32 @@ outputs_overall <- tar_plan(
       )
     }
   ),
+  ### Create XLSX output for all endline tables
+  tar_target(
+    name = endline_results_xlsx,
+    command = {
+      endline_wb <- openxlsx::createWorkbook()
+      openxlsx::addWorksheet(
+        wb = endline_wb, sheetName = "endline"
+      )
+      openxlsx::writeData(
+        wb = endline_wb,
+        sheet = "endline",
+        x = endline_results_all
+      )
+      openxlsx::setColWidths(
+        wb = endline_wb,
+        sheet = "endline",
+        cols = seq_len(ncol(endline_results_all)),
+        widths = "auto"
+      )
+      openxlsx::saveWorkbook(
+        wb = endline_wb,
+        file = "outputs/endline_results.xlsx",
+        overwrite = TRUE
+      )
+    }
+  ),
   baseline_results_csv = write.csv(
     x = baseline_results_all,
     file = "outputs/baseline_results.csv",
@@ -10636,6 +13453,14 @@ reports <- tar_plan(
   tar_render(
     name = baseline_survey_results_report,
     path = "reports/baseline_survey_results_report.Rmd",
+    output_dir = "outputs",
+    knit_root_dir = here::here(),
+    cue = tar_cue("always")
+  ),
+  ### Endline report ----------------------------------------------------------
+  tar_render(
+    name = endline_survey_results_report,
+    path = "reports/endline_survey_results_report.Rmd",
     output_dir = "outputs",
     knit_root_dir = here::here(),
     cue = tar_cue("always")

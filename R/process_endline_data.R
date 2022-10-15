@@ -1355,6 +1355,8 @@
   
   process_endline_data <- function(.data, 
                                    survey_endline_choices) {
+    n_row <- nrow(.data)
+    
     dplyr::mutate(
       .data = .data,
       ### Demographics - respondent ----------------------------------------------
@@ -1487,9 +1489,30 @@
       source_of_household_income = refactor_var_categorical(
         x = ig1, y = "income1", choices = survey_endline_choices
       ),
-      sufficiency_of_household_income = NA,
-      sufficiency_of_family_resource = NA,
-      household_income_against_expenses = NA,
+      sufficiency_of_household_income = vector(
+        mode = "character", length = n_row
+      ) |>
+        factor(
+          levels = survey_endline_choices |>
+            subset(list_name == "income2", select = `label::English (en)`) |>
+            (\(x) x$`label::English (en)`)()
+        ),
+      sufficiency_of_family_resource = vector(
+        mode = "character", length = n_row
+      ) |>
+        factor(
+          levels = survey_endline_choices |>
+            subset(list_name == "income2", select = `label::English (en)`) |>
+            (\(x) x$`label::English (en)`)()
+        ),
+      household_income_against_expenses = vector(
+        mode = "character", length = n_row
+      ) |>
+        factor(
+          levels = survey_endline_choices |>
+            subset(list_name == "income3", select = `label::English (en)`) |>
+            (\(x) x$`label::English (en)`)()
+        ),
       ### Household structure ----------------------------------------------------
       home_ownership_own = ifelse(sdh6 == 2, 0, 1),
       home_ownership_rent = ifelse(sdh7 == 2, 0, 1),
@@ -1521,7 +1544,7 @@
       electricity = recode_yes_no(as.integer(cdcg1)),
       cellphone = recode_yes_no(as.integer(cdcg4)),
       computer = recode_yes_no(as.integer(cdcg7)),
-      landline = NA,
+      landline = NA_integer_,
       radio = recode_yes_no(as.integer(cdcg2)),
       television = recode_yes_no(as.integer(cdcg3)),
       housekeeper_childcare_employee = recode_yes_no(as.integer(cdcg14)),
@@ -1550,10 +1573,24 @@
       mode_of_travel_to_local_markets = refactor_var_categorical(
         x = gi3m, y = "travel2", choices = survey_endline_choices
       ),
-      time_to_travel_to_primary_school = NA,
-      mode_of_travel_to_primary_school = NA,
-      time_to_travel_to_secondary_school = NA,
-      mode_of_travel_to_secondary_school = NA,
+      time_to_travel_to_primary_school = NA_integer_,
+      mode_of_travel_to_primary_school = vector(
+        mode = "character", length = n_row
+      ) |>
+        factor(
+          levels = survey_endline_choices |>
+            subset(list_name == "travel2", select = `label::English (en)`) |>
+            (\(x) x$`label::English (en)`)()
+        ),
+      time_to_travel_to_secondary_school = NA_integer_,
+      mode_of_travel_to_secondary_school = vector(
+        mode = "character", length = n_row
+      ) |>
+        factor(
+          levels = survey_endline_choices |>
+            subset(list_name == "travel2", select = `label::English (en)`) |>
+            (\(x) x$`label::English (en)`)()
+        ),
       ### Household decision making ----------------------------------------------
       marrying_age = refactor_var_categorical(
         x = ge1, y = "decisions", choices = survey_endline_choices
@@ -1585,7 +1622,7 @@
       healthcare_for_child = refactor_var_categorical(
         x = ge10, y = "decisions", choices = survey_endline_choices
       ),
-      ### Community groups participation -----------------------------------------
+      ### Community groups participation ---------------------------------------
       group_membership = recode_yes_no(q05),
       #group_membership_type = recode_group_type(q05, q05_spec),
       presentation_participation = recode_yes_no(q06),
@@ -1596,7 +1633,7 @@
       health_tasks_participation = recode_yes_no(q07),
       #health_tasks_participation_type = recode_var_categorical(q07) |>
       #  (\(x) ifelse(x == "Sim. Especifique", q07_spec, x))(),
-      ### Child anthropometry ----------------------------------------------------
+      ### Child anthropometry --------------------------------------------------
       child_height_length = height,
       child_standing = position,
       child_weight = weight,
@@ -1605,7 +1642,7 @@
       moderate_wasting_by_muac = ifelse(child_muac < 12.5 & child_muac >= 11.5, 1, 0),
       severe_wasting_by_muac = ifelse(child_muac < 11.5, 1, 0),
       severe_wasting_by_oedema = ifelse(cmalnut == 1, 1, 0),
-      ### Water ------------------------------------------------------------------
+      ### Water ----------------------------------------------------------------
       surface_water_source = ifelse(wt2 == 11, 1, 0),
       unimproved_water_source = ifelse(wt2 %in% c(7, 9), 1, 0),
       limited_water_source = ifelse(
@@ -1617,12 +1654,12 @@
       sufficient_water_source = ifelse(
         wt2 %in% 1:2 & wt4 == 1, 1, 0
       ),
-      ### Sanitation -------------------------------------------------------------
+      ### Sanitation -----------------------------------------------------------
       open_defecation = ifelse(lusd1 == 2 | lusd4 == 6, 1, 0),
       unimproved_toilet_facility = ifelse(lusd4 == 5, 1, 0),
       limited_toilet_facility = ifelse(lusd2 == 1 & lusd4 != 5, 1, 0),
       basic_toilet_facility = ifelse(lusd2 == 2 & lusd4 != 5, 1, 0),
-      ### Hygiene ----------------------------------------------------------------
+      ### Hygiene --------------------------------------------------------------
       no_handwashing_facility = ifelse(
         mao1 == 2, 1, 
         ifelse(
@@ -1635,7 +1672,7 @@
       basic_handwashing_facility = ifelse(
         mao1 == 1 & mao1a == 1 & mao1b != 3, 1, 0
       ),
-      ### Diarrhoea --------------------------------------------------------------
+      ### Diarrhoea ------------------------------------------------------------
       diarrhoea_episode = recode_yes_no(ort1, na_values = c(8, 9)),
       diarrhoea_seek_treatment = recode_yes_no(ort3),
       diarrhoea_point_of_care = refactor_var_categorical(
@@ -1647,7 +1684,7 @@
           ort5a == 1 | ort5b == 1 | ort5c == 1, 1, 0
         )
       ),
-      ### Fever ------------------------------------------------------------------
+      ### Fever ----------------------------------------------------------------
       fever_episode = recode_yes_no(fever1, na_values = c(8, 9)),
       fever_seek_treatment = recode_yes_no(fever2),
       fever_point_of_care = refactor_var_categorical(
@@ -1662,14 +1699,14 @@
       fever_malaria_episode = recode_yes_no(fever6, na_values = c(8, 9)),
       fever_treatment = ifelse(fever6a %in% c(88, 99), NA, fever6a),
       fever_malaria_treatment_intake = recode_yes_no(fever7, na_values = c(8, 9)),
-      ### RTI --------------------------------------------------------------------
+      ### RTI ------------------------------------------------------------------
       rti_episode = ifelse(ch1 == 1 & (ch1a == 1 | ch2 == 1), 1, 0),
       rti_seek_treatment = recode_yes_no(ch3),
       rti_point_of_care = refactor_var_categorical(
         x = ch4, y = "point_of_care", choices = survey_endline_choices
       ),
       rti_treatment = ifelse(ch5a %in% c(88, 99), NA, ch5a),
-      ### Mental health ----------------------------------------------------------
+      ### Mental health --------------------------------------------------------
       ment1 = ifelse(ment1 %in% c(88, 99), NA, ment1),
       ment2 = ifelse(ment2 %in% c(88, 99), NA, ment2),
       ment3 = ifelse(ment3 %in% c(88, 99), NA, ment3),
@@ -1685,9 +1722,9 @@
       alcohol_consumption = refactor_var_categorical(
         x = ment9, y = "alcohol_frequency", choices = survey_endline_choices
       ),
-      ### Pregnant ---------------------------------------------------------------
+      ### Pregnant -------------------------------------------------------------
       currently_pregnant = recode_yes_no(wh1),
-      weeks_of_gestation_self_report = NA,
+      #weeks_of_gestation_self_report = NA,
       prenatal_card_self_report = recode_yes_no(wh2),
       prenatal_card_available = recode_yes_no(wh3),
       malaria_during_pregnancy = recode_yes_no(wh4),
@@ -1699,43 +1736,82 @@
       plans_when_labor_begins = refactor_var_categorical(
         x = preg2, y = "labor_action", choices = survey_endline_choices
       ),
-      ### PMTCT and malaria prevention -------------------------------------------
-      offered_voluntary_counselling_and_testing = recode_yes_no(pmtct1),
-      received_vct_results = recode_yes_no(pmtct2),
-      offered_medication_to_reduce_child_risk = recode_yes_no(pmtct3),
-      received_mosquito_net = recode_yes_no(idk1),
-      slept_under_mosquito_net = recode_yes_no(idk2),
-      ### Natal care -------------------------------------------------------------
+      ### PMTCT and malaria prevention -----------------------------------------
+      offered_voluntary_counselling_and_testing = recode_yes_no(
+        pmtct1, na_values = 8:9
+      ),
+      received_vct_results = recode_yes_no(pmtct2, na_values = 8:9),
+      offered_medication_to_reduce_child_risk = recode_yes_no(
+        pmtct3, na_values = 8:9
+      ),
+      received_mosquito_net = recode_yes_no(idk1, na_values = 8:9),
+      slept_under_mosquito_net = recode_yes_no(idk2, na_values = 8:9),
+      ### Natal care -----------------------------------------------------------
       location_of_last_delivery = refactor_var_categorical(
         x = spc1, y = "delivery_location", choices = survey_endline_choices
       ),
-      number_of_prenatal_visits = refactor_var_categorical(
-        x = spc2, y = "delivery_location", choices = survey_endline_choices
+      number_of_prenatal_visits = ifelse(spc2 %in% c(88, 99), NA, spc2) |>
+        cut(
+          breaks = c(-1, 0, 1, 2, 3, 4, Inf), 
+          labels = c(
+            "No visits", "1 visit", "2 visits", "3 visits", 
+            "4 visits", "more than 4 visits"
+          )
+        ) |>
+        as.character() |>
+        (\(x) { ifelse(spc2 %in% c(88, 99), "No response", x) })() |>
+        factor(
+          levels = c(
+            "No visits", "1 visit", "2 visits", "3 visits", 
+            "4 visits", "more than 4 visits", "No response"
+          )
+        ),
+      at_least_four_anc_visits = ifelse(
+        number_of_prenatal_visits %in% c("4 visits", "more than 4 visits"), 1, 0
       ),
-      at_least_four_anc_visits = ifelse(spc2 %in% 4:5, 1, 0),
-      treated_well_during_anc = recode_yes_no(spc2a),
-      treated_well_at_delivery = recode_yes_no(spc2b),
+      treated_well_during_anc = recode_yes_no(spc2a, na_values = 8:9),
+      treated_well_at_delivery = recode_yes_no(spc2b, na_values = 8:9),
       spc3 = ifelse(spc3 %in% c(88, 99), NA, spc3),
       spc5a = ifelse(spc5a %in% c(88, 99), NA, spc5a),
       spc6 = ifelse(spc6 %in% c(88, 99), NA, spc6),
       spc7 = ifelse(spc7 %in% c(88, 99), NA, spc7),
-      given_malaria_treatment_during_pregnancy = recode_yes_no(fansidar1),
+      given_malaria_treatment_during_pregnancy = recode_yes_no(
+        fansidar1, na_values = 8:9
+      ),
       took_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 1, 0, 1),
-      completed_malaria_treatment_during_pregnancy = ifelse(fansidar2 == 4, 1, 0),
-      at_least_one_tetanus_toxoid_vaccination = recode_yes_no(tt1),
-      two_or_more_tetanus_toxoid_vaccination = ifelse(tt2 != 1, 1, 0),
-      ferrous_sulfate_supplementation = recode_yes_no(fol1),
-      vitamin_a_supplementation_during_pregnancy = NA,
-      ### Family planning --------------------------------------------------------
+      completed_malaria_treatment_during_pregnancy = ifelse(
+        fansidar2 %in% c(88, 99), NA,
+        ifelse(
+          fansidar2 == 4, 1, 0
+        )
+      ),
+      at_least_one_tetanus_toxoid_vaccination = recode_yes_no(
+        tt1, na_values = 8:9
+      ),
+      two_or_more_tetanus_toxoid_vaccination = ifelse(
+        tt2 %in% c(88, 99), NA,
+        ifelse(
+          tt2 != 1, 1, 0
+        )
+      ),
+      ferrous_sulfate_supplementation = recode_yes_no(fol1, na_values = 8:9),
+      vitamin_a_supplementation_during_pregnancy = NA_integer_,
+      ### Family planning ------------------------------------------------------
       attempted_to_delay_or_prevent_pregnancy = recode_yes_no(pf1),
       bs2 = ifelse(bs2 %in% c(88, 99), NA, bs2),
       bs3 = ifelse(bs3 %in% c(88, 99), NA, bs3),
       bs4 = ifelse(bs4 %in% c(88, 99), NA, bs4),
       benefit_of_waiting_until_18_years_of_age = ifelse(bs3 == 6, 0, 1),
       problem_with_having_more_than_4_children = ifelse(bs4 == 6, 0, 1),
-      ### EPI --------------------------------------------------------------------
-      immunisation_card_retention_self_report = recode_yes_no(
-        imm1, na_values = 8:9
+      ### EPI ------------------------------------------------------------------
+      # immunisation_card_retention_self_report = recode_yes_no(
+      #   imm1, na_values = 8:9
+      # ),
+      immunisation_card_retention_self_report = ifelse(
+        imm2 %in% c(88, 99), NA,
+        ifelse(
+          imm2 == 3, 0, 1
+        )
       ),
       immunisation_card_retention = recode_yes_no(imm2, na_values = c(88, 99)),
       immunisation_bcg = recode_yes_no(imm3a, na_values = 4:5),
