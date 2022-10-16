@@ -35,6 +35,7 @@ targets::tar_load(
 water_ladder <- c("#4575b4", "#74add1", "#ffffbf", "#feb24c", "#ec7014")
 sanitation_ladder <- c("#1a9850", "#a6d96a", "#ffffbf", "#feb24c", "#ec7014")
 hygiene_ladder <- c("#cab2d6", "#feb24c", "#ec7014")
+bmi_classes <- c("#d7191c", "#fdae61", "#abdda4", "#2b83ba")
 
 theme_mozambique <- theme_bw() + 
   theme(
@@ -796,11 +797,20 @@ overall_results_all |>
       indicator_category != "Mean"
   ) |>
   dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
     strata = factor(
-      strata, 
+      strata,
       levels = c(
         "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
         "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
       )
     ),
     malnutrition_class = ifelse(
@@ -819,17 +829,12 @@ overall_results_all |>
   scale_y_continuous(
     limits = c(0, 70), breaks = seq(from = 0, to = 70, by = 10)
   ) +
-  scale_x_discrete(
-    labels = c(
-        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
-        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
-      )
-  ) +
   labs(
     title = "Prevalence of child stunting",
     subtitle = "Proportion of children 6-59 years old who are stunting by district of Zambézia and Nampula",
     x = "", y = "%"
   ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -983,11 +988,20 @@ overall_results_all |>
       indicator_category != "Mean"
   ) |>
   dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
     strata = factor(
-      strata, 
+      strata,
       levels = c(
         "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
         "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
       )
     ),
     malnutrition_class = ifelse(
@@ -1006,17 +1020,12 @@ overall_results_all |>
   scale_y_continuous(
     limits = c(0, 40), breaks = seq(from = 0, to = 40, by = 5)
   ) +
-  scale_x_discrete(
-    labels = c(
-        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
-        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
-      )
-  ) +
   labs(
     title = "Prevalence of child underweight",
     subtitle = "Proportion of children 6-59 years old who are underweight by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -1170,11 +1179,20 @@ overall_results_all |>
       indicator_category != "Mean"
   ) |>
   dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
     strata = factor(
-      strata, 
+      strata,
       levels = c(
         "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
         "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
       )
     ),
     malnutrition_class = ifelse(
@@ -1193,17 +1211,12 @@ overall_results_all |>
   scale_y_continuous(
     limits = c(0, 10), breaks = seq(from = 0, to = 10, by = 2)
   ) +
-  scale_x_discrete(
-    labels = c(
-        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
-        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
-      )
-  ) +
   labs(
     title = "Prevalence of child wasting by weight-for-height z-score",
     subtitle = "Proportion of children 6-59 years old who are wasting by weight-for-height z-score by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -1241,7 +1254,7 @@ overall_results_all |>
     limits = c(0, 10), breaks = seq(from = 0, to = 10, by = 2)
   ) +
   labs(
-    title = "Prevalence of child underweight",
+    title = "Prevalence of child wasting by weight-for-height z-score",
     subtitle = "Proportion of children 6-59 years old who are wasting by weight-for-height z-score by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
@@ -1342,6 +1355,102 @@ rbind(
       "Study group" = 2
     )
   )
+```
+
+```{r child_wasting_muac_strata_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "child_anthro" & study_round == "Baseline" &
+      !strata %in% c("Zambézia", "Nampula", "Overall") & 
+      indicator_variable != "severe_wasting_by_oedema" &
+      indicator_label == "Child wasting by mid-upper arm circumference" &
+      stringr::str_detect(
+        string = indicator_variable, pattern = "global", negate = TRUE
+      ) &
+      indicator_category != "Mean"
+  ) |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata,
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    malnutrition_class = ifelse(
+      stringr::str_detect(
+        string = indicator_variable, pattern = "moderate"
+      ), "Moderate", "Severe"
+    )
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = strata, y = estimate * 100, fill = malnutrition_class
+    )
+  ) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_y_continuous(
+    limits = c(0, 10), breaks = seq(from = 0, to = 10, by = 2)
+  ) +
+  labs(
+    title = "Prevalence of child wasting by mid-upper arm circumference",
+    subtitle = "Proportion of children 6-59 years old who are wasting by MUAC by districts of Zambézia and Nampula",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
+  theme_mozambique
+```
+
+```{r child_wasting_muac_study_group_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "child_anthro" & study_round == "Baseline" &
+      strata %in% c("Zambézia", "Nampula", "Overall") & 
+      indicator_variable != "severe_wasting_by_oedema" &
+      indicator_label == "Child wasting by mid-upper arm circumference" &
+      stringr::str_detect(
+        string = indicator_variable, pattern = "global", negate = TRUE
+      ) &
+      indicator_category != "Mean"
+  ) |>
+  dplyr::mutate(
+    strata = factor(
+      strata, 
+      levels = c("Zambézia", "Nampula", "Overall")
+    ),
+    malnutrition_class = ifelse(
+      stringr::str_detect(
+        string = indicator_variable, pattern = "moderate"
+      ), "Moderate", "Severe"
+    )
+  ) |>
+  ggplot(
+    mapping = aes(
+      x = study_group, y = estimate * 100, fill = malnutrition_class
+    )
+  ) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_y_continuous(
+    limits = c(0, 10), breaks = seq(from = 0, to = 10, by = 2)
+  ) +
+  labs(
+    title = "Prevalence of child wasting by mid-upper arm circumference",
+    subtitle = "Proportion of children 6-59 years old who are wasting by MUAC by study groups in Zambézia and Nampula",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~strata, ncol = 3) +
+  theme_mozambique
 ```
 
 ### Severe wasting by nutritional oedema
@@ -1602,6 +1711,9 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = study_group, y = estimate * 100)) +
   geom_bar(stat = "identity", fill = "gray70") +
+  scale_y_continuous(
+    limits = c(0, 50), breaks = seq(from = 0, to = 50, by = 10)
+  ) +
   labs(
     title = "Period prevalence of child illnesses",
     subtitle = "Proportion of children 0-59 years old who had diarrhoea, fever, or cough in the past 2 weeks",
@@ -1623,28 +1735,32 @@ overall_results_all |>
       indicator_category == "Diarrhoea episode in past 2 weeks"
   ) |>
   dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
     strata = factor(
       strata, 
       levels = c(
         "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
         "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
       )
     )
   ) |>
   ggplot(
     mapping = aes(x = strata, y = estimate * 100)) +
   geom_bar(stat = "identity", fill = "gray70") +
-  scale_x_discrete(
-    labels = c(
-        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
-        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
-      )
-  ) +
   labs(
     title = "Prevalence of diarrhoea",
     subtitle = "Proportion of children 0-59 years old who had diarrhoea in the past 2 weeks by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -1664,6 +1780,9 @@ overall_results_all |>
   ggplot(
     mapping = aes(x = study_group, y = estimate * 100)) +
   geom_bar(stat = "identity", fill = "gray70") +
+  scale_y_continuous(
+    limits = c(0, 20), breaks = seq(from = 0, to = 20, by = 5)
+  ) +
   labs(
     title = "Prevalence of diarrhoea",
     subtitle = "Proportion of children 0-59 years old who had diarrhoea in the past 2 weeks by study groups in Zambézia and Nampula",
@@ -1683,28 +1802,35 @@ overall_results_all |>
       indicator_category == "Fever episode in past 2 weeks"
   ) |>
   dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
     strata = factor(
       strata, 
       levels = c(
         "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
         "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
       )
     )
   ) |>
   ggplot(
     mapping = aes(x = strata, y = estimate * 100)) +
   geom_bar(stat = "identity", fill = "gray70") +
-  scale_x_discrete(
-    labels = c(
-        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
-        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
-      )
+  scale_y_continuous(
+    limits = c(0, 70), breaks = seq(from = 0, to = 70, by = 10)
   ) +
   labs(
     title = "Prevalence of fever",
     subtitle = "Proportion of children 0-59 years old who had fever in the past 2 weeks by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -1743,28 +1869,35 @@ overall_results_all |>
       indicator_category == "Cough episode in past 2 weeks"
   ) |>
   dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
     strata = factor(
       strata, 
       levels = c(
         "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
         "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
       )
     )
   ) |>
   ggplot(
     mapping = aes(x = strata, y = estimate * 100)) +
   geom_bar(stat = "identity", fill = "gray70") +
-  scale_x_discrete(
-    labels = c(
-        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
-        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
-      )
+  scale_y_continuous(
+    limits = c(0, 30), breaks = seq(from = 0, to = 30, by = 5)
   ) +
   labs(
     title = "Prevalence of cough",
     subtitle = "Proportion of children 0-59 years old who had cough in the past 2 weeks by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -2133,18 +2266,22 @@ overall_results_all |>
       !strata %in% c("Zambézia", "Nampula", "Overall")
   ) |>
   dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
     strata = factor(
       strata, 
       levels = c(
         "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
         "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
       )
     ),
-    province = ifelse(
-      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
-      "Nampula", "Zambézia"
-    ) |>
-      factor(levels = c("Zambézia", "Nampula", "Overall")),
     indicator_category = factor(
       x = indicator_category,
       levels = c(
@@ -2155,12 +2292,6 @@ overall_results_all |>
   ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "stack") +
   scale_fill_manual(name = "", values = alpha(rev(water_ladder), 0.8)) +
-  # scale_x_discrete(
-  #   labels = c(
-  #       "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
-  #       "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
-  #     )
-  # ) +
   labs(
     title = "Drinking water service ladder",
     subtitle = "Proportion of households in districts of Zambézia and Nampula by source of drinking water",
@@ -2261,6 +2392,79 @@ rbind(
 
 ### Sanitation
 
+```{r sanitation_province_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "wash" & 
+      indicator_label == "Toilet facility" &
+      study_round == "Baseline" &
+      strata %in% c("Zambézia", "Nampula", "Overall")
+  ) |>
+  dplyr::mutate(
+    strata = factor(strata, levels = c("Zambézia", "Nampula", "Overall")),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c("Open defecation", "Unimproved", "Limited", "Basic")
+    )
+  ) |>
+  ggplot(mapping = aes(x = study_group, y = estimate * 100, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.8)) +
+  labs(
+    title = "Sanitation service ladder",
+    subtitle = "Proportion of households in Zambézia and Nampula by type of sanitation facility",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~strata, scales = "free_y") +
+  theme_mozambique
+```
+
+<br/>
+
+```{r sanitation_strata_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "wash" & 
+      indicator_label == "Toilet facility" &
+      study_round == "Baseline" &
+      !strata %in% c("Zambézia", "Nampula", "Overall")
+  ) |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata, 
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c("Open defecation", "Unimproved", "Limited", "Basic")
+    )
+  ) |>
+  ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.8)) +
+  labs(
+    title = "Sanitation service ladder",
+    subtitle = "Proportion of households in districts of Zambézia and Nampula by type of sanitation facility",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
+  theme_mozambique
+```
+
+<br/>
+
 ```{r sanitation, echo = FALSE}
 sanitation_province_overall <- baseline_wash_province_table |>
   subset(
@@ -2348,6 +2552,79 @@ rbind(
 ```
 
 ### Hygiene
+
+```{r hygiene_province_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "wash" & 
+      indicator_label == "Handwashing facility" &
+      study_round == "Baseline" &
+      strata %in% c("Zambézia", "Nampula", "Overall")
+  ) |>
+  dplyr::mutate(
+    strata = factor(strata, levels = c("Zambézia", "Nampula", "Overall")),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c("No facility", "Limited", "Basic")
+    )
+  ) |>
+  ggplot(mapping = aes(x = study_group, y = estimate * 100, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.8)) +
+  labs(
+    title = "Hygiene service ladder",
+    subtitle = "Proportion of households in Zambézia and Nampula by type of handwashing facility",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~strata, scales = "free_y") +
+  theme_mozambique
+```
+
+<br/>
+
+```{r hygiene_strata_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "wash" & 
+      indicator_label == "Handwashing facility" &
+      study_round == "Baseline" &
+      !strata %in% c("Zambézia", "Nampula", "Overall")
+  ) |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata, 
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c("No facility", "Limited", "Basic")
+    )
+  ) |>
+  ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.8)) +
+  labs(
+    title = "Hygiene service ladder",
+    subtitle = "Proportion of households in districts of Zambézia and Nampula by type of handwashing facility",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
+  theme_mozambique
+```
+
+<br/>
 
 ```{r hygiene, echo = FALSE}
 hygiene_province_overall <- baseline_wash_province_table |>
@@ -3658,6 +3935,79 @@ baseline_family_planning_study_group_table_report |>
 <br/>
 
 ## Women's anthropometry
+
+```{r women_anthro_province_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "women_anthro" &
+      indicator_category != "Mean" &
+      study_round == "Baseline" &
+      strata %in% c("Zambézia", "Nampula", "Overall")
+  ) |>
+  dplyr::mutate(
+    strata = factor(strata, levels = c("Zambézia", "Nampula", "Overall")),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c("Obese", "Overweight", "Healthy weight", "Underweight")
+    )
+  ) |>
+  ggplot(mapping = aes(x = study_group, y = estimate * 100, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(name = "", values = alpha(bmi_classes, 0.8)) +
+  labs(
+    title = "Women's nutrition status",
+    subtitle = "Proportion of women of reproductive age in Zambézia and Nampula by nutrition status based on body mass index",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~strata, ncol = 3) +
+  theme_mozambique
+```
+
+<br/>
+
+```{r women_anthro_strata_plot, fig.align = "center", fig.width = 10}
+overall_results_all |>
+  subset(
+    indicator_set_code == "women_anthro" &
+      indicator_category != "Mean" &
+      study_round == "Baseline" &
+      !strata %in% c("Zambézia", "Nampula", "Overall")
+  ) |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata, 
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c("Obese", "Overweight", "Healthy weight", "Underweight")
+    )
+  ) |>
+  ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(name = "", values = alpha(bmi_classes, 0.8)) +
+  labs(
+    title = "Women's nutrition status",
+    subtitle = "Proportion of households in districts of Zambézia and Nampula by nutrition status based on body mass index",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~province, ncol = 2, scales = "free_x") +
+  theme_mozambique
+```
+
+<br/>
 
 ```{r women_anthro, echo = FALSE}
 bmi_province_overall <- baseline_women_anthro_province_table |>
