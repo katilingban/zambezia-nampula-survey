@@ -146,7 +146,7 @@ estimate_study_group_province <- function(vars, design) {
     (\(x) 
       { 
         names(x) <- lapply(
-          X = c("Zambezia", "Nampula"),
+          X = c("Zambézia", "Nampula"),
           FUN = paste,
           c("Control", "Intervention")
         ) |>

@@ -1156,6 +1156,22 @@
         "withr"
       ]
     },
+    "idbr": {
+      "Package": "idbr",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "de8c9b129fc7178237cf3c392c93054b",
+      "Requirements": [
+        "countrycode",
+        "dplyr",
+        "httr",
+        "jsonlite",
+        "purrr",
+        "rnaturalearthdata",
+        "sf"
+      ]
+    },
     "ids": {
       "Package": "ids",
       "Version": "1.0.1",
@@ -2072,6 +2088,16 @@
         "tinytex",
         "xfun",
         "yaml"
+      ]
+    },
+    "rnaturalearthdata": {
+      "Package": "rnaturalearthdata",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "0d34b89b43e900467e60f5449226f3e3",
+      "Requirements": [
+        "sp"
       ]
     },
     "rpart": {
