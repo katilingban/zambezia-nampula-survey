@@ -13445,7 +13445,47 @@ outputs_overall <- tar_plan(
 
 ## Analysis - difference-in-difference -----------------------------------------
 analysis_comparison <- tar_plan(
-  
+  vars_for_analysis = c(
+    "study_group", "province", "strata", 
+    "cluster_sample_prob_obs", "ind_sample_prob_obs", 
+    "sample_prob_obs", "sample_weight_obs",
+    "respondent_sex", "respondent_age_years", "currently_pregnant",
+    "child_sex", "child_age_days", "child_age_months",
+    "diarrhoea_episode", "fever_episode", "rti_episode",
+    "immunisation_fully_immunised", "immunisation_age_appropriate_immunisation", 
+    "vitamin_a_supplementation_coverage", "deworming_coverage", "wfaz", "hfaz",
+    "wfhz", "global_stunting", "moderate_stunting", "severe_stunting",
+    "global_underweight", "moderate_underweight", "severe_underweight", 
+    "global_wasting_by_weight_for_height", "moderate_wasting_by_weight_for_height",
+    "severe_wasting_by_weight_for_height", "global_wasting_by_muac",
+    "moderate_wasting_by_muac", "severe_wasting_by_muac", 
+    "severe_wasting_by_oedema", "minimum_dietary_diversity",
+    "exclusive_breastfeeding", "body_mass_index", "bmi_class", "wdds", "mddw"
+  ),
+  combined_child_survey_dataset = combine_baseline_endline(
+    vars = vars_for_analysis,
+    baseline_data_weighted, endline_data_weighted, type = "child"
+  ),
+  combined_hh_survey_dataset = combine_baseline_endline(
+    vars = vars_for_analysis,
+    baseline_data_weighted, endline_data_weighted, type = "hh"
+  ),
+  ### Set combined survey design for children sample ---------------------------
+  combined_child_survey_design = survey::svydesign(
+    ids = ~cluster_id,
+    fpc = ~sample_prob_obs,
+    strata = ~study_round + province + strata,
+    data = combined_child_survey_dataset,
+    pps = "brewer"
+  ),
+  ### Set combined survey design for households/respondent ---------------------
+  combined_hh_survey_design = survey::svydesign(
+    ids = ~cluster_id,
+    fpc = ~sample_prob_obs,
+    strata = ~study_round + province + strata,
+    data = combined_hh_survey_dataset,
+    pps = "brewer"
+  )
 )
 
 ## Outputs - difference-in-difference ------------------------------------------
