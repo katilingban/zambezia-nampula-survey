@@ -89,3 +89,10 @@ combine_baseline_endline <- function(vars,
 
 
 
+## Combine svystat objects
+
+combine_baseline_endline_svystate <- function(baseline_svystat, 
+                                              endline_svystat) {
+  
+}
+
