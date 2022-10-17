@@ -535,6 +535,20 @@ process_baseline_data <- function(.data, spss_data) {
       labels = c("Underweight", "Healthy weight", "Overweight", "Obese"),
       include.lowest = TRUE, right = FALSE
     ),
+    nutmul1 = ifelse(nutmul1 == 2, 0, 1),
+    nutmul2 = ifelse(nutmul2 == 2, 0, 1),
+    nutmul3 = ifelse(nutmul3 == 2, 0, 1),
+    nutmul4 = ifelse(nutmul4 == 2, 0, 1),
+    nutmul5 = ifelse(nutmul5 == 2, 0, 1),
+    nutmul6 = ifelse(nutmul6 == 2, 0, 1),
+    nutmul7 = ifelse(nutmul7 == 2, 0, 1),
+    nutmul8 = ifelse(nutmul8 == 2, 0, 1),
+    nutmul9 = ifelse(nutmul9 == 2, 0, 1),
+    nutmul10 = ifelse(nutmul10 == 2, 0, 1),
+    nutmul11 = ifelse(nutmul11 == 2, 0, 1),
+    nutmul12 = ifelse(nutmul12 == 2, 0, 1),
+    nutmul13 = ifelse(nutmul13 == 2, 0, 1),
+    nutmul14 = ifelse(nutmul14 == 2, 0, 1),
     .keep = "unused"
   ) |>
     ## Child anthropometry

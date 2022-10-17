@@ -88,7 +88,20 @@ data_reference <- tar_plan(
       ss = survey_endline_form_id, sheet = "choices"
     ) |>
       subset(!is.na(list_name))
-  )
+  ),
+  ### Get populations data from US Census Bureaus IDB --------------------------
+  population_single_year_age_2019 = idbr::get_idb(
+    country = "Mozambique",
+    year= 2019,
+    sex = "female"
+  ) |>
+    subset(age >= 15),
+  population_single_year_age_2022 = idbr::get_idb(
+    country = "Mozambique",
+    year= 2022,
+    sex = "female"
+  ) |>
+    subset(age >= 15)
 )
 
 
