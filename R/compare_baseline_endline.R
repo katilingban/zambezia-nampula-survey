@@ -166,3 +166,170 @@ calculate_variance_difference <- function(var,
   }
 }
 
+
+################################################################################
+#
+#'
+#' Calculate difference in difference at province level
+#'
+#
+################################################################################
+
+calculate_diff_in_diff_province <- function(baseline, endline) {
+  ## Zambezia
+  control_diff_zambezia <- data.frame(
+    diff_est = coef(endline[["Zambézia Control"]]) - coef(baseline[["Zambézia Control"]]),
+    diff_se = sqrt(c(SE(endline[["Zambézia Control"]])) ^ 2 + c(SE(baseline[["Zambézia Control"]])) ^ 2)
+  )
+  
+  intervention_diff_zambezia <- data.frame(
+    diff_est = coef(endline[["Zambézia Intervention"]]) - coef(baseline[["Zambézia Intervention"]]),
+    diff_se = sqrt(c(SE(endline[["Zambézia Intervention"]])) ^ 2 + c(SE(baseline[["Zambézia Intervention"]])) ^ 2)
+  )
+
+  diff_in_diff_zambezia <- data.frame(
+    variable = row.names(intervention_diff_zambezia),
+    diff_in_diff_est = intervention_diff_zambezia[["diff_est"]] - control_diff_zambezia[["diff_est"]],
+    diff_in_diff_se = sqrt((intervention_diff_zambezia[["diff_se"]]) ^ 2 + (control_diff_zambezia[["diff_se"]]) ^ 2)
+  ) |>
+    dplyr::mutate(
+      diff_in_diff_lcl = diff_in_diff_est - 1.96 * diff_in_diff_se,
+      diff_in_diff_ucl = diff_in_diff_est + 1.96 * diff_in_diff_se,
+      diff_in_diff_z = abs(diff_in_diff_est / diff_in_diff_se),
+      diff_in_diff_p = pnorm(diff_in_diff_z, lower.tail = FALSE)
+    )
+  
+  ## Nampula
+  control_diff_nampula <- data.frame(
+    diff_est = coef(endline[["Nampula Control"]]) - coef(baseline[["Nampula Control"]]),
+    diff_se = sqrt(c(SE(endline[["Nampula Control"]])) ^ 2 + c(SE(baseline[["Nampula Control"]])) ^ 2)
+  )
+  
+  intervention_diff_nampula <- data.frame(
+    diff_est = coef(endline[["Nampula Intervention"]]) - coef(baseline[["Nampula Intervention"]]),
+    diff_se = sqrt(c(SE(endline[["Nampula Intervention"]])) ^ 2 + c(SE(baseline[["Nampula Intervention"]])) ^ 2)
+  )
+  
+  diff_in_diff_nampula <- data.frame(
+    variable = row.names(intervention_diff_nampula),
+    diff_in_diff_est = intervention_diff_nampula[["diff_est"]] - control_diff_nampula[["diff_est"]],
+    diff_in_diff_se = sqrt((intervention_diff_nampula[["diff_se"]]) ^ 2 + (control_diff_nampula[["diff_se"]]) ^ 2)
+  ) |>
+    dplyr::mutate(
+      diff_in_diff_lcl = diff_in_diff_est - 1.96 * diff_in_diff_se,
+      diff_in_diff_ucl = diff_in_diff_est + 1.96 * diff_in_diff_se,
+      diff_in_diff_z = abs(diff_in_diff_est / diff_in_diff_se),
+      diff_in_diff_p = pnorm(diff_in_diff_z, lower.tail = FALSE)
+    )
+
+  list(
+    Zambézia = diff_in_diff_zambezia, 
+    Nampula = diff_in_diff_nampula
+  )
+}
+
+
+################################################################################
+#
+#'
+#'
+#'
+#
+################################################################################
+
+calculate_diff_in_diff_overall <- function(baseline, endline) {
+  control_diff <- data.frame(
+    diff_est = coef(endline[["Control"]]) - coef(baseline[["Control"]]),
+    diff_se = sqrt(c(SE(endline[["Control"]])) ^ 2 + c(SE(baseline[["Control"]])) ^ 2)
+  )
+  
+  intervention_diff <- data.frame(
+    diff_est = coef(endline[["Intervention"]]) - coef(baseline[["Intervention"]]),
+    diff_se = sqrt(c(SE(endline[["Intervention"]])) ^ 2 + c(SE(baseline[["Intervention"]])) ^ 2)
+  )
+  
+  diff_in_diff <- data.frame(
+    variable = row.names(intervention_diff),
+    diff_in_diff_est = intervention_diff[["diff_est"]] - control_diff[["diff_est"]],
+    diff_in_diff_se = sqrt((intervention_diff[["diff_se"]]) ^ 2 + (control_diff[["diff_se"]]) ^ 2)
+  ) |>
+    dplyr::mutate(
+      diff_in_diff_lcl = diff_in_diff_est - 1.96 * diff_in_diff_se,
+      diff_in_diff_ucl = diff_in_diff_est + 1.96 * diff_in_diff_se,
+      diff_in_diff_z = abs(diff_in_diff_est / diff_in_diff_se),
+      diff_in_diff_p = pnorm(diff_in_diff_z, lower.tail = FALSE)
+    )
+  
+  diff_in_diff
+}
+
+
+################################################################################
+#
+#'
+#'
+#'
+#
+################################################################################
+
+create_diff_in_diff_table <- function(diff_province, 
+                                      diff_overall, 
+                                      indicator_list = survey_indicator_list,
+                                      format = c("wide", "long")) {
+  format <- match.arg(format)
+  
+  if (format == "wide") {
+    df <- merge(diff_province[[1]], diff_province[[2]], by = "variable") |>
+      merge(diff_overall, by = "variable") |>
+      (\(x) 
+       { 
+         names(x) <- c(
+           "variable", 
+           "zambezia_diff_est", "zambezia_diff_se", "zambezia_diff_lcl", "zambezia_diff_ucl", "zambezia_diff_z", "zambezia_diff_p",
+           "nampula_diff_est", "nampula_diff_se", "nampula_diff_lcl", "nampula_diff_ucl", "nampula_diff_z", "nampula_diff_p",
+           "overall_diff_est", "overall_diff_se", "overall_diff_lcl", "overall_diff_ucl", "overall_diff_z", "overall_diff_p"
+         )
+         x
+      }
+      )()
+    
+    merge(
+      indicator_list, df,
+      by.x = "indicator_variable", by.y = "variable",
+      all.y = TRUE, sort = FALSE
+    )
+  } else {
+    df <- rbind(
+      data.frame(
+        strata = "Zambézia",
+        diff_province[[1]]
+      ),
+      data.frame(
+        strata = "Nampula",
+        diff_province[[2]]
+      ),
+      data.frame(
+        strata = "Overall",
+        diff_overall
+      )
+    ) |>
+      (\(x) 
+        { 
+          names(x) <- c(
+            "strata", "variable", "estimate", "se", "lcl", "ucl", "z", "p"
+          )
+          x
+        }
+      )() |>
+      dplyr::mutate(
+        strata = factor(strata, levels = c("Zambézia", "Nampula", "Overall"))
+      )
+    
+    merge(
+      indicator_list, df, 
+      by.x = "indicator_variable", by.y = "variable", 
+      all.y = TRUE, sort = FALSE
+    )
+  }
+}
+

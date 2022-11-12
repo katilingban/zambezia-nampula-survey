@@ -47,6 +47,6 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("baseline_child_immunisation"))
+          targets::tar_make(dplyr::starts_with("difference_in_difference"))
         shell: Rscript {0}
           
