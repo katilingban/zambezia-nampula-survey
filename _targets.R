@@ -12995,6 +12995,55 @@ outputs_tables_endline <- tar_plan(
     indicator_list = food_security_indicator_list,
     study_round = "Endline",
     report = FALSE
+  ),
+  ### Endline LCSI tables ------------------------------------------------------
+  endline_lcsi_province_table = create_province_table(
+    endline_lcsi_province,
+    endline_lcsi,
+    vars = c("lcsi_score", "lcsi_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_lcsi_province_table_report = create_province_table(
+    endline_lcsi_province,
+    endline_lcsi,
+    vars = c("lcsi_score", "lcsi_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_lcsi_strata_table = create_strata_table(
+    endline_lcsi_strata,
+    endline_lcsi,
+    vars = c("lcsi_score", "lcsi_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_lcsi_study_group_table = create_study_group_table(
+    endline_lcsi_study_group,
+    endline_lcsi,
+    vars = c("lcsi_score", "lcsi_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_lcsi_study_group_table_report = create_study_group_table(
+    endline_lcsi_study_group,
+    endline_lcsi,
+    vars = c("lcsi_score", "lcsi_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_lcsi_study_group_province_table = create_study_group_province_table(
+    endline_lcsi_study_group_province,
+    endline_lcsi_study_group,
+    vars = c("lcsi_score", "lcsi_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
   )
 )
 
