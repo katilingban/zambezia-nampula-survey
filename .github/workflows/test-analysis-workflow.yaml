@@ -47,6 +47,7 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("difference_in_difference"))
+          targets::tar_make(dplyr::starts_with("endline_hdds"))
+          targets::tar_make(dplyr::starts_with("endline_fcs"))
         shell: Rscript {0}
           
