@@ -33,6 +33,7 @@ bmi_classes <- c("#d7191c", "#fdae61", "#abdda4", "#2b83ba")
 fcs_classes <- c("#d73027", "#ffffbf", "#4575b4")
 rcsi_classes <- c("#d73027", "#ffffbf", "#4575b4")
 lcsi_classes <- c("#d73027", "#fc8d59", "#ffffbf", "#4575b4")
+stock_classes <- c("gray70", "#a1dab4", "#41b6c4", "#2c7fb8", "#253494")
 
 theme_mozambique <- theme_bw() + 
   theme(
@@ -728,6 +729,724 @@ rbind(
   )
 ```
 
+
+## Food stocks
+
+```{r food_stocks_province_plot, echo = FALSE, fig.align = "center", fig.width = 10, fig.height = 10}
+rbind(
+  endline_corn_reserve_province_table,
+  endline_rice_reserve_province_table,
+  endline_millet_reserve_province_table,
+  endline_sorghum_reserve_province_table,
+  endline_cassava_reserve_province_table,
+  endline_sweet_potato_reserve_province_table,
+  endline_legumes_reserve_province_table
+) |>
+  dplyr::mutate(
+    indicator_variable = factor(
+      x = indicator_variable,
+      levels = c("corn_reserve", "rice_reserve", "millet_reserve",
+                 "sorghum_reserve", "cassava_reserve", "sweet_potato_reserve",
+                 "legumes_reserve"),
+      labels = c(
+        "Corn", "Rice", "Millet", "Sorghum", "Cassava", "Sweet Potato", "Legumes"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c(
+        "Don't know/No response", "Menos de um mês", "1 a 3 meses", 
+        "4 a 6 meses", "Mais de 6 meses"
+      )
+    ),
+    strata = factor(
+      x = strata,
+      levels = c("Zambézia", "Nampula", "Overall")
+    )
+  ) |>
+  ggplot(
+    mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)
+  ) +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
+  scale_fill_manual(name = "", values = alpha(stock_classes, 0.8)) +
+  labs(
+    title = "Household food stock amount",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall by food stock amount",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~indicator_variable, ncol = 4) +
+  theme_mozambique +
+  theme(
+    legend.position = "top"
+  )
+```
+
+```{r food_stocks_strata_plot, echo = FALSE, fig.align = "center", fig.width = 10, fig.height = 18}
+rbind(
+  endline_corn_reserve_strata_table,
+  endline_rice_reserve_strata_table,
+  endline_millet_reserve_strata_table,
+  endline_sorghum_reserve_strata_table,
+  endline_cassava_reserve_strata_table,
+  endline_sweet_potato_reserve_strata_table,
+  endline_legumes_reserve_strata_table
+) |>
+  subset(strata != "Overall") |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata,
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    indicator_variable = factor(
+      x = indicator_variable,
+      levels = c("corn_reserve", "rice_reserve", "millet_reserve",
+                 "sorghum_reserve", "cassava_reserve", "sweet_potato_reserve",
+                 "legumes_reserve"),
+      labels = c(
+        "Corn", "Rice", "Millet", "Sorghum", "Cassava", "Sweet Potato", "Legumes"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category,
+      levels = c(
+        "Don't know/No response", "Menos de um mês", "1 a 3 meses", 
+        "4 a 6 meses", "Mais de 6 meses"
+      )
+    )
+  ) |>
+  ggplot(
+    mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)
+  ) +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
+  scale_fill_manual(name = "", values = alpha(stock_classes, 0.8)) +
+  labs(
+    title = "Household food stock amount",
+    subtitle = "Proportion of households in districts of Zambézia and Nampula by food stock amount",
+    x = "", y = "%"
+  ) +
+  facet_grid(
+    rows = vars(indicator_variable), 
+    cols = vars(province), scales = "free_x"
+  ) +
+  theme_mozambique +
+  theme(
+    legend.position = "top"
+  )
+```
+
+### Corn stocks
+
+```{r corn_stock, echo = FALSE}
+corn_stock_province_overall <- endline_corn_reserve_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+corn_stock_strata <- endline_corn_reserve_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+corn_stock_study_group <- endline_corn_reserve_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  corn_stock_province_overall,
+  corn_stock_strata,
+  corn_stock_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16]  <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Est", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Menos de um mês" = 3,
+      "1 a 3 meses" = 3,
+      "4 a 6 meses" = 3,
+      "Mais de 6 meses" = 3,
+      "Don't know/No response" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Rice stocks
+
+```{r rice_stock, echo = FALSE}
+rice_stock_province_overall <- endline_rice_reserve_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+rice_stock_strata <- endline_rice_reserve_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+rice_stock_study_group <- endline_rice_reserve_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  rice_stock_province_overall,
+  rice_stock_strata,
+  rice_stock_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16]  <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Est", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Menos de um mês" = 3,
+      "1 a 3 meses" = 3,
+      "4 a 6 meses" = 3,
+      "Mais de 6 meses" = 3,
+      "Don't know/No response" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Millet stocks
+
+```{r millet_stock, echo = FALSE}
+millet_stock_province_overall <- endline_millet_reserve_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+millet_stock_strata <- endline_millet_reserve_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+millet_stock_study_group <- endline_millet_reserve_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  millet_stock_province_overall,
+  millet_stock_strata,
+  millet_stock_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16]  <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Est", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Menos de um mês" = 3,
+      "1 a 3 meses" = 3,
+      "4 a 6 meses" = 3,
+      "Mais de 6 meses" = 3,
+      "Don't know/No response" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Sorghum stocks
+
+```{r sorghum_stock, echo = FALSE}
+sorghum_stock_province_overall <- endline_sorghum_reserve_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+sorghum_stock_strata <- endline_sorghum_reserve_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+sorghum_stock_study_group <- endline_sorghum_reserve_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  sorghum_stock_province_overall,
+  sorghum_stock_strata,
+  sorghum_stock_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16]  <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Est", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Menos de um mês" = 3,
+      "1 a 3 meses" = 3,
+      "4 a 6 meses" = 3,
+      "Mais de 6 meses" = 3,
+      "Don't know/No response" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Cassava stocks
+
+```{r cassava_stock, echo = FALSE}
+cassava_stock_province_overall <- endline_cassava_reserve_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+cassava_stock_strata <- endline_cassava_reserve_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+cassava_stock_study_group <- endline_cassava_reserve_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  cassava_stock_province_overall,
+  cassava_stock_strata,
+  cassava_stock_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16]  <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Est", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Menos de um mês" = 3,
+      "1 a 3 meses" = 3,
+      "4 a 6 meses" = 3,
+      "Mais de 6 meses" = 3,
+      "Don't know/No response" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Sweet potato stocks
+
+```{r sweet_potato_stock, echo = FALSE}
+sweet_potato_stock_province_overall <- endline_sweet_potato_reserve_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+sweet_potato_stock_strata <- endline_sweet_potato_reserve_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+sweet_potato_stock_study_group <- endline_sweet_potato_reserve_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  sweet_potato_stock_province_overall,
+  sweet_potato_stock_strata,
+  sweet_potato_stock_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16]  <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Est", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Menos de um mês" = 3,
+      "1 a 3 meses" = 3,
+      "4 a 6 meses" = 3,
+      "Mais de 6 meses" = 3,
+      "Don't know/No response" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+### Legumes stocks
+
+```{r legumes_stock, echo = FALSE}
+legumes_stock_province_overall <- endline_legumes_reserve_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+legumes_stock_strata <- endline_legumes_reserve_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+legumes_stock_study_group <- endline_legumes_reserve_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  legumes_stock_province_overall,
+  legumes_stock_strata,
+  legumes_stock_study_group
+) |>
+  (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
+  (\(x)
+    {
+      x[ , 2:16]  <- round(x[ , 2:16] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Est", "95% LCL", "95% UCL"), 5)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Menos de um mês" = 3,
+      "1 a 3 meses" = 3,
+      "4 a 6 meses" = 3,
+      "Mais de 6 meses" = 3,
+      "Don't know/No response" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
 
 <br/>
 <br/>
