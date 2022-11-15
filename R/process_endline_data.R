@@ -2013,37 +2013,107 @@
         x = reserve1a,
         y = "stock_frequency",
         choices = survey_endline_choices
-      ),
+      ) |>
+        (\(x)
+          ifelse(
+            as.character(x) %in% c("Don't know", "No response"), 
+            "Don't know/No response", as.character(x)
+          )
+        )() |>
+        factor(levels = c(
+          "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
+          "Don't know/No response"
+        )),
       rice_reserve = refactor_var_categorical(
         x = reserve2a,
         y = "stock_frequency",
         choices = survey_endline_choices
-      ),
+      ) |>
+        (\(x)
+         ifelse(
+           as.character(x) %in% c("Don't know", "No response"), 
+           "Don't know/No response", as.character(x)
+         )
+        )() |>
+        factor(levels = c(
+          "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
+          "Don't know/No response"
+        )),
       millet_reserve = refactor_var_categorical(
         x = reserve3a,
         y = "stock_frequency",
         choices = survey_endline_choices
-      ),
+      ) |>
+        (\(x)
+         ifelse(
+           as.character(x) %in% c("Don't know", "No response"), 
+           "Don't know/No response", as.character(x)
+         )
+        )() |>
+        factor(levels = c(
+          "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
+          "Don't know/No response"
+        )),
       sorghum_reserve = refactor_var_categorical(
         x = reserve4a,
         y = "stock_frequency",
         choices = survey_endline_choices
-      ),
+      ) |>
+        (\(x)
+         ifelse(
+           as.character(x) %in% c("Don't know", "No response"), 
+           "Don't know/No response", as.character(x)
+         )
+        )() |>
+        factor(levels = c(
+          "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
+          "Don't know/No response"
+        )),
       cassava_reserve = refactor_var_categorical(
         x = reserve5a,
         y = "stock_frequency",
         choices = survey_endline_choices
-      ),
+      ) |>
+        (\(x)
+         ifelse(
+           as.character(x) %in% c("Don't know", "No response"), 
+           "Don't know/No response", as.character(x)
+         )
+        )() |>
+        factor(levels = c(
+          "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
+          "Don't know/No response"
+        )),
       sweet_potato_reserve = refactor_var_categorical(
         x = reserve6a,
         y = "stock_frequency",
         choices = survey_endline_choices
-      ),
+      ) |>
+        (\(x)
+         ifelse(
+           as.character(x) %in% c("Don't know", "No response"), 
+           "Don't know/No response", as.character(x)
+         )
+        )() |>
+        factor(levels = c(
+          "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
+          "Don't know/No response"
+        )),
       legumes_reserve = refactor_var_categorical(
         x = reserve7a,
         y = "stock_frequency",
         choices = survey_endline_choices
-      ),
+      ) |>
+        (\(x)
+         ifelse(
+           as.character(x) %in% c("Don't know", "No response"), 
+           "Don't know/No response", as.character(x)
+         )
+        )() |>
+        factor(levels = c(
+          "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
+          "Don't know/No response"
+        )),
       .keep = "unused"
     ) |>
       ## Child anthropometry

@@ -8952,6 +8952,153 @@ analysis_endline <- tar_plan(
   endline_fies_study_group_province = estimate_study_group_province(
     vars = "fies_score",
     design = endline_hh_survey_design
+  ),
+  ### Endline results - corn reserves ------------------------------------------
+  endline_corn_reserve = estimate_total(
+    vars = "corn_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_corn_reserve_province = estimate_province(
+    vars = "corn_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_corn_reserve_strata = estimate_strata(
+    vars = "corn_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_corn_reserve_study_group = estimate_study_group(
+    vars = "corn_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_corn_reserve_study_group_province = estimate_study_group_province(
+    vars = "corn_reserve",
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - rice reserves ------------------------------------------
+  endline_rice_reserve = estimate_total(
+    vars = "rice_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_rice_reserve_province = estimate_province(
+    vars = "rice_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_rice_reserve_strata = estimate_strata(
+    vars = "rice_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_rice_reserve_study_group = estimate_study_group(
+    vars = "rice_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_rice_reserve_study_group_province = estimate_study_group_province(
+    vars = "rice_reserve",
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - millet reserves ------------------------------------------
+  endline_millet_reserve = estimate_total(
+    vars = "millet_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_millet_reserve_province = estimate_province(
+    vars = "millet_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_millet_reserve_strata = estimate_strata(
+    vars = "millet_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_millet_reserve_study_group = estimate_study_group(
+    vars = "millet_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_millet_reserve_study_group_province = estimate_study_group_province(
+    vars = "millet_reserve",
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - sorghum reserves ---------------------------------------
+  endline_sorghum_reserve = estimate_total(
+    vars = "sorghum_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sorghum_reserve_province = estimate_province(
+    vars = "sorghum_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sorghum_reserve_strata = estimate_strata(
+    vars = "sorghum_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sorghum_reserve_study_group = estimate_study_group(
+    vars = "sorghum_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sorghum_reserve_study_group_province = estimate_study_group_province(
+    vars = "sorghum_reserve",
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - cassava reserves ---------------------------------------
+  endline_cassava_reserve = estimate_total(
+    vars = "cassava_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_cassava_reserve_province = estimate_province(
+    vars = "cassava_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_cassava_reserve_strata = estimate_strata(
+    vars = "cassava_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_cassava_reserve_study_group = estimate_study_group(
+    vars = "cassava_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_cassava_reserve_study_group_province = estimate_study_group_province(
+    vars = "cassava_reserve",
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - sweet_potato reserves ----------------------------------
+  endline_sweet_potato_reserve = estimate_total(
+    vars = "sweet_potato_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sweet_potato_reserve_province = estimate_province(
+    vars = "sweet_potato_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sweet_potato_reserve_strata = estimate_strata(
+    vars = "sweet_potato_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sweet_potato_reserve_study_group = estimate_study_group(
+    vars = "sweet_potato_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_sweet_potato_reserve_study_group_province = estimate_study_group_province(
+    vars = "sweet_potato_reserve",
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - legumes reserves ---------------------------------------
+  endline_legumes_reserve = estimate_total(
+    vars = "legumes_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_legumes_reserve_province = estimate_province(
+    vars = "legumes_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_legumes_reserve_strata = estimate_strata(
+    vars = "legumes_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_legumes_reserve_study_group = estimate_study_group(
+    vars = "legumes_reserve",
+    design = endline_hh_survey_design
+  ),
+  endline_legumes_reserve_study_group_province = estimate_study_group_province(
+    vars = "legumes_reserve",
+    design = endline_hh_survey_design
   )
 )
 
@@ -13041,6 +13188,349 @@ outputs_tables_endline <- tar_plan(
     endline_lcsi_study_group_province,
     endline_lcsi_study_group,
     vars = c("lcsi_score", "lcsi_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline corn reserve tables  ---------------------------------------------
+  endline_corn_reserve_province_table = create_province_table(
+    endline_corn_reserve_province,
+    endline_corn_reserve,
+    vars = "corn_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_corn_reserve_province_table_report = create_province_table(
+    endline_corn_reserve_province,
+    endline_corn_reserve,
+    vars = "corn_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_corn_reserve_strata_table = create_strata_table(
+    endline_corn_reserve_strata,
+    endline_corn_reserve,
+    vars = "corn_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_corn_reserve_study_group_table = create_study_group_table(
+    endline_corn_reserve_study_group,
+    endline_corn_reserve,
+    vars = "corn_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_corn_reserve_study_group_table_report = create_study_group_table(
+    endline_corn_reserve_study_group,
+    endline_corn_reserve,
+    vars = "corn_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_corn_reserve_study_group_province_table = create_study_group_province_table(
+    endline_corn_reserve_study_group_province,
+    endline_corn_reserve_study_group,
+    vars = "corn_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline rice reserve tables  ---------------------------------------------
+  endline_rice_reserve_province_table = create_province_table(
+    endline_rice_reserve_province,
+    endline_rice_reserve,
+    vars = "rice_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rice_reserve_province_table_report = create_province_table(
+    endline_rice_reserve_province,
+    endline_rice_reserve,
+    vars = "rice_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rice_reserve_strata_table = create_strata_table(
+    endline_rice_reserve_strata,
+    endline_rice_reserve,
+    vars = "rice_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rice_reserve_study_group_table = create_study_group_table(
+    endline_rice_reserve_study_group,
+    endline_rice_reserve,
+    vars = "rice_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rice_reserve_study_group_table_report = create_study_group_table(
+    endline_rice_reserve_study_group,
+    endline_rice_reserve,
+    vars = "rice_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rice_reserve_study_group_province_table = create_study_group_province_table(
+    endline_rice_reserve_study_group_province,
+    endline_rice_reserve_study_group,
+    vars = "rice_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline millet reserve tables  -------------------------------------------
+  endline_millet_reserve_province_table = create_province_table(
+    endline_millet_reserve_province,
+    endline_millet_reserve,
+    vars = "millet_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_millet_reserve_province_table_report = create_province_table(
+    endline_millet_reserve_province,
+    endline_millet_reserve,
+    vars = "millet_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_millet_reserve_strata_table = create_strata_table(
+    endline_millet_reserve_strata,
+    endline_millet_reserve,
+    vars = "millet_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_millet_reserve_study_group_table = create_study_group_table(
+    endline_millet_reserve_study_group,
+    endline_millet_reserve,
+    vars = "millet_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_millet_reserve_study_group_table_report = create_study_group_table(
+    endline_millet_reserve_study_group,
+    endline_millet_reserve,
+    vars = "millet_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_millet_reserve_study_group_province_table = create_study_group_province_table(
+    endline_millet_reserve_study_group_province,
+    endline_millet_reserve_study_group,
+    vars = "millet_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline sorghum reserve tables  ------------------------------------------
+  endline_sorghum_reserve_province_table = create_province_table(
+    endline_sorghum_reserve_province,
+    endline_sorghum_reserve,
+    vars = "sorghum_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_sorghum_reserve_province_table_report = create_province_table(
+    endline_sorghum_reserve_province,
+    endline_sorghum_reserve,
+    vars = "sorghum_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_sorghum_reserve_strata_table = create_strata_table(
+    endline_sorghum_reserve_strata,
+    endline_sorghum_reserve,
+    vars = "sorghum_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_sorghum_reserve_study_group_table = create_study_group_table(
+    endline_sorghum_reserve_study_group,
+    endline_sorghum_reserve,
+    vars = "sorghum_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_sorghum_reserve_study_group_table_report = create_study_group_table(
+    endline_sorghum_reserve_study_group,
+    endline_sorghum_reserve,
+    vars = "sorghum_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_sorghum_reserve_study_group_province_table = create_study_group_province_table(
+    endline_sorghum_reserve_study_group_province,
+    endline_sorghum_reserve_study_group,
+    vars = "sorghum_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline cassava reserve tables  ------------------------------------------
+  endline_cassava_reserve_province_table = create_province_table(
+    endline_cassava_reserve_province,
+    endline_cassava_reserve,
+    vars = "cassava_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_cassava_reserve_province_table_report = create_province_table(
+    endline_cassava_reserve_province,
+    endline_cassava_reserve,
+    vars = "cassava_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_cassava_reserve_strata_table = create_strata_table(
+    endline_cassava_reserve_strata,
+    endline_cassava_reserve,
+    vars = "cassava_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_cassava_reserve_study_group_table = create_study_group_table(
+    endline_cassava_reserve_study_group,
+    endline_cassava_reserve,
+    vars = "cassava_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_cassava_reserve_study_group_table_report = create_study_group_table(
+    endline_cassava_reserve_study_group,
+    endline_cassava_reserve,
+    vars = "cassava_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_cassava_reserve_study_group_province_table = create_study_group_province_table(
+    endline_cassava_reserve_study_group_province,
+    endline_cassava_reserve_study_group,
+    vars = "cassava_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline sweet_potato reserve tables  -------------------------------------
+  endline_sweet_potato_reserve_province_table = create_province_table(
+    endline_sweet_potato_reserve_province,
+    endline_sweet_potato_reserve,
+    vars = "sweet_potato_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_sweet_potato_reserve_province_table_report = create_province_table(
+    endline_sweet_potato_reserve_province,
+    endline_sweet_potato_reserve,
+    vars = "sweet_potato_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_sweet_potato_reserve_strata_table = create_strata_table(
+    endline_sweet_potato_reserve_strata,
+    endline_sweet_potato_reserve,
+    vars = "sweet_potato_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_sweet_potato_reserve_study_group_table = create_study_group_table(
+    endline_sweet_potato_reserve_study_group,
+    endline_sweet_potato_reserve,
+    vars = "sweet_potato_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_sweet_potato_reserve_study_group_table_report = create_study_group_table(
+    endline_sweet_potato_reserve_study_group,
+    endline_sweet_potato_reserve,
+    vars = "sweet_potato_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_sweet_potato_reserve_study_group_province_table = create_study_group_province_table(
+    endline_sweet_potato_reserve_study_group_province,
+    endline_sweet_potato_reserve_study_group,
+    vars = "sweet_potato_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline legumes reserve tables  ---------------------------------------------
+  endline_legumes_reserve_province_table = create_province_table(
+    endline_legumes_reserve_province,
+    endline_legumes_reserve,
+    vars = "legumes_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_legumes_reserve_province_table_report = create_province_table(
+    endline_legumes_reserve_province,
+    endline_legumes_reserve,
+    vars = "legumes_reserve",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_legumes_reserve_strata_table = create_strata_table(
+    endline_legumes_reserve_strata,
+    endline_legumes_reserve,
+    vars = "legumes_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_legumes_reserve_study_group_table = create_study_group_table(
+    endline_legumes_reserve_study_group,
+    endline_legumes_reserve,
+    vars = "legumes_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_legumes_reserve_study_group_table_report = create_study_group_table(
+    endline_legumes_reserve_study_group,
+    endline_legumes_reserve,
+    vars = "legumes_reserve",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_legumes_reserve_study_group_province_table = create_study_group_province_table(
+    endline_legumes_reserve_study_group_province,
+    endline_legumes_reserve_study_group,
+    vars = "legumes_reserve",
     indicator_list = food_security_indicator_list,
     study_round = "Endline",
     report = FALSE

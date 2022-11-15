@@ -51,5 +51,6 @@ jobs:
           targets::tar_make(dplyr::starts_with("endline_fcs"))
           targets::tar_make(dplyr::starts_with("endline_rcsi"))
           targets::tar_make(dplyr::starts_with("endline_lcsi"))
+          targets::tar_make(dplyr::contains("reserve"))
         shell: Rscript {0}
           
