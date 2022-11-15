@@ -32,6 +32,7 @@ hygiene_ladder <- c("#cab2d6", "#feb24c", "#ec7014")
 bmi_classes <- c("#d7191c", "#fdae61", "#abdda4", "#2b83ba")
 fcs_classes <- c("#d73027", "#ffffbf", "#4575b4")
 rcsi_classes <- c("#d73027", "#ffffbf", "#4575b4")
+lcsi_classes <- c("#d73027", "#fc8d59", "#ffffbf", "#4575b4")
 
 theme_mozambique <- theme_bw() + 
   theme(
@@ -227,7 +228,7 @@ rbind(
 
 <br/>
 
-```{r fcs_plot, echo = FALSE, fig.align = "center", fig.width = 6}
+```{r fcs_plot, echo = FALSE, fig.align = "center", fig.width = 8}
 endline_fcs_province_table |>
   subset(
     indicator_category != "Mean"
@@ -241,7 +242,7 @@ endline_fcs_province_table |>
     )
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
   scale_fill_manual(name = "", values = alpha(fcs_classes, 0.8)) +
   labs(
     title = "Food insecurity status based on food consumption score",
@@ -422,7 +423,7 @@ rbind(
 
 <br/>
 
-```{r rcsi_plot, echo = FALSE, fig.align = "center", fig.width = 6}
+```{r rcsi_plot, echo = FALSE, fig.align = "center", fig.width = 8}
 endline_rcsi_province_table |>
   subset(
     indicator_category != "Mean"
@@ -436,7 +437,7 @@ endline_rcsi_province_table |>
     )
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
   scale_fill_manual(name = "", values = alpha(rev(rcsi_classes), 0.8)) +
   labs(
     title = "Food insecurity status based on reduced coping strategies index",
@@ -518,6 +519,201 @@ rbind(
       "Minimal" = 3,
       "Stressed" = 3,
       "Crisis" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+## Livelihood coping strategies index
+
+```{r lcsi, echo = FALSE}
+lcsi_province_overall <- endline_lcsi_province_table |>
+  subset(
+    indicator_variable == "lcsi_score",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+lcsi_strata <- endline_lcsi_strata_table |>
+  subset(
+    indicator_variable == "lcsi_score" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+lcsi_study_group <- endline_lcsi_study_group_table |>
+  subset(
+    indicator_variable == "lcsi_score" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  lcsi_province_overall,
+  lcsi_strata,
+  lcsi_study_group
+) |>
+  #(\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 3)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", c("Estimate", "95% LCL", "95% UCL")),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Livelihoods Coping Strategies Index" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+```{r lcsi_plot, echo = FALSE, fig.align = "center", fig.width = 8}
+endline_lcsi_province_table |>
+  subset(
+    indicator_category != "Mean"
+  ) |>
+  dplyr::mutate(
+    indicator_category = factor(
+      x = indicator_category, levels = c("secure", "stress", "crisis", "emergency")
+    ),
+    strata = factor(
+      x = strata, levels = c("Zambézia", "Nampula", "Overall")
+    )
+  ) |>
+  ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
+  scale_fill_manual(name = "", values = alpha(rev(lcsi_classes), 0.8)) +
+  labs(
+    title = "Food insecurity status based on livelihoods coping strategies index",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall\nby food insecurity category based on livelihoods coping strategies index",
+    x = "", y = "%"
+  ) +
+  theme_mozambique
+```
+
+<br/>
+
+```{r lcsi_class, echo = FALSE}
+lcsi_province_overall <- endline_lcsi_province_table |>
+  subset(
+    indicator_variable != "lcsi_score",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+lcsi_strata <- endline_lcsi_strata_table |>
+  subset(
+    indicator_variable != "lcsi_score" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+lcsi_study_group <- endline_lcsi_study_group_table |>
+  subset(
+    indicator_variable != "lcsi_score" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  lcsi_province_overall,
+  lcsi_strata,
+  lcsi_study_group
+) |>
+  (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:13]  <- round(x[ , 2:13] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 4)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Secure" = 3,
+      "Stress" = 3,
+      "Crisis" = 3,
+      "Emergency" = 3
     ),
     bold = TRUE
   ) |>
