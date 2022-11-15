@@ -78,6 +78,15 @@ data_reference <- tar_plan(
     command = googlesheets4::read_sheet(ss = survey_indicator_list_id),
     cue = tar_cue("always")
   ),
+  ### Read food security indicator list from Google Sheets
+  food_security_indicator_list_id = googlesheets4::gs4_find() |>
+    subset(name == "food_security_indicators") |>
+    (\(x) x$id)(),
+  tar_target(
+    name = food_security_indicator_list,
+    command = googlesheets4::read_sheet(ss = food_security_indicator_list_id),
+    cue = tar_cue("always")
+  ),
   ### Read choices list for endline survey -------------------------------------
   survey_endline_form_id = googlesheets4::gs4_find() |>
     subset(name == "improving_nutrition_status_u5") |>
@@ -8783,7 +8792,7 @@ analysis_endline <- tar_plan(
     design = endline_hh_survey_design |>
       subset(respondent_sex == "Female")
   ),
-  ### endline results - women's anthropometry ---------------------------------
+  ### Endline results - women's anthropometry ----------------------------------
   endline_women_anthro = estimate_total(
     vars = c("body_mass_index", "bmi_class"),
     design = endline_hh_survey_design |>
@@ -8828,6 +8837,121 @@ analysis_endline <- tar_plan(
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
+  ),
+  ### Endline results - household dietary diversity score -----------------------
+  endline_hdds = estimate_total(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_province = estimate_province(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_strata = estimate_strata(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_study_group = estimate_study_group(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_study_group_province = estimate_study_group_province(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  ### Endline results - food consumption score ---------------------------------
+  endline_fcs = estimate_total(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_province = estimate_province(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_strata = estimate_strata(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_study_group = estimate_study_group(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_study_group_province = estimate_study_group_province(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  ### Endline results - reduced coping strategies index ------------------------
+  endline_rcsi = estimate_total(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_province = estimate_province(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_strata = estimate_strata(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_study_group = estimate_study_group(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_study_group_province = estimate_study_group_province(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - livelihood coping strategies index ------------------------
+  endline_lcsi = estimate_total(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_province = estimate_province(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_strata = estimate_strata(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_study_group = estimate_study_group(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_study_group_province = estimate_study_group_province(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - food insecurity experience scale -----------------------
+  endline_fies = estimate_total(
+    vars = "fies_score",
+    design = endline_hh_survey_design
+  ),
+  endline_fies_province = estimate_province(
+    vars = "fies_score",
+    design = endline_hh_survey_design
+  ),
+  endline_fies_strata = estimate_strata(
+    vars = c("fies", "fies_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_fies_study_group = estimate_study_group(
+    vars = "fies_score",
+    design = endline_hh_survey_design
+  ),
+  endline_fies_study_group_province = estimate_study_group_province(
+    vars = "fies_score",
+    design = endline_hh_survey_design
   )
 )
 
@@ -12724,6 +12848,104 @@ outputs_tables_endline <- tar_plan(
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
+  ),
+  ### Endline HDDS tables ------------------------------------------------------
+  endline_hdds_province_table = create_province_table(
+    endline_hdds_province,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hdds_province_table_report = create_province_table(
+    endline_hdds_province,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hdds_strata_table = create_strata_table(
+    endline_hdds_strata,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hdds_study_group_table = create_study_group_table(
+    endline_hdds_study_group,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hdds_study_group_table_report = create_study_group_table(
+    endline_hdds_study_group,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hdds_study_group_province_table = create_study_group_province_table(
+    endline_hdds_study_group_province,
+    endline_hdds_study_group,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline FCS tables -------------------------------------------------------
+  endline_fcs_province_table = create_province_table(
+    endline_fcs_province,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fcs_province_table_report = create_province_table(
+    endline_fcs_province,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_fcs_strata_table = create_strata_table(
+    endline_fcs_strata,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fcs_study_group_table = create_study_group_table(
+    endline_fcs_study_group,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fcs_study_group_table_report = create_study_group_table(
+    endline_fcs_study_group,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_fcs_study_group_province_table = create_study_group_province_table(
+    endline_fcs_study_group_province,
+    endline_fcs_study_group,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
   )
 )
 
@@ -14093,6 +14315,14 @@ reports <- tar_plan(
   tar_render(
     name = endline_survey_results_report,
     path = "reports/endline_survey_results_report.Rmd",
+    output_dir = "outputs",
+    knit_root_dir = here::here(),
+    cue = tar_cue("always")
+  ),
+  ### Endline food security report ---------------------------------------------
+  tar_render(
+    name = endline_survey_food_security_results_report,
+    path = "reports/endline_survey_food_security_results_report.Rmd",
     output_dir = "outputs",
     knit_root_dir = here::here(),
     cue = tar_cue("always")
