@@ -238,7 +238,7 @@ rbind(
 
 <br/>
 
-```{r fcs_province_plot, echo = FALSE, fig.align = "center", fig.width = 8}
+```{r fcs_province_plot, echo = FALSE, fig.align = "center", fig.width = 10}
 endline_fcs_province_table |>
   subset(
     indicator_category != "Mean"
@@ -256,7 +256,7 @@ endline_fcs_province_table |>
   scale_fill_manual(name = "", values = alpha(rev(fcs_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on food consumption score",
-    subtitle = "Proportion of households in Zambézia, Nampula, and overall by food insecurity category based on food consumption score",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall by food consumption score food insecurity categories",
     x = "", y = "%"
   ) +
   #facet_wrap(~strata, scales = "free_y") +
@@ -294,7 +294,7 @@ endline_fcs_strata_table |>
   scale_fill_manual(name = "", values = alpha(rev(fcs_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on food consumption score",
-    subtitle = "Proportion of households in districts of Zambézia and Nampula\nby food insecurity category based on food consumption score",
+    subtitle = "Proportion of households Zambézia and Nampula districts by food consumption score food insecurity categories",
     x = "", y = "%"
   ) +
   facet_wrap(~province, scales = "free_x") +
@@ -477,7 +477,7 @@ rbind(
 
 <br/>
 
-```{r rcsi_province_plot, echo = FALSE, fig.align = "center", fig.width = 8}
+```{r rcsi_province_plot, echo = FALSE, fig.align = "center", fig.width = 10}
 endline_rcsi_province_table |>
   subset(
     indicator_category != "Mean"
@@ -495,7 +495,7 @@ endline_rcsi_province_table |>
   scale_fill_manual(name = "", values = alpha(rev(rcsi_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on reduced coping strategies index",
-    subtitle = "Proportion of households in Zambézia, Nampula, and overall\nby food insecurity category based on reduced coping strategies index",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall by reduced coping strategies index food insecurity categories",
     x = "", y = "%"
   ) +
   theme_mozambique
@@ -532,7 +532,7 @@ endline_rcsi_strata_table |>
   scale_fill_manual(name = "", values = alpha(rev(rcsi_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on reduced coping strategies index",
-    subtitle = "Proportion of households in districts of Zambézia and Nampula by food insecurity category based on reduced coping strategies index",
+    subtitle = "Proportion of households in Zambézia and Nampula districts by reduced coping strategies index food insecurity categories",
     x = "", y = "%"
   ) +
   facet_wrap(~province, scales = "free_x") +
@@ -715,7 +715,7 @@ rbind(
 
 <br/>
 
-```{r lcsi_province_plot, echo = FALSE, fig.align = "center", fig.width = 8}
+```{r lcsi_province_plot, echo = FALSE, fig.align = "center", fig.width = 10}
 endline_lcsi_province_table |>
   subset(
     indicator_category != "Mean"
@@ -733,7 +733,7 @@ endline_lcsi_province_table |>
   scale_fill_manual(name = "", values = alpha(rev(lcsi_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on livelihoods coping strategies index",
-    subtitle = "Proportion of households in Zambézia, Nampula, and overall\nby food insecurity category based on livelihoods coping strategies index",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall by livelihood coping strategies index food insecurity categories",
     x = "", y = "%"
   ) +
   theme_mozambique
@@ -770,7 +770,7 @@ endline_lcsi_strata_table |>
   scale_fill_manual(name = "", values = alpha(rev(lcsi_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on livelihoods coping strategies index",
-    subtitle = "Proportion of households in districts of Zambézia and Nampula by food insecurity category based on livelihoods coping strategies index",
+    subtitle = "Proportion of households in Zambézia and Nampula districts by livelihoods coping strategy food insecurity categories",
     x = "", y = "%"
   ) +
   facet_wrap(~province, scales = "free_x") +
