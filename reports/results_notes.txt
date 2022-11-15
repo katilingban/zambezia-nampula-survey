@@ -1,0 +1,11 @@
+Notes on missing categories between baseline and endline results
+19 October 2022
+
+1. Demographics - respondent
+
+Number of rows for baseline - 738
+Number of rows for endline - 702
+
+Endline data missing some languages and some age groups
+
+2. Demographics - children

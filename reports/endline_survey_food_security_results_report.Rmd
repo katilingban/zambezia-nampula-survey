@@ -1,0 +1,313 @@
+---
+title: "Improving nutrition status for under 5 children in Zambezia and Nampula"
+subtitle: "Endline survey food security indicator results"
+author: 
+    - name: Mark Myatt
+    - name: Ernest Guevarra
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    self_contained: true
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE,
+  echo = FALSE
+)
+
+suppressPackageStartupMessages(source("packages.R"))
+for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
+
+targets::tar_load(dplyr::starts_with("endline"))
+
+water_ladder <- c("#4575b4", "#74add1", "#ffffbf", "#feb24c", "#ec7014")
+sanitation_ladder <- c("#1a9850", "#a6d96a", "#ffffbf", "#feb24c", "#ec7014")
+hygiene_ladder <- c("#cab2d6", "#feb24c", "#ec7014")
+bmi_classes <- c("#d7191c", "#fdae61", "#abdda4", "#2b83ba")
+
+theme_mozambique <- theme_bw() + 
+  theme(
+    plot.title = element_text(size = 14),
+    plot.subtitle = element_text(size = 12),
+    panel.border = element_rect(size = 0.5, colour = "gray70"),
+    panel.grid.major = element_line(
+      linetype = 1, size = 0.2, colour = "gray90"
+    ),
+    panel.grid.minor = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(size = 12, hjust = 0),
+    legend.key = element_rect(linetype = 0),
+    axis.line.x = element_line(size = 1, colour = "gray70"),
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10),
+    axis.ticks = element_line(colour = "gray70", size = 0.5)
+  )
+```
+
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
+
+<br/>
+
+## Household dietary diversity score
+
+```{r hdds, echo = FALSE}
+hdds_province_overall <- endline_hdds_province_table |>
+  subset(
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+hdds_strata <- endline_hdds_strata_table |>
+  subset(
+    strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+hdds_study_group <- endline_hdds_study_group_table |>
+  subset(
+    study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  hdds_province_overall,
+  hdds_strata,
+  hdds_study_group
+) |>
+  #(\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 3)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", c("Estimate", "95% LCL", "95% UCL")),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Household Dietary Diversity Score" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+## Food consumption score
+
+```{r fcs, echo = FALSE}
+fcs_province_overall <- endline_fcs_province_table |>
+  subset(
+    indicator_variable == "fcs_score",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+fcs_strata <- endline_fcs_strata_table |>
+  subset(
+    indicator_variable == "fcs_score" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+fcs_study_group <- endline_fcs_study_group_table |>
+  subset(
+    indicator_variable == "fcs_score" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  fcs_province_overall,
+  fcs_strata,
+  fcs_study_group
+) |>
+  #(\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
+  (\(x)
+    {
+      x[ , 2:4]  <- round(x[ , 2:4], digits = 3)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", c("Estimate", "95% LCL", "95% UCL")),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Mean Food Consumption Score" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+<br/>
+
+```{r fcs_class, echo = FALSE}
+fcs_province_overall <- endline_fcs_province_table |>
+  subset(
+    indicator_variable != "fcs_score",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+fcs_strata <- endline_fcs_strata_table |>
+  subset(
+    indicator_variable != "fcs_score" & strata != "Overall",
+    select = c(indicator_category, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+fcs_study_group <- endline_fcs_study_group_table |>
+  subset(
+    indicator_variable != "fcs_score" & study_group != "Overall",
+    select = c(indicator_category, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_category,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  fcs_province_overall,
+  fcs_strata,
+  fcs_study_group
+) |>
+  (\(x) x[ , c(1, 2, 5, 8, 3, 6, 9, 4, 7, 10)])() |>
+  (\(x)
+    {
+      x[ , 2:10]  <- round(x[ , 2:10] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Poor" = 3,
+      "Borderline" = 3,
+      "Acceptable" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+
+<br/>
+<br/>

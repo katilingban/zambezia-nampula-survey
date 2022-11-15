@@ -78,6 +78,15 @@ data_reference <- tar_plan(
     command = googlesheets4::read_sheet(ss = survey_indicator_list_id),
     cue = tar_cue("always")
   ),
+  ### Read food security indicator list from Google Sheets
+  food_security_indicator_list_id = googlesheets4::gs4_find() |>
+    subset(name == "food_security_indicators") |>
+    (\(x) x$id)(),
+  tar_target(
+    name = food_security_indicator_list,
+    command = googlesheets4::read_sheet(ss = food_security_indicator_list_id),
+    cue = tar_cue("always")
+  ),
   ### Read choices list for endline survey -------------------------------------
   survey_endline_form_id = googlesheets4::gs4_find() |>
     subset(name == "improving_nutrition_status_u5") |>
@@ -2194,100 +2203,185 @@ analysis_baseline <- tar_plan(
     design = baseline_child_survey_design |>
       subset(child_age_days >= 42)
   ),
-  ### Baseline results - set2 (OPV2, Penta1, Pneumo1, Rota1) --------------------
-  baseline_child_immunisation_set2 = estimate_total(
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  ### Baseline results - set2a (OPV2, Penta1, Pneumo1, Rota1) ------------------
+  baseline_child_immunisation_set2a = estimate_total(
+    vars = "immunisation_polio_third_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 70)
   ),
-  baseline_child_immunisation_set2_province = estimate_province(
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_province = estimate_province(
+    vars = "immunisation_polio_third_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 70)
   ),
-  baseline_child_immunisation_set2_strata = estimate_strata(
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_strata = estimate_strata(
+    vars = "immunisation_polio_third_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 70)
   ),
-  baseline_child_immunisation_set2_study_group = estimate_study_group(
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_study_group = estimate_study_group(
+    vars = "immunisation_polio_third_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 70)
   ),
-  baseline_child_immunisation_set2_study_group_province = estimate_study_group_province(
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_study_group_province = estimate_study_group_province(
+    vars = "immunisation_polio_third_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 70)
   ),
-  ### Baseline results - set3 (OPV2, Penta1, Pneumo1, Rota1) --------------------------------
-  baseline_child_immunisation_set3 = estimate_total(
-    vars = c(
-      "immunisation_polio_fourth_dose",
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  ### Baseline results - set2b (OPV2, Penta1, Pneumo1, Rota1) ------------------
+  baseline_child_immunisation_set2b = estimate_total(
+    vars = "immunisation_pentavalent_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2b_province = estimate_province(
+    vars = "immunisation_pentavalent_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2b_strata = estimate_strata(
+    vars = "immunisation_pentavalent_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2b_study_group = estimate_study_group(
+    vars = "immunisation_pentavalent_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2b_study_group_province = estimate_study_group_province(
+    vars = "immunisation_pentavalent_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  ### Baseline results - set2c (OPV2, Penta1, Pneumo1, Rota1) ------------------
+  baseline_child_immunisation_set2c = estimate_total(
+    vars = "immunisation_pneumococcal_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2c_province = estimate_province(
+    vars = "immunisation_pneumococcal_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2c_strata = estimate_strata(
+    vars = "immunisation_pneumococcal_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2c_study_group = estimate_study_group(
+    vars = "immunisation_pneumococcal_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2c_study_group_province = estimate_study_group_province(
+    vars = "immunisation_pneumococcal_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  ### Baseline results - set2d (OPV2, Penta1, Pneumo1, Rota1) ------------------
+  baseline_child_immunisation_set2d = estimate_total(
+    vars = "immunisation_rotavirus_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2d_province = estimate_province(
+    vars = "immunisation_rotavirus_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2d_strata = estimate_strata(
+    vars = "immunisation_rotavirus_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2d_study_group = estimate_study_group(
+    vars = "immunisation_rotavirus_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  baseline_child_immunisation_set2d_study_group_province = estimate_study_group_province(
+    vars = "immunisation_rotavirus_second_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 70)
+  ),
+  ### Baseline results - set3a (OPV2, Penta1, Pneumo1, Rota1) ------------------
+  baseline_child_immunisation_set3a = estimate_total(
+    vars = "immunisation_polio_fourth_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 98)
   ),
-  baseline_child_immunisation_set3_province = estimate_province(
-    vars = c(
-      "immunisation_polio_fourth_dose",
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set3a_province = estimate_province(
+    vars = "immunisation_polio_fourth_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 98)
   ),
-  baseline_child_immunisation_set3_strata = estimate_strata(
-    vars = c(
-      "immunisation_polio_fourth_dose",
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set3a_strata = estimate_strata(
+    vars = "immunisation_polio_fourth_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 98)
   ),
-  baseline_child_immunisation_set3_study_group = estimate_study_group(
-    vars = c(
-      "immunisation_polio_fourth_dose",
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set3a_study_group = estimate_study_group(
+    vars = "immunisation_polio_fourth_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 98)
   ),
-  baseline_child_immunisation_set3_study_group_province = estimate_study_group_province(
-    vars = c(
-      "immunisation_polio_fourth_dose",
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set3a_study_group_province = estimate_study_group_province(
+    vars = "immunisation_polio_fourth_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  ### Baseline results - set3b (OPV2, Penta1, Pneumo1, Rota1) -------------------
+  baseline_child_immunisation_set3b = estimate_total(
+    vars = "immunisation_pentavalent_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3b_province = estimate_province(
+    vars = "immunisation_pentavalent_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3b_strata = estimate_strata(
+    vars = "immunisation_pentavalent_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3b_study_group = estimate_study_group(
+    vars = "immunisation_pentavalent_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3b_study_group_province = estimate_study_group_province(
+    vars = "immunisation_pentavalent_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  ### Baseline results - set3c (OPV2, Penta1, Pneumo1, Rota1) ------------------
+  baseline_child_immunisation_set3c = estimate_total(
+    vars = "immunisation_pneumococcal_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3c_province = estimate_province(
+    vars = "immunisation_pneumococcal_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3c_strata = estimate_strata(
+    vars = "immunisation_pneumococcal_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3c_study_group = estimate_study_group(
+    vars = "immunisation_pneumococcal_third_dose",
+    design = baseline_child_survey_design |>
+      subset(child_age_days >= 98)
+  ),
+  baseline_child_immunisation_set3c_study_group_province = estimate_study_group_province(
+    vars = "immunisation_pneumococcal_third_dose",
     design = baseline_child_survey_design |>
       subset(child_age_days >= 98)
   ),
@@ -5221,143 +5315,304 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  ### Baseline child immunisation set2 table -----------------------------------
-  baseline_child_immunisation_set2_province_table = create_province_table(
-    baseline_child_immunisation_set2_province,
-    baseline_child_immunisation_set2,
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  ### Baseline child immunisation set2a table ----------------------------------
+  baseline_child_immunisation_set2a_province_table = create_province_table(
+    baseline_child_immunisation_set2a_province,
+    baseline_child_immunisation_set2a,
+    vars = "immunisation_polio_third_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_child_immunisation_set2_province_table_report = create_province_table(
-    baseline_child_immunisation_set2_province,
-    baseline_child_immunisation_set2,
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_province_table_report = create_province_table(
+    baseline_child_immunisation_set2a_province,
+    baseline_child_immunisation_set2a,
+    vars = "immunisation_polio_third_dose",
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  baseline_child_immunisation_set2_strata_table = create_strata_table(
-    baseline_child_immunisation_set2_strata,
-    baseline_child_immunisation_set2,
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_strata_table = create_strata_table(
+    baseline_child_immunisation_set2a_strata,
+    baseline_child_immunisation_set2a,
+    vars = "immunisation_polio_third_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_child_immunisation_set2_study_group_table = create_study_group_table(
-    baseline_child_immunisation_set2_study_group,
-    baseline_child_immunisation_set2,
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_study_group_table = create_study_group_table(
+    baseline_child_immunisation_set2a_study_group,
+    baseline_child_immunisation_set2a,
+    vars = "immunisation_polio_third_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_child_immunisation_set2_study_group_table_report = create_study_group_table(
-    baseline_child_immunisation_set2_study_group,
-    baseline_child_immunisation_set2,
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_set2a_study_group,
+    baseline_child_immunisation_set2a,
+    vars = "immunisation_polio_third_dose",
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  baseline_child_immunisation_set2_study_group_province_table = create_study_group_province_table(
-    baseline_child_immunisation_set2_study_group_province,
-    baseline_child_immunisation_set2_study_group,
-    vars = c(
-      "immunisation_polio_third_dose",
-      "immunisation_pentavalent_second_dose", 
-      "immunisation_pneumococcal_second_dose",
-      "immunisation_rotavirus_second_dose"
-    ),
+  baseline_child_immunisation_set2a_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_set2a_study_group_province,
+    baseline_child_immunisation_set2a_study_group,
+    vars = "immunisation_polio_third_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  ### Baseline child immunisation set3 table -----------------------------------
-  baseline_child_immunisation_set3_province_table = create_province_table(
-    baseline_child_immunisation_set3_province,
-    baseline_child_immunisation_set3,
-    vars = c(
-      "immunisation_polio_fourth_dose", 
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  ### Baseline child immunisation set2b table ----------------------------------
+  baseline_child_immunisation_set2b_province_table = create_province_table(
+    baseline_child_immunisation_set2b_province,
+    baseline_child_immunisation_set2b,
+    vars = "immunisation_pentavalent_second_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_child_immunisation_set3_province_table_report = create_province_table(
-    baseline_child_immunisation_set3_province,
-    baseline_child_immunisation_set3,
-    vars = c(
-      "immunisation_polio_fourth_dose", 
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set2b_province_table_report = create_province_table(
+    baseline_child_immunisation_set2b_province,
+    baseline_child_immunisation_set2b,
+    vars = "immunisation_pentavalent_second_dose",
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  baseline_child_immunisation_set3_strata_table = create_strata_table(
-    baseline_child_immunisation_set3_strata,
-    baseline_child_immunisation_set3,
-    vars = c(
-      "immunisation_polio_fourth_dose", 
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set2b_strata_table = create_strata_table(
+    baseline_child_immunisation_set2b_strata,
+    baseline_child_immunisation_set2b,
+    vars = "immunisation_pentavalent_second_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_child_immunisation_set3_study_group_table = create_study_group_table(
-    baseline_child_immunisation_set3_study_group,
-    baseline_child_immunisation_set3,
-    vars = c(
-      "immunisation_polio_fourth_dose", 
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set2b_study_group_table = create_study_group_table(
+    baseline_child_immunisation_set2b_study_group,
+    baseline_child_immunisation_set2b,
+    vars = "immunisation_pentavalent_second_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_child_immunisation_set3_study_group_table_report = create_study_group_table(
-    baseline_child_immunisation_set3_study_group,
-    baseline_child_immunisation_set3,
-    vars = c(
-      "immunisation_polio_fourth_dose", 
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set2b_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_set2b_study_group,
+    baseline_child_immunisation_set2b,
+    vars = "immunisation_pentavalent_second_dose",
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  baseline_child_immunisation_set3_study_group_province_table = create_study_group_province_table(
-    baseline_child_immunisation_set3_study_group_province,
-    baseline_child_immunisation_set3_study_group,
-    vars = c(
-      "immunisation_polio_fourth_dose", 
-      "immunisation_pentavalent_third_dose",
-      "immunisation_pneumococcal_third_dose"
-    ),
+  baseline_child_immunisation_set2b_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_set2b_study_group_province,
+    baseline_child_immunisation_set2b_study_group,
+    vars = "immunisation_pentavalent_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline child immunisation set2c table ----------------------------------
+  baseline_child_immunisation_set2c_province_table = create_province_table(
+    baseline_child_immunisation_set2c_province,
+    baseline_child_immunisation_set2c,
+    vars = "immunisation_pneumococcal_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set2c_province_table_report = create_province_table(
+    baseline_child_immunisation_set2c_province,
+    baseline_child_immunisation_set2c,
+    vars = "immunisation_pneumococcal_second_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set2c_strata_table = create_strata_table(
+    baseline_child_immunisation_set2c_strata,
+    baseline_child_immunisation_set2c,
+    vars = "immunisation_pneumococcal_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set2c_study_group_table = create_study_group_table(
+    baseline_child_immunisation_set2c_study_group,
+    baseline_child_immunisation_set2c,
+    vars = "immunisation_pneumococcal_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set2c_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_set2c_study_group,
+    baseline_child_immunisation_set2c,
+    vars = "immunisation_pneumococcal_second_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set2c_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_set2c_study_group_province,
+    baseline_child_immunisation_set2c_study_group,
+    vars = "immunisation_pneumococcal_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline child immunisation set2d table ----------------------------------
+  baseline_child_immunisation_set2d_province_table = create_province_table(
+    baseline_child_immunisation_set2d_province,
+    baseline_child_immunisation_set2d,
+    vars = "immunisation_rotavirus_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set2d_province_table_report = create_province_table(
+    baseline_child_immunisation_set2d_province,
+    baseline_child_immunisation_set2d,
+    vars = "immunisation_rotavirus_second_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set2d_strata_table = create_strata_table(
+    baseline_child_immunisation_set2d_strata,
+    baseline_child_immunisation_set2d,
+    vars = "immunisation_rotavirus_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set2d_study_group_table = create_study_group_table(
+    baseline_child_immunisation_set2d_study_group,
+    baseline_child_immunisation_set2d,
+    vars = "immunisation_rotavirus_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set2d_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_set2d_study_group,
+    baseline_child_immunisation_set2d,
+    vars = "immunisation_rotavirus_second_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set2d_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_set2d_study_group_province,
+    baseline_child_immunisation_set2d_study_group,
+    vars = "immunisation_rotavirus_second_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline child immunisation set3a table ----------------------------------
+  baseline_child_immunisation_set3a_province_table = create_province_table(
+    baseline_child_immunisation_set3a_province,
+    baseline_child_immunisation_set3a,
+    vars = "immunisation_polio_fourth_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3a_province_table_report = create_province_table(
+    baseline_child_immunisation_set3a_province,
+    baseline_child_immunisation_set3a,
+    vars = "immunisation_polio_fourth_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set3a_strata_table = create_strata_table(
+    baseline_child_immunisation_set3a_strata,
+    baseline_child_immunisation_set3a,
+    vars = "immunisation_polio_fourth_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3a_study_group_table = create_study_group_table(
+    baseline_child_immunisation_set3a_study_group,
+    baseline_child_immunisation_set3a,
+    vars = "immunisation_polio_fourth_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3a_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_set3a_study_group,
+    baseline_child_immunisation_set3a,
+    vars = "immunisation_polio_fourth_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set3a_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_set3a_study_group_province,
+    baseline_child_immunisation_set3a_study_group,
+    vars = "immunisation_polio_fourth_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline child immunisation set3b table ----------------------------------
+  baseline_child_immunisation_set3b_province_table = create_province_table(
+    baseline_child_immunisation_set3b_province,
+    baseline_child_immunisation_set3b,
+    vars = "immunisation_pentavalent_third_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3b_province_table_report = create_province_table(
+    baseline_child_immunisation_set3b_province,
+    baseline_child_immunisation_set3b,
+    vars = "immunisation_pentavalent_third_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set3b_strata_table = create_strata_table(
+    baseline_child_immunisation_set3b_strata,
+    baseline_child_immunisation_set3b,
+    vars = "immunisation_pentavalent_third_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3b_study_group_table = create_study_group_table(
+    baseline_child_immunisation_set3b_study_group,
+    baseline_child_immunisation_set3b,
+    vars = "immunisation_pentavalent_third_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3b_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_set3b_study_group,
+    baseline_child_immunisation_set3b,
+    vars = "immunisation_pentavalent_third_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set3b_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_set3b_study_group_province,
+    baseline_child_immunisation_set3b_study_group,
+    vars = "immunisation_pentavalent_third_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline child immunisation set3c table ----------------------------------
+  baseline_child_immunisation_set3c_province_table = create_province_table(
+    baseline_child_immunisation_set3c_province,
+    baseline_child_immunisation_set3c,
+    vars = "immunisation_pneumococcal_third_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3c_province_table_report = create_province_table(
+    baseline_child_immunisation_set3c_province,
+    baseline_child_immunisation_set3c,
+    vars = "immunisation_pneumococcal_third_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set3c_strata_table = create_strata_table(
+    baseline_child_immunisation_set3c_strata,
+    baseline_child_immunisation_set3c,
+    vars = "immunisation_pneumococcal_third_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3c_study_group_table = create_study_group_table(
+    baseline_child_immunisation_set3c_study_group,
+    baseline_child_immunisation_set3c,
+    vars = "immunisation_pneumococcal_third_dose",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_immunisation_set3c_study_group_table_report = create_study_group_table(
+    baseline_child_immunisation_set3c_study_group,
+    baseline_child_immunisation_set3c,
+    vars = "immunisation_pneumococcal_third_dose",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_immunisation_set3c_study_group_province_table = create_study_group_province_table(
+    baseline_child_immunisation_set3c_study_group_province,
+    baseline_child_immunisation_set3c_study_group,
+    vars = "immunisation_pneumococcal_third_dose",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
@@ -8537,7 +8792,7 @@ analysis_endline <- tar_plan(
     design = endline_hh_survey_design |>
       subset(respondent_sex == "Female")
   ),
-  ### endline results - women's anthropometry ---------------------------------
+  ### Endline results - women's anthropometry ----------------------------------
   endline_women_anthro = estimate_total(
     vars = c("body_mass_index", "bmi_class"),
     design = endline_hh_survey_design |>
@@ -8582,6 +8837,121 @@ analysis_endline <- tar_plan(
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
+  ),
+  ### Endline results - household dietary diversity score -----------------------
+  endline_hdds = estimate_total(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_province = estimate_province(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_strata = estimate_strata(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_study_group = estimate_study_group(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  endline_hdds_study_group_province = estimate_study_group_province(
+    vars = "hdds",
+    design = endline_hh_survey_design |>
+      subset(hdds0 == 2)
+  ),
+  ### Endline results - food consumption score ---------------------------------
+  endline_fcs = estimate_total(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_province = estimate_province(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_strata = estimate_strata(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_study_group = estimate_study_group(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  endline_fcs_study_group_province = estimate_study_group_province(
+    vars = c("fcs_score", "fcs_class"),
+    design = endline_hh_survey_design |>
+      subset(fcs0 == 2)
+  ),
+  ### Endline results - reduced coping strategies index ------------------------
+  endline_rcsi = estimate_total(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_province = estimate_province(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_strata = estimate_strata(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_study_group = estimate_study_group(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_rcsi_study_group_province = estimate_study_group_province(
+    vars = c("rcsi", "rcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - livelihood coping strategies index ------------------------
+  endline_lcsi = estimate_total(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_province = estimate_province(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_strata = estimate_strata(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_study_group = estimate_study_group(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_lcsi_study_group_province = estimate_study_group_province(
+    vars = c("lcsi", "lcsi_class"),
+    design = endline_hh_survey_design
+  ),
+  ### Endline results - food insecurity experience scale -----------------------
+  endline_fies = estimate_total(
+    vars = "fies_score",
+    design = endline_hh_survey_design
+  ),
+  endline_fies_province = estimate_province(
+    vars = "fies_score",
+    design = endline_hh_survey_design
+  ),
+  endline_fies_strata = estimate_strata(
+    vars = c("fies", "fies_class"),
+    design = endline_hh_survey_design
+  ),
+  endline_fies_study_group = estimate_study_group(
+    vars = "fies_score",
+    design = endline_hh_survey_design
+  ),
+  endline_fies_study_group_province = estimate_study_group_province(
+    vars = "fies_score",
+    design = endline_hh_survey_design
   )
 )
 
@@ -12478,6 +12848,104 @@ outputs_tables_endline <- tar_plan(
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
+  ),
+  ### Endline HDDS tables ------------------------------------------------------
+  endline_hdds_province_table = create_province_table(
+    endline_hdds_province,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hdds_province_table_report = create_province_table(
+    endline_hdds_province,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hdds_strata_table = create_strata_table(
+    endline_hdds_strata,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hdds_study_group_table = create_study_group_table(
+    endline_hdds_study_group,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_hdds_study_group_table_report = create_study_group_table(
+    endline_hdds_study_group,
+    endline_hdds,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_hdds_study_group_province_table = create_study_group_province_table(
+    endline_hdds_study_group_province,
+    endline_hdds_study_group,
+    vars = "hdds",
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline FCS tables -------------------------------------------------------
+  endline_fcs_province_table = create_province_table(
+    endline_fcs_province,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fcs_province_table_report = create_province_table(
+    endline_fcs_province,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_fcs_strata_table = create_strata_table(
+    endline_fcs_strata,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fcs_study_group_table = create_study_group_table(
+    endline_fcs_study_group,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_fcs_study_group_table_report = create_study_group_table(
+    endline_fcs_study_group,
+    endline_fcs,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_fcs_study_group_province_table = create_study_group_province_table(
+    endline_fcs_study_group_province,
+    endline_fcs_study_group,
+    vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
   )
 )
 
@@ -13108,16 +13576,41 @@ outputs_overall <- tar_plan(
       baseline_child_immunisation_set1_study_group,
       baseline_child_immunisation_set1_study_group_province,
       baseline_child_immunisation_set1,
-      baseline_child_immunisation_set2_province, 
-      baseline_child_immunisation_set2_strata,
-      baseline_child_immunisation_set2_study_group,
-      baseline_child_immunisation_set2_study_group_province,
-      baseline_child_immunisation_set2,
-      baseline_child_immunisation_set3_province, 
-      baseline_child_immunisation_set3_strata,
-      baseline_child_immunisation_set3_study_group,
-      baseline_child_immunisation_set3_study_group_province,
-      baseline_child_immunisation_set3
+      baseline_child_immunisation_set2a_province, 
+      baseline_child_immunisation_set2a_strata,
+      baseline_child_immunisation_set2a_study_group,
+      baseline_child_immunisation_set2a_study_group_province,
+      baseline_child_immunisation_set2a,
+      baseline_child_immunisation_set2b_province, 
+      baseline_child_immunisation_set2b_strata,
+      baseline_child_immunisation_set2b_study_group,
+      baseline_child_immunisation_set2b_study_group_province,
+      baseline_child_immunisation_set2b,
+      baseline_child_immunisation_set2c_province, 
+      baseline_child_immunisation_set2c_strata,
+      baseline_child_immunisation_set2c_study_group,
+      baseline_child_immunisation_set2c_study_group_province,
+      baseline_child_immunisation_set2c,
+      baseline_child_immunisation_set2d_province, 
+      baseline_child_immunisation_set2d_strata,
+      baseline_child_immunisation_set2d_study_group,
+      baseline_child_immunisation_set2d_study_group_province,
+      baseline_child_immunisation_set2d,
+      baseline_child_immunisation_set3a_province, 
+      baseline_child_immunisation_set3a_strata,
+      baseline_child_immunisation_set3a_study_group,
+      baseline_child_immunisation_set3a_study_group_province,
+      baseline_child_immunisation_set3a,
+      baseline_child_immunisation_set3b_province, 
+      baseline_child_immunisation_set3b_strata,
+      baseline_child_immunisation_set3b_study_group,
+      baseline_child_immunisation_set3b_study_group_province,
+      baseline_child_immunisation_set3b,
+      baseline_child_immunisation_set3c_province, 
+      baseline_child_immunisation_set3c_strata,
+      baseline_child_immunisation_set3c_study_group,
+      baseline_child_immunisation_set3c_study_group_province,
+      baseline_child_immunisation_set3c
     ),
     endline = list(
       endline_child_immunisation_card_self_report_province, 
@@ -13332,13 +13825,35 @@ outputs_overall <- tar_plan(
     overall_iycf,
     overall_child_anthro
   ),
+  ### Overall results subset ---------------------------------------------------
+  overall_results_subset = rbind(
+    overall_wash,
+    overall_family_planning,
+    overall_wdds,
+    overall_mddw,
+    overall_women_anthro,
+    overall_child_dev,
+    overall_child_ill,
+    overall_child_immunisation,
+    overall_child_immunisation_full,
+    overall_child_vita,
+    overall_deworming,
+    overall_breastfeeding,
+    overall_ebf,
+    overall_iycf,
+    overall_child_anthro
+  ),
   ### Baseline results all -----------------------------------------------------
   baseline_results_all = subset(
     overall_results_all, study_round == "Baseline"
   ),
-  ### Endline results all ------------------------------------------------------
-  endline_results_all = subset(
-    overall_results_all, study_round == "Endline"
+  ### Baseline results subset --------------------------------------------------
+  baseline_results_subset = subset(
+    overall_results_subset, study_round == "Baseline"
+  ),
+  ### Endline results subset ---------------------------------------------------
+  endline_results_subset = subset(
+    overall_results_subset, study_round == "Endline"
   ),
   ### Create XLSX output for all tables ----------------------------------------
   overall_results_xlsx = create_results_spreadsheet(
@@ -13440,6 +13955,16 @@ outputs_overall <- tar_plan(
     x = endline_results_all,
     file = "outputs/endline_results.csv",
     row.names = FALSE
+  ),
+  baseline_results_subset_csv = write.csv(
+    x = baseline_results_subset,
+    file = "outputs/baseline_results_subset.csv",
+    row.names = FALSE
+  ),
+  endline_results_subset_csv = write.csv(
+    x = endline_results_subset,
+    file = "outputs/endline_results_subset.csv",
+    row.names = FALSE
   )
 )
 
@@ -13485,12 +14010,288 @@ analysis_comparison <- tar_plan(
     strata = ~study_round + province + strata,
     data = combined_hh_survey_dataset,
     pps = "brewer"
+  ),
+  ### Compare child anthropometric results
+  child_anthro_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_child_anthro_study_group_province,
+    endline = endline_child_anthro_study_group_province
+  ),
+  child_anthro_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_child_anthro_study_group,
+    endline = endline_child_anthro_study_group
+  ),
+  child_anthro_diff_table = create_diff_in_diff_table(
+    diff_province = child_anthro_diff_province,
+    diff_overall = child_anthro_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  child_anthro_diff_table_long = create_diff_in_diff_table(
+    diff_province = child_anthro_diff_province,
+    diff_overall = child_anthro_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare child illnesses results
+  child_ill_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_child_ill_study_group_province,
+    endline = endline_child_ill_study_group_province
+  ),
+  child_ill_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_child_ill_study_group,
+    endline = endline_child_ill_study_group
+  ),
+  child_ill_diff_table = create_diff_in_diff_table(
+    diff_province = child_ill_diff_province,
+    diff_overall = child_ill_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  child_ill_diff_table_long = create_diff_in_diff_table(
+    diff_province = child_ill_diff_province,
+    diff_overall = child_ill_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare minimum dietary diversity for children
+  iycf_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_iycf_study_group_province,
+    endline = endline_iycf_study_group_province
+  ),
+  iycf_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_iycf_study_group,
+    endline = endline_iycf_study_group
+  ),
+  iycf_diff_table = create_diff_in_diff_table(
+    diff_province = iycf_diff_province,
+    diff_overall = iycf_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  iycf_diff_table_long = create_diff_in_diff_table(
+    diff_province = iycf_diff_province,
+    diff_overall = iycf_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare immunisation for children
+  child_immunisation_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_child_immunisation_full_study_group_province,
+    endline = endline_child_immunisation_full_study_group_province
+  ),
+  child_immunisation_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_child_immunisation_full_study_group,
+    endline = endline_child_immunisation_full_study_group
+  ),
+  child_immunisation_diff_table = create_diff_in_diff_table(
+    diff_province = child_immunisation_diff_province,
+    diff_overall = child_immunisation_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  child_immunisation_diff_table_long = create_diff_in_diff_table(
+    diff_province = child_immunisation_diff_province,
+    diff_overall = child_immunisation_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare BCG immunisation for children
+  child_bcg_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_child_immunisation_bcg_study_group_province,
+    endline = endline_child_immunisation_bcg_study_group_province
+  ),
+  child_bcg_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_child_immunisation_bcg_study_group,
+    endline = endline_child_immunisation_bcg_study_group
+  ),
+  child_bcg_diff_table = create_diff_in_diff_table(
+    diff_province = child_bcg_diff_province,
+    diff_overall = child_bcg_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  child_bcg_diff_table_long = create_diff_in_diff_table(
+    diff_province = child_bcg_diff_province,
+    diff_overall = child_bcg_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare vitamin A and deworming for children
+  child_vita_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_child_vita_study_group_province,
+    endline = endline_child_vita_study_group_province
+  ),
+  child_vita_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_child_vita_study_group,
+    endline = endline_child_vita_study_group
+  ),
+  child_vita_diff_table = create_diff_in_diff_table(
+    diff_province = child_vita_diff_province,
+    diff_overall = child_vita_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  child_vita_diff_table_long = create_diff_in_diff_table(
+    diff_province = child_vita_diff_province,
+    diff_overall = child_vita_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare deworming for children
+  child_deworm_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_deworming_study_group_province,
+    endline = endline_deworming_study_group_province
+  ),
+  child_deworm_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_deworming_study_group,
+    endline = endline_deworming_study_group
+  ),
+  child_deworm_diff_table = create_diff_in_diff_table(
+    diff_province = child_deworm_diff_province,
+    diff_overall = child_deworm_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  child_deworm_diff_table_long = create_diff_in_diff_table(
+    diff_province = child_deworm_diff_province,
+    diff_overall = child_deworm_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare women's anthropometry
+  women_anthro_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_women_anthro_study_group_province,
+    endline = endline_women_anthro_study_group_province
+  ),
+  women_anthro_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_women_anthro_study_group,
+    endline = endline_women_anthro_study_group
+  ),
+  women_anthro_diff_table = create_diff_in_diff_table(
+    diff_province = women_anthro_diff_province,
+    diff_overall = women_anthro_diff_overall,
+    indicator_list = survey_indicator_list
+  ) |>
+    (\(x)
+      {
+        x$indicator_set <- rep("Women's anthropometry", 5)
+        x$indicator_set_code <- rep("women_anthro", 5)
+        x$indicator <- c(
+          "Mean body mass index", 
+          "Proportion of women of reproductive age with healthy weight based on BMI",
+          "Proportion of women of reproductive age who are obese based on BMI",
+          "Proportion of women of reproductive age who are overweight based on BMI",
+          "Proportion of women of reproductive age who are underweight based on BMI"
+        )
+        x$indicator_code <- c("women_anthro_01", "women_anthro_02", 
+                               "women_anthro_02", "women_anthro_02", 
+                               "women_anthro_02")
+        x$indicator_label <- c("Body mass index", "Healthy weight", "Obese", "Overweight", "Underweight")
+        x$indicator_category <- c("Mean", "Healthy weight", "Obese", "Overweight", "Underweight")
+        x$indicator_type <- c("mean", "proportion", "proportion", "proportion", "proportion")
+        x$indicator_population <- rep("women of reproductive age", 5)
+        x
+      }
+    )(),
+  women_anthro_diff_table_long = create_diff_in_diff_table(
+    diff_province = women_anthro_diff_province,
+    diff_overall = women_anthro_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare WDDS
+  wdds_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_wdds_study_group_province,
+    endline = endline_wdds_study_group_province
+  ),
+  wdds_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_wdds_study_group,
+    endline = endline_wdds_study_group
+  ),
+  wdds_diff_table = create_diff_in_diff_table(
+    diff_province = wdds_diff_province,
+    diff_overall = wdds_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  wdds_diff_table_long = create_diff_in_diff_table(
+    diff_province = wdds_diff_province,
+    diff_overall = wdds_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare MDD-W
+  mddw_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_mddw_study_group_province,
+    endline = endline_mddw_study_group_province
+  ),
+  mddw_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_mddw_study_group,
+    endline = endline_mddw_study_group
+  ),
+  mddw_diff_table = create_diff_in_diff_table(
+    diff_province = mddw_diff_province,
+    diff_overall = mddw_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  mddw_diff_table_long = create_diff_in_diff_table(
+    diff_province = mddw_diff_province,
+    diff_overall = mddw_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Compare WASH
+  wash_diff_province = calculate_diff_in_diff_province(
+    baseline = baseline_wash_study_group_province,
+    endline = endline_wash_study_group_province
+  ),
+  wash_diff_overall = calculate_diff_in_diff_overall(
+    baseline = baseline_wash_study_group,
+    endline = endline_wash_study_group
+  ),
+  wash_diff_table = create_diff_in_diff_table(
+    diff_province = wash_diff_province,
+    diff_overall = wash_diff_overall,
+    indicator_list = survey_indicator_list
+  ),
+  wash_diff_table_long = create_diff_in_diff_table(
+    diff_province = wash_diff_province,
+    diff_overall = wash_diff_overall,
+    indicator_list = survey_indicator_list,
+    format = "long"
+  ),
+  ### Concatenate all difference in difference results
+  diff_in_diff_table = rbind(
+    child_anthro_diff_table,
+    iycf_diff_table,
+    child_ill_diff_table,
+    child_immunisation_diff_table,
+    child_bcg_diff_table,
+    child_vita_diff_table,
+    child_deworm_diff_table,
+    women_anthro_diff_table,
+    wdds_diff_table,
+    mddw_diff_table,
+    wash_diff_table
+  ),
+  diff_in_diff_table_long = rbind(
+    child_anthro_diff_table_long,
+    iycf_diff_table_long,
+    child_ill_diff_table_long,
+    child_immunisation_diff_table_long,
+    child_bcg_diff_table_long,
+    child_vita_diff_table_long,
+    child_deworm_diff_table_long,
+    women_anthro_diff_table_long,
+    wdds_diff_table_long,
+    mddw_diff_table_long,
+    wash_diff_table_long
   )
 )
 
 ## Outputs - difference-in-difference ------------------------------------------
 outputs_comparison <- tar_plan(
-  
+  diff_in_diff_table_csv = write.csv(
+    x = diff_in_diff_table,
+    file = "outputs/diff_in_diff_results.csv",
+    row.names = FALSE
+  ),
+  diff_in_diff_table_xlsx = openxlsx::write.xlsx(
+    x = diff_in_diff_table,
+    file = "outputs/diff_in_diff_results.xlsx"
+  )
 )
 
 ## Reports ---------------------------------------------------------------------
@@ -13514,6 +14315,22 @@ reports <- tar_plan(
   tar_render(
     name = endline_survey_results_report,
     path = "reports/endline_survey_results_report.Rmd",
+    output_dir = "outputs",
+    knit_root_dir = here::here(),
+    cue = tar_cue("always")
+  ),
+  ### Endline food security report ---------------------------------------------
+  tar_render(
+    name = endline_survey_food_security_results_report,
+    path = "reports/endline_survey_food_security_results_report.Rmd",
+    output_dir = "outputs",
+    knit_root_dir = here::here(),
+    cue = tar_cue("always")
+  ),
+  ### Change report ------------------------------------------------------------
+  tar_render(
+    name = difference_in_difference_results_report,
+    path = "reports/difference_in_difference_results.Rmd",
     output_dir = "outputs",
     knit_root_dir = here::here(),
     cue = tar_cue("always")

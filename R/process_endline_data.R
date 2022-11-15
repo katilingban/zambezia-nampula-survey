@@ -2008,6 +2008,42 @@
         labels = c("Underweight", "Healthy weight", "Overweight", "Obese"),
         include.lowest = TRUE, right = FALSE
       ),
+      ## Food stocks
+      corn_reserve = refactor_var_categorical(
+        x = reserve1a,
+        y = "stock_frequency",
+        choices = survey_endline_choices
+      ),
+      rice_reserve = refactor_var_categorical(
+        x = reserve2a,
+        y = "stock_frequency",
+        choices = survey_endline_choices
+      ),
+      millet_reserve = refactor_var_categorical(
+        x = reserve3a,
+        y = "stock_frequency",
+        choices = survey_endline_choices
+      ),
+      sorghum_reserve = refactor_var_categorical(
+        x = reserve4a,
+        y = "stock_frequency",
+        choices = survey_endline_choices
+      ),
+      cassava_reserve = refactor_var_categorical(
+        x = reserve5a,
+        y = "stock_frequency",
+        choices = survey_endline_choices
+      ),
+      sweet_potato_reserve = refactor_var_categorical(
+        x = reserve6a,
+        y = "stock_frequency",
+        choices = survey_endline_choices
+      ),
+      legumes_reserve = refactor_var_categorical(
+        x = reserve7a,
+        y = "stock_frequency",
+        choices = survey_endline_choices
+      ),
       .keep = "unused"
     ) |>
       ## Child anthropometry
@@ -2329,7 +2365,146 @@
             )()
           )
         }
-      )()
+      )() |>
+      ## Household dietary diversity score
+      (\(x)
+        {
+          data.frame(
+            x,
+            hdds_recode_groups(
+              vars = hdds_map_fg_vars(
+                cereals = "hdds1", 
+                tubers = "hdds2", 
+                vegetables = c("hdds3", "hdds4", "hdds5"), 
+                fruits = c("hdds6", "hdds7"), 
+                meat = c("hdds8", "hdds9"), 
+                eggs = "hdds10", fish = "hdds11", 
+                legumes_seeds = "hdds12", 
+                milk = "hdds13", 
+                oils_fats = "hdds14", 
+                sweets = "hdds15", 
+                spices = "hdds16"
+              ),
+              .data = x
+            ) |>
+              hdds_calculate_score()
+          )
+        }
+      )() |>
+      ## Food consumption score
+      (\(x)
+        {
+          data.frame(
+            x,
+            fcs_recode_groups(
+              vars = fcs_map_fg_vars(
+                staples = paste0("fcs", 1:4), 
+                pulses = "fcs5", 
+                vegetables = "fcs14", 
+                fruits = "fcs15", 
+                meat_fish = paste0("fcs", c(6, 8:9, 11)), 
+                milk = "fcs12", 
+                sugar = "fcs16", 
+                oil = "fcs10", 
+                condiments = paste0("fcs", c(7, 13))
+              ),
+              .data = x
+            ) |>
+              fcs_calculate_score(add = TRUE) |>
+              (\(x)
+                {
+                  names(x) <- c(
+                    paste0(
+                      "fcs_", 
+                      c("staples", "pulses", "vegetables",
+                        "fruits", "meat_fish", "milk",
+                        "sugar", "oil", "condiments")
+                    ),
+                    "fcs_score"
+                  )
+                  x
+                }
+              )(),
+            fcs_class = fcs_recode_groups(
+              vars = fcs_map_fg_vars(
+                staples = paste0("fcs", 1:4), 
+                pulses = "fcs5", 
+                vegetables = "fcs14", 
+                fruits = "fcs15", 
+                meat_fish = paste0("fcs", c(6, 8:9, 11)), 
+                milk = "fcs12", 
+                sugar = "fcs16", 
+                oil = "fcs10", 
+                condiments = paste0("fcs", c(7, 13))
+              ),
+              .data = x
+            ) |>
+              fcs_calculate_score(add = FALSE) |>
+              fcs_classify(add = FALSE)
+          )
+        }
+      )() |>
+      ## Reduced coping strategy index (rCSI)
+      (\(x)
+        {
+          data.frame(
+            x,
+            rcsi = rcsi_recode_strategies(
+              vars = paste0("rcsi", 1:5),
+              .data = x,
+              na_values = c(88, 99)
+            ) |>
+              rcsi_calculate_index(add = FALSE),
+            rcsi_class = rcsi_recode_strategies(
+              vars = paste0("rcsi", 1:5),
+              .data = x,
+              na_values = c(88, 99)
+            ) |>
+              rcsi_calculate_index(add = FALSE) |>
+              rcsi_classify(add = FALSE)
+          )
+        }
+      )() |>
+      ## Livelihoods coping strategy index (LCSI)
+      (\(x)
+        {
+          data.frame(
+            x,
+            lcsi_recode_strategies(
+              vars = c(
+                "lcs01", "lcs02", "lcs03", "lcs04", "lcs05", "lcs06", "lcs07", 
+                "lcs08", "lcs09", "lcs10", "lcs11", "lcs12", "lcs13", "lcs14"
+              ),
+              .data = x,
+              na_values = c(5, 8, 9)
+            ) |>
+              lcsi_calculate_index(add = FALSE) |>
+              lcsi_classify(add = TRUE)
+          )  
+        }
+      )() |>
+      ## FIES
+      (\(x)
+        {
+          data.frame(
+            x,
+            fies_recode_responses(
+              vars = paste0("fies0", 1:8),
+              .data = x
+            ) |>
+              fies_calculate_score() |>
+              (\(x)
+                {
+                  names(x) <- c(
+                    paste0("fies_", 1:8),
+                    "fies_score"
+                  )
+                  x
+                }
+              )()
+          )
+        }
+      )() 
   }
   
   

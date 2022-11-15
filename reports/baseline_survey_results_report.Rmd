@@ -2982,8 +2982,8 @@ rbind(
 opv_province_overall <- rbind(
   baseline_child_immunisation_opv_province_table,
   baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  baseline_child_immunisation_set2a_province_table,
+  baseline_child_immunisation_set3a_province_table
 ) |>
   subset(
     indicator_label == "Polio",
@@ -3006,8 +3006,8 @@ opv_province_overall <- rbind(
 opv_strata <- rbind(
   baseline_child_immunisation_opv_strata_table,
   baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  baseline_child_immunisation_set2a_strata_table,
+  baseline_child_immunisation_set3a_strata_table
 ) |>
   subset(
     indicator_label == "Polio" & strata != "Overall",
@@ -3022,8 +3022,8 @@ opv_strata <- rbind(
 opv_study_group <- rbind(
   baseline_child_immunisation_opv_study_group_table,
   baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  baseline_child_immunisation_set2a_study_group_table,
+  baseline_child_immunisation_set3a_study_group_table
 ) |>
   subset(
     indicator_label == "Polio" & study_group != "Overall",
@@ -3082,8 +3082,8 @@ rbind(
 ```{r penta, echo = FALSE}
 penta_province_overall <- rbind(
   baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  baseline_child_immunisation_set2b_province_table,
+  baseline_child_immunisation_set3b_province_table
 ) |>
   subset(
     indicator_label == "Pentavalent",
@@ -3105,8 +3105,8 @@ penta_province_overall <- rbind(
 
 penta_strata <- rbind(
   baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  baseline_child_immunisation_set2b_strata_table,
+  baseline_child_immunisation_set3b_strata_table
 ) |>
   subset(
     indicator_label == "Pentavalent" & strata != "Overall",
@@ -3120,8 +3120,8 @@ penta_strata <- rbind(
 
 penta_study_group <- rbind(
   baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  baseline_child_immunisation_set2b_study_group_table,
+  baseline_child_immunisation_set3b_study_group_table
 ) |>
   subset(
     indicator_label == "Pentavalent" & study_group != "Overall",
@@ -3179,8 +3179,8 @@ rbind(
 ```{r pneumo, echo = FALSE}
 pneumo_province_overall <- rbind(
   baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  baseline_child_immunisation_set2c_province_table,
+  baseline_child_immunisation_set3c_province_table
 ) |>
   subset(
     indicator_label == "Pneumococcal",
@@ -3202,8 +3202,8 @@ pneumo_province_overall <- rbind(
 
 pneumo_strata <- rbind(
   baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  baseline_child_immunisation_set2c_strata_table,
+  baseline_child_immunisation_set3c_strata_table
 ) |>
   subset(
     indicator_label == "Pneumococcal" & strata != "Overall",
@@ -3217,8 +3217,8 @@ pneumo_strata <- rbind(
 
 pneumo_study_group <- rbind(
   baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  baseline_child_immunisation_set2c_study_group_table,
+  baseline_child_immunisation_set3c_study_group_table
 ) |>
   subset(
     indicator_label == "Pneumococcal" & study_group != "Overall",
@@ -3276,8 +3276,7 @@ rbind(
 ```{r rotavirus, echo = FALSE}
 rota_province_overall <- rbind(
   baseline_child_immunisation_set1_province_table,
-  baseline_child_immunisation_set2_province_table,
-  baseline_child_immunisation_set3_province_table
+  baseline_child_immunisation_set2d_province_table
 ) |>
   subset(
     indicator_label == "Rotavirus",
@@ -3299,8 +3298,7 @@ rota_province_overall <- rbind(
 
 rota_strata <- rbind(
   baseline_child_immunisation_set1_strata_table,
-  baseline_child_immunisation_set2_strata_table,
-  baseline_child_immunisation_set3_strata_table
+  baseline_child_immunisation_set2d_strata_table
 ) |>
   subset(
     indicator_label == "Rotavirus" & strata != "Overall",
@@ -3314,8 +3312,7 @@ rota_strata <- rbind(
 
 rota_study_group <- rbind(
   baseline_child_immunisation_set1_study_group_table,
-  baseline_child_immunisation_set2_study_group_table,
-  baseline_child_immunisation_set3_study_group_table
+  baseline_child_immunisation_set2d_study_group_table
 ) |>
   subset(
     indicator_label == "Rotavirus" & study_group != "Overall",
