@@ -8892,44 +8892,44 @@ analysis_endline <- tar_plan(
   ),
   ### Endline results - reduced coping strategies index ------------------------
   endline_rcsi = estimate_total(
-    vars = c("rcsi", "rcsi_class"),
+    vars = c("rcsi_score", "rcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_rcsi_province = estimate_province(
-    vars = c("rcsi", "rcsi_class"),
+    vars = c("rcsi_score", "rcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_rcsi_strata = estimate_strata(
-    vars = c("rcsi", "rcsi_class"),
+    vars = c("rcsi_score", "rcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_rcsi_study_group = estimate_study_group(
-    vars = c("rcsi", "rcsi_class"),
+    vars = c("rcsi_score", "rcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_rcsi_study_group_province = estimate_study_group_province(
-    vars = c("rcsi", "rcsi_class"),
+    vars = c("rcsi_score", "rcsi_class"),
     design = endline_hh_survey_design
   ),
   ### Endline results - livelihood coping strategies index ------------------------
   endline_lcsi = estimate_total(
-    vars = c("lcsi", "lcsi_class"),
+    vars = c("lcsi_score", "lcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_lcsi_province = estimate_province(
-    vars = c("lcsi", "lcsi_class"),
+    vars = c("lcsi_score", "lcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_lcsi_strata = estimate_strata(
-    vars = c("lcsi", "lcsi_class"),
+    vars = c("lcsi_score", "lcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_lcsi_study_group = estimate_study_group(
-    vars = c("lcsi", "lcsi_class"),
+    vars = c("lcsi_score", "lcsi_class"),
     design = endline_hh_survey_design
   ),
   endline_lcsi_study_group_province = estimate_study_group_province(
-    vars = c("lcsi", "lcsi_class"),
+    vars = c("lcsi_score", "lcsi_class"),
     design = endline_hh_survey_design
   ),
   ### Endline results - food insecurity experience scale -----------------------
@@ -12943,6 +12943,55 @@ outputs_tables_endline <- tar_plan(
     endline_fcs_study_group_province,
     endline_fcs_study_group,
     vars = c("fcs_score", "fcs_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline RCSI tables ------------------------------------------------------
+  endline_rcsi_province_table = create_province_table(
+    endline_rcsi_province,
+    endline_rcsi,
+    vars = c("rcsi_score", "rcsi_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rcsi_province_table_report = create_province_table(
+    endline_rcsi_province,
+    endline_rcsi,
+    vars = c("rcsi_score", "rcsi_class"),
+    indicator_list = food_security_indicator_list,
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rcsi_strata_table = create_strata_table(
+    endline_rcsi_strata,
+    endline_rcsi,
+    vars = c("rcsi_score", "rcsi_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rcsi_study_group_table = create_study_group_table(
+    endline_rcsi_study_group,
+    endline_rcsi,
+    vars = c("rcsi_score", "rcsi_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_rcsi_study_group_table_report = create_study_group_table(
+    endline_rcsi_study_group,
+    endline_rcsi,
+    vars = c("rcsi_score", "rcsi_class"),
+    indicator_list = food_security_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_rcsi_study_group_province_table = create_study_group_province_table(
+    endline_rcsi_study_group_province,
+    endline_rcsi_study_group,
+    vars = c("rcsi_score", "rcsi_class"),
     indicator_list = food_security_indicator_list,
     study_round = "Endline",
     report = FALSE

@@ -2449,7 +2449,7 @@
         {
           data.frame(
             x,
-            rcsi = rcsi_recode_strategies(
+            rcsi_score = rcsi_recode_strategies(
               vars = paste0("rcsi", 1:5),
               .data = x,
               na_values = c(88, 99)
@@ -2479,7 +2479,8 @@
               na_values = c(5, 8, 9)
             ) |>
               lcsi_calculate_index(add = FALSE) |>
-              lcsi_classify(add = TRUE)
+              lcsi_classify(add = TRUE) |>
+              (\(x) { names(x) <- c("lcsi_score", "lcsi_class"); x })()
           )  
         }
       )() |>
