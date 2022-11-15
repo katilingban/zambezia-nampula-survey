@@ -49,5 +49,6 @@ jobs:
         run: |
           targets::tar_make(dplyr::starts_with("endline_hdds"))
           targets::tar_make(dplyr::starts_with("endline_fcs"))
+          targets::tar_make(dplyr::starts_with("endline_rcsi"))
         shell: Rscript {0}
           
