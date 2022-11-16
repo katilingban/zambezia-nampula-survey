@@ -18,7 +18,10 @@ knitr::opts_chunk$set(
   warning = FALSE,
   error = FALSE,
   message = FALSE,
-  echo = FALSE
+  echo = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = here::here("outputs/figures/")
 )
 
 suppressPackageStartupMessages(source("packages.R"))
@@ -106,10 +109,14 @@ hdds_study_group <- endline_hdds_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   hdds_province_overall,
+#   hdds_strata,
+#   hdds_study_group
+# ) |>
 rbind(
   hdds_province_overall,
-  hdds_strata,
-  hdds_study_group
+  hdds_strata
 ) |>
   #(\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
   (\(x)
@@ -138,8 +145,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -189,10 +195,14 @@ fcs_study_group <- endline_fcs_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   fcs_province_overall,
+#   fcs_strata,
+#   fcs_study_group
+# ) |>
 rbind(
   fcs_province_overall,
-  fcs_strata,
-  fcs_study_group
+  fcs_strata
 ) |>
   #(\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
   (\(x)
@@ -221,36 +231,73 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
 
 <br/>
 
-```{r fcs_plot, echo = FALSE, fig.align = "center", fig.width = 8}
+```{r fcs_province_plot, echo = FALSE, fig.align = "center", fig.width = 10}
 endline_fcs_province_table |>
   subset(
     indicator_category != "Mean"
   ) |>
   dplyr::mutate(
     indicator_category = factor(
-      x = indicator_category, levels = c("poor", "borderline", "acceptable")
+      x = indicator_category, levels = rev(c("poor", "borderline", "acceptable"))
     ),
     strata = factor(
       x = strata, levels = c("Zambézia", "Nampula", "Overall")
     )
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack", width = 0.75) +
-  scale_fill_manual(name = "", values = alpha(fcs_classes, 0.8)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.5) +
+  scale_fill_manual(name = "", values = alpha(rev(fcs_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on food consumption score",
-    subtitle = "Proportion of households in Zambézia, Nampula, and overall\nby food insecurity category based on food consumption score",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall by food consumption score food insecurity categories",
     x = "", y = "%"
   ) +
   #facet_wrap(~strata, scales = "free_y") +
+  theme_mozambique
+```
+
+```{r fcs_strata_plot, echo = FALSE, fig.align = "center", fig.width = 10}
+endline_fcs_strata_table |>
+  subset(strata != "Overall" & indicator_category != "Mean") |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata,
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category, levels = rev(c("poor", "borderline", "acceptable"))
+    ),
+  ) |>
+  ggplot(
+    mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)
+  ) +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
+  scale_fill_manual(name = "", values = alpha(rev(fcs_classes), 0.6)) +
+  labs(
+    title = "Food insecurity status based on food consumption score",
+    subtitle = "Proportion of households Zambézia and Nampula districts by food consumption score food insecurity categories",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~province, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -299,10 +346,14 @@ fcs_study_group <- endline_fcs_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   fcs_province_overall,
+#   fcs_strata,
+#   fcs_study_group
+# ) |>
 rbind(
   fcs_province_overall,
-  fcs_strata,
-  fcs_study_group
+  fcs_strata
 ) |>
   (\(x) x[ , c(1, 2, 5, 8, 3, 6, 9, 4, 7, 10)])() |>
   (\(x)
@@ -333,8 +384,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -384,10 +434,14 @@ rcsi_study_group <- endline_rcsi_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   rcsi_province_overall,
+#   rcsi_strata,
+#   rcsi_study_group
+# ) |>
 rbind(
   rcsi_province_overall,
-  rcsi_strata,
-  rcsi_study_group
+  rcsi_strata
 ) |>
   #(\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
   (\(x)
@@ -416,15 +470,14 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
 
 <br/>
 
-```{r rcsi_plot, echo = FALSE, fig.align = "center", fig.width = 8}
+```{r rcsi_province_plot, echo = FALSE, fig.align = "center", fig.width = 10}
 endline_rcsi_province_table |>
   subset(
     indicator_category != "Mean"
@@ -438,14 +491,51 @@ endline_rcsi_province_table |>
     )
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack", width = 0.75) +
-  scale_fill_manual(name = "", values = alpha(rev(rcsi_classes), 0.8)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.5) +
+  scale_fill_manual(name = "", values = alpha(rev(rcsi_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on reduced coping strategies index",
-    subtitle = "Proportion of households in Zambézia, Nampula, and overall\nby food insecurity category based on reduced coping strategies index",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall by reduced coping strategies index food insecurity categories",
     x = "", y = "%"
   ) +
-  #facet_wrap(~strata, scales = "free_y") +
+  theme_mozambique
+```
+
+```{r rcsi_strata_plot, echo = FALSE, fig.align = "center", fig.width = 10}
+endline_rcsi_strata_table |>
+  subset(strata != "Overall" & indicator_category != "Mean") |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata,
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category, levels = c("minimal", "stressed", "crisis")
+    ),
+  ) |>
+  ggplot(
+    mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)
+  ) +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
+  scale_fill_manual(name = "", values = alpha(rev(rcsi_classes), 0.6)) +
+  labs(
+    title = "Food insecurity status based on reduced coping strategies index",
+    subtitle = "Proportion of households in Zambézia and Nampula districts by reduced coping strategies index food insecurity categories",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~province, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -494,10 +584,14 @@ rcsi_study_group <- endline_rcsi_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   rcsi_province_overall,
+#   rcsi_strata,
+#   rcsi_study_group
+# ) |>
 rbind(
   rcsi_province_overall,
-  rcsi_strata,
-  rcsi_study_group
+  rcsi_strata
 ) |>
   (\(x) x[ , c(1, 2, 5, 8, 3, 6, 9, 4, 7, 10)])() |>
   (\(x)
@@ -528,8 +622,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -579,10 +672,14 @@ lcsi_study_group <- endline_lcsi_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   lcsi_province_overall,
+#   lcsi_strata,
+#   lcsi_study_group
+# ) |>
 rbind(
   lcsi_province_overall,
-  lcsi_strata,
-  lcsi_study_group
+  lcsi_strata
 ) |>
   #(\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
   (\(x)
@@ -611,15 +708,14 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
 
 <br/>
 
-```{r lcsi_plot, echo = FALSE, fig.align = "center", fig.width = 8}
+```{r lcsi_province_plot, echo = FALSE, fig.align = "center", fig.width = 10}
 endline_lcsi_province_table |>
   subset(
     indicator_category != "Mean"
@@ -633,13 +729,51 @@ endline_lcsi_province_table |>
     )
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack", width = 0.75) +
-  scale_fill_manual(name = "", values = alpha(rev(lcsi_classes), 0.8)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.5) +
+  scale_fill_manual(name = "", values = alpha(rev(lcsi_classes), 0.6)) +
   labs(
     title = "Food insecurity status based on livelihoods coping strategies index",
-    subtitle = "Proportion of households in Zambézia, Nampula, and overall\nby food insecurity category based on livelihoods coping strategies index",
+    subtitle = "Proportion of households in Zambézia, Nampula, and overall by livelihood coping strategies index food insecurity categories",
     x = "", y = "%"
   ) +
+  theme_mozambique
+```
+
+```{r lcsi_strata_plot, echo = FALSE, fig.align = "center", fig.width = 10}
+endline_lcsi_strata_table |>
+  subset(strata != "Overall" & indicator_category != "Mean") |>
+  dplyr::mutate(
+    province = ifelse(
+      strata %in% c("Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"),
+      "Nampula", "Zambézia"
+    ) |>
+      factor(levels = c("Zambézia", "Nampula")),
+    strata = factor(
+      strata,
+      levels = c(
+        "Gurúè", "Lugela", "Pebane", "Molumbo", "Rest of Zambézia", 
+        "Monapo", "Nacala-A-Velha", "Ribáuè", "Rest of Nampula"
+      ),
+      labels = c(
+        "\nGurúè", "\nLugela", "\nPebane", "\nMolumbo", "Rest of\nZambézia", 
+        "\nMonapo", "\nNacala-A-Velha", "\nRibáuè", "Rest of\nNampula"
+      )
+    ),
+    indicator_category = factor(
+      x = indicator_category, levels = c("secure", "stress", "crisis", "emergency")
+    ),
+  ) |>
+  ggplot(
+    mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)
+  ) +
+  geom_bar(stat = "identity", position = "stack", width = 0.75) +
+  scale_fill_manual(name = "", values = alpha(rev(lcsi_classes), 0.6)) +
+  labs(
+    title = "Food insecurity status based on livelihoods coping strategies index",
+    subtitle = "Proportion of households in Zambézia and Nampula districts by livelihoods coping strategy food insecurity categories",
+    x = "", y = "%"
+  ) +
+  facet_wrap(~province, scales = "free_x") +
   theme_mozambique
 ```
 
@@ -688,10 +822,14 @@ lcsi_study_group <- endline_lcsi_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   lcsi_province_overall,
+#   lcsi_strata,
+#   lcsi_study_group
+# ) |>
 rbind(
   lcsi_province_overall,
-  lcsi_strata,
-  lcsi_study_group
+  lcsi_strata
 ) |>
   (\(x) x[ , c(1, 2, 6, 10, 3, 7, 11, 4, 8, 12, 5, 9, 13)])() |>
   (\(x)
@@ -723,12 +861,10 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
-
 
 ## Food stocks
 
@@ -768,7 +904,7 @@ rbind(
     mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)
   ) +
   geom_bar(stat = "identity", position = "stack", width = 0.75) +
-  scale_fill_manual(name = "", values = alpha(stock_classes, 0.8)) +
+  scale_fill_manual(name = "", values = alpha(stock_classes, 0.6)) +
   labs(
     title = "Household food stock amount",
     subtitle = "Proportion of households in Zambézia, Nampula, and overall by food stock amount",
@@ -830,7 +966,7 @@ rbind(
     mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)
   ) +
   geom_bar(stat = "identity", position = "stack", width = 0.75) +
-  scale_fill_manual(name = "", values = alpha(stock_classes, 0.8)) +
+  scale_fill_manual(name = "", values = alpha(stock_classes, 0.6)) +
   labs(
     title = "Household food stock amount",
     subtitle = "Proportion of households in districts of Zambézia and Nampula by food stock amount",
@@ -890,10 +1026,14 @@ corn_stock_study_group <- endline_corn_reserve_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   corn_stock_province_overall,
+#   corn_stock_strata,
+#   corn_stock_study_group
+# ) |>
 rbind(
   corn_stock_province_overall,
-  corn_stock_strata,
-  corn_stock_study_group
+  corn_stock_strata
 ) |>
   (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
   (\(x)
@@ -926,8 +1066,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -976,10 +1115,14 @@ rice_stock_study_group <- endline_rice_reserve_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   rice_stock_province_overall,
+#   rice_stock_strata,
+#   rice_stock_study_group
+# ) |>
 rbind(
   rice_stock_province_overall,
-  rice_stock_strata,
-  rice_stock_study_group
+  rice_stock_strata
 ) |>
   (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
   (\(x)
@@ -1012,8 +1155,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -1062,10 +1204,14 @@ millet_stock_study_group <- endline_millet_reserve_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   millet_stock_province_overall,
+#   millet_stock_strata,
+#   millet_stock_study_group
+# ) |>
 rbind(
   millet_stock_province_overall,
-  millet_stock_strata,
-  millet_stock_study_group
+  millet_stock_strata
 ) |>
   (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
   (\(x)
@@ -1098,8 +1244,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -1148,10 +1293,14 @@ sorghum_stock_study_group <- endline_sorghum_reserve_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   sorghum_stock_province_overall,
+#   sorghum_stock_strata,
+#   sorghum_stock_study_group
+# ) |>
 rbind(
   sorghum_stock_province_overall,
-  sorghum_stock_strata,
-  sorghum_stock_study_group
+  sorghum_stock_strata
 ) |>
   (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
   (\(x)
@@ -1184,8 +1333,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -1234,10 +1382,14 @@ cassava_stock_study_group <- endline_cassava_reserve_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   cassava_stock_province_overall,
+#   cassava_stock_strata,
+#   cassava_stock_study_group
+# ) |>
 rbind(
   cassava_stock_province_overall,
-  cassava_stock_strata,
-  cassava_stock_study_group
+  cassava_stock_strata
 ) |>
   (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
   (\(x)
@@ -1270,8 +1422,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -1320,10 +1471,14 @@ sweet_potato_stock_study_group <- endline_sweet_potato_reserve_study_group_table
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   sweet_potato_stock_province_overall,
+#   sweet_potato_stock_strata,
+#   sweet_potato_stock_study_group
+# ) |>
 rbind(
   sweet_potato_stock_province_overall,
-  sweet_potato_stock_strata,
-  sweet_potato_stock_study_group
+  sweet_potato_stock_strata
 ) |>
   (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
   (\(x)
@@ -1356,8 +1511,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
@@ -1406,10 +1560,14 @@ legumes_stock_study_group <- endline_legumes_reserve_study_group_table |>
   ) |>
   (\(x) { names(x)[1] <- "strata"; x })()
 
+# rbind(
+#   legumes_stock_province_overall,
+#   legumes_stock_strata,
+#   legumes_stock_study_group
+# ) |>
 rbind(
   legumes_stock_province_overall,
-  legumes_stock_strata,
-  legumes_stock_study_group
+  legumes_stock_strata
 ) |>
   (\(x) x[ , c(1, 2, 7, 12, 3, 8, 13, 4, 9, 14, 5, 10, 15, 6, 11, 16)])() |>
   (\(x)
@@ -1442,8 +1600,7 @@ rbind(
       "Overall" = 1,
       "Province" = 2,
       "Districts in Zambezia" = 5, 
-      "Districts in Nampula" = 4, 
-      "Study group" = 2
+      "Districts in Nampula" = 4
     )
   )
 ```
