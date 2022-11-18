@@ -2290,15 +2290,16 @@ overall_results_all |>
       )
     )
   ) |>
-  ggplot(mapping = aes(x = study_group, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  ggplot(mapping = aes(x = study_group, y = estimate, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "", values = alpha(rev(water_ladder), 0.8)) +
+  scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Drinking water service ladder",
     subtitle = "Proportion of households in Zambézia and Nampula by source of drinking water",
     x = "", y = "%"
   ) +
-  facet_wrap(~strata, scales = "free_y") +
+  facet_wrap(~strata) +
   theme_mozambique
 ```
 
@@ -2336,9 +2337,10 @@ overall_results_all |>
       )
     )
   ) |>
-  ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  ggplot(mapping = aes(x = strata, y = estimate, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "", values = alpha(rev(water_ladder), 0.8)) +
+  scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Drinking water service ladder",
     subtitle = "Proportion of households in districts of Zambézia and Nampula by source of drinking water",
@@ -2454,15 +2456,16 @@ overall_results_all |>
       levels = c("Open defecation", "Unimproved", "Limited", "Basic")
     )
   ) |>
-  ggplot(mapping = aes(x = study_group, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  ggplot(mapping = aes(x = study_group, y = estimate, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.8)) +
+  scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Sanitation service ladder",
     subtitle = "Proportion of households in Zambézia and Nampula by type of sanitation facility",
     x = "", y = "%"
   ) +
-  facet_wrap(~strata, scales = "free_y") +
+  facet_wrap(~strata) +
   theme_mozambique
 ```
 
@@ -2498,9 +2501,10 @@ overall_results_all |>
       levels = c("Open defecation", "Unimproved", "Limited", "Basic")
     )
   ) |>
-  ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  ggplot(mapping = aes(x = strata, y = estimate, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.8)) +
+  scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Sanitation service ladder",
     subtitle = "Proportion of households in districts of Zambézia and Nampula by type of sanitation facility",
@@ -2615,15 +2619,16 @@ overall_results_all |>
       levels = c("No facility", "Limited", "Basic")
     )
   ) |>
-  ggplot(mapping = aes(x = study_group, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  ggplot(mapping = aes(x = study_group, y = estimate, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.8)) +
+  scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Hygiene service ladder",
     subtitle = "Proportion of households in Zambézia and Nampula by type of handwashing facility",
     x = "", y = "%"
   ) +
-  facet_wrap(~strata, scales = "free_y") +
+  facet_wrap(~strata) +
   theme_mozambique
 ```
 
@@ -2659,9 +2664,10 @@ overall_results_all |>
       levels = c("No facility", "Limited", "Basic")
     )
   ) |>
-  ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
-  geom_bar(stat = "identity", position = "stack") +
+  ggplot(mapping = aes(x = strata, y = estimate, fill = indicator_category)) +
+  geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.8)) +
+  scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Hygiene service ladder",
     subtitle = "Proportion of households in districts of Zambézia and Nampula by type of handwashing facility",
