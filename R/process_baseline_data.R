@@ -528,7 +528,7 @@ process_baseline_data <- function(.data, spss_data) {
     ),
     deworming_coverage = ifelse(vas3 == 2, 0, 1),
     ## IYCF/ICFI - 6-23 months
-    food_group_breastmilk = ifelse(eb8 == 2, 1, 0),
+    food_group_breastmilk = ifelse(eb8 == 1, 1, 0),
     food_group_dairy = ifelse(nut1l != 1, 1, 0),
     food_group_starch = ifelse(nut1a !=1 | nut1c != 1, 1, 0),
     food_group_vitamin_a_rich = ifelse(

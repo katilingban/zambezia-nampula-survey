@@ -71,7 +71,7 @@ create_strata_table <- function(results_strata,
       study_round = rep(study_round, length(results_strata)),
       strata = names(results_strata),
       study_group = c(
-        rep("Intervention", 4), "Control", rep("Intervention", 3), "Control"
+        rep("Intervention", 4), "Comparison", rep("Intervention", 3), "Comparison"
       )
     ),
     create_results_table(
@@ -216,7 +216,7 @@ create_full_table <- function(variable_set,
         
         baseline_study_group <- list(
           "Overall",
-          c(rep("Intervention", 4), "Control", rep("Intervention", 3), "Control"),
+          c(rep("Intervention", 4), "Comparison", rep("Intervention", 3), "Comparison"),
           names(baseline[[3]]),
           names(baseline[[4]]) |> 
             stringr::str_split(pattern = " ", simplify = TRUE) |> 
@@ -265,7 +265,7 @@ create_full_table <- function(variable_set,
         
         endline_study_group <- list(
           "Overall",
-          c(rep("Intervention", 4), "Control", rep("Intervention", 3), "Control"),
+          c(rep("Intervention", 4), "Comparison", rep("Intervention", 3), "Comparison"),
           names(endline[[3]]),
           names(endline[[4]]) |> 
             stringr::str_split(pattern = " ", simplify = TRUE) |> 
