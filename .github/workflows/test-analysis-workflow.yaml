@@ -47,9 +47,7 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("baseline_observation"))
-          targets::tar_make(dplyr::starts_with("baseline_pica"))
-          targets::tar_make(dplyr::starts_with("endline_observation"))
-          targets::tar_make(dplyr::starts_with("endline_pica"))
+          targets::tar_make(dplyr::starts_with("baseline_child_anthro_subset"))
+          targets::tar_make(dplyr::starts_with("endline_child_anthro_subset"))
         shell: Rscript {0}
           
