@@ -2871,6 +2871,47 @@ analysis_baseline <- tar_plan(
     ),
     design = baseline_child_survey_design |>
       subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  ### Baseline results - WASH subset -------------------------------------------
+  baseline_wash_subset = estimate_total(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_subset_province = estimate_province(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_subset_strata = estimate_strata(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_subset_study_group = estimate_study_group(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_wash_subset_study_group_province = estimate_study_group_province(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -6504,6 +6545,73 @@ outputs_tables_baseline <- tar_plan(
     ),
     indicator_list = survey_anthro_subset_indicator_list,
     report = FALSE
+  ),
+  ### Baseline WASH table subset -----------------------------------------------
+  baseline_wash_subset_province_table = create_province_table(
+    baseline_wash_subset_province,
+    baseline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_wash_subset_province_table_report = create_province_table(
+    baseline_wash_subset_province,
+    baseline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_wash_subset_strata_table = create_strata_table(
+    baseline_wash_subset_strata,
+    baseline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_wash_subset_study_group_table = create_study_group_table(
+    baseline_wash_subset_study_group,
+    baseline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_wash_subset_study_group_table_report = create_study_group_table(
+    baseline_wash_subset_study_group,
+    baseline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_wash_subset_study_group_province_table = create_study_group_province_table(
+    baseline_wash_subset_study_group_province,
+    baseline_wash_subset_study_group,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
   )
 )
 
@@ -9651,6 +9759,47 @@ analysis_endline <- tar_plan(
     ),
     design = endline_child_survey_design |>
       subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  ### Endline results - WASH subset --------------------------------------------
+  endline_wash_subset = estimate_total(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_subset_province = estimate_province(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_subset_strata = estimate_strata(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_subset_study_group = estimate_study_group(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_wash_subset_study_group_province = estimate_study_group_province(
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    design = endline_hh_survey_design
   )
 )
 
@@ -14323,6 +14472,73 @@ outputs_tables_endline <- tar_plan(
     ),
     indicator_list = survey_anthro_subset_indicator_list,
     report = FALSE
+  ),
+  ### Endline WASH table subset ------------------------------------------------
+  endline_wash_subset_province_table = create_province_table(
+    endline_wash_subset_province,
+    endline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_wash_subset_province_table_report = create_province_table(
+    endline_wash_subset_province,
+    endline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_wash_subset_strata_table = create_strata_table(
+    endline_wash_subset_strata,
+    endline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_wash_subset_study_group_table = create_study_group_table(
+    endline_wash_subset_study_group,
+    endline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_wash_subset_study_group_table_report = create_study_group_table(
+    endline_wash_subset_study_group,
+    endline_wash_subset,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_wash_subset_study_group_province_table = create_study_group_province_table(
+    endline_wash_subset_study_group_province,
+    endline_wash_subset_study_group,
+    vars = c(
+      "at_most_unimproved_water_source", "at_least_limited_water_source",
+      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
+      "at_least_limited_handwashing_facility"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
   )
 )
 
@@ -15170,6 +15386,82 @@ outputs_overall <- tar_plan(
       endline_child_anthro
     )
   ),
+  ### Overall table output - child anthro subset -------------------------------
+  overall_child_anthro_subset = create_full_table(
+    variable_set = "child_anthro_subset",
+    indicator_list = survey_anthro_subset_indicator_list,
+    baseline = list(
+      baseline_child_anthro_subset_province, 
+      baseline_child_anthro_subset_strata,
+      baseline_child_anthro_subset_study_group,
+      baseline_child_anthro_subset_study_group_province,
+      baseline_child_anthro_subset
+    ),
+    endline = list(
+      endline_child_anthro_subset_province, 
+      endline_child_anthro_subset_strata,
+      endline_child_anthro_subset_study_group,
+      endline_child_anthro_subset_study_group_province,
+      endline_child_anthro_subset
+    )
+  ),
+  ### Overall table output - WASH subset ---------------------------------------
+  overall_wash_subset = create_full_table(
+    variable_set = "wash_subset",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_wash_subset_province, 
+      baseline_wash_subset_strata,
+      baseline_wash_subset_study_group,
+      baseline_wash_subset_study_group_province,
+      baseline_wash_subset
+    ),
+    endline = list(
+      endline_wash_subset_province, 
+      endline_wash_subset_strata,
+      endline_wash_subset_study_group,
+      endline_wash_subset_study_group_province,
+      endline_wash_subset
+    )
+  ),
+  ### Overall table output - observations --------------------------------------
+  overall_observation = create_full_table(
+    variable_set = "observations",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_observation_province, 
+      baseline_observation_strata,
+      baseline_observation_study_group,
+      baseline_observation_study_group_province,
+      baseline_observation
+    ),
+    endline = list(
+      endline_observation_province, 
+      endline_observation_strata,
+      endline_observation_study_group,
+      endline_observation_study_group_province,
+      endline_observation
+    )
+  ),
+  ### Overall table output - pica ----------------------------------------------
+  overall_pica = create_full_table(
+    variable_set = "pica",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_pica_province, 
+      baseline_pica_strata,
+      baseline_pica_study_group,
+      baseline_pica_study_group_province,
+      baseline_pica
+    ),
+    endline = list(
+      endline_pica_province, 
+      endline_pica_strata,
+      endline_pica_study_group,
+      endline_pica_study_group_province,
+      endline_pica
+    )
+  ),
   ### Overall results table ----------------------------------------------------
   overall_results_all = rbind(
     overall_demo_respondent,
@@ -15200,7 +15492,11 @@ outputs_overall <- tar_plan(
     overall_breastfeeding,
     overall_ebf,
     overall_iycf,
-    overall_child_anthro
+    overall_child_anthro,
+    overall_child_anthro_subset,
+    overall_wash_subset,
+    overall_observation,
+    overall_pica
   ),
   ### Overall results subset ---------------------------------------------------
   overall_results_subset = rbind(
@@ -15218,7 +15514,11 @@ outputs_overall <- tar_plan(
     overall_breastfeeding,
     overall_ebf,
     overall_iycf,
-    overall_child_anthro
+    overall_child_anthro,
+    overall_child_anthro_subset,
+    overall_wash_subset,
+    overall_observation,
+    overall_pica
   ),
   ### Baseline results all -----------------------------------------------------
   baseline_results_all = subset(
@@ -15283,6 +15583,10 @@ outputs_overall <- tar_plan(
       overall_ebf,
       overall_iycf,
       overall_child_anthro,
+      overall_child_anthro_subset,
+      overall_wash_subset,
+      overall_observation,
+      overall_pica,
       overall_results_all
     ),
     filename = "outputs/survey_results.xlsx"
