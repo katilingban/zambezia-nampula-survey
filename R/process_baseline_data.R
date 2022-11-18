@@ -495,7 +495,7 @@ process_baseline_data <- function(.data, spss_data) {
     ),
     deworming_coverage = ifelse(vas3 == 2, 0, 1),
     ## IYCF/ICFI - 6-23 months
-    food_group_breastmilk = ifelse(eb1 == 2, 1, 0),
+    food_group_breastmilk = ifelse(eb8 == 2, 1, 0),
     food_group_dairy = ifelse(nut1l != 1, 1, 0),
     food_group_starch = ifelse(nut1a !=1 | nut1c != 1, 1, 0),
     food_group_vitamin_a_rich = ifelse(
@@ -520,7 +520,7 @@ process_baseline_data <- function(.data, spss_data) {
     early_initiation_of_breastfeeding = ifelse(eb2 == 1 | eb2_hrs <= 1, 1, 0),
     ## Exclusive breastfeeding (less than 6 months)
     exclusive_breastfeeding = ifelse(
-      eb2 == 2 & nut2 == 1, 1, 0
+      eb8 == 1 & nut2 == 1, 1, 0
     ),
     ## Women's decision making
     freedom_and_control = recode_var_categorical(von1),
@@ -549,6 +549,44 @@ process_baseline_data <- function(.data, spss_data) {
     nutmul12 = ifelse(nutmul12 == 2, 0, 1),
     nutmul13 = ifelse(nutmul13 == 2, 0, 1),
     nutmul14 = ifelse(nutmul14 == 2, 0, 1),
+    ## Observation module
+    clean_yard_house = ifelse(anim2 == 2, 1, 0),
+    water_storage_system = ifelse(agua1 == 1, 1, 0),
+    water_storage_small_mouth_covered = agua2_1,
+    water_storage_small_mouth_uncovered = agua2_2,
+    water_storage_wide_mouth = agua2_3,
+    eating_utensils_storage_system = ifelse(
+      coz1 %in% 3:4, NA,
+      ifelse(
+        coz1 == 1, 1, 0
+      )
+    ),
+    dry_food_storage_system = ifelse(
+      coz2 %in% 3:4, NA,
+      ifelse(
+        coz2 == 1, 1, 0
+      )
+    ),
+    mortar_hanger = ifelse(
+      coz3 %in% 3:4, NA,
+      ifelse(
+        coz3 == 1, 1, 0
+      )
+    ),
+    trash_system = ifelse(
+      quin1 %in% 3:4, NA,
+      ifelse(
+        quin1 == 1, 1, 0
+      )
+    ),
+    ## PICA
+    pica_frequency = pica1,
+    pica_stop_child = pica2_1,
+    pica_remove_dirt = pica2_2,
+    pica_wash_with_water = pica2_3,
+    pica_wash_with_water_and_soap = pica2_4,
+    pica_do_nothing = pica2_5,
+    pica_bad = ifelse(pica3 == 1, 1, 0),
     .keep = "unused"
   ) |>
     ## Child anthropometry

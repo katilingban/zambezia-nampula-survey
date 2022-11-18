@@ -292,7 +292,7 @@
       ANIM1 = NA_integer_,
       ANIM2 = NA_integer_,
       AGUA1 = NA_integer_,
-      AGUA2 = NA_integer_,
+      AGUA2 = NA_character_,
       AGUA3 = NA_integer_,
       COZ1 = NA_integer_,
       COZ2 = NA_integer_,
@@ -2114,6 +2114,59 @@
           "Menos de um mês", "1 a 3 meses", "4 a 6 meses", "Mais de 6 meses",
           "Don't know/No response"
         )),
+      ## Observation module
+      clean_yard_house = ifelse(anim2 == 2, 1, 0),
+      water_storage_system = ifelse(agua1 == 1, 1, 0),
+      # water_storage_small_mouth_covered = refactor_var_categorical(
+      #   x = agua2,
+      #   y = 
+      # ),
+      # water_storage_small_mouth_uncoverd = agua2_2,
+      # water_storage_wide_mouth = agua2_3,
+      eating_utensils_storage_system = ifelse(
+        coz1 %in% 3:4, NA,
+        ifelse(
+          coz1 == 1, 1, 0
+        )
+      ),
+      dry_food_storage_system = ifelse(
+        coz2 %in% 3:4, NA,
+        ifelse(
+          coz2 == 1, 1, 0
+        )
+      ),
+      mortar_hanger = ifelse(
+        coz3 %in% 3:4, NA,
+        ifelse(
+          coz3 == 1, 1, 0
+        )
+      ),
+      trash_system = ifelse(
+        quin1 %in% 3:4, NA,
+        ifelse(
+          quin1 == 1, 1, 0
+        )
+      ),
+      ## PICA
+      pica_frequency = refactor_var_categorical(
+        x = pica1,
+        y = "pica_frequency",
+        choices = survey_endline_choices
+      ) |>
+        (\(x)
+          ifelse(
+            as.character(x) %in% c("Don't know", "No response"), 
+            NA, as.character(x)
+          )
+        )() |>
+        factor(levels = c(
+          "0 times", "<1 time per day", "Once per day", "2-5 times per day",
+          "More than 5 times per day"
+        )),
+      pica_bad = ifelse(
+        pica3 %in% 8:9, NA,
+        ifelse(1, 1, 0)
+      ),
       .keep = "unused"
     ) |>
       ## Child anthropometry
@@ -2575,7 +2628,54 @@
               )()
           )
         }
-      )() 
+      )() |>
+      ## observation module
+      (\(x)
+        {
+           data.frame(
+             x,
+            split_select_multiples(
+              x = x$agua2,
+              fill = 1:4,
+              prefix = "water_storage"
+            ) |>
+              (\(x) 
+                { 
+                  names(x) <- c(
+                    "water_storage_small_mouth_covered", 
+                    "water_storage_small_mouth_uncovered", 
+                    "water_storage_wide_mouth", 
+                    "water_storage_none"
+                  ) 
+                  x 
+                } 
+              )()
+           )
+        }
+      )() |>
+      ## PICA
+      (\(x)
+        {
+          data.frame(
+            x,
+            spread_vector_to_columns(
+              x = x$pica2,
+              fill = 1:5,
+              prefix = "pica"
+            ) |>
+              (\(x)
+                {
+                  names(x) <- c(
+                    "pica_stop_child", "pica_remove_dirt",
+                    "pica_wash_with_water", "pica_wash_with_water_and_soap",
+                    "pica_do_nothing"
+                  ) 
+                  x
+                }
+              )()
+          )
+        }
+      )()
   }
   
   
