@@ -244,6 +244,14 @@ process_baseline_data <- function(.data, spss_data) {
     at_least_limited_water_source = ifelse(
       surface_water_source != 1 & unimproved_water_source != 1, 1, 0
     ),
+    bad_water_source = ifelse(
+      surface_water_source == 1 | 
+        unimproved_water_source == 1 |
+        limited_water_source == 1, 1, 0
+    ),
+    good_water_source = ifelse(
+      basic_water_source == 1 | sufficient_water_source == 1, 1, 0
+    ),
     ## Sanitation
     open_defecation = ifelse(lusd1 == 2 | lusd4 == 6, 1, 0),
     unimproved_toilet_facility = ifelse(lusd4 == 5, 1, 0),
@@ -255,6 +263,12 @@ process_baseline_data <- function(.data, spss_data) {
     at_least_limited_toilet_facility = ifelse(
       open_defecation != 1 & unimproved_toilet_facility != 1, 1, 0
     ),
+    bad_toilet_facility = ifelse(
+      open_defecation == 1 | 
+        unimproved_toilet_facility == 1 |
+        limited_toilet_facility == 1, 1, 0
+    ),
+    good_toilet_facility = ifelse(basic_toilet_facility == 1, 1, 0),
     ## Hygiene
     no_handwashing_facility = ifelse(
       mao1 == 2, 1, 
@@ -271,6 +285,10 @@ process_baseline_data <- function(.data, spss_data) {
     at_least_limited_handwashing_facility = ifelse(
       no_handwashing_facility != 1, 1, 0
     ),
+    bad_handwashing_facility = ifelse(
+      no_handwashing_facility == 1 | limited_handwashing_facility == 1, 1, 0
+    ),
+    good_handwashing_facility = ifelse(basic_handwashing_facility == 1, 1, 0),
     ## Diarrhoea
     diarrhoea_episode = ifelse(ort1 == 2, 0, 1),
     diarrhoea_seek_treatment = ifelse(ort3 == 2, 0, 1),
