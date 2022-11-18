@@ -113,7 +113,7 @@ endline_demo_respondent_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -180,7 +180,7 @@ endline_demo_child_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -248,7 +248,7 @@ endline_demo_spouse_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -326,7 +326,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -401,7 +401,7 @@ endline_hh_structure_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -500,7 +500,7 @@ endline_hh_amenities_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -581,7 +581,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -660,7 +660,7 @@ endline_hh_decision_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -1623,7 +1623,7 @@ endline_iycf_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   )
 ```
@@ -2103,7 +2103,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -2181,7 +2181,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -2255,7 +2255,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -3642,7 +3642,7 @@ endline_child_dev_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -3755,7 +3755,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -3834,7 +3834,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -3941,7 +3941,7 @@ rbind(
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -4018,7 +4018,7 @@ endline_family_planning_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -4246,7 +4246,7 @@ endline_wdds_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -4394,7 +4394,7 @@ endline_mddw_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -4546,7 +4546,7 @@ endline_wem_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   ) |>
   kableExtra::pack_rows(
@@ -4699,7 +4699,7 @@ endline_women_phq8_study_group_table_report |>
     lightable_options = "striped", full_width = TRUE, font_size = 12
   ) |>
   kableExtra::add_header_above(
-    header = c(" " = 1, "Control" = 3, "Intervention" = 3, "Overall" = 3),
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
     bold = TRUE
   )
 ```

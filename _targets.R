@@ -6081,7 +6081,7 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_breastfeeding1_stugy_group_table = create_study_group_table(
+  baseline_breastfeeding1_study_group_table = create_study_group_table(
     baseline_breastfeeding1_study_group,
     baseline_breastfeeding1,
     vars = "ever_breastfed",
@@ -6124,7 +6124,7 @@ outputs_tables_baseline <- tar_plan(
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_breastfeeding2_stugy_group_table = create_study_group_table(
+  baseline_breastfeeding2_study_group_table = create_study_group_table(
     baseline_breastfeeding2_study_group,
     baseline_breastfeeding2,
     vars = "early_initiation_of_breastfeeding",
@@ -13480,51 +13480,100 @@ outputs_tables_endline <- tar_plan(
     study_round = "Endline",
     report = FALSE
   ),
-  ### Endline breastfeeding table ---------------------------------------------
-  endline_breastfeeding_province_table = create_province_table(
-    endline_breastfeeding_province,
-    endline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  ### Endline breastfeeding1 table ---------------------------------------------
+  endline_breastfeeding1_province_table = create_province_table(
+    endline_breastfeeding1_province,
+    endline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
   ),
-  endline_breastfeeding_province_table_report = create_province_table(
-    endline_breastfeeding_province,
-    endline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_province_table_report = create_province_table(
+    endline_breastfeeding1_province,
+    endline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = TRUE, format = "wide"
   ),
-  endline_breastfeeding_strata_table = create_strata_table(
-    endline_breastfeeding_strata,
-    endline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_strata_table = create_strata_table(
+    endline_breastfeeding1_strata,
+    endline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
   ),
-  endline_breastfeeding_stugy_group_table = create_study_group_table(
-    endline_breastfeeding_study_group,
-    endline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_stugy_group_table = create_study_group_table(
+    endline_breastfeeding1_study_group,
+    endline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
   ),
-  endline_breastfeeding_study_group_table_report = create_study_group_table(
-    endline_breastfeeding_study_group,
-    endline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_study_group_table_report = create_study_group_table(
+    endline_breastfeeding1_study_group,
+    endline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = TRUE, format = "wide"
   ),
-  endline_breastfeeding_study_group_province_table = create_study_group_province_table(
-    endline_breastfeeding_study_group_province,
-    endline_breastfeeding_study_group,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_study_group_province_table = create_study_group_province_table(
+    endline_breastfeeding1_study_group_province,
+    endline_breastfeeding1_study_group,
+    vars = "ever_breastfed",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  ### Endline breastfeeding2 table ---------------------------------------------
+  endline_breastfeeding2_province_table = create_province_table(
+    endline_breastfeeding2_province,
+    endline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding2",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_breastfeeding2_province_table_report = create_province_table(
+    endline_breastfeeding2_province,
+    endline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding2",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_breastfeeding2_strata_table = create_strata_table(
+    endline_breastfeeding2_strata,
+    endline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding2",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_breastfeeding2_stugy_group_table = create_study_group_table(
+    endline_breastfeeding2_study_group,
+    endline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding2",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = FALSE
+  ),
+  endline_breastfeeding2_study_group_table_report = create_study_group_table(
+    endline_breastfeeding2_study_group,
+    endline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding2",
+    indicator_list = survey_indicator_list,     
+    study_round = "Endline",
+    report = TRUE, format = "wide"
+  ),
+  endline_breastfeeding2_study_group_province_table = create_study_group_province_table(
+    endline_breastfeeding2_study_group_province,
+    endline_breastfeeding2_study_group,
+    vars = "early_initiation_of_breastfeeding2",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE

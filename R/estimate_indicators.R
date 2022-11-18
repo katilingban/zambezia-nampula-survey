@@ -114,7 +114,7 @@ estimate_study_group <- function(vars, design) {
     deff = TRUE,
     mc.cores = 2
   ) |>
-    (\(x) { names(x) <- c("Control", "Intervention"); x })()
+    (\(x) { names(x) <- c("Comparison", "Intervention"); x })()
 }
 
 ## Estimate by study group by province -----------------------------------------
@@ -148,7 +148,7 @@ estimate_study_group_province <- function(vars, design) {
         names(x) <- lapply(
           X = c("Zambézia", "Nampula"),
           FUN = paste,
-          c("Control", "Intervention")
+          c("Comparison", "Intervention")
         ) |>
           unlist()
         x
