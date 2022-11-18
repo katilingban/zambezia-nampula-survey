@@ -2709,6 +2709,93 @@ analysis_baseline <- tar_plan(
           respondent_age_years >= 15 & 
           respondent_age_years < 50
       )
+  ),
+  ### Baseline observations module results -------------------------------------
+  baseline_observation = estimate_total(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_observation_province = estimate_province(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_observation_strata = estimate_strata(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_observation_study_group = estimate_study_group(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_observation_study_group_province = estimate_study_group_province(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  ### Baseline pica results ----------------------------------------------------
+  baseline_pica = estimate_total(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pica_province = estimate_province(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pica_strata = estimate_strata(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pica_study_group = estimate_study_group(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = baseline_hh_survey_design
+  ),
+  baseline_pica_study_group_province = estimate_study_group_province(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = baseline_hh_survey_design
   )
 )
 
@@ -6105,6 +6192,152 @@ outputs_tables_baseline <- tar_plan(
     vars = c("body_mass_index", "bmi_class"),
     indicator_list = survey_indicator_list,
     report = FALSE
+  ),
+  ### Baseline observation module table ----------------------------------------
+  baseline_observation_province_table = create_province_table(
+    baseline_observation_province,
+    baseline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_observation_province_table_report = create_province_table(
+    baseline_observation_province,
+    baseline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, pivot = "wide"
+  ),
+  baseline_observation_strata_table = create_strata_table(
+    baseline_observation_strata,
+    baseline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_observation_study_group_table = create_study_group_table(
+    baseline_observation_study_group,
+    baseline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_observation_study_group_table_report = create_study_group_table(
+    baseline_observation_study_group,
+    baseline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_observation_study_group_province_table = create_study_group_province_table(
+    baseline_observation_study_group_province,
+    baseline_observation_study_group,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline pica table ------------------------------------------------------
+  baseline_pica_province_table = create_province_table(
+    baseline_pica_province,
+    baseline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pica_province_table_report = create_province_table(
+    baseline_pica_province,
+    baseline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, pivot = "wide"
+  ),
+  baseline_pica_strata_table = create_strata_table(
+    baseline_pica_strata,
+    baseline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pica_study_group_table = create_study_group_table(
+    baseline_pica_study_group,
+    baseline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_pica_study_group_table_report = create_study_group_table(
+    baseline_pica_study_group,
+    baseline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_pica_study_group_province_table = create_study_group_province_table(
+    baseline_pica_study_group_province,
+    baseline_pica_study_group,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
   )
 )
 
@@ -9098,6 +9331,93 @@ analysis_endline <- tar_plan(
   ),
   endline_legumes_reserve_study_group_province = estimate_study_group_province(
     vars = "legumes_reserve",
+    design = endline_hh_survey_design
+  ),
+  ### Endline observations module results --------------------------------------
+  endline_observation = estimate_total(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_observation_province = estimate_province(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_observation_strata = estimate_strata(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_observation_study_group = estimate_study_group(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_observation_study_group_province = estimate_study_group_province(
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    design = endline_hh_survey_design
+  ),
+  ### Endline pica results -----------------------------------------------------
+  endline_pica = estimate_total(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_pica_province = estimate_province(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_pica_strata = estimate_strata(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_pica_study_group = estimate_study_group(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    design = endline_hh_survey_design
+  ),
+  endline_pica_study_group_province = estimate_study_group_province(
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
     design = endline_hh_survey_design
   )
 )
@@ -13534,6 +13854,152 @@ outputs_tables_endline <- tar_plan(
     indicator_list = food_security_indicator_list,
     study_round = "Endline",
     report = FALSE
+  ),
+  ### Endline observation module table -----------------------------------------
+  endline_observation_province_table = create_province_table(
+    endline_observation_province,
+    endline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_observation_province_table_report = create_province_table(
+    endline_observation_province,
+    endline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, pivot = "wide"
+  ),
+  endline_observation_strata_table = create_strata_table(
+    endline_observation_strata,
+    endline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_observation_study_group_table = create_study_group_table(
+    endline_observation_study_group,
+    endline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_observation_study_group_table_report = create_study_group_table(
+    endline_observation_study_group,
+    endline_observation,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_observation_study_group_province_table = create_study_group_province_table(
+    endline_observation_study_group_province,
+    endline_observation_study_group,
+    vars = c(
+      "clean_yard_house", "water_storage_system", 
+      "water_storage_small_mouth_covered", 
+      "water_storage_small_mouth_uncovered",
+      "water_storage_wide_mouth", "eating_utensils_storage_system",
+      "dry_food_storage_system", "mortar_hanger", "trash_system"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Endline pica table -------------------------------------------------------
+  endline_pica_province_table = create_province_table(
+    endline_pica_province,
+    endline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_pica_province_table_report = create_province_table(
+    endline_pica_province,
+    endline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, pivot = "wide"
+  ),
+  endline_pica_strata_table = create_strata_table(
+    endline_pica_strata,
+    endline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_pica_study_group_table = create_study_group_table(
+    endline_pica_study_group,
+    endline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  endline_pica_study_group_table_report = create_study_group_table(
+    endline_pica_study_group,
+    endline_pica,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_pica_study_group_province_table = create_study_group_province_table(
+    endline_pica_study_group_province,
+    endline_pica_study_group,
+    vars = c(
+      "pica_frequency", "pica_stop_child", "pica_remove_dirt",
+      "pica_wash_with_water", "pica_wash_with_water_and_soap",
+      "pica_do_nothing", "pica_bad"
+    ),
+    indicator_list = survey_indicator_list,
+    report = FALSE
   )
 )
 
@@ -14438,11 +14904,27 @@ outputs_overall <- tar_plan(
   ### Baseline results subset --------------------------------------------------
   baseline_results_subset = subset(
     overall_results_subset, study_round == "Baseline"
+  ) |>
+    dplyr::mutate(
+      indicator = ifelse(
+        stringr::str_detect(indicator, "per"), 
+        paste0(indicator, " - ", indicator_category), indicator
+      )
+    ),
+  ### Endline results all -----------------------------------------------------
+  endline_results_all = subset(
+    overall_results_all, study_round == "Endline"
   ),
   ### Endline results subset ---------------------------------------------------
   endline_results_subset = subset(
     overall_results_subset, study_round == "Endline"
-  ),
+  ) |>
+    dplyr::mutate(
+      indicator = ifelse(
+        stringr::str_detect(indicator, "per"), 
+        paste0(indicator, " - ", indicator_category), indicator
+      )
+    ),
   ### Create XLSX output for all tables ----------------------------------------
   overall_results_xlsx = create_results_spreadsheet(
     sheet = as.list(

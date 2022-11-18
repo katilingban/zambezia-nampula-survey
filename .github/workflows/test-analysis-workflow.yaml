@@ -47,10 +47,9 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::starts_with("endline_hdds"))
-          targets::tar_make(dplyr::starts_with("endline_fcs"))
-          targets::tar_make(dplyr::starts_with("endline_rcsi"))
-          targets::tar_make(dplyr::starts_with("endline_lcsi"))
-          targets::tar_make(dplyr::contains("reserve"))
+          targets::tar_make(dplyr::starts_with("baseline_observation"))
+          targets::tar_make(dplyr::starts_with("baseline_pica"))
+          targets::tar_make(dplyr::starts_with("endline_observation"))
+          targets::tar_make(dplyr::starts_with("endline_pica"))
         shell: Rscript {0}
           
