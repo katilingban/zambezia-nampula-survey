@@ -2528,29 +2528,55 @@ analysis_baseline <- tar_plan(
     design = baseline_child_survey_design |>
       subset(child_age_months >= 6 & child_age_months < 24)
   ),
-  ### Baseline results - breastfeeding -----------------------------------------
-  baseline_breastfeeding = estimate_total(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  ### Baseline results - ever breastfed ----------------------------------------
+  baseline_breastfeeding1 = estimate_total(
+    vars = "ever_breastfed",
     design = baseline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  baseline_breastfeeding_province = estimate_province(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_province = estimate_province(
+    vars = "ever_breastfed",
     design = baseline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  baseline_breastfeeding_strata = estimate_strata(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_strata = estimate_strata(
+    vars = "ever_breastfed",
     design = baseline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  baseline_breastfeeding_study_group = estimate_study_group(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_study_group = estimate_study_group(
+    vars = "ever_breastfed",
     design = baseline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  baseline_breastfeeding_study_group_province = estimate_study_group_province(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_study_group_province = estimate_study_group_province(
+    vars = "ever_breastfed",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  ### Baseline results - early initiation of breastfeeding ---------------------
+  baseline_breastfeeding2 = estimate_total(
+    vars = "early_initiation_of_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding2_province = estimate_province(
+    vars = "early_initiation_of_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding2_strata = estimate_strata(
+    vars = "early_initiation_of_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding2_study_group = estimate_study_group(
+    vars = "early_initiation_of_breastfeeding",
+    design = baseline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  baseline_breastfeeding2_study_group_province = estimate_study_group_province(
+    vars = "early_initiation_of_breastfeeding",
     design = baseline_child_survey_design |>
       subset(child_age_months < 24)
   ),
@@ -2875,41 +2901,41 @@ analysis_baseline <- tar_plan(
   ### Baseline results - WASH subset -------------------------------------------
   baseline_wash_subset = estimate_total(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_wash_subset_province = estimate_province(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_wash_subset_strata = estimate_strata(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_wash_subset_study_group = estimate_study_group(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = baseline_hh_survey_design
   ),
   baseline_wash_subset_study_group_province = estimate_study_group_province(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = baseline_hh_survey_design
   )
@@ -6034,45 +6060,88 @@ outputs_tables_baseline <- tar_plan(
     report = FALSE
   ),
   ### Baseline breastfeeding table ---------------------------------------------
-  baseline_breastfeeding_province_table = create_province_table(
-    baseline_breastfeeding_province,
-    baseline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_province_table = create_province_table(
+    baseline_breastfeeding1_province,
+    baseline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_breastfeeding_province_table_report = create_province_table(
-    baseline_breastfeeding_province,
-    baseline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_province_table_report = create_province_table(
+    baseline_breastfeeding1_province,
+    baseline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  baseline_breastfeeding_strata_table = create_strata_table(
-    baseline_breastfeeding_strata,
-    baseline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_strata_table = create_strata_table(
+    baseline_breastfeeding1_strata,
+    baseline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_breastfeeding_stugy_group_table = create_study_group_table(
-    baseline_breastfeeding_study_group,
-    baseline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_stugy_group_table = create_study_group_table(
+    baseline_breastfeeding1_study_group,
+    baseline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
-  baseline_breastfeeding_study_group_table_report = create_study_group_table(
-    baseline_breastfeeding_study_group,
-    baseline_breastfeeding,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_study_group_table_report = create_study_group_table(
+    baseline_breastfeeding1_study_group,
+    baseline_breastfeeding1,
+    vars = "ever_breastfed",
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
   ),
-  baseline_breastfeeding_study_group_province_table = create_study_group_province_table(
-    baseline_breastfeeding_study_group_province,
-    baseline_breastfeeding_study_group,
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  baseline_breastfeeding1_study_group_province_table = create_study_group_province_table(
+    baseline_breastfeeding1_study_group_province,
+    baseline_breastfeeding1_study_group,
+    vars = "ever_breastfed",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Baseline breastfeeding table ---------------------------------------------
+  baseline_breastfeeding2_province_table = create_province_table(
+    baseline_breastfeeding2_province,
+    baseline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_breastfeeding2_province_table_report = create_province_table(
+    baseline_breastfeeding2_province,
+    baseline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_breastfeeding2_strata_table = create_strata_table(
+    baseline_breastfeeding2_strata,
+    baseline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_breastfeeding2_stugy_group_table = create_study_group_table(
+    baseline_breastfeeding2_study_group,
+    baseline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding",
+    indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  baseline_breastfeeding2_study_group_table_report = create_study_group_table(
+    baseline_breastfeeding2_study_group,
+    baseline_breastfeeding2,
+    vars = "early_initiation_of_breastfeeding",
+    indicator_list = survey_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_breastfeeding2_study_group_province_table = create_study_group_province_table(
+    baseline_breastfeeding2_study_group_province,
+    baseline_breastfeeding2_study_group,
+    vars = "early_initiation_of_breastfeeding",
     indicator_list = survey_indicator_list,
     report = FALSE
   ),
@@ -6551,9 +6620,9 @@ outputs_tables_baseline <- tar_plan(
     baseline_wash_subset_province,
     baseline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -6562,9 +6631,9 @@ outputs_tables_baseline <- tar_plan(
     baseline_wash_subset_province,
     baseline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -6573,9 +6642,9 @@ outputs_tables_baseline <- tar_plan(
     baseline_wash_subset_strata,
     baseline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -6584,9 +6653,9 @@ outputs_tables_baseline <- tar_plan(
     baseline_wash_subset_study_group,
     baseline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -6595,9 +6664,9 @@ outputs_tables_baseline <- tar_plan(
     baseline_wash_subset_study_group,
     baseline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -6606,9 +6675,9 @@ outputs_tables_baseline <- tar_plan(
     baseline_wash_subset_study_group_province,
     baseline_wash_subset_study_group,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -9154,29 +9223,55 @@ analysis_endline <- tar_plan(
     design = endline_child_survey_design |>
       subset(child_age_months >= 6 & child_age_months < 24)
   ),
-  ### endline results - breastfeeding -----------------------------------------
-  endline_breastfeeding = estimate_total(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  ### endline results - breastfeeding1 -----------------------------------------
+  endline_breastfeeding1 = estimate_total(
+    vars = "ever_breastfed",
     design = endline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  endline_breastfeeding_province = estimate_province(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_province = estimate_province(
+    vars = "ever_breastfed",
     design = endline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  endline_breastfeeding_strata = estimate_strata(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_strata = estimate_strata(
+    vars = "ever_breastfed",
     design = endline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  endline_breastfeeding_study_group = estimate_study_group(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_study_group = estimate_study_group(
+    vars = "ever_breastfed",
     design = endline_child_survey_design |>
       subset(child_age_months < 24)
   ),
-  endline_breastfeeding_study_group_province = estimate_study_group_province(
-    vars = c("ever_breastfed", "early_initiation_of_breastfeeding"),
+  endline_breastfeeding1_study_group_province = estimate_study_group_province(
+    vars = "ever_breastfed",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  ### endline results - breastfeeding2 -----------------------------------------
+  endline_breastfeeding2 = estimate_total(
+    vars = "early_initiation_of_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding2_province = estimate_province(
+    vars = "early_initiation_of_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding2_strata = estimate_strata(
+    vars = "early_initiation_of_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding2_study_group = estimate_study_group(
+    vars = "early_initiation_of_breastfeeding",
+    design = endline_child_survey_design |>
+      subset(child_age_months < 24)
+  ),
+  endline_breastfeeding2_study_group_province = estimate_study_group_province(
+    vars = "early_initiation_of_breastfeeding",
     design = endline_child_survey_design |>
       subset(child_age_months < 24)
   ),
@@ -9763,41 +9858,41 @@ analysis_endline <- tar_plan(
   ### Endline results - WASH subset --------------------------------------------
   endline_wash_subset = estimate_total(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = endline_hh_survey_design
   ),
   endline_wash_subset_province = estimate_province(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = endline_hh_survey_design
   ),
   endline_wash_subset_strata = estimate_strata(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = endline_hh_survey_design
   ),
   endline_wash_subset_study_group = estimate_study_group(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = endline_hh_survey_design
   ),
   endline_wash_subset_study_group_province = estimate_study_group_province(
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     design = endline_hh_survey_design
   )
@@ -14478,9 +14573,9 @@ outputs_tables_endline <- tar_plan(
     endline_wash_subset_province,
     endline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -14489,9 +14584,9 @@ outputs_tables_endline <- tar_plan(
     endline_wash_subset_province,
     endline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -14500,9 +14595,9 @@ outputs_tables_endline <- tar_plan(
     endline_wash_subset_strata,
     endline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -14511,9 +14606,9 @@ outputs_tables_endline <- tar_plan(
     endline_wash_subset_study_group,
     endline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -14522,9 +14617,9 @@ outputs_tables_endline <- tar_plan(
     endline_wash_subset_study_group,
     endline_wash_subset,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -14533,9 +14628,9 @@ outputs_tables_endline <- tar_plan(
     endline_wash_subset_study_group_province,
     endline_wash_subset_study_group,
     vars = c(
-      "at_most_unimproved_water_source", "at_least_limited_water_source",
-      "at_most_unimproved_toilet_facility", "at_least_limited_toilet_facility",
-      "at_least_limited_handwashing_facility"
+      "bad_water_source", "good_water_source",
+      "bad_toilet_facility", "good_toilet_facility",
+      "bad_handwashing_facility", "good_toilet_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -15139,8 +15234,8 @@ outputs_overall <- tar_plan(
       endline_rti_treatment_type
     )
   ),
-  ### Overall table output - child immunisation --------------------------------
-  overall_child_immunisation = create_full_table(
+  ### Overall table output - child immunisation card self-report ---------------
+  overall_child_immunisation_card_self_report = create_full_table(
     variable_set = "child_immunisation",
     indicator_list = survey_indicator_list,
     baseline = list(
@@ -15148,99 +15243,52 @@ outputs_overall <- tar_plan(
       baseline_child_immunisation_card_self_report_strata,
       baseline_child_immunisation_card_self_report_study_group,
       baseline_child_immunisation_card_self_report_study_group_province,
-      baseline_child_immunisation_card_self_report,
-      baseline_child_immunisation_card_available_province, 
-      baseline_child_immunisation_card_available_strata,
-      baseline_child_immunisation_card_available_study_group,
-      baseline_child_immunisation_card_available_study_group_province,
-      baseline_child_immunisation_card_available,
-      baseline_child_immunisation_bcg_province, 
-      baseline_child_immunisation_bcg_strata,
-      baseline_child_immunisation_bcg_study_group,
-      baseline_child_immunisation_bcg_study_group_province,
-      baseline_child_immunisation_bcg,
-      baseline_child_immunisation_opv_province, 
-      baseline_child_immunisation_opv_strata,
-      baseline_child_immunisation_opv_study_group,
-      baseline_child_immunisation_opv_study_group_province,
-      baseline_child_immunisation_opv,
-      baseline_child_immunisation_set1_province, 
-      baseline_child_immunisation_set1_strata,
-      baseline_child_immunisation_set1_study_group,
-      baseline_child_immunisation_set1_study_group_province,
-      baseline_child_immunisation_set1,
-      baseline_child_immunisation_set2a_province, 
-      baseline_child_immunisation_set2a_strata,
-      baseline_child_immunisation_set2a_study_group,
-      baseline_child_immunisation_set2a_study_group_province,
-      baseline_child_immunisation_set2a,
-      baseline_child_immunisation_set2b_province, 
-      baseline_child_immunisation_set2b_strata,
-      baseline_child_immunisation_set2b_study_group,
-      baseline_child_immunisation_set2b_study_group_province,
-      baseline_child_immunisation_set2b,
-      baseline_child_immunisation_set2c_province, 
-      baseline_child_immunisation_set2c_strata,
-      baseline_child_immunisation_set2c_study_group,
-      baseline_child_immunisation_set2c_study_group_province,
-      baseline_child_immunisation_set2c,
-      baseline_child_immunisation_set2d_province, 
-      baseline_child_immunisation_set2d_strata,
-      baseline_child_immunisation_set2d_study_group,
-      baseline_child_immunisation_set2d_study_group_province,
-      baseline_child_immunisation_set2d,
-      baseline_child_immunisation_set3a_province, 
-      baseline_child_immunisation_set3a_strata,
-      baseline_child_immunisation_set3a_study_group,
-      baseline_child_immunisation_set3a_study_group_province,
-      baseline_child_immunisation_set3a,
-      baseline_child_immunisation_set3b_province, 
-      baseline_child_immunisation_set3b_strata,
-      baseline_child_immunisation_set3b_study_group,
-      baseline_child_immunisation_set3b_study_group_province,
-      baseline_child_immunisation_set3b,
-      baseline_child_immunisation_set3c_province, 
-      baseline_child_immunisation_set3c_strata,
-      baseline_child_immunisation_set3c_study_group,
-      baseline_child_immunisation_set3c_study_group_province,
-      baseline_child_immunisation_set3c
+      baseline_child_immunisation_card_self_report
     ),
     endline = list(
       endline_child_immunisation_card_self_report_province, 
       endline_child_immunisation_card_self_report_strata,
       endline_child_immunisation_card_self_report_study_group,
       endline_child_immunisation_card_self_report_study_group_province,
-      endline_child_immunisation_card_self_report,
+      endline_child_immunisation_card_self_report
+    )
+  ),
+  ### Overall table output - child immunisation card available -----------------
+  overall_child_immunisation_card_available = create_full_table(
+    variable_set = "child_immunisation",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_immunisation_card_available_province, 
+      baseline_child_immunisation_card_available_strata,
+      baseline_child_immunisation_card_available_study_group,
+      baseline_child_immunisation_card_available_study_group_province,
+      baseline_child_immunisation_card_available
+    ),
+    endline = list(
       endline_child_immunisation_card_available_province, 
       endline_child_immunisation_card_available_strata,
       endline_child_immunisation_card_available_study_group,
       endline_child_immunisation_card_available_study_group_province,
-      endline_child_immunisation_card_available,
+      endline_child_immunisation_card_available
+    )
+  ),
+  ### Overall table output - child immunisation BCG ----------------------------
+  overall_child_immunisation_bcg = create_full_table(
+    variable_set = "child_immunisation",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_child_immunisation_bcg_province, 
+      baseline_child_immunisation_bcg_strata,
+      baseline_child_immunisation_bcg_study_group,
+      baseline_child_immunisation_bcg_study_group_province,
+      baseline_child_immunisation_bcg
+    ),
+    endline = list(
       endline_child_immunisation_bcg_province, 
       endline_child_immunisation_bcg_strata,
       endline_child_immunisation_bcg_study_group,
       endline_child_immunisation_bcg_study_group_province,
-      endline_child_immunisation_bcg,
-      endline_child_immunisation_opv_province, 
-      endline_child_immunisation_opv_strata,
-      endline_child_immunisation_opv_study_group,
-      endline_child_immunisation_opv_study_group_province,
-      endline_child_immunisation_opv,
-      endline_child_immunisation_set1_province, 
-      endline_child_immunisation_set1_strata,
-      endline_child_immunisation_set1_study_group,
-      endline_child_immunisation_set1_study_group_province,
-      endline_child_immunisation_set1,
-      endline_child_immunisation_set2_province, 
-      endline_child_immunisation_set2_strata,
-      endline_child_immunisation_set2_study_group,
-      endline_child_immunisation_set2_study_group_province,
-      endline_child_immunisation_set2,
-      endline_child_immunisation_set3_province, 
-      endline_child_immunisation_set3_strata,
-      endline_child_immunisation_set3_study_group,
-      endline_child_immunisation_set3_study_group_province,
-      endline_child_immunisation_set3
+      endline_child_immunisation_bcg
     )
   ),
   ### Overall table output - child immunisation full ---------------------------
@@ -15252,7 +15300,21 @@ outputs_overall <- tar_plan(
       baseline_child_immunisation_full_strata,
       baseline_child_immunisation_full_study_group,
       baseline_child_immunisation_full_study_group_province,
-      baseline_child_immunisation_full,
+      baseline_child_immunisation_full
+    ),
+    endline = list(
+      endline_child_immunisation_full_province, 
+      endline_child_immunisation_full_strata,
+      endline_child_immunisation_full_study_group,
+      endline_child_immunisation_full_study_group_province,
+      endline_child_immunisation_full
+    )
+  ),
+  ### Overall table output - child immunisation age appropriate ----------------
+  overall_child_immunisation_age_appropriate = create_full_table(
+    variable_set = "child_immunisation_full",
+    indicator_list = survey_indicator_list,
+    baseline = list(
       baseline_child_immunisation_age_appropriate_province, 
       baseline_child_immunisation_age_appropriate_strata,
       baseline_child_immunisation_age_appropriate_study_group,
@@ -15260,11 +15322,6 @@ outputs_overall <- tar_plan(
       baseline_child_immunisation_age_appropriate
     ),
     endline = list(
-      endline_child_immunisation_full_province, 
-      endline_child_immunisation_full_strata,
-      endline_child_immunisation_full_study_group,
-      endline_child_immunisation_full_study_group_province,
-      endline_child_immunisation_full,
       endline_child_immunisation_age_appropriate_province, 
       endline_child_immunisation_age_appropriate_strata,
       endline_child_immunisation_age_appropriate_study_group,
@@ -15310,23 +15367,42 @@ outputs_overall <- tar_plan(
       endline_deworming
     )
   ),
-  ### Overall table output - breastfeeding -------------------------------------
-  overall_breastfeeding = create_full_table(
+  ### Overall table output - breastfeeding1 ------------------------------------
+  overall_breastfeeding1 = create_full_table(
     variable_set = "breastfeeding",
     indicator_list = survey_indicator_list,
     baseline = list(
-      baseline_breastfeeding_province, 
-      baseline_breastfeeding_strata,
-      baseline_breastfeeding_study_group,
-      baseline_breastfeeding_study_group_province,
-      baseline_breastfeeding
+      baseline_breastfeeding1_province, 
+      baseline_breastfeeding1_strata,
+      baseline_breastfeeding1_study_group,
+      baseline_breastfeeding1_study_group_province,
+      baseline_breastfeeding1
     ),
     endline = list(
-      endline_breastfeeding_province, 
-      endline_breastfeeding_strata,
-      endline_breastfeeding_study_group,
-      endline_breastfeeding_study_group_province,
-      endline_breastfeeding
+      endline_breastfeeding1_province, 
+      endline_breastfeeding1_strata,
+      endline_breastfeeding1_study_group,
+      endline_breastfeeding1_study_group_province,
+      endline_breastfeeding1
+    )
+  ),
+  ### Overall table output - breastfeeding2 -------------------------------------
+  overall_breastfeeding2 = create_full_table(
+    variable_set = "breastfeeding",
+    indicator_list = survey_indicator_list,
+    baseline = list(
+      baseline_breastfeeding2_province, 
+      baseline_breastfeeding2_strata,
+      baseline_breastfeeding2_study_group,
+      baseline_breastfeeding2_study_group_province,
+      baseline_breastfeeding2
+    ),
+    endline = list(
+      endline_breastfeeding2_province, 
+      endline_breastfeeding2_strata,
+      endline_breastfeeding2_study_group,
+      endline_breastfeeding2_study_group_province,
+      endline_breastfeeding2
     )
   ),
   ### Overall table output - exclusive breastfeeding ---------------------------
@@ -15485,11 +15561,15 @@ outputs_overall <- tar_plan(
     overall_women_anthro,
     overall_child_dev,
     overall_child_ill,
-    overall_child_immunisation,
+    overall_child_immunisation_card_self_report,
+    overall_child_immunisation_card_available,
+    overall_child_immunisation_bcg,
     overall_child_immunisation_full,
+    overall_child_immunisation_age_appropriate,
     overall_child_vita,
     overall_deworming,
-    overall_breastfeeding,
+    overall_breastfeeding1,
+    overall_breastfeeding2,
     overall_ebf,
     overall_iycf,
     overall_child_anthro,
@@ -15500,18 +15580,22 @@ outputs_overall <- tar_plan(
   ),
   ### Overall results subset ---------------------------------------------------
   overall_results_subset = rbind(
-    overall_wash,
+    #overall_wash,
     overall_family_planning,
     overall_wdds,
     overall_mddw,
     overall_women_anthro,
     overall_child_dev,
     overall_child_ill,
-    overall_child_immunisation,
+    overall_child_immunisation_card_self_report,
+    overall_child_immunisation_card_available,
+    overall_child_immunisation_bcg,
     overall_child_immunisation_full,
+    overall_child_immunisation_age_appropriate,
     overall_child_vita,
     overall_deworming,
-    overall_breastfeeding,
+    overall_breastfeeding1,
+    overall_breastfeeding2,
     overall_ebf,
     overall_iycf,
     overall_child_anthro,
@@ -15551,7 +15635,11 @@ outputs_overall <- tar_plan(
   ### Create XLSX output for all tables ----------------------------------------
   overall_results_xlsx = create_results_spreadsheet(
     sheet = as.list(
-      c(unique(survey_indicator_list$indicator_set_code), "overall")
+      c(
+        unique(survey_indicator_list$indicator_set_code),
+        unique(survey_anthro_subset_indicator_list$indicator_set_code),
+        "overall"
+      )
     ),
     x = list(
       overall_demo_respondent,
@@ -15575,18 +15663,22 @@ outputs_overall <- tar_plan(
       overall_women_anthro,
       overall_child_dev,
       overall_child_ill,
-      overall_child_immunisation,
+      overall_child_immunisation_card_self_report,
+      overall_child_immunisation_card_available,
+      overall_child_immunisation_bcg,
       overall_child_immunisation_full,
+      overall_child_immunisation_age_appropriate,
       overall_child_vita,
       overall_deworming,
-      overall_breastfeeding,
+      overall_breastfeeding1,
+      overall_breastfeeding2,
       overall_ebf,
       overall_iycf,
       overall_child_anthro,
-      overall_child_anthro_subset,
-      overall_wash_subset,
       overall_observation,
       overall_pica,
+      overall_wash_subset,
+      overall_child_anthro_subset,
       overall_results_all
     ),
     filename = "outputs/survey_results.xlsx"
