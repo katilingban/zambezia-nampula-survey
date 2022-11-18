@@ -78,13 +78,22 @@ data_reference <- tar_plan(
     command = googlesheets4::read_sheet(ss = survey_indicator_list_id),
     cue = tar_cue("always")
   ),
-  ### Read food security indicator list from Google Sheets
+  ### Read food security indicator list from Google Sheets ---------------------
   food_security_indicator_list_id = googlesheets4::gs4_find() |>
     subset(name == "food_security_indicators") |>
     (\(x) x$id)(),
   tar_target(
     name = food_security_indicator_list,
     command = googlesheets4::read_sheet(ss = food_security_indicator_list_id),
+    cue = tar_cue("always")
+  ),
+  ### Read child anthro subset indicator list from Google Sheets ---------------
+  survey_anthro_subset_indicator_list_id = googlesheets4::gs4_find() |>
+    subset(name == "zambezia_nampula_anthro_subset_survey_indicators") |>
+    (\(x) x$id )(),
+  tar_target(
+    name = survey_anthro_subset_indicator_list,
+    command = googlesheets4::read_sheet(ss = survey_anthro_subset_indicator_list_id),
     cue = tar_cue("always")
   ),
   ### Read choices list for endline survey -------------------------------------
@@ -2796,6 +2805,72 @@ analysis_baseline <- tar_plan(
       "pica_do_nothing", "pica_bad"
     ),
     design = baseline_hh_survey_design
+  ),
+  ### Baseline child anthro subset ---------------------------------------------
+  baseline_child_anthro_subset = estimate_total(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  baseline_child_anthro_subset_province = estimate_province(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  baseline_child_anthro_subset_strata = estimate_strata(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  baseline_child_anthro_subset_study_group = estimate_study_group(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  baseline_child_anthro_subset_study_group_province = estimate_study_group_province(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = baseline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
   )
 )
 
@@ -6338,6 +6413,97 @@ outputs_tables_baseline <- tar_plan(
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
+  ),
+  ### Baseline child anthropometry subset table --------------------------------
+  baseline_child_anthro_subset_province_table = create_province_table(
+    baseline_child_anthro_subset_province,
+    baseline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_anthro_subset_province_table_report = create_province_table(
+    baseline_child_anthro_subset_province,
+    baseline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_anthro_subset_strata_table = create_strata_table(
+    baseline_child_anthro_subset_strata,
+    baseline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_anthro_subset_study_group_table = create_study_group_table(
+    baseline_child_anthro_subset_study_group,
+    baseline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = FALSE
+  ),
+  baseline_child_anthro_subset_study_group_table_report = create_study_group_table(
+    baseline_child_anthro_subset_study_group,
+    baseline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  baseline_child_anthro_subset_study_group_province_table = create_study_group_province_table(
+    baseline_child_anthro_subset_study_group_province,
+    baseline_child_anthro_subset_study_group,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = FALSE
   )
 )
 
@@ -9419,6 +9585,72 @@ analysis_endline <- tar_plan(
       "pica_do_nothing", "pica_bad"
     ),
     design = endline_hh_survey_design
+  ),
+  ### Endline child anthro subset ----------------------------------------------
+  endline_child_anthro_subset = estimate_total(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  endline_child_anthro_subset_province = estimate_province(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  endline_child_anthro_subset_strata = estimate_strata(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  endline_child_anthro_subset_study_group = estimate_study_group(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
+  ),
+  endline_child_anthro_subset_study_group_province = estimate_study_group_province(
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    design = endline_child_survey_design |>
+      subset(child_age_months >= 6 & child_age_months < 36)
   )
 )
 
@@ -13999,6 +14231,97 @@ outputs_tables_endline <- tar_plan(
       "pica_do_nothing", "pica_bad"
     ),
     indicator_list = survey_indicator_list,
+    report = FALSE
+  ),
+  ### Endline child anthropometry subset table ---------------------------------
+  endline_child_anthro_subset_province_table = create_province_table(
+    endline_child_anthro_subset_province,
+    endline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = FALSE
+  ),
+  endline_child_anthro_subset_province_table_report = create_province_table(
+    endline_child_anthro_subset_province,
+    endline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_child_anthro_subset_strata_table = create_strata_table(
+    endline_child_anthro_subset_strata,
+    endline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = FALSE
+  ),
+  endline_child_anthro_subset_study_group_table = create_study_group_table(
+    endline_child_anthro_subset_study_group,
+    endline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = FALSE
+  ),
+  endline_child_anthro_subset_study_group_table_report = create_study_group_table(
+    endline_child_anthro_subset_study_group,
+    endline_child_anthro_subset,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
+    report = TRUE, format = "wide"
+  ),
+  endline_child_anthro_subset_study_group_province_table = create_study_group_province_table(
+    endline_child_anthro_subset_study_group_province,
+    endline_child_anthro_subset_study_group,
+    vars = c(
+      "hfaz", "global_stunting", "moderate_stunting", "severe_stunting",
+      "wfaz", "global_underweight", "moderate_underweight", "severe_underweight",
+      "wfhz", "global_wasting_by_weight_for_height",
+      "moderate_wasting_by_weight_for_height",
+      "severe_wasting_by_weight_for_height",
+      "child_muac", "global_wasting_by_muac", "moderate_wasting_by_muac",
+      "severe_wasting_by_muac", "severe_wasting_by_oedema"
+    ),
+    indicator_list = survey_anthro_subset_indicator_list,
     report = FALSE
   )
 )
