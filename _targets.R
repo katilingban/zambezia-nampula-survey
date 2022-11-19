@@ -6403,7 +6403,7 @@ outputs_tables_baseline <- tar_plan(
       "dry_food_storage_system", "mortar_hanger", "trash_system"
     ),
     indicator_list = survey_indicator_list,
-    report = TRUE, pivot = "wide"
+    report = TRUE, format = "wide"
   ),
   baseline_observation_strata_table = create_strata_table(
     baseline_observation_strata,
@@ -14405,7 +14405,7 @@ outputs_tables_endline <- tar_plan(
       "dry_food_storage_system", "mortar_hanger", "trash_system"
     ),
     indicator_list = survey_indicator_list,
-    report = TRUE, pivot = "wide"
+    report = TRUE, format = "wide"
   ),
   endline_observation_strata_table = create_strata_table(
     endline_observation_strata,

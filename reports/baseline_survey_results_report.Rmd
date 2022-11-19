@@ -3944,6 +3944,72 @@ rbind(
 
 <br/>
 
+## Observations
+
+### By province and overall
+
+```{r observation, echo = FALSE}
+baseline_observation_province_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -study_group
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Zambezia" = 3, "Nampula" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Cleanliness" = 1,
+      "Water storage" = 4,
+      "Hygienic storage systems" = 4
+    )
+  )
+```
+
+### By study group and overall
+
+```{r observation_study_group, echo = FALSE}
+baseline_observation_study_group_table_report |>
+  subset(
+    select = c(
+      -indicator_label, -indicator_set, -indicator, 
+      -study_round, -strata
+    )
+  ) |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c("Variable", rep(c("Estimate", "95% LCL", "95% UCL"), 3)),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = TRUE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(" " = 1, "Comparison" = 3, "Intervention" = 3, "Overall" = 3),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Cleanliness" = 1,
+      "Water storage" = 4,
+      "Hygienic storage systems" = 4
+    )
+  )
+```
+
+<br/>
+
 ## Pica
 
 ### By province and overall
