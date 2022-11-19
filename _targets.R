@@ -2665,7 +2665,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Female")
+      subset(respondent_sex == "Mulher")
   ),
   baseline_wem_province = estimate_province(
     vars = c(
@@ -2673,7 +2673,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Female")
+      subset(respondent_sex == "Mulher")
   ),
   baseline_wem_strata = estimate_strata(
     vars = c(
@@ -2681,7 +2681,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Female")
+      subset(respondent_sex == "Mulher")
   ),
   baseline_wem_study_group = estimate_study_group(
     vars = c(
@@ -2689,7 +2689,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Female")
+      subset(respondent_sex == "Mulher")
   ),
   baseline_wem_study_group_province = estimate_study_group_province(
     vars = c(
@@ -2697,7 +2697,7 @@ analysis_baseline <- tar_plan(
       "make_decision_without_husband", "willingly_participate_in_survey"
     ),
     design = baseline_hh_survey_design |>
-      subset(respondent_sex == "Female")
+      subset(respondent_sex == "Mulher")
   ),
   ### Baseline results - women's anthropometry ---------------------------------
   baseline_women_anthro = estimate_total(
