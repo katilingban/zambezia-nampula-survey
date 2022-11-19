@@ -613,7 +613,14 @@ process_baseline_data <- function(.data, spss_data) {
       )
     ),
     ## PICA
-    pica_frequency = pica1,
+    pica_frequency = factor(
+      pica1,
+      levels = 1:5,
+      labels = c(
+        "0 times", "<1 time per day", "Once per day", 
+        "2-5 times per day", "More than 5 times per day"
+      )
+    ),
     pica_stop_child = pica2_1,
     pica_remove_dirt = pica2_2,
     pica_wash_with_water = pica2_3,
