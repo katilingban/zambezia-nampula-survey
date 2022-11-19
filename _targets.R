@@ -6478,7 +6478,7 @@ outputs_tables_baseline <- tar_plan(
       "pica_do_nothing", "pica_bad"
     ),
     indicator_list = survey_indicator_list,
-    report = TRUE, pivot = "wide"
+    report = TRUE, format = "wide"
   ),
   baseline_pica_strata_table = create_strata_table(
     baseline_pica_strata,
@@ -14480,7 +14480,7 @@ outputs_tables_endline <- tar_plan(
       "pica_do_nothing", "pica_bad"
     ),
     indicator_list = survey_indicator_list,
-    report = TRUE, pivot = "wide"
+    report = TRUE, format = "wide"
   ),
   endline_pica_strata_table = create_strata_table(
     endline_pica_strata,
