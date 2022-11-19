@@ -3332,6 +3332,86 @@ rbind(
   )
 ```
 
+```{r good_water_source, echo = FALSE}
+water_subset_province_overall <- endline_wash_subset_province_table |>
+  subset(
+    indicator_category == "Good water source",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+water_subset_strata <- endline_wash_subset_strata_table |>
+  subset(
+    indicator_category == "Good water source" & strata != "Overall",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+water_subset_study_group <- endline_wash_subset_study_group_table |>
+  subset(
+    indicator_category == "Good water source" & study_group != "Overall",
+    select = c(indicator_label, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  water_subset_province_overall,
+  water_subset_strata,
+  water_subset_study_group
+) |>
+  (\(x)
+    {
+      x[ , 2:4] <- round(x[ , 2:4] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", c("Estimate", "95% LCL", "95% UCL")),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Good water source" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
 ### Sanitation
 
 ```{r sanitation_province_plot, fig.align = "center", fig.width = 10}
@@ -3495,6 +3575,86 @@ rbind(
   )
 ```
 
+```{r good_toilet_facility, echo = FALSE}
+sanitation_subset_province_overall <- endline_wash_subset_province_table |>
+  subset(
+    indicator_category == "Good toilet facility",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+sanitation_subset_strata <- endline_wash_subset_strata_table |>
+  subset(
+    indicator_category == "Good toilet facility" & strata != "Overall",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+sanitation_subset_study_group <- endline_wash_subset_study_group_table |>
+  subset(
+    indicator_category == "Good toilet facility" & study_group != "Overall",
+    select = c(indicator_label, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  sanitation_subset_province_overall,
+  sanitation_subset_strata,
+  sanitation_subset_study_group
+) |>
+  (\(x)
+    {
+      x[ , 2:4] <- round(x[ , 2:4] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", c("Estimate", "95% LCL", "95% UCL")),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Good toilet facility" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
 ### Hygiene
 
 ```{r hygiene_province_plot, fig.align = "center", fig.width = 10}
@@ -3643,6 +3803,86 @@ rbind(
       "No facility" = 3, 
       "Limited" = 3, 
       "Basic" = 3
+    ),
+    bold = TRUE
+  ) |>
+  kableExtra::pack_rows(
+    index = c(
+      "Overall" = 1,
+      "Province" = 2,
+      "Districts in Zambezia" = 5, 
+      "Districts in Nampula" = 4, 
+      "Study group" = 2
+    )
+  )
+```
+
+```{r good_handwashing_facility, echo = FALSE}
+hygiene_subset_province_overall <- endline_wash_province_table |>
+  subset(
+    indicator_variable == "basic_handwashing_facility",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x)
+   {
+     rbind(
+       x[3, ],
+       x[1:2, ]
+     )
+   }
+  )()
+
+hygiene_subset_strata <- endline_wash_strata_table |>
+  subset(
+    indicator_variable == "basic_handwashing_facility" & strata != "Overall",
+    select = c(indicator_label, strata, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  )
+
+hygiene_subset_study_group <- endline_wash_study_group_table |>
+  subset(
+    indicator_variable == "basic_handwashing_facility" & study_group != "Overall",
+    select = c(indicator_label, study_group, estimate, lcl, ucl)
+  ) |>
+  tidyr::pivot_wider(
+    names_from = indicator_label,
+    values_from = c(estimate, lcl, ucl),
+    names_sep = "_"
+  ) |>
+  (\(x) { names(x)[1] <- "strata"; x })()
+
+rbind(
+  hygiene_subset_province_overall,
+  hygiene_subset_strata,
+  hygiene_subset_study_group
+) |>
+  (\(x)
+    {
+      x[ , 2:4] <- round(x[ , 2:4] * 100, digits = 1)
+      x
+    }
+  )() |>
+  knitr::kable(
+    row.names = FALSE,
+    col.names = c(" ", c("Estimate", "95% LCL", "95% UCL")),
+    align = "r"
+  ) |>
+  kableExtra::kable_paper(
+    lightable_options = "striped", full_width = FALSE, font_size = 12
+  ) |>
+  kableExtra::add_header_above(
+    header = c(
+      " " = 1, 
+      "Good handwashing facility" = 3
     ),
     bold = TRUE
   ) |>
