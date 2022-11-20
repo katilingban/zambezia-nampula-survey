@@ -266,7 +266,7 @@ process_baseline_data <- function(.data, spss_data) {
     bad_toilet_facility = ifelse(
       open_defecation == 1 | 
         unimproved_toilet_facility == 1 |
-        limited_toilet_facility == 1, 1, 0
+        limited_toilet_facility == 1, 1, 0  
     ),
     good_toilet_facility = ifelse(basic_toilet_facility == 1, 1, 0),
     ## Hygiene

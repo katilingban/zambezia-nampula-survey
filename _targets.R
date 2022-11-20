@@ -2903,7 +2903,7 @@ analysis_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = baseline_hh_survey_design
   ),
@@ -2911,7 +2911,7 @@ analysis_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = baseline_hh_survey_design
   ),
@@ -2919,7 +2919,7 @@ analysis_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = baseline_hh_survey_design
   ),
@@ -2927,7 +2927,7 @@ analysis_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = baseline_hh_survey_design
   ),
@@ -2935,7 +2935,7 @@ analysis_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = baseline_hh_survey_design
   )
@@ -6622,7 +6622,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -6633,7 +6633,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -6644,7 +6644,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -6655,7 +6655,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -6666,7 +6666,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -6677,7 +6677,7 @@ outputs_tables_baseline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -9860,7 +9860,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = endline_hh_survey_design
   ),
@@ -9868,7 +9868,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = endline_hh_survey_design
   ),
@@ -9876,7 +9876,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = endline_hh_survey_design
   ),
@@ -9884,7 +9884,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = endline_hh_survey_design
   ),
@@ -9892,7 +9892,7 @@ analysis_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     design = endline_hh_survey_design
   )
@@ -14624,7 +14624,7 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -14635,7 +14635,7 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -14646,7 +14646,7 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -14657,7 +14657,7 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
@@ -14668,7 +14668,7 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = TRUE, format = "wide"
@@ -14679,7 +14679,7 @@ outputs_tables_endline <- tar_plan(
     vars = c(
       "bad_water_source", "good_water_source",
       "bad_toilet_facility", "good_toilet_facility",
-      "bad_handwashing_facility", "good_toilet_facility"
+      "bad_handwashing_facility", "good_handwashing_facility"
     ),
     indicator_list = survey_indicator_list,
     report = FALSE
