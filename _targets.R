@@ -16164,15 +16164,15 @@ reports <- tar_plan(
     output_dir = "outputs",
     knit_root_dir = here::here(),
     cue = tar_cue("always")
-  ),
+  )#,
   ### Change report ------------------------------------------------------------
-  tar_render(
-    name = difference_in_difference_results_report,
-    path = "reports/difference_in_difference_results.Rmd",
-    output_dir = "outputs",
-    knit_root_dir = here::here(),
-    cue = tar_cue("always")
-  )
+  # tar_render(
+  #   name = difference_in_difference_results_report,
+  #   path = "reports/difference_in_difference_results.Rmd",
+  #   output_dir = "outputs",
+  #   knit_root_dir = here::here(),
+  #   cue = tar_cue("always")
+  # )
 )
 
 ## Deploy targets --------------------------------------------------------------
@@ -16198,8 +16198,8 @@ list(
   analysis_endline,
   outputs_tables_endline,
   outputs_overall,
-  analysis_comparison,
-  outputs_comparison,
+  #analysis_comparison,
+  #outputs_comparison,
   reports,
   deploy
 )
