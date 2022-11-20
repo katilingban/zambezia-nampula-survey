@@ -384,8 +384,12 @@ create_results_table <- function(x, vars,
     study_round = study_round,
     strata = strata,
     study_group = study_group,
-    estimate = coef(x),
-    confint(x)
+    #estimate = coef(x),
+    estimate = lapply(X = x, FUN = coef) |>
+      unlist(),
+    #confint(x)
+    lapply(X = x, FUN = confint) |>
+      (\(x) do.call(rbind, x))()
   ) |>
     (\(x) { names(x)[5:6] <- c("lcl", "ucl"); x })()
   
