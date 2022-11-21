@@ -13533,7 +13533,7 @@ outputs_tables_endline <- tar_plan(
   endline_breastfeeding2_province_table = create_province_table(
     endline_breastfeeding2_province,
     endline_breastfeeding2,
-    vars = "early_initiation_of_breastfeeding2",
+    vars = "early_initiation_of_breastfeeding",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
@@ -13541,7 +13541,7 @@ outputs_tables_endline <- tar_plan(
   endline_breastfeeding2_province_table_report = create_province_table(
     endline_breastfeeding2_province,
     endline_breastfeeding2,
-    vars = "early_initiation_of_breastfeeding2",
+    vars = "early_initiation_of_breastfeeding",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = TRUE, format = "wide"
@@ -13549,7 +13549,7 @@ outputs_tables_endline <- tar_plan(
   endline_breastfeeding2_strata_table = create_strata_table(
     endline_breastfeeding2_strata,
     endline_breastfeeding2,
-    vars = "early_initiation_of_breastfeeding2",
+    vars = "early_initiation_of_breastfeeding",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
@@ -13557,7 +13557,7 @@ outputs_tables_endline <- tar_plan(
   endline_breastfeeding2_stugy_group_table = create_study_group_table(
     endline_breastfeeding2_study_group,
     endline_breastfeeding2,
-    vars = "early_initiation_of_breastfeeding2",
+    vars = "early_initiation_of_breastfeeding",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
@@ -13565,7 +13565,7 @@ outputs_tables_endline <- tar_plan(
   endline_breastfeeding2_study_group_table_report = create_study_group_table(
     endline_breastfeeding2_study_group,
     endline_breastfeeding2,
-    vars = "early_initiation_of_breastfeeding2",
+    vars = "early_initiation_of_breastfeeding",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = TRUE, format = "wide"
@@ -13573,7 +13573,7 @@ outputs_tables_endline <- tar_plan(
   endline_breastfeeding2_study_group_province_table = create_study_group_province_table(
     endline_breastfeeding2_study_group_province,
     endline_breastfeeding2_study_group,
-    vars = "early_initiation_of_breastfeeding2",
+    vars = "early_initiation_of_breastfeeding",
     indicator_list = survey_indicator_list,     
     study_round = "Endline",
     report = FALSE
