@@ -25,14 +25,13 @@ suppressPackageStartupMessages(source("packages.R"))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 targets::tar_load(dplyr::starts_with("endline"))
-targets::tar_load(
-  c(population_single_year_age_2019, overall_results_all)
-)
+targets::tar_load(overall_results_all)
 
 water_ladder <- c("#4575b4", "#74add1", "#ffffbf", "#feb24c", "#ec7014")
 sanitation_ladder <- c("#1a9850", "#a6d96a", "#ffffbf", "#feb24c", "#ec7014")
 hygiene_ladder <- c("#cab2d6", "#feb24c", "#ec7014")
 bmi_classes <- c("#d7191c", "#fdae61", "#abdda4", "#2b83ba")
+unicef_blue <- "#1CABE2"
 
 theme_mozambique <- theme_bw() + 
   theme(
@@ -712,10 +711,10 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   labs(
     title = "Prevalence of child undernutrition",
-    subtitle = "Proportion of children 6-59 years old who are stunting, underweight, and wasting",
+    subtitle = "Proportion of children 6-59 months old who are stunting, underweight, and wasting",
     x = "", y = "%"
   ) +
   facet_grid(
@@ -860,13 +859,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 70), breaks = seq(from = 0, to = 70, by = 10)
   ) +
   labs(
     title = "Prevalence of child stunting",
-    subtitle = "Proportion of children 6-59 years old who are stunting by district of Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are stunting by district of Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~province, ncol = 2, scales = "free_x") +
@@ -902,13 +901,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 70), breaks = seq(from = 0, to = 70, by = 10)
   ) +
   labs(
     title = "Prevalence of child stunting",
-    subtitle = "Proportion of children 6-59 years old who are stunting by study groups in Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are stunting by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~strata, ncol = 3) +
@@ -1051,13 +1050,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 40), breaks = seq(from = 0, to = 40, by = 5)
   ) +
   labs(
     title = "Prevalence of child underweight",
-    subtitle = "Proportion of children 6-59 years old who are underweight by districts of Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are underweight by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~province, ncol = 2, scales = "free_x") +
@@ -1093,13 +1092,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 40), breaks = seq(from = 0, to = 40, by = 5)
   ) +
   labs(
     title = "Prevalence of child underweight",
-    subtitle = "Proportion of children 6-59 years old who are underweight by study groups in Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are underweight by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~strata, ncol = 3) +
@@ -1242,13 +1241,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 15), breaks = seq(from = 0, to = 15, by = 5)
   ) +
   labs(
     title = "Prevalence of child wasting by weight-for-height z-score",
-    subtitle = "Proportion of children 6-59 years old who are wasting by weight-for-height z-score by districts of Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are wasting by weight-for-height z-score by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~province, ncol = 2, scales = "free_x") +
@@ -1284,13 +1283,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 15), breaks = seq(from = 0, to = 15, by = 5)
   ) +
   labs(
     title = "Prevalence of child wasting by weight-for-height z-score",
-    subtitle = "Proportion of children 6-59 years old who are wasting by weight-for-height z-score by study groups in Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are wasting by weight-for-height z-score by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~strata, ncol = 3) +
@@ -1433,13 +1432,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 10), breaks = seq(from = 0, to = 10, by = 2)
   ) +
   labs(
     title = "Prevalence of child wasting by mid-upper arm circumference",
-    subtitle = "Proportion of children 6-59 years old who are wasting by MUAC by districts of Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are wasting by MUAC by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~province, ncol = 2, scales = "free_x") +
@@ -1475,13 +1474,13 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 10), breaks = seq(from = 0, to = 10, by = 2)
   ) +
   labs(
     title = "Prevalence of child wasting by mid-upper arm circumference",
-    subtitle = "Proportion of children 6-59 years old who are wasting by MUAC by study groups in Zambézia and Nampula",
+    subtitle = "Proportion of children 6-59 months old who are wasting by MUAC by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~strata, ncol = 3) +
@@ -1605,7 +1604,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   labs(
     title = "Prevalence of child undernutrition",
     subtitle = "Proportion of children 6-35 months old who are stunting, underweight, and wasting",
@@ -1753,7 +1752,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 70), breaks = seq(from = 0, to = 70, by = 10)
   ) +
@@ -1795,7 +1794,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 70), breaks = seq(from = 0, to = 70, by = 10)
   ) +
@@ -1944,7 +1943,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 40), breaks = seq(from = 0, to = 40, by = 5)
   ) +
@@ -1986,7 +1985,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 40), breaks = seq(from = 0, to = 40, by = 5)
   ) +
@@ -2135,7 +2134,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 16), breaks = seq(from = 0, to = 16, by = 2)
   ) +
@@ -2177,7 +2176,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 16), breaks = seq(from = 0, to = 16, by = 2)
   ) +
@@ -2326,7 +2325,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 16), breaks = seq(from = 0, to = 16, by = 2)
   ) +
@@ -2368,7 +2367,7 @@ overall_results_all |>
     )
   ) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(c("#FFEA00", "#a50026"), 0.6)) +
   scale_y_continuous(
     limits = c(0, 16), breaks = seq(from = 0, to = 16, by = 2)
   ) +
@@ -2638,13 +2637,13 @@ overall_results_all |>
     )
   ) |>
   ggplot(mapping = aes(x = study_group, y = estimate * 100)) +
-  geom_bar(stat = "identity", fill = "gray70") +
+  geom_bar(stat = "identity", fill = alpha(unicef_blue, 0.6)) +
   scale_y_continuous(
     limits = c(0, 60), breaks = seq(from = 0, to = 60, by = 10)
   ) +
   labs(
     title = "Period prevalence of child illnesses",
-    subtitle = "Proportion of children 0-59 years old who had diarrhoea, fever, or cough in the past 2 weeks",
+    subtitle = "Proportion of children 0-59 months old who had diarrhoea, fever, or cough in the past 2 weeks",
     x = "", y = "%"
   ) +
   facet_grid(
@@ -2682,10 +2681,10 @@ overall_results_all |>
   ) |>
   ggplot(
     mapping = aes(x = strata, y = estimate * 100)) +
-  geom_bar(stat = "identity", fill = "gray70") +
+  geom_bar(stat = "identity", fill = alpha(unicef_blue, 0.6)) +
   labs(
     title = "Prevalence of diarrhoea",
-    subtitle = "Proportion of children 0-59 years old who had diarrhoea in the past 2 weeks by districts of Zambézia and Nampula",
+    subtitle = "Proportion of children 0-59 months old who had diarrhoea in the past 2 weeks by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~province, ncol = 2, scales = "free_x") +
@@ -2707,13 +2706,13 @@ overall_results_all |>
   ) |>
   ggplot(
     mapping = aes(x = study_group, y = estimate * 100)) +
-  geom_bar(stat = "identity", fill = "gray70") +
+  geom_bar(stat = "identity", fill = alpha(unicef_blue, 0.6)) +
   scale_y_continuous(
     limits = c(0, 20), breaks = seq(from = 0, to = 20, by = 5)
   ) +
   labs(
     title = "Prevalence of diarrhoea",
-    subtitle = "Proportion of children 0-59 years old who had diarrhoea in the past 2 weeks by study groups in Zambézia and Nampula",
+    subtitle = "Proportion of children 0-59 months old who had diarrhoea in the past 2 weeks by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~strata, ncol = 3) +
@@ -2749,13 +2748,13 @@ overall_results_all |>
   ) |>
   ggplot(
     mapping = aes(x = strata, y = estimate * 100)) +
-  geom_bar(stat = "identity", fill = "gray70") +
+  geom_bar(stat = "identity", fill = alpha(unicef_blue, 0.6)) +
   scale_y_continuous(
     limits = c(0, 70), breaks = seq(from = 0, to = 70, by = 10)
   ) +
   labs(
     title = "Prevalence of fever",
-    subtitle = "Proportion of children 0-59 years old who had fever in the past 2 weeks by districts of Zambézia and Nampula",
+    subtitle = "Proportion of children 0-59 months old who had fever in the past 2 weeks by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~province, ncol = 2, scales = "free_x") +
@@ -2777,10 +2776,10 @@ overall_results_all |>
   ) |>
   ggplot(
     mapping = aes(x = study_group, y = estimate * 100)) +
-  geom_bar(stat = "identity", fill = "gray70") +
+  geom_bar(stat = "identity", fill = alpha(unicef_blue, 0.6)) +
   labs(
     title = "Prevalence of fever",
-    subtitle = "Proportion of children 0-59 years old who had fever in the past 2 weeks by study groups in Zambézia and Nampula",
+    subtitle = "Proportion of children 0-59 months old who had fever in the past 2 weeks by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~strata, ncol = 3) +
@@ -2816,13 +2815,13 @@ overall_results_all |>
   ) |>
   ggplot(
     mapping = aes(x = strata, y = estimate * 100)) +
-  geom_bar(stat = "identity", fill = "gray70") +
+  geom_bar(stat = "identity", fill = alpha(unicef_blue, 0.6)) +
   scale_y_continuous(
     limits = c(0, 30), breaks = seq(from = 0, to = 30, by = 5)
   ) +
   labs(
     title = "Prevalence of cough",
-    subtitle = "Proportion of children 0-59 years old who had cough in the past 2 weeks by districts of Zambézia and Nampula",
+    subtitle = "Proportion of children 0-59 months old who had cough in the past 2 weeks by districts of Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~province, ncol = 2, scales = "free_x") +
@@ -2844,10 +2843,10 @@ overall_results_all |>
   ) |>
   ggplot(
     mapping = aes(x = study_group, y = estimate * 100)) +
-  geom_bar(stat = "identity", fill = "gray70") +
+  geom_bar(stat = "identity", fill = alpha(unicef_blue, 0.6)) +
   labs(
     title = "Prevalence of cough",
-    subtitle = "Proportion of children 0-59 years old who had cough in the past 2 weeks by study groups in Zambézia and Nampula",
+    subtitle = "Proportion of children 0-59 months old who had cough in the past 2 weeks by study groups in Zambézia and Nampula",
     x = "", y = "%"
   ) +
   facet_wrap(~strata, ncol = 3) +
@@ -3185,7 +3184,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = study_group, y = estimate, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "fill") +
-  scale_fill_manual(name = "", values = alpha(rev(water_ladder), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(rev(water_ladder), 0.6)) +
   scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Drinking water service ladder",
@@ -3232,7 +3231,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "fill") +
-  scale_fill_manual(name = "", values = alpha(rev(water_ladder), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(rev(water_ladder), 0.6)) +
   scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Drinking water service ladder",
@@ -3431,7 +3430,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = study_group, y = estimate, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "fill") +
-  scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.6)) +
   scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Sanitation service ladder",
@@ -3476,7 +3475,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "fill") +
-  scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(rev(sanitation_ladder), 0.6)) +
   scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Sanitation service ladder",
@@ -3674,7 +3673,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = study_group, y = estimate, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "fill") +
-  scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.6)) +
   scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Hygiene service ladder",
@@ -3719,7 +3718,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "fill") +
-  scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.8)) +
+  scale_fill_manual(name = "", values = alpha(rev(hygiene_ladder), 0.6)) +
   scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Hygiene service ladder",
@@ -5325,7 +5324,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = study_group, y = estimate * 100, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "stack") +
-  scale_fill_manual(name = "", values = alpha(bmi_classes, 0.8)) +
+  scale_fill_manual(name = "", values = alpha(bmi_classes, 0.6)) +
   labs(
     title = "Women's nutrition status",
     subtitle = "Proportion of women of reproductive age in Zambézia and Nampula by nutrition status based on body mass index",
@@ -5369,7 +5368,7 @@ overall_results_all |>
   ) |>
   ggplot(mapping = aes(x = strata, y = estimate * 100, fill = indicator_category)) +
   geom_bar(stat = "identity", position = "stack") +
-  scale_fill_manual(name = "", values = alpha(bmi_classes, 0.8)) +
+  scale_fill_manual(name = "", values = alpha(bmi_classes, 0.6)) +
   labs(
     title = "Women's nutrition status",
     subtitle = "Proportion of households in districts of Zambézia and Nampula by nutrition status based on body mass index",
