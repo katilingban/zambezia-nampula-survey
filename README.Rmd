@@ -70,15 +70,28 @@ targets::tar_make(dplyr::starts_with("baseline"))
 targets::tar_make(dplyr::starts_with("endline"))
 ```
 
-The schematic figure below summarizes the steps in the data management and processing workflow:
+The schematic figure below summarizes the steps in the data analysis workflow for the baseline survey:
 
-
-```{r data_analysis_workflow, echo = FALSE, message = FALSE, results = 'asis'}
+```{r data_analysis_workflow_baseline, echo = FALSE, message = FALSE, results = 'asis'}
 cat(
   "```mermaid",
   targets::tar_mermaid(
     targets_only = TRUE, 
-    names = c(dplyr::starts_with("baseline"), dplyr::starts_with("endline"))
+    names = dplyr::starts_with("baseline")
+  ),
+  "```",
+  sep = "\n"
+)
+```
+
+The schematic figure below summarizes the steps in the data analysis workflow for the endline survey:
+
+```{r data_analysis_workflow_endline, echo = FALSE, message = FALSE, results = 'asis'}
+cat(
+  "```mermaid",
+  targets::tar_mermaid(
+    targets_only = TRUE, 
+    names = dplyr::starts_with("endline")
   ),
   "```",
   sep = "\n"
