@@ -4049,8 +4049,8 @@ require ability to decrypt the `.env` file
 To be able to work on this repository, a potential user/collaborator on
 this project will need to:
 
-- Create their own PGP (Pretty Good Privacy) public and private keys;
-  and,
+- Create their own **PGP (Pretty Good Privacy) public and private
+  keys**; and,
 
 - Share their public key to the authors and request for it to be added
   to the repository.
@@ -4069,10 +4069,17 @@ on the terminal.
 
 ## License
 
-This work is licensed under a GNU General Public License 3 (GPL-3).
+The datasets for both baseline and endline survey (not included in this
+repository) are owned by **UNICEF Mozambique**. Access to these datasets
+is restricted. Communicate with **UNICEF Mozambique** to request access
+to the survey datasets.
+
+The code included in this repository is owned by the authors and is
+licensed under a [GNU General Public License 3
+(GPL-3)](https://opensource.org/licenses/GPL-3.0).
 
 ## Feedback
 
 Feedback, bug reports and feature requests are welcome; file issues or
 seek support
-[here](https://github.com/katilingban/mozambique-s3m/issues).
+[here](https://github.com/katilingban/zambezia-nampula-survey/issues).
