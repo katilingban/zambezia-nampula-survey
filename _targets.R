@@ -107,6 +107,19 @@ data_reference <- tar_plan(
     ) |>
       subset(!is.na(list_name))
   ),
+  ### Create endline codebook --------------------------------------------------
+  endline_xlsform_file = download_googledrive(
+    filename = "ins_u5_endline_2022041901.xlsx", overwrite = TRUE
+  ),
+  survey_questions = readxl::read_xlsx(
+    path = endline_xlsform_file$local_path, sheet = "survey"
+  ),
+  survey_choices = readxl::read_xlsx(
+    path = endline_xlsform_file$local_path, sheet = "choices"
+  ),
+  survey_codebook = create_codebook(
+    survey_questions, survey_choices, endline_raw_data, meta = TRUE
+  ),
   ### Get populations data from US Census Bureaus IDB --------------------------
   population_single_year_age_2019 = idbr::get_idb(
     country = "Mozambique",
