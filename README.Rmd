@@ -37,19 +37,24 @@ This repository is a [`docker`](https://www.docker.com/get-started)-containerise
 
 This project requires `R 4.2.2 Patched (2022-11-10 r83330)`. This project uses the `{renv}` framework to record R package dependencies and versions. Packages and versions used are recorded in `renv.lock` and code used to manage dependencies is in `renv/` and other files in the root project directory. On starting an R session in the working directory, `run renv::restore()` to install R package dependencies.
 
+### System requirements
+
+This project's data management and analysis pipeline was built to utilise multi-threaded parallel computing to make calculations faster and more efficient. This project's pipeline uses 4 computing threads. To run without issues, ensure that you use a machine with at least 5 computing threads when reproducing this pipeline (4 threads for the pipeline and the remaininig threads to run the machines regular processes).
+
+With multi-threaded computation, the entire pipeline completes between 30 minutes to an hour (depending on CPU speed and RAM size). Without multi-threading, the entire pipeline completes between 3-5 hours.
+
 ### Data management and analysis
 
 This project uses the `{targets}` package to create its data management and analysis pipeline as defined in the `_targets.R` file.
 
 * To execute the data management and processing workflow for baseline and endline survey data, run:
 
-```
+```R
 targets::tar_make(baseline_data_weighted)
 targets::tar_make(endline_data_weighted)
 ```
 
-The schematic figure below summarizes the steps in the data management and processing workflow:
-
+The schematic figure below summarises the steps in the data management and processing workflow:
 
 ```{r data_management_workflow, echo = FALSE, message = FALSE, results = 'asis'}
 cat(
@@ -65,37 +70,9 @@ cat(
 
 * To execute the data analysis workflow for the baseline and endline survey data, run:
 
-```
+```R
 targets::tar_make(dplyr::starts_with("baseline"))
 targets::tar_make(dplyr::starts_with("endline"))
-```
-
-The schematic figure below summarizes the steps in the data analysis workflow for the baseline survey:
-
-```{r data_analysis_workflow_baseline, echo = FALSE, message = FALSE, results = 'asis'}
-cat(
-  "```mermaid",
-  targets::tar_mermaid(
-    targets_only = TRUE, 
-    names = dplyr::starts_with("baseline")
-  ),
-  "```",
-  sep = "\n"
-)
-```
-
-The schematic figure below summarizes the steps in the data analysis workflow for the endline survey:
-
-```{r data_analysis_workflow_endline, echo = FALSE, message = FALSE, results = 'asis'}
-cat(
-  "```mermaid",
-  targets::tar_mermaid(
-    targets_only = TRUE, 
-    names = dplyr::starts_with("endline")
-  ),
-  "```",
-  sep = "\n"
-)
 ```
 
 ## Encryption
@@ -104,15 +81,15 @@ This repository uses `git-crypt` to enable transparent encryption and decryption
 
 The `.env` file contains:
 
-* variables for accessing the survey data direct from ONA;
+* variables for authenticating with Google Cloud services account setup for this project for accessing the baseline survey data;
 
-* variables for authenticating with Google services account setup for this project;
+* variables for accessing the endline survey data direct from ONA;
 
 * variables for `SMTP_PASSWORD` and `EMAIL_RECIPIENTS` which are used for sending the email updates for the high frequency data checks.
 
 Those who would like to reproduce the results of this project will require ability to decrypt the `.env` file
 
-To be able to work on this repository, a potential user/collaborator on this project will need to:
+To be able to work on this repository, a user/collaborator on this project will need to:
 
 * Create their own **PGP (Pretty Good Privacy) public and private keys**; and,
 
