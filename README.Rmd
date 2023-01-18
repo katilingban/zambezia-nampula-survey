@@ -84,7 +84,8 @@ cat(
     targets_only = TRUE, 
     names = c(dplyr::starts_with("overall")),
     shortcut = TRUE,
-    exclude = dplyr::contains(c("strata", "study_group", "table"))
+    exclude = dplyr::contains(c("strata", "study_group", "table")),
+    allow = dplyr::contains("results")
   ),
   "```",
   sep = "\n"
