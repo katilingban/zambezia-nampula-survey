@@ -38,12 +38,12 @@ endline survey**.
 
 ### R package dependencies
 
-This project requires `R 4.2.2 Patched (2022-11-10 r83330)`. This
-project uses the `{renv}` framework to record R package dependencies and
-versions. Packages and versions used are recorded in `renv.lock` and
-code used to manage dependencies is in `renv/` and other files in the
-root project directory. On starting an R session in the working
-directory, `run renv::restore()` to install R package dependencies.
+This project requires `R 4.2.2 (2022-11-10 r83330)`. This project uses
+the `{renv}` framework to record R package dependencies and versions.
+Packages and versions used are recorded in `renv.lock` and code used to
+manage dependencies is in `renv/` and other files in the root project
+directory. On starting an R session in the working directory,
+`run renv::restore()` to install R package dependencies.
 
 ### System requirements
 
@@ -80,9 +80,6 @@ auth/mozambique-s3m-e9da207bc2a3.json
 
 ``` mermaid
 graph LR
-  subgraph legend
-    x7420bd9270f8d27d([""Up to date""]):::uptodate --- xbf4603d6c2c2ad6b([""Stem""]):::none
-  end
   subgraph Graph
     xaa8b198e46c12205(["baseline_data_downloads"]):::uptodate --> x34303849e9b0482a(["baseline_raw_data_spss"]):::uptodate
     x3292f12efa6fc224(["endline_raw_data"]):::uptodate --> x9fee25520ed83a1a(["endline_sample_weight"]):::uptodate
@@ -106,7 +103,6 @@ graph LR
   end
   classDef uptodate stroke:#000000,color:#ffffff,fill:#354823;
   classDef none stroke:#000000,color:#000000,fill:#94a4ac;
-  linkStyle 0 stroke-width:0px;
 ```
 
 - To execute the data analysis workflow for the baseline and endline
@@ -117,10 +113,39 @@ targets::tar_make(dplyr::starts_with("baseline"))
 targets::tar_make(dplyr::starts_with("endline"))
 ```
 
+The schematic figure below summarises the steps in the data analysis
+workflow:
+
+✔ Successfully auto-authenticated via
+auth/mozambique-s3m-e9da207bc2a3.json
+
+``` mermaid
+graph LR
+  subgraph Graph
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> x0bbe9f288492eeec(["overall_results_xlsx"]):::outdated
+    xb8de1d18ad2cc4f6(["baseline_results_all"]):::outdated --> xaa3f6c085cefc626(["baseline_results_csv"]):::outdated
+    xa8885ae938ad1519(["overall_results_subset"]):::outdated --> x14c4c0c6cf2ca972(["baseline_results_subset"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> x02fbd9452a16eea6(["baseline_survey_results_report"]):::outdated
+    xcf2fba5ab534b33c(["endline_results_subset"]):::outdated --> x6ddc0eabdf53e510(["endline_results_subset_csv"]):::outdated
+    x14c4c0c6cf2ca972(["baseline_results_subset"]):::outdated --> x969d7dd50bd8a411(["baseline_results_subset_csv"]):::outdated
+    xa8885ae938ad1519(["overall_results_subset"]):::outdated --> xcf2fba5ab534b33c(["endline_results_subset"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> xcd1b6eeb6bb99aba(["endline_survey_results_report"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> xdf25b6550ed0d67d(["endline_results_all"]):::outdated
+    xb8de1d18ad2cc4f6(["baseline_results_all"]):::outdated --> xe30152fe1d53bcbe(["baseline_results_xlsx"]):::outdated
+    xdf25b6550ed0d67d(["endline_results_all"]):::outdated --> xa5c7be8027626ce4(["endline_results_csv"]):::outdated
+    xdf25b6550ed0d67d(["endline_results_all"]):::outdated --> x87d5a544c4ad6d2e(["endline_results_xlsx"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> xb8de1d18ad2cc4f6(["baseline_results_all"]):::outdated
+    x26387a2c59ebbcd2(["endline_survey_food_security_results_report"]):::outdated --> x26387a2c59ebbcd2(["endline_survey_food_security_results_report"]):::outdated
+  end
+  classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
+  classDef none stroke:#000000,color:#000000,fill:#94a4ac;
+```
+
 ## Encryption
 
-This repository uses `git-crypt` to enable transparent encryption and
-decryption of the `.env` file.
+This repository uses [`git-crypt`](https://github.com/AGWA/git-crypt) to
+enable transparent encryption and decryption of the `.env` file and the
+`auth/` directory.
 
 The `.env` file contains:
 
@@ -132,8 +157,10 @@ The `.env` file contains:
 - variables for `SMTP_PASSWORD` and `EMAIL_RECIPIENTS` which are used
   for sending the email updates for the high frequency data checks.
 
+The `auth/` directory contains credentials for Google service account.
+
 Those who would like to reproduce the results of this project will
-require ability to decrypt the `.env` file
+require ability to decrypt the `.env` file and the `auth/` directory.
 
 To be able to work on this repository, a user/collaborator on this
 project will need to:
@@ -144,8 +171,8 @@ project will need to:
 - Share their public key to the authors and request for it to be added
   to the repository.
 
-Once added, a collaborator can now decrypt the `.env` file after
-pulling/cloning the repository by running:
+Once added, a collaborator can now decrypt the `.env` file and the
+`auth/` directory after pulling/cloning the repository by running:
 
     git-crypt unlock
 
