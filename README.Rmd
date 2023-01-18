@@ -82,7 +82,7 @@ cat(
   "```mermaid",
   targets::tar_mermaid(
     targets_only = TRUE, 
-    names = c(dplyr::starts_with("baseline")),
+    names = c(dplyr::starts_with("overall")),
     shortcut = TRUE,
     exclude = dplyr::contains(c("strata", "study_group", "table"))
   ),
