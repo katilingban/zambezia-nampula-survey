@@ -124,21 +124,6 @@ workflow for the baseline survey:
 auth/mozambique-s3m-e9da207bc2a3.json
 
 ``` mermaid
-graph LR
-  subgraph legend
-    x7420bd9270f8d27d([""Up to date""]):::uptodate --- x0a52b03877696646([""Outdated""]):::outdated
-    x0a52b03877696646([""Outdated""]):::outdated --- xbf4603d6c2c2ad6b([""Stem""]):::none
-  end
-  subgraph Graph
-    x2ae00276a0a5b418(["overall_results_all"]):::uptodate --> x0bbe9f288492eeec(["overall_results_xlsx"]):::outdated
-    xa8885ae938ad1519(["overall_results_subset"]):::uptodate --> xa8885ae938ad1519(["overall_results_subset"]):::uptodate
-  end
-  classDef uptodate stroke:#000000,color:#ffffff,fill:#354823;
-  classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
-  classDef none stroke:#000000,color:#000000,fill:#94a4ac;
-  linkStyle 0 stroke-width:0px;
-  linkStyle 1 stroke-width:0px;
-  linkStyle 3 stroke-width:0px;
 ```
 
 ## Encryption
