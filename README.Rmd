@@ -35,7 +35,7 @@ This repository is a [`docker`](https://www.docker.com/get-started)-containerise
 
 ### R package dependencies
 
-This project requires `R 4.2.2 Patched (2022-11-10 r83330)`. This project uses the `{renv}` framework to record R package dependencies and versions. Packages and versions used are recorded in `renv.lock` and code used to manage dependencies is in `renv/` and other files in the root project directory. On starting an R session in the working directory, `run renv::restore()` to install R package dependencies.
+This project requires `R 4.2.2 (2022-11-10 r83330)`. This project uses the `{renv}` framework to record R package dependencies and versions. Packages and versions used are recorded in `renv.lock` and code used to manage dependencies is in `renv/` and other files in the root project directory. On starting an R session in the working directory, `run renv::restore()` to install R package dependencies.
 
 ### System requirements
 
@@ -95,7 +95,7 @@ cat(
 
 ## Encryption
 
-This repository uses `git-crypt` to enable transparent encryption and decryption of the `.env` file and the `auth/` directory.
+This repository uses [`git-crypt`](https://github.com/AGWA/git-crypt) to enable transparent encryption and decryption of the `.env` file and the `auth/` directory.
 
 The `.env` file contains:
 
