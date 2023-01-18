@@ -75,9 +75,25 @@ targets::tar_make(dplyr::starts_with("baseline"))
 targets::tar_make(dplyr::starts_with("endline"))
 ```
 
+The schematic figure below summarises the steps in the data analysis workflow:
+
+```{r data_analysis_workflow, echo = FALSE, message = FALSE, results = 'asis'}
+cat(
+  "```mermaid",
+  targets::tar_mermaid(
+    targets_only = TRUE, 
+    names = c(dplyr::starts_with("baseline"), dplyr::starts_with("endline")),
+    shortcut = TRUE,
+    exclude = dplyr::contains(c("strata", "study_group", "table"))
+  ),
+  "```",
+  sep = "\n"
+)
+```
+
 ## Encryption
 
-This repository uses `git-crypt` to enable transparent encryption and decryption of the `.env` file.
+This repository uses `git-crypt` to enable transparent encryption and decryption of the `.env` file and the `auth/` directory.
 
 The `.env` file contains:
 
@@ -87,7 +103,9 @@ The `.env` file contains:
 
 * variables for `SMTP_PASSWORD` and `EMAIL_RECIPIENTS` which are used for sending the email updates for the high frequency data checks.
 
-Those who would like to reproduce the results of this project will require ability to decrypt the `.env` file
+The `auth/` directory contains credentials for Google service account.
+
+Those who would like to reproduce the results of this project will require ability to decrypt the `.env` file and the `auth/` directory.
 
 To be able to work on this repository, a user/collaborator on this project will need to:
 
@@ -95,7 +113,7 @@ To be able to work on this repository, a user/collaborator on this project will 
 
 * Share their public key to the authors and request for it to be added to the repository.
 
-Once added, a collaborator can now decrypt the `.env` file after pulling/cloning the repository by running:
+Once added, a collaborator can now decrypt the `.env` file and the `auth/` directory after pulling/cloning the repository by running:
 
 ```
 git-crypt unlock
