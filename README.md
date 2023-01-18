@@ -80,9 +80,6 @@ auth/mozambique-s3m-e9da207bc2a3.json
 
 ``` mermaid
 graph LR
-  subgraph legend
-    x7420bd9270f8d27d([""Up to date""]):::uptodate --- xbf4603d6c2c2ad6b([""Stem""]):::none
-  end
   subgraph Graph
     xaa8b198e46c12205(["baseline_data_downloads"]):::uptodate --> x34303849e9b0482a(["baseline_raw_data_spss"]):::uptodate
     x3292f12efa6fc224(["endline_raw_data"]):::uptodate --> x9fee25520ed83a1a(["endline_sample_weight"]):::uptodate
@@ -106,7 +103,6 @@ graph LR
   end
   classDef uptodate stroke:#000000,color:#ffffff,fill:#354823;
   classDef none stroke:#000000,color:#000000,fill:#94a4ac;
-  linkStyle 0 stroke-width:0px;
 ```
 
 - To execute the data analysis workflow for the baseline and endline
@@ -125,9 +121,6 @@ auth/mozambique-s3m-e9da207bc2a3.json
 
 ``` mermaid
 graph LR
-  subgraph legend
-    x0a52b03877696646([""Outdated""]):::outdated --- xbf4603d6c2c2ad6b([""Stem""]):::none
-  end
   subgraph Graph
     x2ae00276a0a5b418(["overall_results_all"]):::outdated --> x0bbe9f288492eeec(["overall_results_xlsx"]):::outdated
     xb8de1d18ad2cc4f6(["baseline_results_all"]):::outdated --> xaa3f6c085cefc626(["baseline_results_csv"]):::outdated
@@ -146,8 +139,6 @@ graph LR
   end
   classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
   classDef none stroke:#000000,color:#000000,fill:#94a4ac;
-  linkStyle 0 stroke-width:0px;
-  linkStyle 14 stroke-width:0px;
 ```
 
 ## Encryption

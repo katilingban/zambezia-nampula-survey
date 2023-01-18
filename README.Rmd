@@ -61,7 +61,8 @@ cat(
   "```mermaid",
   targets::tar_mermaid(
     targets_only = TRUE, 
-    names = c(baseline_data_weighted, endline_data_weighted)
+    names = c(baseline_data_weighted, endline_data_weighted),
+    legend = FALSE
   ),
   "```",
   sep = "\n"
@@ -84,7 +85,8 @@ cat(
     targets_only = TRUE, 
     #names = c(dplyr::starts_with("overall")),
     #shortcut = TRUE,
-    allow = dplyr::contains("results")
+    allow = dplyr::contains("results"),
+    legend = FALSE
   ),
   "```",
   sep = "\n"
