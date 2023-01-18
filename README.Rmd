@@ -75,7 +75,7 @@ targets::tar_make(dplyr::starts_with("baseline"))
 targets::tar_make(dplyr::starts_with("endline"))
 ```
 
-The schematic figure below summarises the steps in the data analysis workflow for the baseline survey:
+The schematic figure below summarises the steps in the data analysis workflow:
 
 ```{r data_analysis_workflow, echo = FALSE, message = FALSE, results = 'asis'}
 cat(
@@ -83,8 +83,7 @@ cat(
   targets::tar_mermaid(
     targets_only = TRUE, 
     #names = c(dplyr::starts_with("overall")),
-    shortcut = TRUE,
-    #exclude = dplyr::contains(c("strata", "study_group", "table")),
+    #shortcut = TRUE,
     allow = dplyr::contains("results")
   ),
   "```",

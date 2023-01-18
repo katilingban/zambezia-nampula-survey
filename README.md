@@ -118,12 +118,36 @@ targets::tar_make(dplyr::starts_with("endline"))
 ```
 
 The schematic figure below summarises the steps in the data analysis
-workflow for the baseline survey:
+workflow:
 
 ✔ Successfully auto-authenticated via
 auth/mozambique-s3m-e9da207bc2a3.json
 
 ``` mermaid
+graph LR
+  subgraph legend
+    x0a52b03877696646([""Outdated""]):::outdated --- xbf4603d6c2c2ad6b([""Stem""]):::none
+  end
+  subgraph Graph
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> x0bbe9f288492eeec(["overall_results_xlsx"]):::outdated
+    xb8de1d18ad2cc4f6(["baseline_results_all"]):::outdated --> xaa3f6c085cefc626(["baseline_results_csv"]):::outdated
+    xa8885ae938ad1519(["overall_results_subset"]):::outdated --> x14c4c0c6cf2ca972(["baseline_results_subset"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> x02fbd9452a16eea6(["baseline_survey_results_report"]):::outdated
+    xcf2fba5ab534b33c(["endline_results_subset"]):::outdated --> x6ddc0eabdf53e510(["endline_results_subset_csv"]):::outdated
+    x14c4c0c6cf2ca972(["baseline_results_subset"]):::outdated --> x969d7dd50bd8a411(["baseline_results_subset_csv"]):::outdated
+    xa8885ae938ad1519(["overall_results_subset"]):::outdated --> xcf2fba5ab534b33c(["endline_results_subset"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> xcd1b6eeb6bb99aba(["endline_survey_results_report"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> xdf25b6550ed0d67d(["endline_results_all"]):::outdated
+    xb8de1d18ad2cc4f6(["baseline_results_all"]):::outdated --> xe30152fe1d53bcbe(["baseline_results_xlsx"]):::outdated
+    xdf25b6550ed0d67d(["endline_results_all"]):::outdated --> xa5c7be8027626ce4(["endline_results_csv"]):::outdated
+    xdf25b6550ed0d67d(["endline_results_all"]):::outdated --> x87d5a544c4ad6d2e(["endline_results_xlsx"]):::outdated
+    x2ae00276a0a5b418(["overall_results_all"]):::outdated --> xb8de1d18ad2cc4f6(["baseline_results_all"]):::outdated
+    x26387a2c59ebbcd2(["endline_survey_food_security_results_report"]):::outdated --> x26387a2c59ebbcd2(["endline_survey_food_security_results_report"]):::outdated
+  end
+  classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
+  classDef none stroke:#000000,color:#000000,fill:#94a4ac;
+  linkStyle 0 stroke-width:0px;
+  linkStyle 14 stroke-width:0px;
 ```
 
 ## Encryption
