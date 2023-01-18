@@ -31,6 +31,9 @@ endline survey**.
   more information);
 - `docs/` contains archived high frequency data checks reports produced
   during the implementation of the survey;
+- `did/` contains R script for performing the difference-in-difference
+  analysis using the results tables produced by the analysis
+  pipeline/workflow;
 - `_targets.R` file defines the steps in this workflow’s data management
   and analysis pipeline.
 
@@ -64,8 +67,8 @@ multi-threading, the entire pipeline completes between 3-5 hours.
 This project uses the `{targets}` package to create its data management
 and analysis pipeline as defined in the `_targets.R` file.
 
-- To execute the data management and processing workflow for baseline
-  and endline survey data, run:
+To execute the data management and processing workflow for baseline and
+endline survey data, run:
 
 ``` r
 targets::tar_make(baseline_data_weighted)
@@ -105,8 +108,15 @@ graph LR
   classDef none stroke:#000000,color:#000000,fill:#94a4ac;
 ```
 
-- To execute the data analysis workflow for the baseline and endline
-  survey data, run:
+This produces the following outputs:
+
+- R object for processed baseline data that includes probability weights
+  for use in weighted analysis;
+- R object for processed endline data that includes probability weights
+  for use in weighted analysis.
+
+To execute the data analysis workflow for the baseline and endline
+survey data, run:
 
 ``` r
 targets::tar_make(dplyr::starts_with("baseline"))
@@ -140,6 +150,62 @@ graph LR
   classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
   classDef none stroke:#000000,color:#000000,fill:#94a4ac;
 ```
+
+This pipeline produces the following outputs:
+
+- Baseline results tables in CSV and in XLSX format;
+- Baseline results tables subset in CSV format which is used for the
+  difference-in-difference analysis;
+- Endline results tables in CSV and in XLSX format;
+- Endline results tables subset in CSV format which is used for the
+  difference-in-difference analysis.
+
+These outputs are saved by the pipeline in the `outputs` directory with
+the following filenames:
+
+- `baseline_results.csv`;
+- `baseline_results.xlsx`;
+- `baseline_results_subset.csv`;
+- `endline_results.csv`;
+- `endline_results.xlsx`;
+- `endline_results_subset.csv`.
+
+### Difference-in-difference analysis
+
+The **difference-in-difference** analysis was performed using a single
+`R` script found in the `did/` directory.
+
+To run the **difference-in-difference** analysis, one should first run
+the data analysis pipeline describe above using the following command in
+R:
+
+    targets::tar_make(dplyr::starts_with("baseline"))
+    targets::tar_make(dplyr::starts_with("endline"))
+
+which will produce the necessary results outputs needed for the
+**difference-in-difference** analysis.
+
+Then, one should run the **difference-in-difference** R script using the
+following R command:
+
+    source("did/did.R")
+
+The outputs of the **difference-in-difference** R script are:
+
+- an HTML file called `analysisDiD.html`;
+- all the plots (in `.png` format) showing the
+  **difference-in-difference** results for each indicator on which the
+  analysis was performed.
+
+These outputs are saved in the `did/` directory after the
+**difference-in-difference** R script is run.
+
+This repository doesn’t contain the outputs of data management and
+analysis workflows described above. The user is expected to use this
+code along with the data from **UNICEF Mozambique** (restricted; request
+access only; see below) to run the workflows and produce the outputs
+themselves. All outputs are available from **UNICEF Mozambique** on
+request.
 
 ## Encryption
 

@@ -8,5 +8,7 @@ outputs
 !outputs/.gitkeep
 _targets
 diff_in_diff.txt
-did
+#did
+did/**.png
+did/**.html
 did.zip
