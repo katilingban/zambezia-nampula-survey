@@ -195,6 +195,9 @@ processed_data_baseline <- tar_plan(
     .data = baseline_raw_data_stata,
     survey_sampling_list
   ),
+  baseline_sample_weight_csv = baseline_sample_weight |>
+    haven::zap_labels() |>
+    write.csv("data/baseline_sample_weight.csv", row.names = FALSE),
   baseline_data_processed = process_baseline_data(
     .data = baseline_raw_data_stata, spss_data = baseline_raw_data_spss
   ),
@@ -6748,6 +6751,10 @@ processed_data_endline <- tar_plan(
     .data = endline_raw_data,
     survey_sampling_list_endline,
     type = "endline"
+  ),
+  endline_sample_weight_csv = write.csv(
+    x = endline_sample_weight,
+    file = "data/endline_sample_weight.csv", row.names = FALSE
   ),
   ### Process endline data
   endline_data_processed = process_endline_data(
